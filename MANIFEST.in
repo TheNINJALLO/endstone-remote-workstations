@@ -1,0 +1,19 @@
+include LICENSE README.md THIRD_PARTY.md requirements-*.lock
+include CONTRIBUTING.md CHANGELOG.md
+recursive-include docs *.md *.json
+recursive-include examples *.py *.toml *.md
+recursive-include integrations *.py *.md
+recursive-include tools *.py
+recursive-include tools *.ps1
+recursive-include native *.cpp *.h *.asm
+recursive-include native/build-inputs *.json
+recursive-include docs/assets *.svg *.png
+recursive-include wiki *.md
+recursive-include tests *.py *.json
+recursive-include licenses *
+recursive-exclude * __pycache__ *pyc
+prune .venv
+prune .research
+prune .runtime
+prune research
+prune examples/dependency_plugin/build

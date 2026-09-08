@@ -1,0 +1,122 @@
+# The Windows platform wheel includes the hash-gated native companion.
+# Alias registration reads this file before plugin loading; restart after changes.
+[aliases]
+enabled = true
+# Optional replacements: chest = ["chest", "vaultmenu"]
+# Use [] to omit a capability's short commands. /enchant is always forbidden.
+
+[diagnostics]
+enabled = false
+queue_capacity = 512
+maximum_file_bytes = 2097152
+file_count = 3
+
+[sessions]
+maximum = 100
+opening_timeout_seconds = 10.0
+closing_timeout_seconds = 5.0
+
+[native]
+# Release candidate: opt in on an isolated server after reviewing TEST_REPORT.md.
+enabled = false
+maximum_sessions = 100
+maximum_duration_seconds = 1200
+denied_dimensions = []
+# Only the exact admitted BDS/runtime and Windows 1.26.45 clients may open.
+# BDS owns all recipes, requests, inventories, XP and input return.
+# The portable wheel keeps these commands unavailable without the companion.
+
+[native.linked]
+# Real block storage/processing uses BDS and follows loaded world ticking.
+# Enable only after qualification on your isolated exact-build server.
+enabled = false
+# Each command requires a configured source. Dependency plugins can supply a
+# server-authorized BlockContext instead. No player-controlled coordinates.
+# [native.linked.sources.furnace]
+# dimension = "Overworld"
+# position = [0, 64, 0]
+# permission = "myplugin.furnace" # Omit to require remoteworkstations.contexts.
+
+[native.signs]
+# Requires native.linked plus the exact Windows companion. BDS owns sign text
+# validation, filtering and persistence; the scoped hooks change distance only.
+enabled = false
+
+[native.jigsaw]
+# Actual source metadata editor. Creative operator and administrator permission
+# are mandatory. Structure generation is a separate interface/operation.
+enabled = false
+
+[native.commandblock]
+# Real source editor, restricted to Creative operators with admin permission.
+# Native BDS retains command filtering, mode changes and execution behavior.
+enabled = false
+
+[native.commandblockminecart]
+# Real entity editor. Creative operator, admin and source permission required.
+# Reopening the same cart waits 60 seconds to reject late saves without window IDs.
+enabled = false
+
+[native.structure]
+# Real native Save/Load and template controls. Administrator and Creative
+# operator required. World changes use the actual BlockContext source.
+enabled = false
+maximum_volume = 262144
+
+[native.entities]
+# Real entity inventories remain owned by BDS. Disabled until local qualification.
+enabled = false
+# Supply an actual Actor via EntityContext, or configure a fixed command source:
+# [native.entities.sources.chestminecart]
+# dimension = "Overworld"
+# actor_id = -123456 # Actual persistent ActorUniqueID, not network RuntimeID.
+# permission = "myplugin.vehicle"
+
+[native.chemistry]
+# Real linked chemistry tables. Requires world Education features, the exact
+# admitted native build/client, native.linked and source access permission.
+enabled = false
+
+[native.agent]
+# Actual native Agent inventory; requires Education features, native.entities,
+# a loaded server-selected EntityContext and the Agent's existing native owner.
+# Ownership is never assigned by this plugin.
+enabled = false
+
+[native.npc]
+# Real NPC dialogue and installed behavior-pack scenes. BDS executes all scene
+# commands. A server-selected EntityContext and source permission are mandatory.
+# Each presentation has a unique client scene token; old requests are rejected.
+enabled = false
+# Optional /workstations open npc source:
+# [native.npc.source]
+# dimension = "Overworld"
+# actor_id = -123456 # Actual persistent ActorUniqueID of a loaded NPC.
+# permission = "myplugin.dialogue"
+# scene = "welcome" # Installed behavior-pack scene; empty uses the NPC default.
+# branches = ["next_scene"] # Explicitly permitted native scene transitions.
+
+[processing]
+# Personal processing is not yet implemented. Linked sources follow BDS world
+# ticking, including after UI close/offline while their chunks remain ticking.
+online_after_close = "continue"
+offline = "pause"
+linked_blocks = "require_loaded_ticking"
+
+[packet_inventory]
+# Real online Ender Chest and protected developer inventory menus.
+# Opt in after reviewing the packet-inventory candidate test report.
+enabled = false
+maximum_sessions = 100
+
+[policies]
+enchanting_power = "linked_real_bookshelves"
+beacon = "linked_real_valid_pyramid"
+crafter_activation = "explicit_with_real_inputs"
+powerful_editors = false
+education = false
+
+[presentation]
+chest_forms = false
+# Matching pinned Chest-UI resource pack with $show_inventory=false is required.
+rows = 3

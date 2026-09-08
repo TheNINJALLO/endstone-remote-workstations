@@ -1,0 +1,12 @@
+.venv/
+.research/
+.runtime/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+build/
+*.sqlite*
+*.log
+research/
+dist/
+release-assets/

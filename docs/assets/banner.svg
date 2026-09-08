@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-labelledby="title desc">
+ <title id="title">RemoteWorkstations</title><desc id="desc">Native Bedrock screens and a developer UI API for Endstone. An original abstract illustration of inventory slots linked to a workstation.</desc>
+ <defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#111e2d"/><stop offset="1" stop-color="#07131d"/></linearGradient>
+  <linearGradient id="accent" x2="1" y2="1"><stop stop-color="#93f7cd"/><stop offset="1" stop-color="#32bea1"/></linearGradient>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#7094a8" stroke-opacity=".09"/></pattern>
+ </defs>
+ <rect width="1280" height="420" rx="24" fill="url(#bg)"/><rect width="1280" height="420" rx="24" fill="url(#grid)"/>
+ <path d="M0 410H1280" stroke="#64e6bc" stroke-width="3" opacity=".35"/>
+ <circle cx="1140" cy="48" r="208" fill="#1a5b53" opacity=".12"/>
+ <text x="64" y="67" fill="#64e6bc" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="4">ENDSTONE / MINECRAFT BEDROCK</text>
+ <text x="59" y="156" fill="#eff6fc" font-family="Segoe UI,Arial,sans-serif" font-size="69" font-weight="750" letter-spacing="-2">Remote</text>
+ <text x="59" y="230" fill="#eff6fc" font-family="Segoe UI,Arial,sans-serif" font-size="69" font-weight="750" letter-spacing="-2">Workstations</text>
+ <text x="64" y="276" fill="#aebfd0" font-family="Segoe UI,Arial,sans-serif" font-size="23">Native screens. Your plugin's actions.</text>
+ <rect x="64" y="323" width="157" height="36" rx="18" fill="#16392f" stroke="#3b7764"/>
+ <text x="142" y="347" text-anchor="middle" fill="#a1f3d1" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="600">53 ENTRY POINTS</text>
+ <rect x="233" y="323" width="169" height="36" rx="18" fill="#182a3d" stroke="#334e67"/>
+ <text x="318" y="347" text-anchor="middle" fill="#b6d6fa" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="600">DEPENDENCY API 1.5</text>
+ <g transform="translate(733 72)">
+  <rect x="20" y="16" width="434" height="286" rx="21" fill="#020a10" opacity=".5"/>
+  <rect width="434" height="286" rx="21" fill="#192b3a" stroke="#385060"/><path d="M0 53H434" stroke="#385060"/>
+  <circle cx="26" cy="27" r="5" fill="#64e6bc"/><circle cx="45" cy="27" r="5" fill="#415866"/>
+  <text x="407" y="32" text-anchor="end" fill="#98afbd" font-family="Consolas,monospace" font-size="12">ui.open_native(player, "anvil")</text>
+  <g fill="#0e1c28" stroke="#334b5c">
+   <rect x="27" y="81" width="59" height="59" rx="8"/><rect x="99" y="81" width="59" height="59" rx="8"/><rect x="171" y="81" width="59" height="59" rx="8"/>
+   <rect x="27" y="153" width="59" height="59" rx="8"/><rect x="99" y="153" width="59" height="59" rx="8"/><rect x="171" y="153" width="59" height="59" rx="8"/>
+  </g>
+  <rect x="99" y="81" width="59" height="59" rx="8" fill="#184537" stroke="#64e6bc" stroke-width="2"/>
+  <path d="M128 94l15 16-15 16-15-16z" fill="url(#accent)"/>
+  <path d="M253 145h31m-10-10 10 10-10 10" fill="none" stroke="#f2c96d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="309" y="108" width="98" height="88" rx="12" fill="#24372f" stroke="#59705e"/>
+  <path d="M329 130h55v10l-16 8v13h8v9h-39v-9h9v-13l-17-6z" fill="#a6b9bd"/><path d="M329 130h55v6h-55z" fill="#e4eebf"/>
+  <text x="28" y="252" fill="#87a3b5" font-family="Segoe UI,Arial,sans-serif" font-size="14">MENUS</text>
+  <text x="406" y="252" text-anchor="end" fill="#96e4bf" font-family="Segoe UI,Arial,sans-serif" font-size="14">NATIVE WORKSTATIONS</text>
+ </g>
+</svg>

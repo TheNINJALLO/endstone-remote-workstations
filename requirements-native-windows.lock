@@ -1,0 +1,5 @@
+# In addition to requirements-build.lock; CPython 3.11 and MSVC 14.44.35207.
+pybind11==3.0.1
+pefile==2024.8.26
+# Disassembly audit only; not linked or required by the plugin.
+capstone==5.0.6

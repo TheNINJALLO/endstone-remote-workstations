@@ -1,0 +1,10 @@
+{
+  "provenance": "Hand-authored synthetic examples from EndstoneMC/protocol-docs e125b570c1cec03199083eaa845a23fe91b2a9c5. NOT client captures.",
+  "container_open": "01 00 02 80 01 03 01",
+  "container_close": "01 00 01",
+  "take_five": "01 01 01 00 00 05 0c 00 00 01 00 00 00 07 00 00 00 00 00 00 00 00 00 00 00",
+  "error_response": "01 01 01 01 00",
+  "empty_content": "01 00 07 00 00 00 00 00 00 00 00 00",
+  "empty_slot": "01 00 00 00 00 00 00 00 00 00 00 00",
+  "item_nbt_short": "0a 00 00 02 0a 00 52 65 70 61 69 72 43 6f 73 74 07 00 00"
+}

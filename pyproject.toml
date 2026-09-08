@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "endstone-remote-workstations"
+version = "0.4.0"
+description = "RemoteWorkstations: native Endstone workstations with exact-build compatibility checks"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE", "licenses/*.txt"]
+authors = [{name = "RemoteWorkstations contributors"}]
+dependencies = ["bstream==1.0.1", "rapidnbt==1.3.5"]
+
+[project.urls]
+Homepage = "https://github.com/TheNINJALLO/endstone-remote-workstations"
+Documentation = "https://github.com/TheNINJALLO/endstone-remote-workstations/wiki"
+Issues = "https://github.com/TheNINJALLO/endstone-remote-workstations/issues"
+
+[project.optional-dependencies]
+codec-audit = ["bedrock-protocol-packets-ng==0.0.11", "bstream==1.0.1", "rapidnbt==1.3.5"]
+
+[project.entry-points.endstone]
+remote_workstations = "endstone_remote_workstations.plugin:RemoteWorkstations"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+endstone_remote_workstations = ["*.json", "*.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

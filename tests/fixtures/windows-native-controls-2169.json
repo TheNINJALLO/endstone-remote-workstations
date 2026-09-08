@@ -1,0 +1,9 @@
+{
+  "origin": "Actual isolated Windows Bedrock 1.26.45 client and BDS 1.26.45.1 / Endstone 0.11.10",
+  "source": "plugin-anvil-handshake.json",
+  "packet_id": 115,
+  "send_hex": "0724be6a0000000001",
+  "receive_hex": "c0cf3bd1c35c060001",
+  "echo_timestamp_multiplier": 1000000,
+  "echo_from_server": true
+}

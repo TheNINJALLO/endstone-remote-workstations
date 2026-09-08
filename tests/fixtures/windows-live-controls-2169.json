@@ -1,0 +1,12 @@
+{
+  "origin": "Actual sanitized PacketSendEvent/PacketReceiveEvent captures on 2026-09-06",
+  "client": "Minecraft for Windows 1.26.4501.0 (in-game v26.45)",
+  "runtime": "Endstone 0.11.10 / BDS 1.26.45.1 / server protocol 2169",
+  "source": "research/windows-client-packets.jsonl",
+  "scope": "Native player inventory control packets only; no remote storage or transaction payload certification",
+  "sessions": [
+    {"window": 2, "position": [0, 80, 0], "open_send": "02ff00a0010001", "close_receive": "02f700", "close_send": "02f700"},
+    {"window": 3, "position": [-7, 78, 6], "open_send": "03ff0d9c010c01", "close_receive": "03f700", "close_send": "03f700"},
+    {"window": 4, "position": [-7, 78, 6], "open_send": "04ff0d9c010c01", "close_receive": "04f700", "close_send": "04f700"}
+  ]
+}
