@@ -57,8 +57,9 @@ does not validate the plugin's command, form, projection and cleanup orchestrati
 
 Sending a restoration packet inside `PacketSendEvent` overwrote the active serialized
 packet buffer in a live test. The release backend therefore queues restoration/close work
-for its scheduler; packet callbacks only record state. ItemStackRequest packets are never
-cancelled, answered or rewritten by the plugin.
+for its scheduler. Native ItemStackRequests remain executed by BDS; scoped
+authorization checks can reject owned requests. The managed packet inventory
+backend separately validates and responds to its own requests.
 
 Windows 1.26.45's NetworkStackLatency reply multiplies the sent timestamp by 1,000,000
 and preserves the `from server` bit. The actual fixture is
