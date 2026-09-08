@@ -177,10 +177,12 @@ struct NativeUi::Impl {
                 require(v.observed&&observed_window==window,VCF_CONFLICT);
             }catch(...){v.activating=false;throw;}
             v.active=true;engine.opened(v.owner,v.id,VCF_OK);
+            if(engine.session(v.owner,v.id).state!=VCF_ACTIVE){close(p,v);return false;}
         }
         if(v.close_seen||now>=v.next_check) {
             v.next_check=now+std::chrono::milliseconds(250);
             if(inspect(*p).ready){restore(*p,v);retire(v,VCF_OK);return true;}
+            engine.authorize(v.owner,v.id,VCF_GUARD_ACTIVE);
         }
         if(v.close_seen)close(p,v);
         if(now-v.queued>std::chrono::minutes(20))close(p,v);
@@ -195,6 +197,11 @@ vcf_status NativeUi::open(const Session&s) {
     // Real player-state roles and a BDS-owned native workstation context are
     // distinct from plugin-authored virtual transactions.
     if(s.mode!=(layout->block.empty()?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT))return VCF_UNAVAILABLE;
+    // This adapter owns only original gameplay. Never accept custom definitions
+    // or a conflicting source and then silently ignore the caller's contract.
+    if(!s.rules.empty()||!s.title.empty())return VCF_UNAVAILABLE;
+    for(const auto&slot:s.inventory.slots)if(!slot.item.empty()||slot.policy!=(VCF_INSERT|VCF_EXTRACT))return VCF_UNAVAILABLE;
+    if(!s.dimension.empty()||!s.entity_id.empty()||!s.held_id.empty()||s.x||s.y||s.z)return VCF_INVALID;
     auto*p=impl_->player(s.player);if(!p)return VCF_CLOSED;
     require(impl_->views.size()<100,VCF_CAPACITY);
     for(const auto&[id,v]:impl_->views)require(v.player!=s.player,VCF_CONFLICT);

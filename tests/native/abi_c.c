@@ -6,5 +6,11 @@ int main(void){
  if(oni_vcf_get_api(VCF_ABI_VERSION+1,sizeof(api),&api)!=VCF_VERSION)return 2;
  if(oni_vcf_get_api(VCF_ABI_VERSION,sizeof(api),&api)!=VCF_OK)return 3;
  if(api.size!=sizeof(api)||!api.prepare||!api.define_rule||!api.forget)return 4;
+ memset(&api,0xa5,sizeof(api));
+ if(oni_vcf_get_api(VCF_ABI_VERSION_1_0,VCF_API_1_0_SIZE,&api)!=VCF_OK)return 5;
+ if(api.size!=VCF_API_1_0_SIZE||api.version!=VCF_ABI_VERSION_1_0||!api.forget)return 6;
+ { const unsigned char* bytes=(const unsigned char*)&api;size_t i;
+   for(i=VCF_API_1_0_SIZE;i<sizeof(api);++i)if(bytes[i]!=0xa5)return 7;
+ }
  return 0;
 }

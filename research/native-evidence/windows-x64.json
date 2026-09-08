@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "92d09c7b74ac6a9805bafc166d8e0a13ac9e5db73dbbb0819e5a14093699d44f",
     "loader_sha256": "0c6f0861c5f9a677058b25776d975654a3586a80d2e4421b069b5e98f536f819",
-    "artifact_sha256": "1d2f71c6a6e58fdad458042476135a651bf24391627be47fcfd5ddc6a567c125"
+    "artifact_sha256": "699e226ea4db34f0845c9866548fe76b5ab9f3511bcf9a0a88d251a847086362"
   },
   "build": "tested",
   "native_loader_smoke": "tested",
@@ -8465,7 +8465,8 @@
     "action_exports": {
       "implementation": "implemented",
       "acceptance": "not-qualified",
-      "client_test": "untested"
+      "client_test": "untested",
+      "listing": "Detached own/exported action descriptions, caller-owned buffers and stale revision rejection tested"
     },
     "deferred_invocation": {
       "implementation": "implemented",
@@ -8478,9 +8479,10 @@
       "client_test": "untested"
     },
     "source_guards": {
-      "implementation": "not-implemented",
+      "implementation": "implemented",
       "acceptance": "not-qualified",
-      "client_test": "untested"
+      "client_test": "untested",
+      "automated_test": "SDK 1.1 dispatch/readiness/revocation; active native checks are implemented but client untested"
     },
     "capabilities": {
       "implementation": "implemented",
@@ -8494,7 +8496,7 @@
     }
   },
   "native_tests": {
-    "ctest": "9/9 passed",
+    "ctest": "10/10 passed (including SDK guards/action listing and ABI 1.0 prefix sentinels)",
     "scope": "69 entries and 10 additional surfaces retained",
     "qualification": "not-qualified"
   },
@@ -8502,5 +8504,22 @@
     "experimental_original_windows": true,
     "default": false
   },
-  "client_attempt": "Minecraft input resumed temporarily; adding local test connection was interrupted by loss of foreground. No new screen opening has been verified."
+  "client_attempt": "Minecraft input resumed temporarily; adding local test connection was interrupted by loss of foreground. No new screen opening has been verified.",
+  "sdk_version": "1.1; ABI 1.0 function-table prefix/descriptors retained",
+  "sdk_consumers": [
+    {
+      "name": "UICatalogShowcase",
+      "sha256": "f5526c02e9bfe0439f30099a098f6c31f342d4f47bc715f38938b050c74144cd",
+      "compiled_abi": "1.0",
+      "native_loader_smoke": "tested",
+      "client_gameplay": "untested"
+    },
+    {
+      "name": "NativePassthrough",
+      "sha256": "663230ee27ac865a388c81014f3e45192a3d04dd0ec98eaa6a84df246fef46f3",
+      "compiled_abi": "1.1",
+      "native_loader_smoke": "tested",
+      "client_gameplay": "untested"
+    }
+  ]
 }

@@ -141,7 +141,7 @@ public:
 #ifdef _WIN32
     if(native_ui_)native_ui_->tick();
 #endif
-    engine_->tick();
+    engine_->tick();engine_->collect_terminal(self_->owner());
    }catch(...){getLogger().error("VCF scheduler stopped by invariant failure.");task_->cancel();}},0,1);
    registerEvent(&VirtualContainerFramework::quit,*this);
    registerEvent(&VirtualContainerFramework::death,*this);
@@ -152,7 +152,7 @@ public:
    registerEvent(&VirtualContainerFramework::sent,*this,endstone::EventPriority::Monitor);
    std::filesystem::create_directories(getDataFolder());
    std::ofstream receipt(getDataFolder()/"native-startup.txt");receipt<<"native C++ plugin; no project Python runtime\nBDS "<<admission_.bds_sha256<<"\nEndstone "<<admission_.runtime_sha256<<"\n69 retained entries; all-UI acceptance NOT QUALIFIED\n";
-   getLogger().info("Native VCF enabled: C ABI 1.0, 69 catalog entries retained, C++ forms/actions active; all-UI acceptance NOT QUALIFIED.");
+   getLogger().info("Native VCF enabled: C ABI 1.1 (1.0 compatible), 69 catalog entries retained, C++ forms/actions/guards active; all-UI acceptance NOT QUALIFIED.");
   }catch(const std::exception&e){getLogger().error("VCF startup failed: {}",e.what());onDisable();}
    catch(const Error&e){getLogger().error("VCF startup failed with status {}",e.status);onDisable();}
  }
@@ -191,7 +191,7 @@ public:
    if(name=="vcf"||name=="workstations"){
     if(!args.empty()&&(args[0]=="status"||args[0]=="diagnose"||args[0]=="sessions")){
      if(!sender.hasPermission("remoteworkstations.status")){sender.sendErrorMessage("Permission denied.");return true;}
-     sender.sendMessage("Native VCF C ABI 1.0; sessions "+std::to_string(engine_->session_count())+"; 69 entries retained; all-UI NOT QUALIFIED.");return true;
+     sender.sendMessage("Native VCF C ABI 1.1; sessions "+std::to_string(engine_->session_count())+"; 69 entries retained; all-UI NOT QUALIFIED.");return true;
     }
     if(!args.empty()&&(args[0]=="capabilities"||args[0]=="list")){
      for(const auto&row:catalog())sender.sendMessage(std::string(row.id)+": native/custom migration unqualified");return true;

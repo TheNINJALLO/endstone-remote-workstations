@@ -16,7 +16,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#define VCF_ABI_VERSION 0x00010000u
+#define VCF_ABI_VERSION_1_0 0x00010000u
+#define VCF_ABI_VERSION 0x00010001u
 typedef uint64_t vcf_handle;
 typedef int32_t vcf_status;
 enum { VCF_OK=0, VCF_INVALID=1, VCF_VERSION=2, VCF_NOT_FOUND=3, VCF_DENIED=4,
@@ -64,6 +65,20 @@ typedef struct {
  const vcf_cost *costs; uint32_t cost_count, output_slot; vcf_item output;
  uint32_t duration_ticks;
 } vcf_rule_desc;
+typedef struct {
+ uint32_t size, version; vcf_string name, consumer, permission;
+ uint32_t exported; uint64_t revision;
+} vcf_action_info;
+enum { VCF_GUARD_DISPATCH=1, VCF_GUARD_READY=2, VCF_GUARD_ACTIVE=3 };
+typedef struct {
+ uint32_t size, version; vcf_handle ticket, requesting_consumer;
+ uint32_t phase; vcf_session_desc request;
+} vcf_guard_event;
+typedef vcf_status (VCF_CALL *vcf_guard_callback)(void *,const vcf_guard_event *);
+typedef struct {
+ uint32_t size, version; vcf_string name, canonical_id;
+ vcf_guard_callback callback; void *context;
+} vcf_guard_desc;
 /* C ABI allocations never cross ownership domains. Caller supplies output
    structures. Capability strings remain valid until provider shutdown.
    All calls except get_api require the provider's server thread.
@@ -86,7 +101,16 @@ typedef struct vcf_api {
  vcf_status (VCF_CALL *session_info)(vcf_handle,vcf_handle,vcf_session_info *);
  vcf_status (VCF_CALL *show_menu)(vcf_handle,const vcf_menu_desc *,vcf_handle *);
  vcf_status (VCF_CALL *forget)(vcf_handle,vcf_handle);
+ /* ABI 1.1 tail. Old 1.0 consumers negotiate only the prefix above.
+    Listing exposes own actions and explicit exports. action_info copies all
+    strings into caller storage; VCF_BUFFER reports required bytes. Reusing an
+    outdated registry revision returns VCF_STALE without a partial result. */
+ vcf_status (VCF_CALL *action_count)(vcf_handle,uint32_t *,uint64_t *);
+ vcf_status (VCF_CALL *action_info)(vcf_handle,uint32_t,uint64_t,vcf_action_info *,char *,uint32_t,uint32_t *);
+ vcf_status (VCF_CALL *register_guard)(vcf_handle,const vcf_guard_desc *,vcf_handle *);
+ vcf_status (VCF_CALL *unregister_guard)(vcf_handle,vcf_handle);
 } vcf_api;
+#define VCF_API_1_0_SIZE ((uint32_t)offsetof(vcf_api,action_count))
 VCF_EXPORT vcf_status VCF_CALL oni_vcf_get_api(uint32_t version, uint32_t size, vcf_api *output);
 #ifdef __cplusplus
 }

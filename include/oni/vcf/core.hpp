@@ -48,6 +48,7 @@ struct Snapshot {
  void execute(Rule&, uint64_t expected_rule_revision);
 };
 struct Button { std::string label,action,icon; };
+struct ActionInfo { std::string name,consumer,permission; bool exported; uint64_t revision; };
 struct Session {
  vcf_handle id=0,owner=0;
  std::string kind,player,title,permission,dimension,entity_id,held_id;
@@ -70,11 +71,17 @@ class Engine {
 public:
  explicit Engine(Host host);
  vcf_status guard() const;
- vcf_handle consumer(std::string);
+ vcf_handle consumer(std::string,uint32_t version=VCF_ABI_VERSION);
  void release(vcf_handle);
  void release_named(std::string_view);
  void action(vcf_handle,std::string,std::string,bool,vcf_callback,void*);
  void remove_action(vcf_handle,std::string_view);
+ std::vector<ActionInfo> actions(vcf_handle) const;
+ uint64_t action_revision()const{return action_revision_;}
+ vcf_handle add_guard(vcf_handle,std::string,std::string,vcf_guard_callback,void*);
+ void remove_guard(vcf_handle,vcf_handle);
+ void authorize(vcf_handle,vcf_handle,uint32_t);
+ uint32_t collect_terminal(vcf_handle,uint32_t limit=32);
  vcf_handle invoke(vcf_handle,std::string,std::string);
  vcf_handle prepare(vcf_handle,Session);
  void preload(vcf_handle,vcf_handle,uint32_t,Item,uint32_t);
@@ -93,14 +100,17 @@ public:
  uint32_t session_count() const { return static_cast<uint32_t>(sessions_.size()); }
  bool native_available(std::string_view id)const{return host_.native_available&&host_.native_available(id);}
 private:
- struct Consumer { std::string name; bool revoked=false; };
+ struct Consumer { std::string name; uint32_t version=VCF_ABI_VERSION; bool revoked=false; };
  struct Action { vcf_handle owner; std::string permission; bool exported; vcf_callback callback; void* context; };
+ struct Guard { vcf_handle owner; std::string name,kind; vcf_guard_callback callback; void* context; };
  enum class TaskType { open, close, invoke };
  struct Task { TaskType type; vcf_handle session; std::string action; };
  Host host_; std::thread::id thread_; bool alive_=true, dispatching_=false; uint32_t callbacks_=0;
  vcf_handle next_=1;
  std::map<vcf_handle,Consumer> consumers_;
  std::map<std::string,Action> actions_;
+ std::map<vcf_handle,Guard> guards_;
+ uint64_t action_revision_=1;
  std::map<vcf_handle,Session> sessions_;
  std::deque<Task> queue_;
  std::set<vcf_handle> revoked_;

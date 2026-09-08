@@ -5,6 +5,8 @@
   "linux_image_source": "https://github.com/silkeh/docker-clang",
   "linux_image_runtime_tested": false,
   "compiler_family": "Clang 20 / libc++ 20 / libc++abi 20",
+  "libfuzzer_source_revision": "87f0227cb60147a26a1eeb4fb06e3b505e9c7261",
+  "libfuzzer_build": "Official standalone LLVM 20.1.8 sources compiled with libc++; distro libstdc++-built archive is not used",
   "debian_snapshot": "20260901T000000Z",
   "cmake_version": "3.31.6",
   "cmake_linux_sha256": "5a1133ff103c71eb5120e2cc3de922733e7d8a26a98ae716397e8676adb367bf",

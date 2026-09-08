@@ -2,7 +2,18 @@
 
 The separately compiled `endstone_vcf_catalog_showcase.dll` uses only the public SDK and loader headers. Its form/action demonstration is implemented; native workstation requests currently refuse. The console `UICatalogShowcase` program is a scope checker with a test host, not a gameplay consumer.
 
-The requested CustomMerchant, CustomMachine, MapPrinter, VirtualStorage, CustomWorkshop, NativePassthrough and all family gameplay consumers are still incomplete. This page records that gap for every entry; it does not count a generic example as screen coverage.
+The separately compiled [NativePassthrough](../examples/native/NativePassthrough.md)
+consumer now issues the eleven experimental original-mode requests through the
+public SDK, from commands or an opt-in compass interaction. It includes source
+permissions, guard callbacks, terminal-event reporting and ticket cleanup.
+Its current-artifact client gameplay tests remain unqualified.
+
+The requested CustomMerchant, CustomMachine, MapPrinter, VirtualStorage,
+CustomWorkshop and other family custom gameplay consumers are still incomplete.
+The table below records outstanding scenarios; a generic example is not screen
+coverage. For the eleven NativePassthrough entries, original-mode orchestration
+is implemented experimentally; the missing scenario is actual client regression
+qualification plus separate custom behavior.
 
 | Entry | Current selectable SDK request | Missing working scenario |
 |---|---|---|

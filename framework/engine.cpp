@@ -18,11 +18,12 @@ vcf_status Engine::guard()const {
  return VCF_OK;
 }
 void Engine::check()const {require(guard()==VCF_OK,guard());}
-vcf_handle Engine::consumer(std::string name) {
+vcf_handle Engine::consumer(std::string name,uint32_t version) {
  check();require(name_ok(name));require(host_.consumer_allowed && host_.consumer_allowed(name),VCF_DENIED);
  require(consumers_.size()<128,VCF_CAPACITY);
  for(const auto&[id,c]:consumers_)require(c.name!=name,VCF_CONFLICT);
- auto id=next_++;consumers_.emplace(id,Consumer{std::move(name)});return id;
+ require(version==VCF_ABI_VERSION||version==VCF_ABI_VERSION_1_0,VCF_VERSION);
+ auto id=next_++;consumers_.emplace(id,Consumer{std::move(name),version});return id;
 }
 std::string Engine::qualify(vcf_handle owner,std::string_view action)const {
  auto c=consumers_.find(owner);require(c!=consumers_.end(),VCF_NOT_FOUND);require(!c->second.revoked,VCF_CLOSED);
@@ -31,7 +32,8 @@ std::string Engine::qualify(vcf_handle owner,std::string_view action)const {
 }
 void Engine::release(vcf_handle id){
  check();require(!callbacks_&&!dispatching_,VCF_REENTRANT);require(consumers_.contains(id),VCF_NOT_FOUND);
- std::erase_if(actions_,[id](const auto&v){return v.second.owner==id;});
+ if(std::erase_if(actions_,[id](const auto&v){return v.second.owner==id;}))++action_revision_;
+ std::erase_if(guards_,[id](const auto&v){return v.second.owner==id;});
  for(auto&[key,s]:sessions_)if(s.owner==id){
   s.callback=nullptr;s.context=nullptr;
   if(s.host_started && s.state!=VCF_TERMINAL && host_.close){try{host_.close(s);}catch(...){}}
@@ -48,7 +50,8 @@ void Engine::release_named(std::string_view name){
   // callable pointers immediately, but retain borrowed session storage until
   // dispatch unwinds. No exception crosses the plugin-disable event boundary.
   c.revoked=true;revoked_.insert(id);
-  std::erase_if(actions_,[id](const auto&v){return v.second.owner==id;});
+  if(std::erase_if(actions_,[id](const auto&v){return v.second.owner==id;}))++action_revision_;
+  std::erase_if(guards_,[id](const auto&v){return v.second.owner==id;});
   for(auto&[key,s]:sessions_)if(s.owner==id){s.callback=nullptr;s.context=nullptr;}
   if(!callbacks_&&!dispatching_)drain_revoked();
   return;
@@ -61,9 +64,63 @@ void Engine::action(vcf_handle owner,std::string name,std::string permission,boo
  check();require(name_ok(name) && callback);auto key=qualify(owner,name);
  require(actions_.size()<1024,VCF_CAPACITY);require(!actions_.contains(key),VCF_CONFLICT);
  actions_.emplace(key,Action{owner,std::move(permission),exported,callback,context});
+ ++action_revision_;
 }
 void Engine::remove_action(vcf_handle owner,std::string_view name){
- check();auto key=qualify(owner,name);auto it=actions_.find(key);require(it!=actions_.end(),VCF_NOT_FOUND);require(it->second.owner==owner,VCF_DENIED);actions_.erase(it);
+ check();auto key=qualify(owner,name);auto it=actions_.find(key);require(it!=actions_.end(),VCF_NOT_FOUND);require(it->second.owner==owner,VCF_DENIED);actions_.erase(it);++action_revision_;
+}
+std::vector<ActionInfo> Engine::actions(vcf_handle owner) const {
+ check();qualify(owner,"");std::vector<ActionInfo> result;
+ for(const auto&[name,a]:actions_)if(a.owner==owner||a.exported){
+  auto c=consumers_.find(a.owner);
+  if(c!=consumers_.end()&&!c->second.revoked&&host_.consumer_allowed(c->second.name))
+   result.push_back({name,c->second.name,a.permission,a.exported,action_revision_});
+ }
+ return result;
+}
+vcf_handle Engine::add_guard(vcf_handle owner,std::string name,std::string kind,vcf_guard_callback callback,void* context){
+ check();require(name_ok(name)&&callback);auto qualified=qualify(owner,name);
+ if(!kind.empty()){auto* row=resolve(kind);require(row,VCF_NOT_FOUND);kind=std::string(row->id);}
+ require(guards_.size()<64,VCF_CAPACITY);
+ for(const auto&[id,g]:guards_)require(g.name!=qualified,VCF_CONFLICT);
+ auto id=next_++;guards_.emplace(id,Guard{owner,std::move(qualified),std::move(kind),callback,context});return id;
+}
+void Engine::remove_guard(vcf_handle owner,vcf_handle id){
+ check();qualify(owner,"");auto it=guards_.find(id);require(it!=guards_.end(),VCF_NOT_FOUND);require(it->second.owner==owner,VCF_DENIED);guards_.erase(it);
+}
+void Engine::authorize(vcf_handle owner,vcf_handle id,uint32_t phase){
+ auto& s=session(owner,id);require(phase>=VCF_GUARD_DISPATCH&&phase<=VCF_GUARD_ACTIVE);
+ require(host_.consumer_allowed(consumers_.at(owner).name),VCF_CLOSED);
+ const auto* row=resolve(s.kind);
+ require(host_.permission&&host_.permission(s.player,s.is_menu?s.permission:std::string(row->permission)),VCF_DENIED);
+ if(!s.permission.empty())require(host_.permission(s.player,s.permission),VCF_DENIED);
+ auto view=[](const std::string& v)->vcf_string{return {v.data(),static_cast<uint32_t>(v.size())};};
+ vcf_guard_event event{};event.size=sizeof(event);event.version=VCF_ABI_VERSION;
+ event.ticket=id;event.requesting_consumer=owner;event.phase=phase;
+ auto& request=event.request;request.size=sizeof(request);request.version=VCF_ABI_VERSION;
+ request.canonical_id=view(s.kind);request.player=view(s.player);request.title=view(s.title);
+ request.source_permission=view(s.permission);request.mode=s.mode;request.dimension=view(s.dimension);
+ request.x=s.x;request.y=s.y;request.z=s.z;request.entity_id=view(s.entity_id);request.held_id=view(s.held_id);
+ // A callback may revoke another guard. Copy stable IDs, then re-resolve each
+ // live registration before calling; no stale function/context survives unload.
+ std::vector<vcf_handle> ids;for(const auto&[key,g]:guards_)ids.push_back(key);
+ for(auto key:ids){
+  auto it=guards_.find(key);if(it==guards_.end())continue;auto guard=it->second;
+  if(!guard.kind.empty()&&guard.kind!=s.kind)continue;
+  if(!consumers_.contains(guard.owner)||consumers_.at(guard.owner).revoked||!host_.consumer_allowed(consumers_.at(guard.owner).name))continue;
+  ++callbacks_;vcf_status result;
+  try{result=guard.callback(guard.context,&event);}catch(...){result=VCF_DENIED;}
+  --callbacks_;require(result==VCF_OK,VCF_DENIED);
+  require(!consumers_.at(owner).revoked,VCF_CLOSED);
+  require(s.state!=VCF_CLOSING&&s.state!=VCF_TERMINAL,VCF_CLOSED);
+ }
+}
+uint32_t Engine::collect_terminal(vcf_handle owner,uint32_t limit){
+ check();require(!callbacks_&&!dispatching_,VCF_REENTRANT);qualify(owner,"");uint32_t n=0;
+ for(auto it=sessions_.begin();it!=sessions_.end()&&n<std::min(limit,256u);){
+  if(it->second.owner==owner&&it->second.state==VCF_TERMINAL){it=sessions_.erase(it);++n;}else ++it;
+ }
+ return n;
 }
 Session& Engine::session(vcf_handle owner,vcf_handle id){
  check();require(consumers_.contains(owner),VCF_NOT_FOUND);require(!consumers_.at(owner).revoked,VCF_CLOSED);auto it=sessions_.find(id);require(it!=sessions_.end(),VCF_NOT_FOUND);require(it->second.owner==owner,VCF_DENIED);return it->second;
@@ -76,7 +133,7 @@ vcf_handle Engine::prepare(vcf_handle owner,Session s){
  s.owner=owner;s.id=next_++;s.generation=s.id;sessions_.emplace(s.id,s);return s.id;
 }
 Item Engine::item(const vcf_item& in)const{
- check();require(in.size>=sizeof(vcf_item)&&in.version==VCF_ABI_VERSION);
+ check();require(in.size>=sizeof(vcf_item)&&(in.version==VCF_ABI_VERSION||in.version==VCF_ABI_VERSION_1_0));
  Item i;i.id=str(in.identifier);i.count=in.count;
  if(!i.count){require(i.id.empty() && !in.nbt.length);return i;}
  require(host_.item_limit!=nullptr,VCF_UNAVAILABLE);i.limit=host_.item_limit(i.id);
@@ -115,7 +172,7 @@ void Engine::forget(vcf_handle owner,vcf_handle id){
 void Engine::emit(Session&s,uint32_t kind,std::string_view detail){
  if(!s.callback||!consumers_.contains(s.owner)||consumers_.at(s.owner).revoked)return;
  if(!host_.consumer_allowed(consumers_.at(s.owner).name))return;
- vcf_event e{sizeof(e),VCF_ABI_VERSION,s.id,{s.player.data(),static_cast<uint32_t>(s.player.size())},kind,s.result,s.inventory.revision,{detail.data(),static_cast<uint32_t>(detail.size())}};
+ vcf_event e{sizeof(e),consumers_.at(s.owner).version,s.id,{s.player.data(),static_cast<uint32_t>(s.player.size())},kind,s.result,s.inventory.revision,{detail.data(),static_cast<uint32_t>(detail.size())}};
  ++callbacks_;try{s.callback(s.context,&e);}catch(...){s.result=VCF_INTERNAL;}--callbacks_;
 }
 void Engine::finish(Session&s,vcf_status result){s.state=VCF_TERMINAL;s.result=result;emit(s,result==VCF_OK||result==VCF_CLOSED?VCF_EVENT_CLOSE:VCF_EVENT_FAILURE);}
@@ -145,13 +202,11 @@ void Engine::tick(uint32_t budget){
     require(copy.owner==s.owner||copy.exported,VCF_DENIED);
     require(consumers_.contains(copy.owner)&&!consumers_.at(copy.owner).revoked&&host_.consumer_allowed(consumers_.at(copy.owner).name),VCF_CLOSED);
     require(host_.permission && host_.permission(s.player,copy.permission),VCF_DENIED);
-    vcf_event e{sizeof(e),VCF_ABI_VERSION,s.id,{s.player.data(),static_cast<uint32_t>(s.player.size())},VCF_EVENT_ACTION,VCF_OK,0,{task.action.data(),static_cast<uint32_t>(task.action.size())}};
+    vcf_event e{sizeof(e),consumers_.at(copy.owner).version,s.id,{s.player.data(),static_cast<uint32_t>(s.player.size())},VCF_EVENT_ACTION,VCF_OK,0,{task.action.data(),static_cast<uint32_t>(task.action.size())}};
     ++callbacks_;vcf_status result;try{result=copy.callback(copy.context,&e);}catch(...){result=VCF_INTERNAL;}--callbacks_;
     finish(s,result);continue;
    }
-   const auto* row=resolve(s.kind);
-   require(host_.permission && host_.permission(s.player,s.is_menu?s.permission:std::string(row->permission)),VCF_DENIED);
-   if(!s.permission.empty())require(host_.permission(s.player,s.permission),VCF_DENIED);
+   authorize(s.owner,s.id,VCF_GUARD_DISPATCH);
    for(const auto&[other,t]:sessions_)require(other==s.id||t.player!=s.player||!t.host_started||t.state==VCF_TERMINAL,VCF_CONFLICT);
    require(host_.open!=nullptr,VCF_UNAVAILABLE);s.host_started=true;auto result=host_.open(s);if(result==VCF_PENDING)continue;require(result==VCF_OK,result);
    require(!consumers_.at(s.owner).revoked,VCF_CLOSED);
@@ -162,7 +217,7 @@ void Engine::tick(uint32_t budget){
 void Engine::selected(vcf_handle id,std::string_view player,uint32_t index){
  check();auto it=sessions_.find(id);require(it!=sessions_.end(),VCF_STALE);auto&s=it->second;
  require(s.is_menu && s.state==VCF_ACTIVE && s.player==player,VCF_STALE);
- require(index<s.buttons.size());require(host_.permission(s.player,s.permission),VCF_DENIED);
+ require(index<s.buttons.size());authorize(s.owner,s.id,VCF_GUARD_ACTIVE);
  // Invalidate before queueing action: double clicks cannot execute twice.
  auto owner=s.owner;auto action=s.buttons[index].action;auto player_copy=s.player;
  finish(s,VCF_OK);invoke(owner,std::move(player_copy),std::move(action));
@@ -174,10 +229,8 @@ void Engine::opened(vcf_handle owner,vcf_handle id,vcf_status result){
  auto&s=session(owner,id);require(s.state==VCF_OPENING&&s.host_started,VCF_STALE);
  require(result!=VCF_PENDING,VCF_INVALID);
  if(result==VCF_OK){
-  const auto* row=resolve(s.kind);
-  if(!host_.consumer_allowed(consumers_.at(owner).name)||!host_.permission(s.player,s.is_menu?s.permission:std::string(row->permission))||(!s.permission.empty()&&!host_.permission(s.player,s.permission))){
-   s.result=VCF_DENIED;close(owner,id);return;
-  }
+  try{authorize(owner,id,VCF_GUARD_READY);}
+  catch(const Error& e){s.result=e.status;if(!consumers_.at(owner).revoked)close(owner,id);return;}
  }
  if(result==VCF_OK){s.state=VCF_ACTIVE;emit(s,VCF_EVENT_OPEN);}else finish(s,result);
 }

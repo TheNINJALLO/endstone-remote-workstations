@@ -39,8 +39,14 @@ WORKDIR /lab
 ENTRYPOINT ["/bin/bash"]
 
 FROM toolchain AS sanitizer-test
+RUN git init /opt/vcf-fuzzer \
+ && git -C /opt/vcf-fuzzer remote add origin https://github.com/llvm/llvm-project.git \
+ && git -C /opt/vcf-fuzzer sparse-checkout init --cone \
+ && git -C /opt/vcf-fuzzer sparse-checkout set compiler-rt/lib/fuzzer \
+ && git -C /opt/vcf-fuzzer fetch --depth 1 --filter=blob:none origin 87f0227cb60147a26a1eeb4fb06e3b505e9c7261 \
+ && git -C /opt/vcf-fuzzer checkout --detach 87f0227cb60147a26a1eeb4fb06e3b505e9c7261
 RUN cmake -S . -B out/linux-sanitized -G Ninja -DCMAKE_BUILD_TYPE=Debug \
- -DVCF_BUILD_PLUGIN=OFF -DVCF_SANITIZERS=ON -DVCF_FUZZERS=ON \
+ -DVCF_BUILD_PLUGIN=OFF -DVCF_SANITIZERS=ON -DVCF_FUZZERS=ON -DVCF_FUZZER_ROOT=/opt/vcf-fuzzer \
  && cmake --build out/linux-sanitized --parallel 4 \
  && mkdir -p /sanitizer-results /fuzz-corpus \
  && printf '\012\000\000\000' > /fuzz-corpus/empty-compound \

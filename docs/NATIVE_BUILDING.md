@@ -42,7 +42,11 @@ of this successful build.
 
 The additional `sanitizer-export` Docker target runs the core, asynchronous
 lifecycle and six journal crash-boundary tests under ASan/UBSan, then executes
-100,000 bounded libFuzzer NBT inputs. Run it with:
+100,000 bounded libFuzzer NBT inputs. The image's distro libFuzzer archive was
+built against libstdc++ and failed to link with this project's libc++ build.
+The test target therefore builds the official standalone libFuzzer sources at
+LLVM 20.1.8 commit `87f0227cb60147a26a1eeb4fb06e3b505e9c7261` with libc++.
+It never adds libstdc++ to either the plugin or fuzz process. Run it with:
 
 ```sh
 docker buildx build --platform linux/amd64 --target sanitizer-export --output type=local,dest=dist/linux-sanitizers .
