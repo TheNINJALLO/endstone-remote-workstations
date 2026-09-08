@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "92d09c7b74ac6a9805bafc166d8e0a13ac9e5db73dbbb0819e5a14093699d44f",
     "loader_sha256": "0c6f0861c5f9a677058b25776d975654a3586a80d2e4421b069b5e98f536f819",
-    "artifact_sha256": "babed4f5edb7fdd02da06708a7614f445bdb086a03b15030147a5aa5ac5af243"
+    "artifact_sha256": "1d2f71c6a6e58fdad458042476135a651bf24391627be47fcfd5ddc6a567c125"
   },
   "build": "tested",
   "native_loader_smoke": "tested",
@@ -1217,7 +1217,7 @@
           "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1235,7 +1235,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1341,7 +1341,7 @@
           "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1359,7 +1359,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1465,7 +1465,7 @@
           "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1483,7 +1483,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1589,7 +1589,7 @@
           "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1607,7 +1607,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1713,7 +1713,7 @@
           "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1731,7 +1731,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1837,7 +1837,7 @@
           "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1855,7 +1855,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1961,7 +1961,7 @@
           "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1979,7 +1979,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -6882,7 +6882,7 @@
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -6900,7 +6900,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -7003,7 +7003,7 @@
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -7021,7 +7021,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -7124,7 +7124,7 @@
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -7142,7 +7142,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -7366,7 +7366,7 @@
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-implemented",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -7384,7 +7384,7 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ orchestration/custom executor integration and client qualification pending; legacy primitive compilation is separate evidence."
+          "blocker": "C++ original-mode adapter compiled and configured on isolated server; current-artifact client lifecycle and gameplay qualification pending. Custom logic not integrated."
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -8492,5 +8492,15 @@
       "acceptance": "not-qualified",
       "client_test": "untested"
     }
-  }
+  },
+  "native_tests": {
+    "ctest": "9/9 passed",
+    "scope": "69 entries and 10 additional surfaces retained",
+    "qualification": "not-qualified"
+  },
+  "experimental_configuration": {
+    "experimental_original_windows": true,
+    "default": false
+  },
+  "client_attempt": "Minecraft input resumed temporarily; adding local test connection was interrupted by loss of foreground. No new screen opening has been verified."
 }

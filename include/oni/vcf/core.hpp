@@ -56,14 +56,15 @@ struct Session {
  vcf_callback callback=nullptr; void* context=nullptr;
  Snapshot inventory; std::map<std::string,Rule> rules;
  std::string content; std::vector<Button> buttons;
- bool is_menu=false;
+ bool is_menu=false, host_started=false;
 };
 struct Host {
  std::function<bool(std::string_view)> consumer_allowed;
  std::function<bool(std::string_view,std::string_view)> permission;
  std::function<uint32_t(std::string_view)> item_limit;
+ std::function<bool(std::string_view)> native_available;
  std::function<vcf_status(const Session&)> open;
- std::function<void(const Session&)> close;
+ std::function<vcf_status(const Session&)> close;
 };
 class Engine {
 public:
@@ -86,19 +87,24 @@ public:
  void tick(uint32_t budget=64);
  void selected(vcf_handle,std::string_view,uint32_t);
  void player_gone(std::string_view);
+ void opened(vcf_handle,vcf_handle,vcf_status);
+ void retired(vcf_handle,vcf_handle,vcf_status);
  void shutdown();
  uint32_t session_count() const { return static_cast<uint32_t>(sessions_.size()); }
+ bool native_available(std::string_view id)const{return host_.native_available&&host_.native_available(id);}
 private:
- struct Consumer { std::string name; };
+ struct Consumer { std::string name; bool revoked=false; };
  struct Action { vcf_handle owner; std::string permission; bool exported; vcf_callback callback; void* context; };
  enum class TaskType { open, close, invoke };
  struct Task { TaskType type; vcf_handle session; std::string action; };
- Host host_; std::thread::id thread_; bool alive_=true; uint32_t callbacks_=0;
+ Host host_; std::thread::id thread_; bool alive_=true, dispatching_=false; uint32_t callbacks_=0;
  vcf_handle next_=1;
  std::map<vcf_handle,Consumer> consumers_;
  std::map<std::string,Action> actions_;
  std::map<vcf_handle,Session> sessions_;
  std::deque<Task> queue_;
+ std::set<vcf_handle> revoked_;
+ void drain_revoked();
  void check() const;
  std::string qualify(vcf_handle,std::string_view) const;
  void emit(Session&,uint32_t,std::string_view={});

@@ -3,9 +3,9 @@
 Native C++20 container framework development for Linux x86-64 and Windows x64.
 **The all-UI migration is in progress and is not release-qualified.**
 
-The Windows build produces a real Endstone plugin DLL, a C ABI/C++ SDK, debugging symbols and an independent native consumer. The isolated Endstone 0.11.10 server has loaded both DLLs and verified the reused Windows function manifest. The project plugin has no Python runtime dependency.
+Native builds produce a Windows DLL and a Linux ELF `.so`, a C ABI/C++ SDK and an independent native consumer. Windows release/debug and the pinned Linux Docker build pass in CI. The isolated Windows Endstone 0.11.10 server has loaded both DLLs and verified the reused Windows function manifest. The project plugin has no Python runtime dependency.
 
-All 69 original catalog entries, aliases, permissions and source contracts are preserved in an immutable migration baseline. Catalog retention is distinct from native/custom gameplay implementation; the full-scope acceptance gate currently fails. Linux Docker execution and exact Onistone runtime inputs remain unavailable on the current development host.
+All 69 original catalog entries, aliases, permissions and source contracts are preserved in an immutable migration baseline. Catalog retention is distinct from native/custom gameplay implementation; the full-scope acceptance gate currently fails. Docker builds execute on GitHub's Linux runner. Local Docker/WSL and exact Onistone runtime inputs remain unavailable; Linux private ABI admission and gameplay remain blocked.
 
 - [Migration audit and remaining work](docs/MIGRATION_AUDIT.md)
 - [Native build and test instructions](docs/NATIVE_BUILDING.md)
@@ -16,6 +16,8 @@ All 69 original catalog entries, aliases, permissions and source contracts are p
 - [Frozen original catalog](research/original-ui-catalog.json)
 
 Implemented core work includes staged item transfers, exact metadata policies, recipe/stock revisions, bounded processing, deferred permission-checked actions, consumer-owned session lifetimes and a durable uncertainty journal. Native inventory publication, screen customization, full SDK parity, map integration and cross-save recovery qualification remain incomplete.
+
+An opt-in Windows adapter now orchestrates seven original workstations and the four shared player-inventory entry points in C++. Its asynchronous lifecycle waits for an ordered client handshake and restores client projections from current world state. It is disabled by default while this artifact's client tests proceed; it does not implement custom recipes or replace real inventory contents.
 
 The published [RemoteWorkstations 0.4.0 release](https://github.com/TheNINJALLO/endstone-remote-workstations/releases/tag/v0.4.0) remains unchanged. Its [archived README](research/original-source/README.md), screenshots and validation describe the legacy Python/native-companion implementation, not these DLLs. Do not install both inventory owners together. No new release or tag is created by this migration branch.
 

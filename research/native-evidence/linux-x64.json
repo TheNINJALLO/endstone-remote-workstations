@@ -9,9 +9,9 @@
     "protocol": null,
     "bds_sha256": null,
     "loader_sha256": null,
-    "artifact_sha256": null
+    "artifact_sha256": "5ae732556bae6811002f9c9c207b08c2ad5c0c3e084934a01c679595b1e674ca"
   },
-  "build": "blocked",
+  "build": "tested-in-linux-docker-ci",
   "native_loader_smoke": "blocked",
   "sdk_consumer_load": "blocked",
   "all_ui_acceptance": "not-qualified",
@@ -8492,5 +8492,22 @@
       "acceptance": "not-qualified",
       "client_test": "untested"
     }
+  },
+  "build_evidence": {
+    "source_revision": "5ba09bc2ac33329d1dbd00ea6ef1f7eb70db3be5",
+    "workflow": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34273970612",
+    "host": "GitHub ubuntu-24.04 runner, pinned linux/amd64 Docker image",
+    "native_tests": "8/8 passed on this revision",
+    "elf_report": "linux-5ba09bc-elf-report.txt",
+    "direct_glibc_symbol_maximum": "GLIBC_2.14",
+    "direct_libraries": [
+      "libc++.so.1",
+      "libc++abi.so.1",
+      "libunwind.so.1",
+      "libm.so.6",
+      "libgcc_s.so.1",
+      "libc.so.6"
+    ],
+    "runtime_restriction": "Direct symbol versions do not cover transitive libraries. Preserve pinned libc++20 ABI. Private Linux BDS/loader admission and client gameplay are unqualified."
   }
 }

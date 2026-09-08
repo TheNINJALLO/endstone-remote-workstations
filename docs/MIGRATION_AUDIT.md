@@ -53,12 +53,25 @@ Endstone runtime SHA-256:
 Docker CLI/Desktop were not found in PATH or standard installation locations.
 WSL reports that it is not installed. No system components, services or global
 virtualization settings were changed. The Linux image digest and Clang 20 family
-are pinned, but the Dockerfile has not run on this host. Linux build/runtime/UI
-qualification remains blocked. An exact Onistone SDK/runtime was not supplied;
+are pinned. The Docker build subsequently passed on GitHub's Linux runner in
+run 34273970612, exporting a real `.so` and ELF dependency report; Windows
+release/debug jobs passed separately. The full-scope acceptance job correctly
+failed for unqualified per-entry gameplay. Local Docker and Linux runtime/UI
+qualification remain blocked. An exact Onistone SDK/runtime was not supplied;
 no compatibility is inferred from Endstone's provenance.
 
-Windows Minecraft foreground input is currently unavailable. All new-artifact
-client interaction records remain untested. Additional devices and a second
+An experimental C++ session adapter now owns the seven original workstation
+contexts and four shared player-inventory entry points. It waits for the ordered
+projection handshake, observes the actual native open, and retains its lease
+through asynchronous close. BDS still owns original recipes and inventory.
+These paths require an opt-in configuration flag and Windows 1.26.45 clients;
+none counts as a custom implementation. Native tests now include cancellation
+before dispatch, concurrent pending opens, permission revocation during opening,
+stale completion and consumer disable during a callback.
+
+Windows Minecraft foreground input resumed temporarily but was interrupted
+while adding the isolated connection. All new-artifact screen interaction
+records remain untested. Additional devices and a second
 client are unavailable; prior user instructions waived acquiring those devices,
 which does not turn their records into passes.
 

@@ -30,9 +30,26 @@ Linux contributors use `sh tools/native/build-linux.sh`.
 The digest-pinned Clang 20/libc++/libc++abi container has separate toolchain,
 unit-test, abi-lab, runtime-smoke and artifact-export targets.
 The final export goes to `dist/linux-x64-dev/`; ELF requirements are recorded
-by `tools/native/inspect-elf.sh`. The image has not yet been executed on the
-current Windows host. Neither its glibc compatibility nor a Linux plugin
-artifact has been qualified there.
+by `tools/native/inspect-elf.sh`. GitHub Actions run 34273970612 successfully
+executed this Docker build on Linux and exported a real x86-64 ELF plugin.
+That artifact directly requires libc++, libc++abi, libunwind, libm, libgcc_s
+and libc; it does not link libstdc++. Its directly versioned glibc symbols top
+out at GLIBC_2.14, but transitive toolchain-library requirements also apply.
+Keep the pinned libc++20 ABI; this symbol report is not a certificate for an
+arbitrary Pterodactyl image. Local Windows Docker/WSL remains unavailable.
+Linux BDS/loader ABI admission and gameplay are still blocked, independently
+of this successful build.
+
+The additional `sanitizer-export` Docker target runs the core, asynchronous
+lifecycle and six journal crash-boundary tests under ASan/UBSan, then executes
+100,000 bounded libFuzzer NBT inputs. Run it with:
+
+```sh
+docker buildx build --platform linux/amd64 --target sanitizer-export --output type=local,dest=dist/linux-sanitizers .
+```
+
+The journal tests terminate a dedicated process at each durable write phase.
+They do not establish atomic recovery across BDS world/player saves.
 
 The research profile takes explicit read-only private inputs:
 `docker compose --profile research run --rm abi-lab`.

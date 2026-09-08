@@ -2,9 +2,9 @@
 
 This matrix describes the new C++ artifact only. **Full scope: NOT QUALIFIED.**
 
-Windows development artifact SHA-256: `babed4f5edb7fdd02da06708a7614f445bdb086a03b15030147a5aa5ac5af243`. Native loader and separate C ABI consumer startup passed. No catalog screen has completed gameplay qualification under this artifact.
+Windows development artifact SHA-256: `1d2f71c6a6e58fdad458042476135a651bf24391627be47fcfd5ddc6a567c125`. Native loader and separate C ABI consumer startup passed. No catalog screen has completed gameplay qualification under this artifact.
 
-Linux Docker execution is unavailable on the current host. The source contains a separate Linux admission boundary; no Linux UI implementation is claimed.
+The Linux Docker build passes in CI and produces a real ELF `.so`; local Docker execution and private Linux runtime admission remain blocked. The source contains a separate Linux admission boundary; no Linux UI implementation is claimed.
 
 | Entry | Family | Windows original/custom | Linux original/custom |
 |---|---|---|---|
@@ -17,13 +17,13 @@ Linux Docker execution is unavailable on the current host. The source contains a
 | `trappedchest` | storage | Not qualified / not implemented | Blocked / not implemented |
 | `enderchest` | storage | Not qualified / not implemented | Blocked / not implemented |
 | `shulker` | storage | Not qualified / not implemented | Blocked / not implemented |
-| `craft` | workstation | Not qualified / not implemented | Blocked / not implemented |
-| `anvil` | workstation | Not qualified / not implemented | Blocked / not implemented |
-| `grindstone` | workstation | Not qualified / not implemented | Blocked / not implemented |
-| `smithing` | workstation | Not qualified / not implemented | Blocked / not implemented |
-| `stonecutter` | workstation | Not qualified / not implemented | Blocked / not implemented |
-| `loom` | workstation | Not qualified / not implemented | Blocked / not implemented |
-| `cartography` | workstation | Not qualified / not implemented | Blocked / not implemented |
+| `craft` | workstation | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
+| `anvil` | workstation | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
+| `grindstone` | workstation | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
+| `smithing` | workstation | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
+| `stonecutter` | workstation | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
+| `loom` | workstation | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
+| `cartography` | workstation | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
 | `enchanting` | workstation | Not qualified / not implemented | Blocked / not implemented |
 | `furnace` | workstation | Not qualified / not implemented | Blocked / not implemented |
 | `blastfurnace` | workstation | Not qualified / not implemented | Blocked / not implemented |
@@ -64,11 +64,11 @@ Linux Docker execution is unavailable on the current host. The source contains a
 | `elementconstructor` | education | Not qualified / not implemented | Blocked / not implemented |
 | `materialreducer` | education | Not qualified / not implemented | Blocked / not implemented |
 | `labtable` | education | Not qualified / not implemented | Blocked / not implemented |
-| `inventory2x2` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |
-| `armor` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |
-| `offhand` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |
+| `inventory2x2` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
+| `armor` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
+| `offhand` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
 | `cursor` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |
-| `recipebook` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |
+| `recipebook` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
 | `bundle` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |
 | `hud` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |
 | `cauldron` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |

@@ -43,6 +43,16 @@ jobs:
         with:
           name: native-linux-x64-UNQUALIFIED
           path: dist/linux-x64-dev
+  linux-sanitizers:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Linux ASan, UBSan, crash boundaries and 100000 NBT fuzz inputs
+        run: docker buildx build --platform linux/amd64 --target sanitizer-export --output type=local,dest=dist/linux-sanitizers .
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-linux-sanitizers
+          path: dist/linux-sanitizers
   full-scope-acceptance:
     runs-on: ubuntu-24.04
     steps:

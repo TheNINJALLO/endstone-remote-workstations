@@ -45,6 +45,12 @@ item codec round trips or nested-container writes under the new plugin.
 
 Tickets report preparing/opening/active/closing/recovering/terminal state,
 revision, generation and terminal status. `close` queues cancellation.
+An asynchronous adapter keeps a ticket opening until its native handshake
+finishes and closing until its manager is retired. Cancelling before dispatch
+does not close another plugin's form. Native opens recheck permissions when
+the handshake completes, and pending/closing native leases exclude concurrent
+opens for the same player. `VCF_PENDING` is an internal host-adapter result;
+public queueing operations still return `VCF_OK` when accepted.
 `forget` frees a terminal ticket. Consumers should release terminal handles;
 limits refuse further work instead of allowing unbounded growth.
 
@@ -60,3 +66,12 @@ protected-menu descriptors, editor-specific controls, request-batch publication,
 map providers and persistent storage operations are not yet exposed as completed
 native SDK functions. Their original contracts remain tracked in
 [ALL_UI_MIGRATION.md](ALL_UI_MIGRATION.md).
+
+The experimental Windows original-mode adapter requires an explicit
+`experimental_original_windows: true` in `plugins/onistone_vcf/config.json`.
+For `craft`, `anvil`, `stonecutter`, `grindstone`, `smithing`, `loom` and
+`cartography`, request `VCF_NATIVE_CONTEXT`; BDS retains its original gameplay
+ownership. For `inventory2x2`, `armor`, `offhand` and `recipebook`, request
+`VCF_REAL_SOURCE`. These four share the real inventory screen and client-owned
+navigation/closure. Other backing modes refuse instead of substituting a
+screen. This configuration flag does not certify client or custom behavior.

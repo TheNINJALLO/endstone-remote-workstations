@@ -13,13 +13,13 @@ The immutable floor is [original-ui-catalog.json](../research/original-ui-catalo
 | `trappedchest` | `/trappedchest` | `remoteworkstations.open.trappedchest` | block; C++ session integration pending |
 | `enderchest` | `/enderchest`, `/ec` | `remoteworkstations.open.enderchest` | player; C++ session integration pending |
 | `shulker` | `/shulker` | `remoteworkstations.open.shulker` | held-item; C++ session integration pending |
-| `craft` | `/craft`, `/workbench` | `remoteworkstations.open.craft` | player; C++ session integration pending |
-| `anvil` | `/anvil` | `remoteworkstations.open.anvil` | player; C++ session integration pending |
-| `grindstone` | `/grindstone` | `remoteworkstations.open.grindstone` | player; C++ session integration pending |
-| `smithing` | `/smithing` | `remoteworkstations.open.smithing` | player; C++ session integration pending |
-| `stonecutter` | `/stonecutter` | `remoteworkstations.open.stonecutter` | player; C++ session integration pending |
-| `loom` | `/loom` | `remoteworkstations.open.loom` | player; C++ session integration pending |
-| `cartography` | `/cartography` | `remoteworkstations.open.cartography` | player; C++ session integration pending |
+| `craft` | `/craft`, `/workbench` | `remoteworkstations.open.craft` | player; Experimental C++ original session implemented; client and custom qualification pending |
+| `anvil` | `/anvil` | `remoteworkstations.open.anvil` | player; Experimental C++ original session implemented; client and custom qualification pending |
+| `grindstone` | `/grindstone` | `remoteworkstations.open.grindstone` | player; Experimental C++ original session implemented; client and custom qualification pending |
+| `smithing` | `/smithing` | `remoteworkstations.open.smithing` | player; Experimental C++ original session implemented; client and custom qualification pending |
+| `stonecutter` | `/stonecutter` | `remoteworkstations.open.stonecutter` | player; Experimental C++ original session implemented; client and custom qualification pending |
+| `loom` | `/loom` | `remoteworkstations.open.loom` | player; Experimental C++ original session implemented; client and custom qualification pending |
+| `cartography` | `/cartography` | `remoteworkstations.open.cartography` | player; Experimental C++ original session implemented; client and custom qualification pending |
 | `enchanting` | `/enchanting`, `/etable` | `remoteworkstations.open.enchanting` | block; C++ session integration pending |
 | `furnace` | `/furnace` | `remoteworkstations.open.furnace` | block; C++ session integration pending |
 | `blastfurnace` | `/blastfurnace` | `remoteworkstations.open.blastfurnace` | block; C++ session integration pending |
@@ -60,11 +60,11 @@ The immutable floor is [original-ui-catalog.json](../research/original-ui-catalo
 | `elementconstructor` | None | `remoteworkstations.open.elementconstructor` | block; C++ session integration pending |
 | `materialreducer` | None | `remoteworkstations.open.materialreducer` | block; C++ session integration pending |
 | `labtable` | None | `remoteworkstations.open.labtable` | block; C++ session integration pending |
-| `inventory2x2` | None | `remoteworkstations.open.inventory2x2` | embedded; C++ session integration pending |
-| `armor` | None | `remoteworkstations.open.armor` | embedded; C++ session integration pending |
-| `offhand` | None | `remoteworkstations.open.offhand` | embedded; C++ session integration pending |
+| `inventory2x2` | None | `remoteworkstations.open.inventory2x2` | embedded; Experimental C++ original session implemented; client and custom qualification pending |
+| `armor` | None | `remoteworkstations.open.armor` | embedded; Experimental C++ original session implemented; client and custom qualification pending |
+| `offhand` | None | `remoteworkstations.open.offhand` | embedded; Experimental C++ original session implemented; client and custom qualification pending |
 | `cursor` | None | `remoteworkstations.open.cursor` | embedded; C++ session integration pending |
-| `recipebook` | None | `remoteworkstations.open.recipebook` | embedded; C++ session integration pending |
+| `recipebook` | None | `remoteworkstations.open.recipebook` | embedded; Experimental C++ original session implemented; client and custom qualification pending |
 | `bundle` | None | `remoteworkstations.open.bundle` | held-item; C++ session integration pending |
 | `hud` | None | `remoteworkstations.open.hud` | embedded; C++ session integration pending |
 | `cauldron` | None | `remoteworkstations.open.cauldron` | interaction-only; C++ session integration pending |

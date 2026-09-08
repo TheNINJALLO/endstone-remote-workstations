@@ -38,6 +38,23 @@ FROM unit-test AS abi-lab
 WORKDIR /lab
 ENTRYPOINT ["/bin/bash"]
 
+FROM toolchain AS sanitizer-test
+RUN cmake -S . -B out/linux-sanitized -G Ninja -DCMAKE_BUILD_TYPE=Debug \
+ -DVCF_BUILD_PLUGIN=OFF -DVCF_SANITIZERS=ON -DVCF_FUZZERS=ON \
+ && cmake --build out/linux-sanitized --parallel 4 \
+ && mkdir -p /sanitizer-results /fuzz-corpus \
+ && printf '\012\000\000\000' > /fuzz-corpus/empty-compound \
+ && printf '\012\000\000\001\001\000x\177\000' > /fuzz-corpus/byte-compound \
+ && ASAN_OPTIONS=detect_leaks=1:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
+ ctest --test-dir out/linux-sanitized --output-on-failure --output-junit /sanitizer-results/ctest.xml \
+ && ASAN_OPTIONS=detect_leaks=1:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
+ out/linux-sanitized/vcf_fuzz_nbt /fuzz-corpus -runs=100000 -max_len=65536 -timeout=5 -rss_limit_mb=1024 -seed=2169 \
+ > /sanitizer-results/fuzz-nbt.txt 2>&1 \
+ && cp out/linux-sanitized/Testing/Temporary/LastTest.log /sanitizer-results/
+
+FROM scratch AS sanitizer-export
+COPY --from=sanitizer-test /sanitizer-results/ /
+
 FROM unit-test AS runtime-smoke
 RUN useradd --uid 10001 --create-home vcf
 USER 10001:10001

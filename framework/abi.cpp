@@ -18,7 +18,8 @@ vcf_status VCF_CALL unreg(vcf_handle h){return call([&]{engine->release(h);});}
 vcf_status VCF_CALL count(uint32_t*out){return call([&]{require(out);*out=static_cast<uint32_t>(catalog().size());});}
 vcf_status VCF_CALL capability(uint32_t index,vcf_capability*out){
  return call([&]{input(out);require(index<catalog().size(),VCF_NOT_FOUND);const auto&c=catalog()[index];
- *out={sizeof(*out),VCF_ABI_VERSION,view(c.id),view(c.family),view(c.permission),view(c.aliases),view(c.source_kind),0,0,VCF_UNAVAILABLE,view("Native and custom screen adapters are not qualified for this C++ artifact.")};});
+ const bool available=engine->native_available(c.id);
+ *out={sizeof(*out),VCF_ABI_VERSION,view(c.id),view(c.family),view(c.permission),view(c.aliases),view(c.source_kind),available?1u:0u,0,available?VCF_OK:VCF_UNAVAILABLE,view(available?"Experimental original-mode adapter is configured; client qualification is pending.":"Native and custom screen adapters are not qualified or configured for this C++ artifact.")};});
 }
 vcf_status VCF_CALL lookup(vcf_string name,uint32_t*out){return call([&]{require(out);auto c=resolve(text(name));require(c,VCF_NOT_FOUND);*out=static_cast<uint32_t>(c-catalog().data());});}
 vcf_status VCF_CALL action(vcf_handle h,const vcf_action_desc*d){return call([&]{input(d);require(d->exported<=1);engine->action(h,text(d->name),text(d->permission),d->exported!=0,d->callback,d->context);});}
