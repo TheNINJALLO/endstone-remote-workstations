@@ -8500,7 +8500,14 @@
     "scope": "69 entries and 10 additional surfaces retained",
     "qualification": "not-qualified",
     "core_checks": 50181,
-    "storage_checks": 10309
+    "storage_checks": 10309,
+    "source_revision": "404aa913dae1a5f6c29d796d4dd17f1a4e24126b",
+    "ci": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34282759521",
+    "ci_configurations": [
+      "windows-release: passed",
+      "windows-debug: passed"
+    ],
+    "live_client_gameplay": "untested; foreground input unavailable after interrupted server-add flow"
   },
   "experimental_configuration": {
     "experimental_original_windows": true,

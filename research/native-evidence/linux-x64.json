@@ -9,7 +9,7 @@
     "protocol": null,
     "bds_sha256": null,
     "loader_sha256": null,
-    "artifact_sha256": "b04f1ea550f937d57cd6a1ffb4d51c3c5f30ca2210427bf5cf359f81bcc824cd"
+    "artifact_sha256": "869ee272568e4135971276fe222a66bd21634dad3bbda3c69e793950f32c01f2"
   },
   "build": "tested-in-linux-docker-ci",
   "native_loader_smoke": "blocked",
@@ -8496,11 +8496,11 @@
     }
   },
   "build_evidence": {
-    "source_revision": "ac94e2dfc1ce73c3e3383a1550d225a7b866c330",
-    "workflow": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34279270106",
+    "source_revision": "404aa913dae1a5f6c29d796d4dd17f1a4e24126b",
+    "workflow": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34282759521",
     "host": "GitHub ubuntu-24.04 runner, pinned linux/amd64 Docker image",
-    "native_tests": "10/10 passed on this revision; ASan/UBSan passed; NBT libFuzzer 100000 inputs passed",
-    "elf_report": "linux-ac94e2d-elf-report.txt",
+    "native_tests": "11/11 passed; ASan/UBSan passed; NBT and storage fuzzing each passed 100000 inputs",
+    "elf_report": "linux-404aa91-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.14",
     "direct_libraries": [
       "libc++.so.1",
@@ -8514,10 +8514,13 @@
   },
   "sdk_version": "1.1; ABI 1.0 prefix retained",
   "sanitizers": {
-    "source_revision": "ac94e2dfc1ce73c3e3383a1550d225a7b866c330",
+    "source_revision": "404aa913dae1a5f6c29d796d4dd17f1a4e24126b",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
-    "storage_fuzz": "new implementation; current CI run pending"
+    "storage_fuzz_inputs": 100000,
+    "test_report": "linux-404aa91-sanitizer-tests.txt",
+    "nbt_report": "linux-404aa91-fuzz-nbt.txt",
+    "storage_report": "linux-404aa91-fuzz-storage.txt"
   }
 }

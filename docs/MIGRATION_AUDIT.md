@@ -63,9 +63,12 @@ no compatibility is inferred from Endstone's provenance.
 Subsequent CI run 34279270106 passed both Windows configurations, the Linux
 Docker build, all ten then-current tests under ASan/UBSan, and 100,000 NBT fuzz
 inputs using the rebuilt libc++ libFuzzer. The storage/lease checkpoint expands
-the local suite to eleven jobs: 50,181 core checks and 10,309 storage checks,
-plus separate lifecycle, SDK, ABI and crash-boundary tests. Its extra storage
-fuzz run is tracked independently until CI finishes. Detailed implementation
+the suite to eleven jobs: 50,181 core checks and 10,309 storage checks,
+plus separate lifecycle, SDK, ABI and crash-boundary tests. CI run 34282759521
+then passed both Windows builds, Linux Docker, ASan/UBSan, and 100,000 inputs
+each for NBT and storage fuzzing at source revision `404aa913`. The full-scope
+gate still correctly fails all 138 canonical/platform and 20 additional
+surface/platform qualification outcomes. Detailed implementation
 boundaries are in [NATIVE_STORAGE.md](NATIVE_STORAGE.md).
 
 An experimental C++ session adapter now owns the seven original workstation

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "source_revision": "404aa913dae1a5f6c29d796d4dd17f1a4e24126b",
+  "native_ci": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34282759521",
+  "legacy_ci": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34282759054",
+  "tests": {
+    "native_ctest": 11,
+    "core_checks": 50181,
+    "storage_checks": 10309,
+    "nbt_fuzz_inputs": 100000,
+    "storage_fuzz_inputs": 100000,
+    "legacy_pytest": 661
+  },
+  "windows_dll_sha256": "229976cdfb09fa157ce48fe1bb3d69bb139f15f76c2fd4075ca37e766c09fa21",
+  "linux_so_sha256": "869ee272568e4135971276fe222a66bd21634dad3bbda3c69e793950f32c01f2",
+  "all_ui_acceptance": "not-qualified",
+  "incomplete_canonical_platform_outcomes": 138,
+  "incomplete_extra_platform_outcomes": 20,
+  "runtime_blockers": [
+    "Local Docker CLI/Desktop and WSL are absent; private Linux ABI execution remains unavailable.",
+    "Exact Onistone SDK/runtime inputs are not supplied or admitted.",
+    "Windows Minecraft foreground input is unavailable; no new native screen client qualification is claimed."
+  ],
+  "remaining_implementation": [
+    "Linux native ABI and UI adapters",
+    "Remaining original UI families and all custom UI integrations",
+    "Protected inventory menus and pagination",
+    "Native inventory publication, full item codec/held inventory bindings, map provider and persistent services",
+    "BDS/plugin cross-save recovery and per-entry interactive qualification"
+  ],
+  "legacy_held_fixture_cleanup": "Stopped legacy test world was archived; 18 pre-test backup files restored and hash-verified in the separate legacy test server.",
+  "publication": "Feature branch only; no production deployment, main merge, release or tag."
+}
