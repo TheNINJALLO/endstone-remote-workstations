@@ -76,6 +76,8 @@ void Engine::preload(vcf_handle owner,vcf_handle id,uint32_t slot,Item i,uint32_
  auto&s=session(owner,id);require(s.state==VCF_PREPARING,VCF_CONFLICT);
  require(s.mode!=VCF_REAL_SOURCE,VCF_DENIED);require(slot<s.inventory.slots.size() && policy<=15);
  require(!((policy&VCF_PREVIEW)&&(policy&(VCF_INSERT|VCF_EXTRACT|VCF_RESULT))),VCF_INVALID);
+ size_t bytes=0;for(const auto&v:s.inventory.slots)bytes+=v.item.nbt.size();
+ require(bytes-s.inventory.slots[slot].item.nbt.size()+i.nbt.size()<=65536,VCF_CAPACITY);
  s.inventory.slots[slot]={std::move(i),policy};
 }
 void Engine::rule(vcf_handle owner,vcf_handle id,Rule r){
@@ -99,6 +101,7 @@ void Engine::forget(vcf_handle owner,vcf_handle id){
 }
 void Engine::emit(Session&s,uint32_t kind,std::string_view detail){
  if(!s.callback||!consumers_.contains(s.owner))return;
+ if(!host_.consumer_allowed(consumers_.at(s.owner).name))return;
  vcf_event e{sizeof(e),VCF_ABI_VERSION,s.id,{s.player.data(),static_cast<uint32_t>(s.player.size())},kind,s.result,s.inventory.revision,{detail.data(),static_cast<uint32_t>(detail.size())}};
  ++callbacks_;try{s.callback(s.context,&e);}catch(...){s.result=VCF_INTERNAL;}--callbacks_;
 }
@@ -120,9 +123,11 @@ void Engine::tick(uint32_t budget){
   if(s.state!=VCF_OPENING)continue;
   try{
    require(consumers_.contains(s.owner),VCF_CLOSED);
+   require(host_.consumer_allowed(consumers_.at(s.owner).name),VCF_CLOSED);
    if(task.type==TaskType::invoke){
     auto a=actions_.find(task.action);require(a!=actions_.end(),VCF_NOT_FOUND);auto copy=a->second;
     require(copy.owner==s.owner||copy.exported,VCF_DENIED);
+    require(consumers_.contains(copy.owner)&&host_.consumer_allowed(consumers_.at(copy.owner).name),VCF_CLOSED);
     require(host_.permission && host_.permission(s.player,copy.permission),VCF_DENIED);
     vcf_event e{sizeof(e),VCF_ABI_VERSION,s.id,{s.player.data(),static_cast<uint32_t>(s.player.size())},VCF_EVENT_ACTION,VCF_OK,0,{task.action.data(),static_cast<uint32_t>(task.action.size())}};
     ++callbacks_;vcf_status result;try{result=copy.callback(copy.context,&e);}catch(...){result=VCF_INTERNAL;}--callbacks_;

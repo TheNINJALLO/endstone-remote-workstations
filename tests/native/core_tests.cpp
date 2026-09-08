@@ -20,7 +20,7 @@ void transfers(){
  s.slots[2].policy=VCF_PREVIEW;std::array<Move,1> preview{{{2,0,1}}};refuses(VCF_DENIED,[&]{s.transfer(preview);});
  s.slots[2].policy=3;s.slots[2].item.nbt={10,0,0,1,1,0,'x',7,0};refuses(VCF_CONFLICT,[&]{s.transfer(preview);});
  std::mt19937 rng(917);s={{{stone(64),3},{stone(64),3},{Item{},3},{Item{},3}}};
- for(int i=0;i<10000;i++){auto a=rng()%4,b=rng()%4;auto n=rng()%70;std::array<Move,1> m{{{a,b,n}}};try{s.transfer(m);}catch(const Error&){}uint32_t total=0;for(auto&v:s.slots){CHECK(v.item.count<=64);total+=v.item.count;}CHECK(total==128);}
+ for(int i=0;i<10000;i++){auto a=static_cast<uint32_t>(rng()%4),b=static_cast<uint32_t>(rng()%4);auto n=static_cast<uint32_t>(rng()%70);std::array<Move,1> m{{{a,b,n}}};try{s.transfer(m);}catch(const Error&){}uint32_t total=0;for(auto&v:s.slots){CHECK(v.item.count<=64);total+=v.item.count;}CHECK(total==128);}
 }
 void rules(){
  Snapshot s{{{stone(3),3},{Item{},VCF_RESULT}}};Rule r{"recycle",1,2,{{0,stone(2)}},1,5,{"minecraft:paper",1,64,{}}};

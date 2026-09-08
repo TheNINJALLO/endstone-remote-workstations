@@ -13,7 +13,7 @@ class Machines {
 public:
  uint64_t add(Snapshot state,Rule rule,uint64_t now){
   require(rule.duration_ticks>0&&rule.duration_ticks<=72000);
-  require(machines_.size()<1024 && now<=UINT64_MAX-rule.duration_ticks,VCF_CAPACITY);
+  require(machines_.size()<1024 && due_.size()<2048 && now<=UINT64_MAX-rule.duration_ticks,VCF_CAPACITY);
   auto id=next_++;auto at=now+rule.duration_ticks;machines_.emplace(id,Machine{std::move(state),std::move(rule),at,1});due_.push({at,id,1});return id;
  }
  void remove(uint64_t id){machines_.erase(id);}

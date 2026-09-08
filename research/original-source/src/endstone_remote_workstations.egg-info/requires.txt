@@ -1,0 +1,7 @@
+bstream==1.0.1
+rapidnbt==1.3.5
+
+[codec-audit]
+bedrock-protocol-packets-ng==0.0.11
+bstream==1.0.1
+rapidnbt==1.3.5

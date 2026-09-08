@@ -1,0 +1,12 @@
+file(MAKE_DIRECTORY "${DIRECTORY}")
+set(journal "${DIRECTORY}/boundary.vcfj")
+# This is one fixed test file inside the caller's CMake build tree.
+file(REMOVE "${journal}")
+execute_process(COMMAND "${EXECUTABLE}" write "${journal}" "${STEP}" RESULT_VARIABLE writer)
+if(NOT writer EQUAL 88)
+ message(FATAL_ERROR "Crash writer did not reach the intended durable boundary: ${writer}")
+endif()
+execute_process(COMMAND "${EXECUTABLE}" verify "${journal}" "${STEP}" RESULT_VARIABLE reader)
+if(NOT reader EQUAL 0)
+ message(FATAL_ERROR "Fresh-process journal reconciliation failed: ${reader}")
+endif()

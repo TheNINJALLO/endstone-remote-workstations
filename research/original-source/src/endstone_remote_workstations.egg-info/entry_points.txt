@@ -1,0 +1,2 @@
+[endstone]
+remote_workstations = endstone_remote_workstations.plugin:RemoteWorkstations

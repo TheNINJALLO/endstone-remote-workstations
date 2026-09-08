@@ -17,4 +17,6 @@ research/*
 !research/original-ui-catalog.json
 !research/original-ui-catalog.sha256
 !research/original-source/
+!research/original-source/src/*.egg-info/
+!research/original-source/src/*.egg-info/**
 !research/native-evidence/
