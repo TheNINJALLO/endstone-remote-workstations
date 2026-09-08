@@ -57,13 +57,18 @@ BDS SHA-256:
 Endstone runtime SHA-256:
 `0c6f0861c5f9a677058b25776d975654a3586a80d2e4421b069b5e98f536f819`.
 
-Docker CLI/Desktop were not found in PATH or standard installation locations.
-WSL reports that it is not installed. No system components, services or global
-virtualization settings were changed. The Linux image digest and Clang 20 family
-are pinned. The Docker build subsequently passed on GitHub's Linux runner in
+At the initial audit, Docker CLI/Desktop and WSL were not installed. Following
+explicit installation authorization on September 8, Docker Desktop 4.90.0 and
+WSL 2.7.13 were installed and Virtual Machine Platform was enabled without
+restarting Windows. The Linux engine remains blocked pending that required
+restart and Docker's first-launch agreement. Authorized Linux BDS/Endstone
+inputs are staged privately with hashes; this does not admit their native ABI.
+See [the setup checkpoint](WINDOWS_DOCKER_SETUP.md).
+The Linux image digest and Clang 20 family are pinned.
+The Docker build previously passed on GitHub's Linux runner in
 run 34273970612, exporting a real `.so` and ELF dependency report; Windows
 release/debug jobs passed separately. The full-scope acceptance job correctly
-failed for unqualified per-entry gameplay. Local Docker and Linux runtime/UI
+failed for unqualified per-entry gameplay. Local Linux execution and runtime/UI
 qualification remain blocked. An exact Onistone SDK/runtime was not supplied;
 no compatibility is inferred from Endstone's provenance.
 

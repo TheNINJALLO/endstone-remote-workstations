@@ -118,10 +118,14 @@ Native writes, valuable-item reconciliation and the journal must be connected,
 then tested against actual server saves/crashes without overwriting uncertain
 items or issuing replacements.
 
-The local host has no Docker CLI/Desktop and WSL is not installed. No system
-components were installed and no virtualization settings changed. An accessible
-Linux Docker engine plus exact authorized Linux runtime inputs are needed for
-local ABI/runtime work. Exact Onistone SDK/runtime inputs remain missing.
+Following explicit installation authorization, Docker Desktop 4.90.0 and
+WSL 2.7.13 were installed locally on September 8. Virtual Machine Platform is
+enabled, but Windows requires a restart before the Linux engine can run.
+Docker's first-launch agreement was not accepted by the installer. Authorized
+Linux BDS 1.26.45.1 and Endstone 0.11.10 inputs are staged privately and hashed;
+local execution and ABI/runtime admission remain blocked. The
+[Docker setup instructions](WINDOWS_DOCKER_SETUP.md) include the build and
+inspection commands. Exact Onistone SDK/runtime inputs remain missing.
 Minecraft must be available in the foreground to finish joining the isolated
 server and run the current-artifact SDK/client procedures. These prerequisites
 block runtime qualification; they do not mean the remaining implementation is

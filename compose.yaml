@@ -18,9 +18,11 @@ services:
     tty: true
     volumes:
       - type: bind
-        source: ${VCF_LINUX_INPUTS:?Set VCF_LINUX_INPUTS to authorized private Linux binaries}
+        source: ${VCF_LINUX_INPUTS:-./.private-inputs-not-configured}
         target: /inputs
         read_only: true
+        bind:
+          create_host_path: false
       - type: bind
         source: ./out/linux-abi
         target: /lab
@@ -38,10 +40,12 @@ services:
       VCF_LICENSE_CONFIRMED: ${VCF_LICENSE_CONFIRMED:-0}
     volumes:
       - type: bind
-        source: ${VCF_LINUX_INPUTS:?Set VCF_LINUX_INPUTS}
+        source: ${VCF_LINUX_INPUTS:-./.private-inputs-not-configured}
         target: /inputs
         read_only: true
+        bind:
+          create_host_path: false
       - type: bind
         source: ./out/linux-smoke
         target: /data
-    ports: ["127.0.0.1:29169:29169/udp"]
+    ports: ["127.0.0.1:${VCF_LINUX_TEST_PORT:-29179}:29169/udp"]

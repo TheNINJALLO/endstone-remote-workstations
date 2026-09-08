@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-09-08T23:06:56Z",
+  "scope": "Local Windows installation and private input staging; not runtime qualification",
+  "windows_build": "10.0.26200.9168",
+  "docker_desktop": {
+    "version": "4.90.0",
+    "installer_sha256": "2ecc54255702ffbf2e2779cb35ebecde535a0b31e4223171be2195dc318ebd3d",
+    "publisher": "Docker Inc",
+    "signature_verified": true,
+    "installer_exit_code": 0,
+    "installation": "per-user",
+    "agreement_accepted_by_installer": false,
+    "cli_version": "29.7.2",
+    "compose_version": "5.5.1",
+    "buildx_version": "0.36.1-desktop.1"
+  },
+  "wsl": {
+    "version": "2.7.13.0",
+    "installer_sha256": "a3505a50f4cc585551d11d9de824ba4375448d7a68f2e71d3fb315fa986fc754",
+    "publisher": "Microsoft Corporation",
+    "signature_verified": true,
+    "installer_exit_code": 0,
+    "kernel_version": "6.18.33.2-2",
+    "virtual_machine_platform_before": "Disabled",
+    "virtual_machine_platform_after": "Enabled",
+    "hypervisor_active_at_checkpoint": false,
+    "restart_required": true,
+    "restart_performed": false
+  },
+  "private_linux_inputs": {
+    "bds_version": "1.26.45.1",
+    "bds_archive_sha256": "b0db86098ee418a9bb226f6f3f51ff2be36542236839375627b29aef3dfa5cda",
+    "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+    "endstone_version": "0.11.10",
+    "wheel_sha256": "582d4cebefaa52c5c895b1f9428e36f512c44f03145210c107f21ddc0015e224",
+    "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+    "public_build_context": false,
+    "archive_paths_validated": true,
+    "elf_header_architecture": "ELF64 little-endian x86-64",
+    "abi_admission": "not-qualified"
+  },
+  "local_linux_engine": "blocked: Windows restart and Docker first-launch completion required",
+  "local_linux_container_build": "not-run",
+  "local_linux_runtime_smoke": "not-run",
+  "native_gameplay_qualification": "not-qualified",
+  "isolated_windows_test_server": "stopped cleanly with zero online players before pending restart"
+}

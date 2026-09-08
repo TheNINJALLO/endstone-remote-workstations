@@ -36,9 +36,11 @@ That artifact directly requires libc++, libc++abi, libunwind, libm, libgcc_s
 and libc; it does not link libstdc++. Its directly versioned glibc symbols top
 out at GLIBC_2.14, but transitive toolchain-library requirements also apply.
 Keep the pinned libc++20 ABI; this symbol report is not a certificate for an
-arbitrary Pterodactyl image. Local Windows Docker/WSL remains unavailable.
-Linux BDS/loader ABI admission and gameplay are still blocked, independently
-of this successful build.
+arbitrary Pterodactyl image. Local Docker Desktop and WSL are installed;
+the Linux engine awaits the required Windows restart. See the
+[Windows Docker setup](WINDOWS_DOCKER_SETUP.md) for build and private ELF
+inspection commands. Linux BDS/loader ABI admission and gameplay are still
+blocked, independently of this successful CI build.
 
 The additional `sanitizer-export` Docker target runs the core, asynchronous
 lifecycle and six journal crash-boundary tests under ASan/UBSan, then executes
