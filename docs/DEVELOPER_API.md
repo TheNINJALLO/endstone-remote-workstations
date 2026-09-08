@@ -1,4 +1,9 @@
-# Dependency API 1.5 (release 0.4.0)
+# Dependency API 1.6 (development 0.5.0.dev1)
+
+API 1.6 adds read-only `inspect_held_item(player)` and immutable `HeldItemInfo`.
+See [held-item development and its example](HELD_ITEMS.md). Held UI opening is
+still unavailable. Release 0.4.0 provides API 1.5; the existing operations below
+remain compatible.
 
 RemoteWorkstations can now be consumed by other Endstone plugins. The public
 Python contract has a separate version from the plugin and native companion.

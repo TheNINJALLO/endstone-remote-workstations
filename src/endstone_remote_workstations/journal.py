@@ -11,9 +11,10 @@ import sqlite3
 import threading
 import time
 from .model import Snapshot, Rejected
+from .held_journal import HeldJournalMixin, SCHEMA as HELD_SCHEMA, detach_arguments
 
 
-class Journal:
+class Journal(HeldJournalMixin):
     def __init__(self, path):
         self.path = str(path)
         self.owner = threading.get_ident()
@@ -33,6 +34,7 @@ class Journal:
               id TEXT PRIMARY KEY, owner TEXT NOT NULL, items TEXT NOT NULL,
               state TEXT NOT NULL, reason TEXT NOT NULL);
         """)
+        self.db.executescript(HELD_SCHEMA)
 
     def check_thread(self):
         if threading.get_ident() != self.owner:
@@ -71,7 +73,7 @@ class Journal:
         self.check_thread()
         with self.db:
             self.db.execute("UPDATE transfers SET phase='quarantined',note='BDS durability unknown after restart' WHERE phase IN ('prepared','applied-memory')")
-        return self.db.execute("SELECT id,owner,phase,note FROM transfers WHERE phase='quarantined'").fetchall()
+        return self.db.execute("SELECT id,owner,phase,note FROM transfers WHERE phase='quarantined'").fetchall() + self.recover_held()
 
     def save_model(self, owner, state, recovery_id=None, overflow=()):
         """Atomic only for this offline model; NEVER writes a real BDS inventory."""
@@ -115,6 +117,7 @@ class JournalWorker:
         if self.closed or not self.slots.acquire(blocking=False):
             raise Rejected("journal unavailable or queue full")
         try:
+            args = detach_arguments(method, args)
             future = self.pool.submit(lambda: getattr(self.ready.result(), method)(*args))
         except BaseException:
             self.slots.release()

@@ -1,5 +1,9 @@
 # Held item entry-point audit
 
+The next development slice adds [held-item snapshots, inspection and journal
+primitives](HELD_ITEMS.md). Native opening and mutation remain unavailable; the
+entry-point findings below still apply.
+
 The pinned Endstone Item header compiles `Item::use` at virtual slot 81 and
 `Item::getComponent` at slot 24. Read-only inspection of four real inventory
 stacks matched their counts and auxiliary values before examining their Item

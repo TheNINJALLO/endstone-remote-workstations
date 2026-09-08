@@ -199,6 +199,15 @@ class UIService:
             row['unavailable_reason'] = reason
         return tuple(rows)
 
+    def inspect_held_item(self, client, player):
+        self._check(client)
+        from .held_items import inspect_held
+        from .model import Rejected
+        try:
+            return inspect_held(player)
+        except Rejected as error:
+            raise UIError(str(error)) from error
+
     def enqueue(self, client, player, target, on_open, on_close):
         self._check(client)
         for callback in (on_open, on_close):

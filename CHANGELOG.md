@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.0.dev1 (unreleased)
+
+- Dependency API 1.6 adds read-only inspection of the actual held item.
+- Typed, bounded item snapshots preserve complete public NBT for detached copies.
+- Exclusive shulker reservations and revisioned write intents extend the journal;
+  ambiguous close/restart records quarantine without automatic item issuance.
+- Source/API, serialization, journal and subprocess-crash tests cover this first
+  development slice. Native identity assignment, movement locks, nesting,
+  writeback and interactive held-item UIs remain unfinished and disabled.
+
+See [held-item development](docs/HELD_ITEMS.md).
+
 ## 0.4.0
 
 First regular release of the implemented RemoteWorkstations feature set.

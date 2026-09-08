@@ -2,12 +2,16 @@
 
 <p align="center">
   <a href="https://github.com/TheNINJALLO/endstone-remote-workstations/releases/latest"><img src="https://img.shields.io/github/v/release/TheNINJALLO/endstone-remote-workstations?style=flat-square&color=64e6bc" alt="Latest release"></a>
-  <img src="https://img.shields.io/badge/Dependency_API-1.5-79b8ff?style=flat-square" alt="Dependency API 1.5">
+  <img src="https://img.shields.io/badge/Dependency_API-1.6_dev-79b8ff?style=flat-square" alt="Development dependency API 1.6">
   <img src="https://img.shields.io/badge/Endstone-0.11.10-f2c96d?style=flat-square" alt="Endstone 0.11.10">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-abb8ca?style=flat-square" alt="MIT license"></a>
 </p>
 
 <p align="center"><b>Open familiar Minecraft screens. Build the plugin experience around them.</b><br>Real workstations, real source inventories, custom menus and named server callbacks.</p>
+
+**Development branch:** `0.5.0.dev1` begins [held-item inspection and journal work](docs/HELD_ITEMS.md).
+Held-item UIs remain disabled. The current published release is **0.4.0 / API 1.5**;
+the release features and downloads below describe that version.
 
 <p align="center">
   <a href="https://github.com/TheNINJALLO/endstone-remote-workstations/releases/latest"><b>Download</b></a> ·

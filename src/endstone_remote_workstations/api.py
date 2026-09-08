@@ -6,11 +6,28 @@ and callback dispatch take place on the Endstone owner thread. See DEVELOPER_API
 from dataclasses import dataclass
 from typing import Any, Callable
 
-API_VERSION = (1, 5)
+API_VERSION = (1, 6)
 
 
 class UIError(RuntimeError):
     """A request failed admission or a dependency contract is unavailable."""
+
+
+@dataclass(frozen=True)
+class HeldItemInfo:
+    """Detached preflight information, without item contents or mutation rights.
+
+    The digest detects content changes; it is not a unique item identity. Native
+    opening remains unavailable during held-item backend development.
+    """
+    kind: str
+    type_id: str
+    slot: int
+    amount: int
+    digest: str
+    durable_id: str | None
+    metadata_bytes: int
+    native_open_available: bool = False
 
 
 @dataclass(frozen=True)
@@ -194,6 +211,10 @@ class UIClient:
 
     def capabilities(self, player=None) -> tuple[dict, ...]:
         return self._service.capabilities(self, player)
+
+    def inspect_held_item(self, player) -> HeldItemInfo:
+        """Read the actual main-hand item on the game thread; never tags or moves it."""
+        return self._service.inspect_held_item(self, player)
 
     def open_npc(self, player, context: EntityContext, *, scene='', branches=(),
                  on_open=None, on_close=None) -> Ticket:

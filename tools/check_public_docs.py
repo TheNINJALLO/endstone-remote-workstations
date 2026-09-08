@@ -25,7 +25,7 @@ def main():
             if link and not (path.parent/link).exists():
                 missing.append(f'{path.relative_to(ROOT)}: {link}')
             checked += 1
-        if path.name in ('README.md','EXAMPLES.md','DEVELOPER_API.md'):
+        if path.name in ('README.md','EXAMPLES.md','DEVELOPER_API.md','HELD_ITEMS.md'):
             for snippet in re.findall(r'```python\s*\n(.*?)```',text,re.S):
                 ast.parse(snippet)
                 snippets += 1
