@@ -29,6 +29,18 @@ class VirtualContainerFramework:public endstone::Plugin {
 #endif
  std::shared_ptr<bool> lifetime_=std::make_shared<bool>(false);
  std::map<std::string,uint32_t> catalog_actions_;
+ struct FormLease {vcf_handle owner,ticket;bool sending=true,observed=false,superseded=false;};
+ std::map<std::string,FormLease> forms_;
+ void retire_form(vcf_handle owner,vcf_handle id,vcf_status result){
+  try{engine_->retired(owner,id,result);}catch(const Error&){}
+ }
+ void poll_forms(){
+  std::vector<FormLease> done;
+  for(auto it=forms_.begin();it!=forms_.end();){
+   if(it->second.superseded){done.push_back(it->second);it=forms_.erase(it);}else ++it;
+  }
+  for(const auto& lease:done)retire_form(lease.owner,lease.ticket,VCF_CLOSED);
+ }
  endstone::Player* player(std::string_view id){
   for(auto*p:getServer().getOnlinePlayers())if(p->getUniqueId().str()==id)return p;
   return nullptr;
@@ -63,15 +75,30 @@ class VirtualContainerFramework:public endstone::Plugin {
   endstone::ActionForm form;form.setTitle(s.title).setContent(s.content);
   auto weak=std::weak_ptr<bool>(lifetime_);
   for(const auto&b:s.buttons)form.addButton(b.label,b.icon.empty()?std::nullopt:std::optional<std::string>{b.icon});
-  form.setOnSubmit([weak,this,id=s.id](endstone::Player*p,int index){
+  form.setOnSubmit([weak,this,id=s.id,owner=s.owner](endstone::Player*p,int index){
    auto live=weak.lock();if(!live||!*live||!p||index<0)return;
-   try{engine_->selected(id,p->getUniqueId().str(),static_cast<uint32_t>(index));}catch(const Error&){}
+   auto it=forms_.find(p->getUniqueId().str());
+   if(it==forms_.end()||it->second.ticket!=id||it->second.superseded)return;
+   forms_.erase(it);
+   try{engine_->selected(id,p->getUniqueId().str(),static_cast<uint32_t>(index));}
+   catch(const Error&e){retire_form(owner,id,e.status);}catch(...){retire_form(owner,id,VCF_INTERNAL);}
   });
-  form.setOnClose([weak,this,id=s.id,owner=s.owner](endstone::Player*){
+  form.setOnClose([weak,this,id=s.id,owner=s.owner,identity=s.player](endstone::Player*){
    auto live=weak.lock();if(!live||!*live)return;
-   try{engine_->close(owner,id);}catch(const Error&){}
+   auto it=forms_.find(identity);if(it==forms_.end()||it->second.ticket!=id)return;
+   const bool superseded=it->second.superseded;forms_.erase(it);
+   // The client's form is already closed. Do not send a broad closeForm() that
+   // might target a replacement installed by another plugin's callback.
+   retire_form(owner,id,superseded?VCF_CLOSED:VCF_OK);
   });
-  p->sendForm(form);return VCF_OK;
+  require(forms_.contains(s.player)||forms_.size()<100,VCF_CAPACITY);
+  forms_.insert_or_assign(s.player,FormLease{s.owner,s.id});
+  try{p->sendForm(form);}catch(...){forms_.erase(s.player);throw;}
+  auto it=forms_.find(s.player);
+  if(it==forms_.end()||it->second.ticket!=s.id)return VCF_CONFLICT;
+  it->second.sending=false;
+  if(!it->second.observed||it->second.superseded){forms_.erase(it);return VCF_UNAVAILABLE;}
+  return VCF_OK;
  }
  void catalog_menu(endstone::Player&p){
   std::vector<std::string> labels,actions;labels.reserve(catalog().size());actions.reserve(catalog().size());
@@ -123,7 +150,12 @@ public:
    };
    host.open=[this](const Session&s){return show(s);};
    host.close=[this](const Session&s)->vcf_status{
-    if(s.is_menu){if(auto*p=player(s.player))p->closeForm();return VCF_OK;}
+    if(s.is_menu){
+     auto it=forms_.find(s.player);if(it==forms_.end()||it->second.ticket!=s.id)return VCF_OK;
+     const bool owned=it->second.observed&&!it->second.superseded;forms_.erase(it);
+     if(owned)if(auto*p=player(s.player))p->closeForm();
+     return VCF_OK;
+    }
 #ifdef _WIN32
     if(native_ui_)return native_ui_->close(s);
 #endif
@@ -138,6 +170,7 @@ public:
    for(uint32_t i=0;i<catalog().size();++i){auto name="catalog."+std::string(catalog()[i].id);catalog_actions_.emplace(name,i);self_->action(name,choose,this,std::string(catalog()[i].permission));}
    *lifetime_=true;
    task_=getServer().getScheduler().runTaskTimer(*this,[this]{try{
+    poll_forms();
 #ifdef _WIN32
     if(native_ui_)native_ui_->tick();
 #endif
@@ -163,6 +196,7 @@ public:
   if(native_ui_)native_ui_->shutdown();
 #endif
   if(engine_){try{engine_->shutdown();}catch(...){}}
+  forms_.clear();
 #ifdef _WIN32
   native_ui_.reset();
   try{platform::windows::shutdown_editors();}catch(...){}
@@ -180,6 +214,15 @@ public:
 #endif
  }
  void sent(endstone::PacketSendEvent&e){
+  if(e.getPlayer()&&!e.isCancelled()){
+   auto it=forms_.find(e.getPlayer()->getUniqueId().str());
+   if(it!=forms_.end()){
+    if(e.getPacketId()==100){
+     if(it->second.sending&&!it->second.observed)it->second.observed=true;
+     else it->second.superseded=true;
+    }else if(e.getPacketId()==46)it->second.superseded=true;
+   }
+  }
 #ifdef _WIN32
   if(native_ui_)native_ui_->sent(e);
 #endif

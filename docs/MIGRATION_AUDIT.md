@@ -19,10 +19,10 @@ Do not regenerate it from the C++ catalog.
 | Existing implementation | Native outcome |
 |---|---|
 | Python catalog/configuration/command registration | Frozen and retained; C++ command names and permission defaults resolve through the native catalog. Configurable legacy alias overrides and repeatable configuration conversion remain unfinished. |
-| Python UIService/forms/action registry | C++ consumer registry, deferred actions, exported/private actions, permissions, opening tickets, form callbacks, revocation and bounded queues implemented. Listing actions, all transition cases and richer refusal details remain unfinished. |
+| Python UIService/forms/action registry | C++ consumer registry, deferred actions, exported/private actions, detached action listings, scoped guards, permissions, opening tickets, owned form callbacks, revocation and bounded queues implemented. Full transition/client qualification and richer refusal details remain unfinished. |
 | Protected inventory menus / packet backend | Preserve as a separate mode; C++ native inventory rendering and packet executor integration pending. A catalog ActionForm is not its replacement. |
 | Original Windows native companion | The existing C++ primitives, exact entry-point hashes, per-instance source checks, editor gates and held save guard compile into the real DLL without pybind11. Their loaded manifest has passed in the isolated server. Most primitives are not connected to the new session owner yet. This is not gameplay qualification. |
-| Python item/transaction models | New C++ staged snapshot executor validates complete move batches, policies, exact metadata, capacity and recipe/stock revisions before applying to its owned model. Native inventory publication, result extraction, stack-network identities and replay envelope integration remain unfinished. |
+| Python item/transaction models | New C++ staged snapshot executor validates complete move batches, policies, exact metadata, capacity and recipe/stock revisions. The storage core now decodes captured requests/responses and validates network identities, replay envelopes and cursor reservations. Native inventory publication, custom result extraction and durable binding integration remain unfinished. |
 | Processing logic | A bounded C++ due-queue executes plugin-defined transforms, output capacity and stock. Native furnace/brewing properties, viewers, persistence integration and custom client transactions remain unfinished. |
 | SQLite recovery prototypes | New append-only native journal uses checksums, sequence/phase validation and OS durability calls. Uncertain outcomes quarantine; no item issuance. BDS save reconciliation is not implemented and exactly-once delivery is not claimed. |
 | Held-item development | All source additions preserved. The full-NBT codec/save-guard primitives compile in the new DLL, but item identity leasing, shulker/bundle sessions and new-artifact crash qualification remain unfinished. |
@@ -59,6 +59,14 @@ release/debug jobs passed separately. The full-scope acceptance job correctly
 failed for unqualified per-entry gameplay. Local Docker and Linux runtime/UI
 qualification remain blocked. An exact Onistone SDK/runtime was not supplied;
 no compatibility is inferred from Endstone's provenance.
+
+Subsequent CI run 34279270106 passed both Windows configurations, the Linux
+Docker build, all ten then-current tests under ASan/UBSan, and 100,000 NBT fuzz
+inputs using the rebuilt libc++ libFuzzer. The storage/lease checkpoint expands
+the local suite to eleven jobs: 50,181 core checks and 10,309 storage checks,
+plus separate lifecycle, SDK, ABI and crash-boundary tests. Its extra storage
+fuzz run is tracked independently until CI finishes. Detailed implementation
+boundaries are in [NATIVE_STORAGE.md](NATIVE_STORAGE.md).
 
 An experimental C++ session adapter now owns the seven original workstation
 contexts and four shared player-inventory entry points. It waits for the ordered

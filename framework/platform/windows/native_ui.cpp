@@ -1,5 +1,6 @@
 #include "native_ui.hpp"
 #include "bridge.hpp"
+#include <oni/vcf/window_leases.hpp>
 #include <endstone/server.h>
 #include <endstone/player.h>
 #include <endstone/block/block_data.h>
@@ -14,6 +15,8 @@
 namespace oni::vcf::platform::windows {
 namespace {
 using Clock = std::chrono::steady_clock;
+uint64_t milliseconds(){return static_cast<uint64_t>(std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now().time_since_epoch()).count());}
+uint8_t next_window(int current){return static_cast<uint8_t>(current<99?current+1:1);}
 struct Point { int32_t x=0,y=0,z=0; bool operator==(const Point&) const = default; };
 struct Spec { std::string_view id,block; uint8_t type; };
 constexpr Spec specs[] = {
@@ -94,6 +97,7 @@ struct NativeUi::Impl {
     endstone::Server& server;
     Engine& engine;
     std::map<vcf_handle,View> views;
+    WindowLeases close_leases;
     vcf_handle cursor=0;
     uint32_t nonce=std::random_device{}()&0x7fffffff;
     explicit Impl(endstone::Server& s,Engine& e):server(s),engine(e){}
@@ -120,6 +124,9 @@ struct NativeUi::Impl {
         v.restored=true;
     }
     void retire(View& v,vcf_status result) {
+        if(v.window>=1&&v.window<=99){
+            auto now=milliseconds();close_leases.retire(v.player,static_cast<uint8_t>(v.window),now+60000,now);
+        }
         try {engine.retired(v.owner,v.id,result);}catch(const Error&) {}
     }
     void close(endstone::Player* p,View& v) {
@@ -150,7 +157,8 @@ struct NativeUi::Impl {
             return false;
         }
         if(!v.prepared) {
-            require(inspect(*p).ready,VCF_CONFLICT);
+            auto native=inspect(*p);require(native.ready,VCF_CONFLICT);
+            require(!close_leases.reserved(v.player,next_window(native.window),milliseconds()),VCF_CONFLICT);
             v.position=spec(v.kind)->block.empty()?feet(*p):projection(*p);
             if(!spec(v.kind)->block.empty()) {
                 auto data=server.createBlockData(std::string(spec(v.kind)->block));
@@ -167,7 +175,8 @@ struct NativeUi::Impl {
             // The ordered projection ping is also mandatory. New artifact
             // qualification is still required before this experimental opt-in.
             if(!v.ack||now-v.queued<std::chrono::milliseconds(500))return false;
-            require(inspect(*p).ready,VCF_CONFLICT);
+            auto native=inspect(*p);require(native.ready,VCF_CONFLICT);
+            require(!close_leases.reserved(v.player,next_window(native.window),milliseconds()),VCF_CONFLICT);
             if(!spec(v.kind)->block.empty())require(p->getDimension().getBlockAt(v.position.x,v.position.y,v.position.z)->getType()=="minecraft:air",VCF_CONFLICT);
             v.activating=true;
             try {
@@ -216,6 +225,7 @@ vcf_status NativeUi::close(const Session&s) {
     impl_->close(impl_->player(it->second.player),it->second);return VCF_PENDING;
 }
 void NativeUi::tick() {
+    impl_->close_leases.expire(milliseconds());
     auto deadline=Clock::now()+std::chrono::milliseconds(2);
     std::vector<vcf_handle> done;
     auto remaining=impl_->views.size();
@@ -224,10 +234,15 @@ void NativeUi::tick() {
         auto&[id,v]=*it;impl_->cursor=id;
         try{if(impl_->poll(v))done.push_back(id);}
         catch(...){
+            vcf_status result=VCF_UNAVAILABLE;
+            try{throw;}catch(const Error&e){result=e.status;}catch(...){}
+            try{
+                auto& session=impl_->engine.session(v.owner,v.id);
+                if(session.state!=VCF_TERMINAL){session.result=result;impl_->engine.close(v.owner,v.id);}
+            }catch(const Error&){}
             auto*p=impl_->player(v.player);
             try{impl_->close(p,v);}catch(...){}
-            try{impl_->engine.opened(v.owner,v.id,VCF_UNAVAILABLE);}catch(const Error&){}
-            if(v.window<0){impl_->retire(v,VCF_UNAVAILABLE);done.push_back(id);}
+            if(v.window<0){impl_->retire(v,result);done.push_back(id);}
         }
         if(Clock::now()>=deadline)break;
     }
@@ -236,6 +251,17 @@ void NativeUi::tick() {
 void NativeUi::receive(endstone::PacketReceiveEvent&e) {
     if(!e.getPlayer()||e.isCancelled())return;
     auto player=e.getPlayer()->getUniqueId().str();
+    if(e.getPacketId()==47&&e.getPayload().size()==3){
+        const auto incoming=static_cast<uint8_t>(e.getPayload()[0]);
+        if(impl_->close_leases.reserved(player,incoming,milliseconds())){
+            try{
+                auto current=inspect(*e.getPlayer());
+                if(impl_->close_leases.blocks_close(player,incoming,current.manager_active,static_cast<uint8_t>(current.window),milliseconds())){
+                    e.setCancelled(true);return;
+                }
+            }catch(...){return;}
+        }
+    }
     for(auto&[id,v]:impl_->views)if(v.player==player) {
         if(e.getPacketId()==115&&v.prepared&&ping_reply(e.getPayload(),v.nonce))v.ack=true;
         if(e.getPacketId()==47&&e.getPayload().size()==3&&static_cast<uint8_t>(e.getPayload()[0])==v.window)v.close_seen=true;
@@ -246,6 +272,8 @@ void NativeUi::receive(endstone::PacketReceiveEvent&e) {
 void NativeUi::sent(endstone::PacketSendEvent&e) {
     if(!e.getPlayer()||e.isCancelled())return;
     auto player=e.getPlayer()->getUniqueId().str();
+    if(e.getPacketId()==46&&!e.getPayload().empty())
+        impl_->close_leases.observed_open(player,static_cast<uint8_t>(e.getPayload()[0]));
     for(auto&[id,v]:impl_->views)if(v.player==player) {
         try{
             if(e.getPacketId()==46) {

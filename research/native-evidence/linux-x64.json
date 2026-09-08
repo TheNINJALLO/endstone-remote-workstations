@@ -9,7 +9,7 @@
     "protocol": null,
     "bds_sha256": null,
     "loader_sha256": null,
-    "artifact_sha256": "5ae732556bae6811002f9c9c207b08c2ad5c0c3e084934a01c679595b1e674ca"
+    "artifact_sha256": "b04f1ea550f937d57cd6a1ffb4d51c3c5f30ca2210427bf5cf359f81bcc824cd"
   },
   "build": "tested-in-linux-docker-ci",
   "native_loader_smoke": "blocked",
@@ -8465,7 +8465,8 @@
     "action_exports": {
       "implementation": "implemented",
       "acceptance": "not-qualified",
-      "client_test": "untested"
+      "client_test": "untested",
+      "listing": "Detached listing and registry-revision refusals tested in Linux Docker"
     },
     "deferred_invocation": {
       "implementation": "implemented",
@@ -8478,9 +8479,10 @@
       "client_test": "untested"
     },
     "source_guards": {
-      "implementation": "not-implemented",
+      "implementation": "implemented",
       "acceptance": "not-qualified",
-      "client_test": "untested"
+      "client_test": "untested",
+      "automated_test": "C++ guard lifecycle tested in Linux Docker; Linux loader/gameplay admission remains blocked"
     },
     "capabilities": {
       "implementation": "implemented",
@@ -8494,11 +8496,11 @@
     }
   },
   "build_evidence": {
-    "source_revision": "5ba09bc2ac33329d1dbd00ea6ef1f7eb70db3be5",
-    "workflow": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34273970612",
+    "source_revision": "ac94e2dfc1ce73c3e3383a1550d225a7b866c330",
+    "workflow": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34279270106",
     "host": "GitHub ubuntu-24.04 runner, pinned linux/amd64 Docker image",
-    "native_tests": "8/8 passed on this revision",
-    "elf_report": "linux-5ba09bc-elf-report.txt",
+    "native_tests": "10/10 passed on this revision; ASan/UBSan passed; NBT libFuzzer 100000 inputs passed",
+    "elf_report": "linux-ac94e2d-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.14",
     "direct_libraries": [
       "libc++.so.1",
@@ -8509,5 +8511,13 @@
       "libc.so.6"
     ],
     "runtime_restriction": "Direct symbol versions do not cover transitive libraries. Preserve pinned libc++20 ABI. Private Linux BDS/loader admission and client gameplay are unqualified."
+  },
+  "sdk_version": "1.1; ABI 1.0 prefix retained",
+  "sanitizers": {
+    "source_revision": "ac94e2dfc1ce73c3e3383a1550d225a7b866c330",
+    "asan": "passed",
+    "ubsan": "passed",
+    "nbt_fuzz_inputs": 100000,
+    "storage_fuzz": "new implementation; current CI run pending"
   }
 }

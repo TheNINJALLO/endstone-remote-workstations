@@ -95,5 +95,5 @@ The immutable floor is [original-ui-catalog.json](../research/original-ui-catalo
 | `SessionInfo` | vcf_session_info; immutable caller-owned copy. |
 | `ActionContext` | vcf_event with ticket/player/result/revision/detail and consumer-owned context. |
 | `Ticket` | Opaque session handle with session_info, close and forget. On-open/failure/close callbacks and deferred dispatch implemented; full native window lifecycle pending. |
-| `UIClient` | `vcf_api` / `sdk::Client`; register_action, unregister_action, invoke, prepare/open/close, capability and dispose exist. Action listing, protected inventory menus, held inspection and typed editor hooks remain missing. |
+| `UIClient` | `vcf_api` / `sdk::Client`; register_action, unregister_action, action listing, scoped protection guards, invoke, prepare/open/close, capability and dispose exist. Protected inventory menus, held inspection and typed editor hooks remain missing. |
 | `get_api` | oni_vcf_get_api negotiated function table; sdk::discover resolves the loaded shadow module. |

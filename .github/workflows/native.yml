@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-      - name: Linux ASan, UBSan, crash boundaries and 100000 NBT fuzz inputs
+      - name: Linux ASan, UBSan, crash boundaries and NBT/storage fuzz inputs
         run: docker buildx build --platform linux/amd64 --target sanitizer-export --output type=local,dest=dist/linux-sanitizers .
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

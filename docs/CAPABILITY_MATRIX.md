@@ -2,7 +2,7 @@
 
 This matrix describes the new C++ artifact only. **Full scope: NOT QUALIFIED.**
 
-Windows development artifact SHA-256: `699e226ea4db34f0845c9866548fe76b5ab9f3511bcf9a0a88d251a847086362`. Native loader and separate C ABI consumer startup passed. No catalog screen has completed gameplay qualification under this artifact.
+Windows development artifact SHA-256: `229976cdfb09fa157ce48fe1bb3d69bb139f15f76c2fd4075ca37e766c09fa21`. Native loader and separate C ABI consumer startup passed. No catalog screen has completed gameplay qualification under this artifact.
 
 The Linux Docker build passes in CI and produces a real ELF `.so`; local Docker execution and private Linux runtime admission remain blocked. The source contains a separate Linux admission boundary; no Linux UI implementation is claimed.
 

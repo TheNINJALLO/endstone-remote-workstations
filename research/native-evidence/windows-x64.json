@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "92d09c7b74ac6a9805bafc166d8e0a13ac9e5db73dbbb0819e5a14093699d44f",
     "loader_sha256": "0c6f0861c5f9a677058b25776d975654a3586a80d2e4421b069b5e98f536f819",
-    "artifact_sha256": "699e226ea4db34f0845c9866548fe76b5ab9f3511bcf9a0a88d251a847086362"
+    "artifact_sha256": "229976cdfb09fa157ce48fe1bb3d69bb139f15f76c2fd4075ca37e766c09fa21"
   },
   "build": "tested",
   "native_loader_smoke": "tested",
@@ -8496,9 +8496,11 @@
     }
   },
   "native_tests": {
-    "ctest": "10/10 passed (including SDK guards/action listing and ABI 1.0 prefix sentinels)",
+    "ctest": "11/11 passed (core, asynchronous lifecycle, SDK guards/actions, storage captures/reservations, C ABI and six journal crash boundaries)",
     "scope": "69 entries and 10 additional surfaces retained",
-    "qualification": "not-qualified"
+    "qualification": "not-qualified",
+    "core_checks": 50181,
+    "storage_checks": 10309
   },
   "experimental_configuration": {
     "experimental_original_windows": true,

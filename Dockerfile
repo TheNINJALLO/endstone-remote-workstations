@@ -56,6 +56,10 @@ RUN cmake -S . -B out/linux-sanitized -G Ninja -DCMAKE_BUILD_TYPE=Debug \
  && ASAN_OPTIONS=detect_leaks=1:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
  out/linux-sanitized/vcf_fuzz_nbt /fuzz-corpus -runs=100000 -max_len=65536 -timeout=5 -rss_limit_mb=1024 -seed=2169 \
  > /sanitizer-results/fuzz-nbt.txt 2>&1 \
+ && python3 tools/native/fuzz-corpus.py /storage-corpus \
+ && ASAN_OPTIONS=detect_leaks=1:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
+ out/linux-sanitized/vcf_fuzz_storage /storage-corpus -runs=100000 -max_len=65536 -timeout=5 -rss_limit_mb=1024 -seed=2169 \
+ > /sanitizer-results/fuzz-storage.txt 2>&1 \
  && cp out/linux-sanitized/Testing/Temporary/LastTest.log /sanitizer-results/
 
 FROM scratch AS sanitizer-export

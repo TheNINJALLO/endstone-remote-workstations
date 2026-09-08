@@ -36,7 +36,11 @@ void Engine::release(vcf_handle id){
  std::erase_if(guards_,[id](const auto&v){return v.second.owner==id;});
  for(auto&[key,s]:sessions_)if(s.owner==id){
   s.callback=nullptr;s.context=nullptr;
-  if(s.host_started && s.state!=VCF_TERMINAL && host_.close){try{host_.close(s);}catch(...){}}
+  if(s.host_started && s.state!=VCF_TERMINAL && host_.close){
+   // Native close can synchronously dispatch Endstone events. Defer any
+   // resulting owner revocation until this borrowed session storage is free.
+   ++callbacks_;try{host_.close(s);}catch(...){}--callbacks_;
+  }
   s.state=VCF_TERMINAL;s.result=VCF_CLOSED;
  }
  std::erase_if(queue_,[&](const auto&t){auto it=sessions_.find(t.session);return it==sessions_.end()||it->second.owner==id;});
@@ -175,7 +179,7 @@ void Engine::emit(Session&s,uint32_t kind,std::string_view detail){
  vcf_event e{sizeof(e),consumers_.at(s.owner).version,s.id,{s.player.data(),static_cast<uint32_t>(s.player.size())},kind,s.result,s.inventory.revision,{detail.data(),static_cast<uint32_t>(detail.size())}};
  ++callbacks_;try{s.callback(s.context,&e);}catch(...){s.result=VCF_INTERNAL;}--callbacks_;
 }
-void Engine::finish(Session&s,vcf_status result){s.state=VCF_TERMINAL;s.result=result;emit(s,result==VCF_OK||result==VCF_CLOSED?VCF_EVENT_CLOSE:VCF_EVENT_FAILURE);}
+void Engine::finish(Session&s,vcf_status result){if(s.state==VCF_TERMINAL)return;s.state=VCF_TERMINAL;s.result=result;emit(s,result==VCF_OK||result==VCF_CLOSED?VCF_EVENT_CLOSE:VCF_EVENT_FAILURE);}
 vcf_handle Engine::invoke(vcf_handle owner,std::string player,std::string action){
  check();auto key=qualify(owner,action);auto it=actions_.find(key);require(it!=actions_.end(),VCF_NOT_FOUND);
  require(it->second.owner==owner||it->second.exported,VCF_DENIED);require(queue_.size()<4096,VCF_CAPACITY);
@@ -208,7 +212,8 @@ void Engine::tick(uint32_t budget){
    }
    authorize(s.owner,s.id,VCF_GUARD_DISPATCH);
    for(const auto&[other,t]:sessions_)require(other==s.id||t.player!=s.player||!t.host_started||t.state==VCF_TERMINAL,VCF_CONFLICT);
-   require(host_.open!=nullptr,VCF_UNAVAILABLE);s.host_started=true;auto result=host_.open(s);if(result==VCF_PENDING)continue;require(result==VCF_OK,result);
+   require(host_.open!=nullptr,VCF_UNAVAILABLE);s.host_started=true;auto result=host_.open(s);
+   if(s.state!=VCF_OPENING||result==VCF_PENDING)continue;require(result==VCF_OK,result);
    require(!consumers_.at(s.owner).revoked,VCF_CLOSED);
    s.state=VCF_ACTIVE;emit(s,VCF_EVENT_OPEN);
   }catch(const Error&e){finish(s,e.status);}catch(...){finish(s,VCF_INTERNAL);}

@@ -9,3 +9,5 @@ research/original-ui-catalog.json -text -whitespace
 research/original-ui-catalog.sha256 -text -whitespace
 framework/platform/windows/native_build.h -text -whitespace
 third_party/** -text -whitespace
+tests/native/fixtures/** -text -whitespace
+research/native-evidence/*.txt -text -whitespace

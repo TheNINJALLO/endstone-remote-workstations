@@ -10,6 +10,7 @@ All 69 original catalog entries, aliases, permissions and source contracts are p
 - [Migration audit and remaining work](docs/MIGRATION_AUDIT.md)
 - [Native build and test instructions](docs/NATIVE_BUILDING.md)
 - [Native SDK and compiled consumer](docs/NATIVE_SDK.md)
+- [Native storage transactions and current integration boundary](docs/NATIVE_STORAGE.md)
 - [NativePassthrough SDK and player-interaction example](examples/native/NativePassthrough.md)
 - [All-entry migration](docs/ALL_UI_MIGRATION.md)
 - [Capability matrix](docs/CAPABILITY_MATRIX.md)

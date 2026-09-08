@@ -105,3 +105,11 @@ recipe definitions, replacement titles and unrelated source descriptors. It
 never reports success while silently ignoring requested custom behavior.
 The provider reclaims its own completed command/catalog tickets; SDK consumers
 retain responsibility for forgetting their own terminal tickets.
+
+Native Windows close leases retain previously owned window IDs for 60 seconds
+under this specific client profile. They reject a delayed old close only when
+the verified current native manager owns a different window. A legitimate close
+for the same window, another player or an unrelated ID passes through. Form
+cleanup similarly checks its own lease and observes replacement form/native
+opens before issuing Endstone's broad close operation. Packet callbacks record
+ownership changes; replacement packets are not sent recursively from them.

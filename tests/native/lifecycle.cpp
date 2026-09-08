@@ -1,4 +1,5 @@
 #include <oni/vcf/core.hpp>
+#include <oni/vcf/window_leases.hpp>
 #include <iostream>
 #include <stdexcept>
 using namespace oni::vcf;
@@ -63,9 +64,30 @@ void disable_inside_callback() {
     // invoking the revoked callback or retaining a callable consumer pointer.
     f.engine.tick();check(f.events==0&&f.engine.session_count()==0);
 }
+void retired_window_closes(){
+    WindowLeases leases;leases.retire("player",71,61000,1000);
+    check(leases.blocks_close("player",71,true,72,2000));
+    check(!leases.blocks_close("other_player",71,true,72,2000));
+    check(!leases.blocks_close("player",71,true,71,2000));
+    check(!leases.blocks_close("player",71,false,72,2000));
+    check(!leases.blocks_close("player",70,true,72,2000));
+    leases.observed_open("player",71);check(!leases.reserved("player",71,2000));
+    leases.retire("player",71,61000,2000);leases.expire(61000);check(leases.size()==0);
+}
+void synchronous_host_completion(){
+    Engine* current=nullptr;int events=0;
+    Host h;h.consumer_allowed=[](auto){return true;};h.permission=[](auto,auto){return true;};
+    h.open=[&](const Session& s){current->retired(s.owner,s.id,VCF_CLOSED);return VCF_OK;};
+    Engine e(h);current=&e;auto owner=e.consumer("consumer");
+    Session s;s.player="player";s.kind="craft";s.mode=VCF_NATIVE_CONTEXT;
+    s.callback=[](void* p,const vcf_event*)->vcf_status{++*static_cast<int*>(p);return VCF_OK;};s.context=&events;
+    auto id=e.prepare(owner,s);e.open(owner,id);e.tick();
+    check(events==1&&e.session(owner,id).state==VCF_TERMINAL&&e.session(owner,id).result==VCF_CLOSED);
+    e.close(owner,id);e.tick();check(events==1);
+}
 }
 int main() {
-    try { pending_and_cancel();permissions_and_release();disable_inside_callback();
+    try { pending_and_cancel();permissions_and_release();disable_inside_callback();retired_window_closes();synchronous_host_completion();
         std::cout<<"Asynchronous opens, closes, revocation and ownership passed\n";
     }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
     catch(const Error& e){std::cerr<<"Unexpected status "<<e.status<<'\n';return 2;}
