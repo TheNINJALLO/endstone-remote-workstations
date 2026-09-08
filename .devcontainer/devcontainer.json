@@ -1,0 +1,9 @@
+{
+ "name":"VCF Linux ABI development",
+ "build":{"dockerfile":"../Dockerfile","context":"..","target":"toolchain"},
+ "workspaceFolder":"/workspace",
+ "workspaceMount":"source=${localWorkspaceFolder},target=/workspace,type=bind",
+ "runArgs":["--platform=linux/amd64"],
+ "remoteUser":"root",
+ "customizations":{"vscode":{"extensions":["ms-vscode.cmake-tools","llvm-vs-code-extensions.vscode-clangd"]}}
+}

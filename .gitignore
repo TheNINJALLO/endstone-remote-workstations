@@ -10,3 +10,11 @@ build/
 research/
 dist/
 release-assets/
+out/
+.native-deps/
+!research/
+research/*
+!research/original-ui-catalog.json
+!research/original-ui-catalog.sha256
+!research/original-source/
+!research/native-evidence/

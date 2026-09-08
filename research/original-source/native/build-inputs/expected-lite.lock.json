@@ -1,0 +1,7 @@
+{
+  "name": "expected-lite",
+  "version": "0.9.0",
+  "url": "https://raw.githubusercontent.com/martinmoene/expected-lite/v0.9.0/include/nonstd/expected.hpp",
+  "sha256": "bbab48a56231800c21373be71e47f1b9d8d4e8e10e2c9d3a51c4f5f850104086",
+  "license": "BSL-1.0"
+}

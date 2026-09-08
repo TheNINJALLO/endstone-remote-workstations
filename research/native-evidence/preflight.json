@@ -1,0 +1,15 @@
+{
+  "date": "2026-09-08",
+  "docker_cli": "not-found",
+  "docker_desktop_standard_paths": "not-found",
+  "docker_engine": "not-tested; no local CLI",
+  "wsl_status": "Windows Subsystem for Linux is not installed",
+  "compose": "blocked",
+  "buildkit": "blocked",
+  "windows_cmake": "3.31.6-msvc6",
+  "windows_msvc": "19.44.35222.0",
+  "windows_toolset": "14.44.35207",
+  "onistone_sdk_runtime": "not supplied; no independent compatibility admission",
+  "client": "Minecraft foreground input blocked by PickerHost; subsequent process has no visible main window",
+  "system_components_installed": false
+}

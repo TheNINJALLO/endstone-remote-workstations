@@ -1,0 +1,154 @@
+#include <oni/vcf/core.hpp>
+#include <oni/vcf/sdk.hpp>
+#include "platform/runtime.hpp"
+#ifdef _WIN32
+#include "platform/windows/bridge.hpp"
+#endif
+#include <endstone/plugin/plugin.h>
+#include <endstone/player.h>
+#include <endstone/scheduler/scheduler.h>
+#include <endstone/inventory/item_type.h>
+#include <endstone/form/action_form.h>
+#include <endstone/event/player/player_quit_event.h>
+#include <endstone/event/actor/player_death_event.h>
+#include <endstone/event/player/player_teleport_event.h>
+#include <endstone/event/player/player_dimension_change_event.h>
+#include <endstone/event/server/plugin_disable_event.h>
+#include <fstream>
+using namespace oni::vcf;
+class VirtualContainerFramework:public endstone::Plugin {
+ std::unique_ptr<Engine> engine_;std::unique_ptr<sdk::Client> self_;vcf_api api_{};
+ platform::Admission admission_;std::shared_ptr<endstone::Task> task_;
+ std::shared_ptr<bool> lifetime_=std::make_shared<bool>(false);
+ std::map<std::string,uint32_t> catalog_actions_;
+ endstone::Player* player(std::string_view id){
+  for(auto*p:getServer().getOnlinePlayers())if(p->getUniqueId().str()==id)return p;
+  return nullptr;
+ }
+ static vcf_status VCF_CALL choose(void* context,const vcf_event* event){
+  auto&self=*static_cast<VirtualContainerFramework*>(context);
+  try {
+   std::string detail(event->detail.data,event->detail.length);auto colon=detail.find(':');
+   auto action=detail.substr(colon+1);auto it=self.catalog_actions_.find(action);if(it==self.catalog_actions_.end())return VCF_NOT_FOUND;
+   const auto&row=catalog()[it->second];auto*p=self.player(std::string_view(event->player.data,event->player.length));if(!p)return VCF_CLOSED;
+   if(!p->hasPermission(std::string(row.permission)))return VCF_DENIED;
+   p->sendMessage(std::string(row.id)+": C++ native/custom screen adapter is not yet qualified. This form is the catalog, not that screen.");
+   return VCF_OK;
+  }catch(...){return VCF_INTERNAL;}
+ }
+ vcf_status show(const Session&s){
+  auto*p=player(s.player);if(!p)return VCF_CLOSED;
+  if(!s.is_menu)return VCF_UNAVAILABLE;
+  if(p->getGameVersion()!="1.26.45")return VCF_UNAVAILABLE;
+  endstone::ActionForm form;form.setTitle(s.title).setContent(s.content);
+  auto weak=std::weak_ptr<bool>(lifetime_);
+  for(const auto&b:s.buttons)form.addButton(b.label,b.icon.empty()?std::nullopt:std::optional<std::string>{b.icon});
+  form.setOnSubmit([weak,this,id=s.id](endstone::Player*p,int index){
+   auto live=weak.lock();if(!live||!*live||!p||index<0)return;
+   try{engine_->selected(id,p->getUniqueId().str(),static_cast<uint32_t>(index));}catch(const Error&){}
+  });
+  form.setOnClose([weak,this,id=s.id,owner=s.owner](endstone::Player*){
+   auto live=weak.lock();if(!live||!*live)return;
+   try{engine_->close(owner,id);}catch(const Error&){}
+  });
+  p->sendForm(form);return VCF_OK;
+ }
+ void catalog_menu(endstone::Player&p){
+  std::vector<std::string> labels,actions;labels.reserve(catalog().size());actions.reserve(catalog().size());
+  for(const auto&row:catalog()){
+   labels.emplace_back(std::string(row.id)+" - migration pending");actions.emplace_back("catalog."+std::string(row.id));
+  }
+  std::vector<vcf_button> buttons;for(size_t i=0;i<labels.size();++i){auto b=sdk::descriptor<vcf_button>();b.label=sdk::view(labels[i]);b.action=sdk::view(actions[i]);buttons.push_back(b);}
+  auto d=sdk::descriptor<vcf_menu_desc>();auto id=p.getUniqueId().str();d.player=sdk::view(id);d.title=sdk::view("Onistone VCF - development catalog");
+  d.content=sdk::view("All 69 entries retained. Native and custom screen qualification is incomplete. Select an entry for its current result.");
+  d.permission=sdk::view("remoteworkstations.use");d.buttons=buttons.data();d.button_count=static_cast<uint32_t>(buttons.size());vcf_handle ticket=0;
+  sdk::checked(api_.show_menu(self_->owner(),&d,&ticket));
+ }
+public:
+ void onEnable()override{
+  try{
+   admission_=platform::inspect_runtime();
+   getLogger().info("BDS SHA256: {}",admission_.bds_sha256);
+   getLogger().info("Loader runtime SHA256: {}",admission_.runtime_sha256);
+   if(!admission_.accepted){getLogger().error("VCF refused admission: {}",admission_.reason);return;}
+   // Endstone owns outstanding std::function form objects. Pin code for this
+   // process before registering callbacks; disable revokes their weak lease.
+   require(platform::pin_provider(),VCF_UNAVAILABLE);
+#ifdef _WIN32
+   platform::windows::initialize_bridge();
+   getLogger().info("Windows native primitive manifest verified in loaded memory; gameplay qualification remains separate.");
+#endif
+   if(getServer().getPluginManager().getPlugin("remote_workstations")){
+    getLogger().error("VCF refuses to enable beside legacy remote_workstations. Stop, back up, and migrate the old installation.");return;
+   }
+   Host host;
+   host.consumer_allowed=[this](std::string_view name){auto*p=getServer().getPluginManager().getPlugin(std::string(name));return p&&p->isEnabled();};
+   host.permission=[this](std::string_view id,std::string_view permission){auto*p=player(id);return p&&(permission.empty()||p->hasPermission(std::string(permission)));};
+   host.item_limit=[this](std::string_view name){auto*type=getServer().getRegistry<endstone::ItemType>().get(endstone::ItemTypeId(name));return type?static_cast<uint32_t>(type->getMaxStackSize()):0;};
+   host.open=[this](const Session&s){return show(s);};
+   host.close=[this](const Session&s){if(s.is_menu)if(auto*p=player(s.player))p->closeForm();};
+   engine_=std::make_unique<Engine>(std::move(host));attach_engine(engine_.get());
+   sdk::checked(oni_vcf_get_api(VCF_ABI_VERSION,sizeof(api_),&api_));
+   self_=std::make_unique<sdk::Client>(api_,"onistone_vcf");
+   for(uint32_t i=0;i<catalog().size();++i){auto name="catalog."+std::string(catalog()[i].id);catalog_actions_.emplace(name,i);self_->action(name,choose,this,std::string(catalog()[i].permission));}
+   *lifetime_=true;
+   task_=getServer().getScheduler().runTaskTimer(*this,[this]{try{engine_->tick();}catch(...){getLogger().error("VCF scheduler stopped by invariant failure.");task_->cancel();}},0,1);
+   registerEvent(&VirtualContainerFramework::quit,*this);
+   registerEvent(&VirtualContainerFramework::death,*this);
+   registerEvent(&VirtualContainerFramework::teleport,*this);
+   registerEvent(&VirtualContainerFramework::dimension,*this);
+   registerEvent(&VirtualContainerFramework::consumer_disabled,*this);
+   std::filesystem::create_directories(getDataFolder());
+   std::ofstream receipt(getDataFolder()/"native-startup.txt");receipt<<"native C++ plugin; no project Python runtime\nBDS "<<admission_.bds_sha256<<"\nEndstone "<<admission_.runtime_sha256<<"\n69 retained entries; all-UI acceptance NOT QUALIFIED\n";
+   getLogger().info("Native VCF enabled: C ABI 1.0, 69 catalog entries retained, C++ forms/actions active; all-UI acceptance NOT QUALIFIED.");
+  }catch(const std::exception&e){getLogger().error("VCF startup failed: {}",e.what());onDisable();}
+   catch(const Error&e){getLogger().error("VCF startup failed with status {}",e.status);onDisable();}
+ }
+ void onDisable()override{
+  *lifetime_=false;
+  if(task_)task_->cancel();
+  if(engine_){try{engine_->shutdown();}catch(...){}}
+  self_.reset();attach_engine(nullptr);engine_.reset();
+ }
+ void quit(endstone::PlayerQuitEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
+ void death(endstone::PlayerDeathEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
+ void teleport(endstone::PlayerTeleportEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
+ void dimension(endstone::PlayerDimensionChangeEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
+ void consumer_disabled(endstone::PluginDisableEvent&e){if(engine_)engine_->release_named(e.getPlugin().getName());}
+ bool onCommand(endstone::CommandSender&sender,const endstone::Command&command,const std::vector<std::string>&args)override{
+  try{
+   if(!engine_){sender.sendErrorMessage(admission_.reason.empty()?"Native VCF is not active; inspect startup diagnostics.":admission_.reason);return true;}
+   auto name=command.getName();
+   if(name=="vcf"||name=="workstations"){
+    if(!args.empty()&&(args[0]=="status"||args[0]=="diagnose"||args[0]=="sessions")){
+     if(!sender.hasPermission("remoteworkstations.status")){sender.sendErrorMessage("Permission denied.");return true;}
+     sender.sendMessage("Native VCF C ABI 1.0; sessions "+std::to_string(engine_->session_count())+"; 69 entries retained; all-UI NOT QUALIFIED.");return true;
+    }
+    if(!args.empty()&&(args[0]=="capabilities"||args[0]=="list")){
+     for(const auto&row:catalog())sender.sendMessage(std::string(row.id)+": native/custom migration unqualified");return true;
+    }
+    if(args.size()==2&&args[0]=="open")name=args[1];
+    else {if(auto*p=dynamic_cast<endstone::Player*>(&sender))catalog_menu(*p);else sender.sendErrorMessage("Open the catalog from Minecraft.");return true;}
+   }
+   auto*row=resolve(name);if(!row){sender.sendErrorMessage("Unknown UI entry.");return true;}
+   if(!sender.hasPermission(std::string(row->permission))){sender.sendErrorMessage("Permission denied.");return true;}
+   sender.sendErrorMessage(std::string(row->id)+": the native C++ adapter is not yet qualified; the legacy source contract is retained in the migration audit.");return true;
+  }catch(...){sender.sendErrorMessage("VCF request refused; inspect diagnostics.");return true;}
+ }
+};
+ENDSTONE_PLUGIN("onistone_vcf","0.1.0-dev",VirtualContainerFramework){
+ description="Native virtual-container framework development build; all-UI qualification incomplete";
+ authors={"TheNINJALLO"};website="https://github.com/TheNINJALLO/endstone-remote-workstations";
+ command("vcf").description("Native VCF catalog and diagnostics").usages("/vcf [action: string] [type: string]").permissions("remoteworkstations.use");
+ command("workstations").description("Migrated original UI entry point").usages("/workstations [action: string] [type: string]").permissions("remoteworkstations.use");
+ permission("remoteworkstations.use").default_(endstone::PermissionDefault::True);
+ for(auto p:{"admin","status","diagnostics","contexts"})permission("remoteworkstations."+std::string(p)).default_(endstone::PermissionDefault::Operator);
+ for(const auto&row:catalog()){
+  permission(std::string(row.permission)).default_(row.privileged?endstone::PermissionDefault::Operator:endstone::PermissionDefault::True);
+  auto aliases=row.aliases;
+  while(!aliases.empty()){auto split=aliases.find('|');auto name=std::string(aliases.substr(0,split));
+   command(name).description("Request "+std::string(row.id)).usages("/"+name).permissions(std::string(row.permission));
+   if(split==std::string_view::npos)break;aliases.remove_prefix(split+1);
+  }
+ }
+}

@@ -1,0 +1,79 @@
+{
+  "bds": "1.26.45.1",
+  "protocol": 2169,
+  "kind": "actual sanitized client/server captures",
+  "packets": [
+    {
+      "source": {
+        "file": "research/live-evidence/ender-real-roundtrip.json",
+        "sha256": "15807050a5977808c19faa031976a20118085cdac7e0ff764d097f9e9f750663"
+      },
+      "packet_id": 147,
+      "direction": "receive",
+      "payload_hex": "01d903010101011c0001150000000700000000000000ffffffff"
+    },
+    {
+      "source": {
+        "file": "research/live-evidence/ender-real-roundtrip.json",
+        "sha256": "15807050a5977808c19faa031976a20118085cdac7e0ff764d097f9e9f750663"
+      },
+      "packet_id": 148,
+      "direction": "send",
+      "payload_hex": "0100d9030101021c0001010100010000000007000100000101012a0c52656d6f746520426c6164650000"
+    },
+    {
+      "source": {
+        "file": "research/live-evidence/ender-real-roundtrip.json",
+        "sha256": "15807050a5977808c19faa031976a20118085cdac7e0ff764d097f9e9f750663"
+      },
+      "packet_id": 147,
+      "direction": "receive",
+      "payload_hex": "01dd0301000001070000150000003b00000000000000ffffffff"
+    },
+    {
+      "source": {
+        "file": "research/live-evidence/ender-real-roundtrip.json",
+        "sha256": "15807050a5977808c19faa031976a20118085cdac7e0ff764d097f9e9f750663"
+      },
+      "packet_id": 148,
+      "direction": "send",
+      "payload_hex": "0100dd0301010207000100000001000000003b000100000101012a0c52656d6f746520426c6164650000"
+    },
+    {
+      "source": {
+        "file": "research/live-evidence/ender-real-roundtrip.json",
+        "sha256": "15807050a5977808c19faa031976a20118085cdac7e0ff764d097f9e9f750663"
+      },
+      "packet_id": 147,
+      "direction": "receive",
+      "payload_hex": "01e103010101013b0000150000001c00010000000000ffffffff"
+    },
+    {
+      "source": {
+        "file": "research/live-evidence/ender-real-roundtrip.json",
+        "sha256": "15807050a5977808c19faa031976a20118085cdac7e0ff764d097f9e9f750663"
+      },
+      "packet_id": 148,
+      "direction": "send",
+      "payload_hex": "0100e1030101023b000100000001000000001c000101010101012a0c52656d6f746520426c6164650000"
+    },
+    {
+      "source": {
+        "file": "research/release-blockers/ender-response-stack.json",
+        "sha256": "e918a8c9e6103a30d6847304131100822ecac3b89b8690af9d5faef4ecdd23d0"
+      },
+      "packet_id": 147,
+      "direction": "receive",
+      "payload_hex": "01fd03010101011c00010d0000000700000000000000ffffffff"
+    },
+    {
+      "source": {
+        "file": "research/release-blockers/ender-response-stack.json",
+        "sha256": "e918a8c9e6103a30d6847304131100822ecac3b89b8690af9d5faef4ecdd23d0"
+      },
+      "packet_id": 148,
+      "direction": "send",
+      "payload_hex": "0132fd030100"
+    }
+  ]
+}

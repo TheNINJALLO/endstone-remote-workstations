@@ -1,0 +1,47 @@
+services:
+  build:
+    platform: linux/amd64
+    build:
+      context: .
+      target: unit-test
+    command: ["ctest", "--test-dir", "/workspace/out/linux-release", "--output-on-failure"]
+  abi-lab:
+    profiles: ["research"]
+    platform: linux/amd64
+    build:
+      context: .
+      target: abi-lab
+    cap_add: [SYS_PTRACE]
+    security_opt: ["seccomp:unconfined"]
+    network_mode: none
+    stdin_open: true
+    tty: true
+    volumes:
+      - type: bind
+        source: ${VCF_LINUX_INPUTS:?Set VCF_LINUX_INPUTS to authorized private Linux binaries}
+        target: /inputs
+        read_only: true
+      - type: bind
+        source: ./out/linux-abi
+        target: /lab
+  smoke:
+    profiles: ["runtime"]
+    platform: linux/amd64
+    build:
+      context: .
+      target: runtime-smoke
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=256m"]
+    environment:
+      VCF_LICENSE_CONFIRMED: ${VCF_LICENSE_CONFIRMED:-0}
+    volumes:
+      - type: bind
+        source: ${VCF_LINUX_INPUTS:?Set VCF_LINUX_INPUTS}
+        target: /inputs
+        read_only: true
+      - type: bind
+        source: ./out/linux-smoke
+        target: /data
+    ports: ["127.0.0.1:29169:29169/udp"]

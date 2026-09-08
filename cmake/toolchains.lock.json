@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "recorded": "2026-09-08",
+  "linux_toolchain_image": "docker.io/silkeh/clang:20-bookworm@sha256:ae2f3deffd84470fbb2904cfb990db208a5f9880b4bcf9d3eae080a50a8900b4",
+  "linux_image_source": "https://github.com/silkeh/docker-clang",
+  "linux_image_runtime_tested": false,
+  "compiler_family": "Clang 20 / libc++ 20 / libc++abi 20",
+  "debian_snapshot": "20260901T000000Z",
+  "cmake_version": "3.31.6",
+  "cmake_linux_sha256": "5a1133ff103c71eb5120e2cc3de922733e7d8a26a98ae716397e8676adb367bf",
+  "endstone_revision": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "endstone_archive_sha256": "bf9bb8d08b1f2209228e0ecfd05492cc229f7586e27fd68f31d2004adb467997",
+  "expected_lite_version": "0.9.0",
+  "expected_lite_header_sha256": "bbab48a56231800c21373be71e47f1b9d8d4e8e10e2c9d3a51c4f5f850104086",
+  "mapdisplays_revision": "6dd5f24233600ad9376c7a5faaee350aa31ee623",
+  "windows_msvc": "19.44.35222.0",
+  "windows_toolset": "14.44.35207",
+  "onistone_runtime": "not supplied; not admitted"
+}

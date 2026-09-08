@@ -1,0 +1,51 @@
+name: Native framework development
+on:
+  push:
+    branches: [feature/native-virtual-container-framework]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        preset: [windows-release, windows-debug]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Fetch exact public SDK
+        shell: pwsh
+        run: ./tools/native/fetch-sdk.ps1 -Destination .native-deps
+      - name: Build DLL, SDK consumer and native tests
+        shell: pwsh
+        run: |
+          $env:VCF_ENDSTONE_ROOT="$pwd/.native-deps/endstone"
+          $env:VCF_EXPECTED_ROOT="$pwd/.native-deps/expected-lite"
+          ./tools/native/build-windows.ps1 -Preset ${{ matrix.preset }}
+      - name: Check immutable migration scope
+        run: python tools/native/scope.py
+      - name: Upload development artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-${{ matrix.preset }}-UNQUALIFIED
+          path: dist/${{ matrix.preset }}
+  linux-docker:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Build in pinned linux/amd64 container
+        run: sh tools/native/build-linux.sh
+      - name: Check immutable migration scope
+        run: python3 tools/native/scope.py
+      - name: Upload development ELF and link report
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-linux-x64-UNQUALIFIED
+          path: dist/linux-x64-dev
+  full-scope-acceptance:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Require actual per-entry runtime and custom behavior evidence
+        run: python3 tools/native/scope.py --require-qualified

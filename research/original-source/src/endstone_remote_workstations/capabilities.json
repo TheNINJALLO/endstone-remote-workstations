@@ -1,0 +1,2646 @@
+[
+  {
+    "id": "chest",
+    "category": "storage",
+    "commands": [
+      "/workstations open chest",
+      "/chest"
+    ],
+    "aliases": [
+      "chest"
+    ],
+    "permission": "remoteworkstations.open.chest",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "levelentitycontainer": 7,
+      "inventorycontainer": 29,
+      "hotbarcontainer": 28,
+      "combinedhotbarandinventorycontainer": 12,
+      "cursorcontainer": 59
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 0,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-chest-finished.json"
+    ]
+  },
+  {
+    "id": "doublechest",
+    "category": "storage",
+    "commands": [
+      "/workstations open doublechest",
+      "/doublechest"
+    ],
+    "aliases": [
+      "doublechest"
+    ],
+    "permission": "remoteworkstations.open.doublechest",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "levelentitycontainer": 7,
+      "inventorycontainer": 29,
+      "hotbarcontainer": 28,
+      "combinedhotbarandinventorycontainer": 12,
+      "cursorcontainer": 59
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 0,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-doublechest-slot53.json"
+    ]
+  },
+  {
+    "id": "hopper",
+    "category": "storage",
+    "commands": [
+      "/workstations open hopper",
+      "/hopper"
+    ],
+    "aliases": [
+      "hopper"
+    ],
+    "permission": "remoteworkstations.open.hopper",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "levelentitycontainer": 7,
+      "inventorycontainer": 29,
+      "hotbarcontainer": 28,
+      "combinedhotbarandinventorycontainer": 12,
+      "cursorcontainer": 59
+    },
+    "administrator_only": false,
+    "validation_scope": "Installed a1: hopper named-item round trip, paid beacon Haste and crafter disabled-slot persistence; each case retains its exact wheel identity.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 8,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/packaged-index.json"
+    ]
+  },
+  {
+    "id": "dispenser",
+    "category": "storage",
+    "commands": [
+      "/workstations open dispenser",
+      "/dispenser"
+    ],
+    "aliases": [
+      "dispenser"
+    ],
+    "permission": "remoteworkstations.open.dispenser",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "levelentitycontainer": 7,
+      "inventorycontainer": 29,
+      "hotbarcontainer": 28,
+      "combinedhotbarandinventorycontainer": 12,
+      "cursorcontainer": 59
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 6,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-dispenser.json"
+    ]
+  },
+  {
+    "id": "barrel",
+    "category": "storage",
+    "commands": [
+      "/workstations open barrel",
+      "/barrel"
+    ],
+    "aliases": [
+      "barrel"
+    ],
+    "permission": "remoteworkstations.open.barrel",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "barrelcontainer": 58
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 0,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-barrel.json"
+    ]
+  },
+  {
+    "id": "dropper",
+    "category": "storage",
+    "commands": [
+      "/workstations open dropper",
+      "/dropper"
+    ],
+    "aliases": [
+      "dropper"
+    ],
+    "permission": "remoteworkstations.open.dropper",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "levelentitycontainer": 7
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 7,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-dropper.json"
+    ]
+  },
+  {
+    "id": "trappedchest",
+    "category": "storage",
+    "commands": [
+      "/workstations open trappedchest",
+      "/trappedchest"
+    ],
+    "aliases": [
+      "trappedchest"
+    ],
+    "permission": "remoteworkstations.open.trappedchest",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "levelentitycontainer": 7
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 0,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-trappedchest.json"
+    ]
+  },
+  {
+    "id": "enderchest",
+    "category": "storage",
+    "commands": [
+      "/workstations open enderchest",
+      "/enderchest",
+      "/ec"
+    ],
+    "aliases": [
+      "enderchest",
+      "ec"
+    ],
+    "permission": "remoteworkstations.open.enderchest",
+    "backend": "packet-real-ender-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Real online Ender slots support tested deposit, withdrawal, cursor cancellation and external-change rejection through the packet adapter. Use open_ender_chest(); the native-only route still rejects remote transfers. Drops, item-specific descriptor extensions and crash/save atomicity remain unqualified.",
+    "requirements": [
+      "native.enabled=true and packet_inventory.enabled=true",
+      "exact Windows BDS/runtime hashes and inventory refresh companion",
+      "Windows Bedrock 1.26.45; keyboard/mouse tested",
+      "living permitted player; protection guards permit opening"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Selected live packet transfers and lifecycle checks; not production certification",
+    "context_kind": "player",
+    "api_method": "open_ender_chest",
+    "container_type": 0,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/packet-evidence/index.json"
+    ]
+  },
+  {
+    "id": "shulker",
+    "category": "storage",
+    "commands": [
+      "/workstations open shulker",
+      "/shulker"
+    ],
+    "aliases": [
+      "shulker"
+    ],
+    "permission": "remoteworkstations.open.shulker",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "The requested source is the actual held box. Public ItemStack NBT alone cannot lock its durable identity across movement, drops, nesting, transfer and BDS saves. No verified native held-box manager or crash-safe escrow/writeback exists; opening a separate vault would violate the source contract.",
+    "requirements": [
+      "verified BDS/client packet fixtures",
+      "authoritative item identities and complete NBT",
+      "exclusive transaction ownership",
+      "client block restoration",
+      "BDS save reconciliation"
+    ],
+    "slot_roles": {
+      "shulkerboxcontainer": 30
+    },
+    "administrator_only": false,
+    "context_kind": "held-item",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "craft",
+    "category": "workstation",
+    "commands": [
+      "/workstations open craft",
+      "/craft",
+      "/workbench"
+    ],
+    "aliases": [
+      "craft",
+      "workbench"
+    ],
+    "permission": "remoteworkstations.open.craft",
+    "backend": "native-bds-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Native 3x3 recipe-book crafting consumed 16 planks for two chests; repeated crafting retained one excess plank. Behavior-pack overrides, remainders and full-inventory cases remain unverified.",
+    "requirements": [
+      "explicit native.enabled=true opt-in for this release candidate",
+      "exact compiled BDS and Endstone module hashes",
+      "Endstone 0.11.10 / BDS 1.26.45.1 / protocol 2169",
+      "CPython 3.11 Windows x86-64 companion",
+      "Windows Bedrock 1.26.45; keyboard/mouse tested",
+      "living permitted player; protection guards permit opening"
+    ],
+    "slot_roles": {
+      "craftinginputcontainer": 13,
+      "craftingoutputpreviewcontainer": 14,
+      "createdoutputcontainer": 60
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected live operations; not complete vanilla parity or production certification",
+    "context_kind": "player",
+    "api_method": "open_native",
+    "container_type": 1,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/live-evidence/index.json"
+    ]
+  },
+  {
+    "id": "anvil",
+    "category": "workstation",
+    "commands": [
+      "/workstations open anvil",
+      "/anvil"
+    ],
+    "aliases": [
+      "anvil"
+    ],
+    "permission": "remoteworkstations.open.anvil",
+    "backend": "native-bds-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Native rename charged one XP level and preserved Sharpness I; zero-XP output was rejected; normal and forced close returned inputs. Repair, enchant merging and prior-work limits remain unverified.",
+    "requirements": [
+      "explicit native.enabled=true opt-in for this release candidate",
+      "exact compiled BDS and Endstone module hashes",
+      "Endstone 0.11.10 / BDS 1.26.45.1 / protocol 2169",
+      "CPython 3.11 Windows x86-64 companion",
+      "Windows Bedrock 1.26.45; keyboard/mouse tested",
+      "living permitted player; protection guards permit opening"
+    ],
+    "slot_roles": {
+      "anvilinputcontainer": 0,
+      "anvilmaterialcontainer": 1,
+      "anvilresultpreviewcontainer": 2,
+      "createdoutputcontainer": 60
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected live operations; not complete vanilla parity or production certification",
+    "context_kind": "player",
+    "api_method": "open_native",
+    "container_type": 5,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/live-evidence/index.json"
+    ]
+  },
+  {
+    "id": "grindstone",
+    "category": "workstation",
+    "commands": [
+      "/workstations open grindstone",
+      "/grindstone"
+    ],
+    "aliases": [
+      "grindstone"
+    ],
+    "permission": "remoteworkstations.open.grindstone",
+    "backend": "native-bds-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Native disenchant removed Sharpness from one iron sword and visibly awarded XP. Curse retention, repair combinations and exact XP distribution remain unverified.",
+    "requirements": [
+      "explicit native.enabled=true opt-in for this release candidate",
+      "exact compiled BDS and Endstone module hashes",
+      "Endstone 0.11.10 / BDS 1.26.45.1 / protocol 2169",
+      "CPython 3.11 Windows x86-64 companion",
+      "Windows Bedrock 1.26.45; keyboard/mouse tested",
+      "living permitted player; protection guards permit opening"
+    ],
+    "slot_roles": {
+      "grindstoneinputcontainer": 50,
+      "grindstoneadditionalcontainer": 51,
+      "grindstoneresultpreviewcontainer": 52,
+      "createdoutputcontainer": 60
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected live operations; not complete vanilla parity or production certification",
+    "context_kind": "player",
+    "api_method": "open_native",
+    "container_type": 26,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/live-evidence/index.json"
+    ]
+  },
+  {
+    "id": "smithing",
+    "category": "workstation",
+    "commands": [
+      "/workstations open smithing",
+      "/smithing"
+    ],
+    "aliases": [
+      "smithing"
+    ],
+    "permission": "remoteworkstations.open.smithing",
+    "backend": "native-bds-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Native Netherite upgrade consumed one diamond pickaxe, ingot and template for one Netherite pickaxe. Trims and metadata-rich upgrade combinations remain unverified.",
+    "requirements": [
+      "explicit native.enabled=true opt-in for this release candidate",
+      "exact compiled BDS and Endstone module hashes",
+      "Endstone 0.11.10 / BDS 1.26.45.1 / protocol 2169",
+      "CPython 3.11 Windows x86-64 companion",
+      "Windows Bedrock 1.26.45; keyboard/mouse tested",
+      "living permitted player; protection guards permit opening"
+    ],
+    "slot_roles": {
+      "smithingtableinputcontainer": 3,
+      "smithingtablematerialcontainer": 4,
+      "smithingtabletemplatecontainer": 61,
+      "smithingtableresultpreviewcontainer": 5,
+      "createdoutputcontainer": 60
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected live operations; not complete vanilla parity or production certification",
+    "context_kind": "player",
+    "api_method": "open_native",
+    "container_type": 33,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/live-evidence/index.json"
+    ]
+  },
+  {
+    "id": "stonecutter",
+    "category": "workstation",
+    "commands": [
+      "/workstations open stonecutter",
+      "/stonecutter"
+    ],
+    "aliases": [
+      "stonecutter"
+    ],
+    "permission": "remoteworkstations.open.stonecutter",
+    "backend": "native-bds-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Native recipe selection consumed one stone for one stone brick and returned 63 unused stone. Remaining recipes and full-inventory cases remain unverified.",
+    "requirements": [
+      "explicit native.enabled=true opt-in for this release candidate",
+      "exact compiled BDS and Endstone module hashes",
+      "Endstone 0.11.10 / BDS 1.26.45.1 / protocol 2169",
+      "CPython 3.11 Windows x86-64 companion",
+      "Windows Bedrock 1.26.45; keyboard/mouse tested",
+      "living permitted player; protection guards permit opening"
+    ],
+    "slot_roles": {
+      "stonecutterinputcontainer": 53,
+      "stonecutterresultpreviewcontainer": 54,
+      "createdoutputcontainer": 60
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected live operations; not complete vanilla parity or production certification",
+    "context_kind": "player",
+    "api_method": "open_native",
+    "container_type": 29,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/live-evidence/index.json"
+    ]
+  },
+  {
+    "id": "loom",
+    "category": "workstation",
+    "commands": [
+      "/workstations open loom",
+      "/loom"
+    ],
+    "aliases": [
+      "loom"
+    ],
+    "permission": "remoteworkstations.open.loom",
+    "backend": "native-bds-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Native selected border pattern consumed two banners and two red dyes for two patterned banners. Special pattern items and pattern limits remain unverified.",
+    "requirements": [
+      "explicit native.enabled=true opt-in for this release candidate",
+      "exact compiled BDS and Endstone module hashes",
+      "Endstone 0.11.10 / BDS 1.26.45.1 / protocol 2169",
+      "CPython 3.11 Windows x86-64 companion",
+      "Windows Bedrock 1.26.45; keyboard/mouse tested",
+      "living permitted player; protection guards permit opening"
+    ],
+    "slot_roles": {
+      "loominputcontainer": 41,
+      "loomdyecontainer": 42,
+      "loommaterialcontainer": 43,
+      "loomresultpreviewcontainer": 44,
+      "createdoutputcontainer": 60
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected live operations; not complete vanilla parity or production certification",
+    "context_kind": "player",
+    "api_method": "open_native",
+    "container_type": 24,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/live-evidence/index.json"
+    ]
+  },
+  {
+    "id": "cartography",
+    "category": "workstation",
+    "commands": [
+      "/workstations open cartography",
+      "/cartography"
+    ],
+    "aliases": [
+      "cartography"
+    ],
+    "permission": "remoteworkstations.open.cartography",
+    "backend": "native-bds-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Native scaling consumed one paper, returned unused paper and rendered the scaled real world map. Copying, locking and persistent map-state comparisons remain unverified.",
+    "requirements": [
+      "explicit native.enabled=true opt-in for this release candidate",
+      "exact compiled BDS and Endstone module hashes",
+      "Endstone 0.11.10 / BDS 1.26.45.1 / protocol 2169",
+      "CPython 3.11 Windows x86-64 companion",
+      "Windows Bedrock 1.26.45; keyboard/mouse tested",
+      "living permitted player; protection guards permit opening"
+    ],
+    "slot_roles": {
+      "cartographyinputcontainer": 55,
+      "cartographyadditionalcontainer": 56,
+      "cartographyresultpreviewcontainer": 57,
+      "createdoutputcontainer": 60
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected live operations; not complete vanilla parity or production certification",
+    "context_kind": "player",
+    "api_method": "open_native",
+    "container_type": 30,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/live-evidence/index.json"
+    ]
+  },
+  {
+    "id": "enchanting",
+    "category": "workstation",
+    "commands": [
+      "/workstations open enchanting",
+      "/enchanting",
+      "/etable"
+    ],
+    "aliases": [
+      "enchanting",
+      "etable"
+    ],
+    "permission": "remoteworkstations.open.enchanting",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "enchantinginputcontainer": 22,
+      "enchantingmaterialcontainer": 23
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 3,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      146,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-enchanting.json"
+    ]
+  },
+  {
+    "id": "furnace",
+    "category": "workstation",
+    "commands": [
+      "/workstations open furnace",
+      "/furnace"
+    ],
+    "aliases": [
+      "furnace"
+    ],
+    "permission": "remoteworkstations.open.furnace",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "furnaceingredientcontainer": 25,
+      "furnacefuelcontainer": 24,
+      "furnaceresultcontainer": 26
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 2,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-furnace.json"
+    ]
+  },
+  {
+    "id": "blastfurnace",
+    "category": "workstation",
+    "commands": [
+      "/workstations open blastfurnace",
+      "/blastfurnace"
+    ],
+    "aliases": [
+      "blastfurnace"
+    ],
+    "permission": "remoteworkstations.open.blastfurnace",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "blastfurnaceingredientcontainer": 45,
+      "furnacefuelcontainer": 24,
+      "furnaceresultcontainer": 26
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 27,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-blastfurnace.json"
+    ]
+  },
+  {
+    "id": "smoker",
+    "category": "workstation",
+    "commands": [
+      "/workstations open smoker",
+      "/smoker"
+    ],
+    "aliases": [
+      "smoker"
+    ],
+    "permission": "remoteworkstations.open.smoker",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "smokeringredientcontainer": 46,
+      "furnacefuelcontainer": 24,
+      "furnaceresultcontainer": 26
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 28,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-smoker.json"
+    ]
+  },
+  {
+    "id": "brewing",
+    "category": "workstation",
+    "commands": [
+      "/workstations open brewing",
+      "/brewing"
+    ],
+    "aliases": [
+      "brewing"
+    ],
+    "permission": "remoteworkstations.open.brewing",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "brewingstandinputcontainer": 9,
+      "brewingstandresultcontainer": 10,
+      "brewingstandfuelcontainer": 11
+    },
+    "administrator_only": false,
+    "validation_scope": "Selected development operations; complete recipe, device, concurrency and crash coverage is separate.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 4,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/product-brewing.json"
+    ]
+  },
+  {
+    "id": "beacon",
+    "category": "workstation",
+    "commands": [
+      "/workstations open beacon",
+      "/beacon"
+    ],
+    "aliases": [
+      "beacon"
+    ],
+    "permission": "remoteworkstations.open.beacon",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "beaconpaymentcontainer": 8
+    },
+    "administrator_only": false,
+    "validation_scope": "Installed a1: hopper named-item round trip, paid beacon Haste and crafter disabled-slot persistence; each case retains its exact wheel identity.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 13,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      56,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/packaged-index.json"
+    ]
+  },
+  {
+    "id": "crafter",
+    "category": "workstation",
+    "commands": [
+      "/workstations open crafter",
+      "/crafter"
+    ],
+    "aliases": [
+      "crafter"
+    ],
+    "permission": "remoteworkstations.open.crafter",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Opens the real authorized source using BDS inventory/gameplay machinery. Native source identity and selected live operations are recorded; world ticking and source permissions remain required. See the per-entry validation scope.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {
+      "crafterlevelentitycontainer": 62
+    },
+    "administrator_only": false,
+    "validation_scope": "Installed a1: hopper named-item round trip, paid beacon Haste and crafter disabled-slot persistence; each case retains its exact wheel identity.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 36,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      56,
+      147,
+      148,
+      306
+    ],
+    "evidence": [
+      "research/catalog-evidence/packaged-index.json"
+    ]
+  },
+  {
+    "id": "lectern",
+    "category": "contextual",
+    "commands": [
+      "/workstations open lectern"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.lectern",
+    "backend": "native-linked-block-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Opens the real lectern book, preserving its NBT and delegating page changes to the guarded native setter. Installed a3 retained page state across reopen and passed manual/forced closure and rapid switching.",
+    "requirements": [
+      "native.enabled=true and native.linked.enabled=true",
+      "exact admitted Windows native companion and Bedrock 1.26.45",
+      "real loaded block in the player dimension; processing requires world ticking",
+      "server-authorized BlockContext or configured source",
+      "interface permission plus source permission; protection guards permit access"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Installed a3 book reading/page/lifecycle tests; held-book editing and book ejection are separate capabilities.",
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 25,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      56,
+      125,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/lectern-index.json"
+    ]
+  },
+  {
+    "id": "writtenbook",
+    "category": "contextual",
+    "commands": [
+      "/workstations open writtenbook"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.writtenbook",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "The actual Player::openBook entry at RVA 0x693c50 returns immediately for a null BlockActor; the verified server path is lectern-only. Held reading is client item interaction. No verified server force-open trigger is bound; book text stays out of diagnostics.",
+    "requirements": [
+      "real permitted entity/item/block context",
+      "ownership and lifecycle validation"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "held-item",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [
+      97
+    ],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "bookediting",
+    "category": "contextual",
+    "commands": [
+      "/workstations open bookediting"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.bookediting",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "BookEdit 97 identifies a real inventory slot and typed replace/add/delete/swap/finalize operations. It is a client save protocol, not an editor-opening packet. Held writable-book identity, signed-state validation and a server open trigger are not bound.",
+    "requirements": [
+      "real permitted entity/item/block context",
+      "ownership and lifecycle validation"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "held-item",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [
+      97
+    ],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "villager",
+    "category": "contextual",
+    "commands": [
+      "/workstations open villager"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.villager",
+    "backend": "native-linked-trade-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Installed a7 completed a real merchant offer with native payment/output, retained the incremented stock use across reopen and restored the player baseline. Native interaction veto also blocked opening. BDS owns offers, customer, profession and trade validation. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows runtime and Windows Bedrock 1.26.45",
+      "real permitted loaded merchant EntityContext; native interaction must allow access",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Selected mason-villager and wandering-trader offers, stock persistence and protection-event veto; all professions, discounts, restock and concurrent customers remain separate.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 15,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      80,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/trade-index.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "wanderingtrader",
+    "category": "contextual",
+    "commands": [
+      "/workstations open wanderingtrader"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.wanderingtrader",
+    "backend": "native-linked-trade-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Installed a7 completed a real merchant offer with native payment/output, retained the incremented stock use across reopen and restored the player baseline. Native interaction veto also blocked opening. BDS owns offers, customer, profession and trade validation. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows runtime and Windows Bedrock 1.26.45",
+      "real permitted loaded merchant EntityContext; native interaction must allow access",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Selected mason-villager and wandering-trader offers, stock persistence and protection-event veto; all professions, discounts, restock and concurrent customers remain separate.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 15,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      80,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/trade-index.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "horse",
+    "category": "contextual",
+    "commands": [
+      "/workstations open horse"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.horse",
+    "backend": "native-linked-equipment-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "The installed native backend passed real horse saddle/armor or chested-donkey storage deposit, close/reopen and withdrawal with exact NBT and player baseline restoration. Source ownership and native attachment determine access and layout. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "real loaded EntityContext with source permission and protection approval",
+      "actual native owner for tameable pets; authorized shared source for camels",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "research/catalog-evidence/equipment-index.json: immutable installed a6 horse saddle/armor, donkey storage and introduced native actor display; remaining lifecycle and variant checks are separate.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 12,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      81,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/equipment-index.json",
+      "research/catalog-evidence/trade-index.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "donkey",
+    "category": "contextual",
+    "commands": [
+      "/workstations open donkey"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.donkey",
+    "backend": "native-linked-equipment-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "The installed native backend passed real horse saddle/armor or chested-donkey storage deposit, close/reopen and withdrawal with exact NBT and player baseline restoration. Source ownership and native attachment determine access and layout. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "real loaded EntityContext with source permission and protection approval",
+      "actual native owner for tameable pets; authorized shared source for camels",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "research/catalog-evidence/equipment-index.json: immutable installed a6 horse saddle/armor, donkey storage and introduced native actor display; remaining lifecycle and variant checks are separate.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 12,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      81,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/equipment-index.json",
+      "research/catalog-evidence/trade-index.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "mule",
+    "category": "contextual",
+    "commands": [
+      "/workstations open mule"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.mule",
+    "backend": "native-linked-equipment-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "The native equipment backend is implemented and its actual vanilla screen opened in the development probe. Native ownership, chest attachment and llama strength determine access and slots. This specific equipment variant has no installed item-transfer qualification. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "real loaded EntityContext with source permission and protection approval",
+      "actual native owner for tameable pets; authorized shared source for camels",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Development probe: ten real screens; selected horse and donkey transfers. Remaining equipment, strength and input variants require separate qualification.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 12,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      81,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/mule-equipment.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "llama",
+    "category": "contextual",
+    "commands": [
+      "/workstations open llama"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.llama",
+    "backend": "native-linked-equipment-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "The native equipment backend is implemented and its actual vanilla screen opened in the development probe. Native ownership, chest attachment and llama strength determine access and slots. This specific equipment variant has no installed item-transfer qualification. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "real loaded EntityContext with source permission and protection approval",
+      "actual native owner for tameable pets; authorized shared source for camels",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Development probe: ten real screens; selected horse and donkey transfers. Remaining equipment, strength and input variants require separate qualification.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 12,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      81,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/llama-equipment.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "traderllama",
+    "category": "contextual",
+    "commands": [
+      "/workstations open traderllama"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.traderllama",
+    "backend": "native-linked-equipment-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "The native equipment backend is implemented and its actual vanilla screen opened in the development probe. Native ownership, chest attachment and llama strength determine access and slots. This specific equipment variant has no installed item-transfer qualification. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "real loaded EntityContext with source permission and protection approval",
+      "actual native owner for tameable pets; authorized shared source for camels",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Development probe: ten real screens; selected horse and donkey transfers. Remaining equipment, strength and input variants require separate qualification.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 12,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      81,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/trader_llama-equipment.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "chestboat",
+    "category": "contextual",
+    "commands": [
+      "/workstations open chestboat"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.chestboat",
+    "backend": "native-linked-entity-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Real BDS entity inventory through open_entity(). Installed 0.4.0a4 passed named enchanted item deposit, reopen and withdrawal for all three kinds, live hopper pickup, chest-boat movement and source-removal closure. Broader recovery and variant testing remains separate.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "actual loaded entity in the player dimension; source access permission",
+      "server-selected EntityContext; protection guards permit access"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "research/catalog-evidence/entity-index.json binds the selected Windows keyboard/mouse tests to the immutable 0.4.0a4 wheel.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 0,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/entity-index.json"
+    ]
+  },
+  {
+    "id": "chestminecart",
+    "category": "contextual",
+    "commands": [
+      "/workstations open chestminecart"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.chestminecart",
+    "backend": "native-linked-entity-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Real BDS entity inventory through open_entity(). Installed 0.4.0a4 passed named enchanted item deposit, reopen and withdrawal for all three kinds, live hopper pickup, chest-boat movement and source-removal closure. Broader recovery and variant testing remains separate.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "actual loaded entity in the player dimension; source access permission",
+      "server-selected EntityContext; protection guards permit access"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "research/catalog-evidence/entity-index.json binds the selected Windows keyboard/mouse tests to the immutable 0.4.0a4 wheel.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 0,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/entity-index.json"
+    ]
+  },
+  {
+    "id": "hopperminecart",
+    "category": "contextual",
+    "commands": [
+      "/workstations open hopperminecart"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.hopperminecart",
+    "backend": "native-linked-entity-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Real BDS entity inventory through open_entity(). Installed 0.4.0a4 passed named enchanted item deposit, reopen and withdrawal for all three kinds, live hopper pickup, chest-boat movement and source-removal closure. Broader recovery and variant testing remains separate.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "actual loaded entity in the player dimension; source access permission",
+      "server-selected EntityContext; protection guards permit access"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "research/catalog-evidence/entity-index.json binds the selected Windows keyboard/mouse tests to the immutable 0.4.0a4 wheel.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 8,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/entity-index.json"
+    ]
+  },
+  {
+    "id": "camel",
+    "category": "contextual",
+    "commands": [
+      "/workstations open camel"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.camel",
+    "backend": "native-linked-equipment-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "The native equipment backend is implemented and its actual vanilla screen opened in the development probe. Native ownership, chest attachment and llama strength determine access and slots. This specific equipment variant has no installed item-transfer qualification. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "real loaded EntityContext with source permission and protection approval",
+      "actual native owner for tameable pets; authorized shared source for camels",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Development probe: ten real screens; selected horse and donkey transfers. Remaining equipment, strength and input variants require separate qualification.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 12,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      81,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/camel-equipment.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "camelhusk",
+    "category": "contextual",
+    "commands": [
+      "/workstations open camelhusk"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.camelhusk",
+    "backend": "native-linked-equipment-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "The native equipment backend is implemented and its actual vanilla screen opened in the development probe. Native ownership, chest attachment and llama strength determine access and slots. This specific equipment variant has no installed item-transfer qualification. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "real loaded EntityContext with source permission and protection approval",
+      "actual native owner for tameable pets; authorized shared source for camels",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Development probe: ten real screens; selected horse and donkey transfers. Remaining equipment, strength and input variants require separate qualification.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 12,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      81,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/camel_husk-equipment.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "zombiehorse",
+    "category": "contextual",
+    "commands": [
+      "/workstations open zombiehorse"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.zombiehorse",
+    "backend": "native-linked-equipment-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "The native equipment backend is implemented and its actual vanilla screen opened in the development probe. Native ownership, chest attachment and llama strength determine access and slots. This specific equipment variant has no installed item-transfer qualification. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "real loaded EntityContext with source permission and protection approval",
+      "actual native owner for tameable pets; authorized shared source for camels",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Development probe: ten real screens; selected horse and donkey transfers. Remaining equipment, strength and input variants require separate qualification.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 12,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      81,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/zombie_horse-equipment.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "skeletonhorse",
+    "category": "contextual",
+    "commands": [
+      "/workstations open skeletonhorse"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.skeletonhorse",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "The pinned vanilla skeleton horse has no inventory/equippable component. Its actual native opener created no manager in the isolated test. An entity type or equipment enum does not create a standalone equipment screen.",
+    "requirements": [
+      "real permitted entity/item/block context",
+      "ownership and lifecycle validation"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "interaction-only",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [
+      81
+    ],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "nautilus",
+    "category": "contextual",
+    "commands": [
+      "/workstations open nautilus"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.nautilus",
+    "backend": "native-linked-equipment-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "The native equipment backend is implemented and its actual vanilla screen opened in the development probe. Native ownership, chest attachment and llama strength determine access and slots. This specific equipment variant has no installed item-transfer qualification. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "real loaded EntityContext with source permission and protection approval",
+      "actual native owner for tameable pets; authorized shared source for camels",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Development probe: ten real screens; selected horse and donkey transfers. Remaining equipment, strength and input variants require separate qualification.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 12,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      81,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/nautilus-equipment.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "zombienautilus",
+    "category": "contextual",
+    "commands": [
+      "/workstations open zombienautilus"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.zombienautilus",
+    "backend": "native-linked-equipment-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "The native equipment backend is implemented and its actual vanilla screen opened in the development probe. Native ownership, chest attachment and llama strength determine access and slots. This specific equipment variant has no installed item-transfer qualification. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "native.enabled=true and native.entities.enabled=true",
+      "exact admitted Windows native companion and Windows Bedrock 1.26.45",
+      "real loaded EntityContext with source permission and protection approval",
+      "actual native owner for tameable pets; authorized shared source for camels",
+      "complete client actor tracking; rejoin after mid-world plugin reload"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "validation_scope": "Development probe: ten real screens; selected horse and donkey transfers. Remaining equipment, strength and input variants require separate qualification.",
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 12,
+    "researched_packet_ids": [
+      13,
+      14,
+      41,
+      46,
+      47,
+      49,
+      50,
+      81,
+      111,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/zombie_nautilus-equipment.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ]
+  },
+  {
+    "id": "allay",
+    "category": "contextual",
+    "commands": [
+      "/workstations open allay"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.allay",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "The supplied behavior definitions expose internal item storage used by allay collection and held-item interaction. They do not define a player-openable standalone storage manager; there is no supported remote vanilla screen to expose.",
+    "requirements": [
+      "real permitted entity/item/block context",
+      "ownership and lifecycle validation"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "interaction-only",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "panda",
+    "category": "contextual",
+    "commands": [
+      "/workstations open panda"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.panda",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "The supplied panda inventory is internal held-food state. A player-facing container or trading manager is not defined; remote item inspection would be a custom menu, not a vanilla panda inventory screen.",
+    "requirements": [
+      "real permitted entity/item/block context",
+      "ownership and lifecycle validation"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "interaction-only",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "piglin",
+    "category": "contextual",
+    "commands": [
+      "/workstations open piglin"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.piglin",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "The supplied piglin inventory supports internal pickup and barter behavior. Bartering is an interaction, not a villager offer screen; synthesizing merchant offers would change vanilla behavior.",
+    "requirements": [
+      "real permitted entity/item/block context",
+      "ownership and lifecycle validation"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "interaction-only",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "agent",
+    "category": "contextual",
+    "commands": [
+      "/workstations open agent"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.agent",
+    "backend": "native-agent-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the real Agent inventory through its native ContainerComponent. Bedrock owns its 27 slots and transactions. Existing native ownership, source identity and permissions are rechecked; the plugin never assigns ownership or creates an Agent.",
+    "requirements": [
+      "native.enabled=true, native.entities.enabled=true and native.agent.enabled=true",
+      "actual world Education features and the exact admitted Windows server/client",
+      "live Agent EntityContext owned by the requesting player",
+      "source/interface permissions and protection guard approval"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "entity",
+    "api_method": "open_entity",
+    "container_type": 0,
+    "researched_packet_ids": [
+      21,
+      46,
+      47,
+      49,
+      50,
+      115,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/agent-development-index.json",
+      "research/catalog-evidence/agent-installed-a23-index.json"
+    ],
+    "validation_scope": "Installed a23 passed transfer/reopen, native cursor cancellation, owner revocation, denied unowned access and protection revocation with exact inventory/NBT/aux/XP. Current a24 and broader lifecycle qualification are separate."
+  },
+  {
+    "id": "sign",
+    "category": "editor",
+    "commands": [
+      "/workstations open sign"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.sign",
+    "backend": "native-sign-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Real native front/back sign editor and BDS text validation/filtering/save. Two scoped native hooks admit only an authorized remote sign save at the original distance checks. Cancellation revokes the lease, releases the real editor lock using unchanged native state, and restores the client block.",
+    "requirements": [
+      "administrator",
+      "explicit feature enable",
+      "real permitted editor context"
+    ],
+    "slot_roles": {},
+    "administrator_only": true,
+    "context_kind": "block-editor",
+    "api_method": "open_sign",
+    "container_type": null,
+    "researched_packet_ids": [
+      21,
+      56,
+      115,
+      303
+    ],
+    "evidence": [
+      "research/catalog-evidence/sign-index.json"
+    ],
+    "validation_scope": "Installed a9 front/back saves, cancellation, guard revocation and nearby unmanaged control passed. Delayed-filter stress and other devices remain unqualified."
+  },
+  {
+    "id": "npc",
+    "category": "editor",
+    "commands": [
+      "/workstations open npc"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.npc",
+    "backend": "native-npc-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Uses the real BDS dialogue command and native NPC scene/actions. Only scene identifiers are translated to unique presentation tokens. Native requests require the matching source, scene, one-use action, source permission and protection guards. BDS executes the installed scene commands; cancellation cannot roll back commands already accepted.",
+    "requirements": [
+      "native.enabled=true and native.npc.enabled=true",
+      "actual native world features, exact admitted Windows server and client",
+      "real permitted NPC EntityContext and installed server-authored scenes",
+      "explicit allowed scene branches and protection guard approval"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "entity-dialogue",
+    "api_method": "open_npc",
+    "container_type": null,
+    "researched_packet_ids": [
+      98,
+      169
+    ],
+    "evidence": [
+      "research/catalog-evidence/npc-installed-a22-index.json"
+    ],
+    "validation_scope": "Installed a22 passed native button commands, two-scene branching, API cancellation and protection revocation with native tags and exact inventory/XP. Older a21 close failures remain preserved. Other clients, delayed callbacks and load are unqualified."
+  },
+  {
+    "id": "commandblock",
+    "category": "editor",
+    "commands": [
+      "/workstations open commandblock"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.commandblock",
+    "backend": "native-command-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Actual command-block editor with native source/window allocation, bounded save decoding and scoped native distance admission. BDS retains command filtering and application; copied deferred saves retain revocable session authority. Requires a Creative operator with administrator and source permissions.",
+    "requirements": [
+      "administrator",
+      "explicit feature enable",
+      "real permitted editor context"
+    ],
+    "slot_roles": {},
+    "administrator_only": true,
+    "context_kind": "block-editor",
+    "api_method": "open_linked",
+    "container_type": 16,
+    "researched_packet_ids": [
+      21,
+      46,
+      47,
+      56,
+      78,
+      115
+    ],
+    "evidence": [
+      "research/catalog-evidence/command-editor-index.json"
+    ],
+    "validation_scope": "Installed a15 real save and unchanged-close movement cleanup passed. The same exact-wheel index includes cart save/cancel/guard/mode and sign/jigsaw regressions. Deferred filter stress remains unqualified."
+  },
+  {
+    "id": "commandblockminecart",
+    "category": "editor",
+    "commands": [
+      "/workstations open commandblockminecart"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.commandblockminecart",
+    "backend": "native-command-entity-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Actual Creative GameMode interaction with an authorized live command cart. ActorUniqueID and RuntimeID must resolve the same native source. Bounded saves use BDS filtering/application and revocable copied-payload leases. Default disabled; Creative operator, admin and source permission required. Native riding relationships are read from the source; remote views detach only this client and restore current native links on cleanup.",
+    "requirements": [
+      "administrator",
+      "explicit feature enable",
+      "real permitted editor context"
+    ],
+    "slot_roles": {},
+    "administrator_only": true,
+    "context_kind": "entity-editor",
+    "api_method": "open_entity",
+    "container_type": 16,
+    "researched_packet_ids": [
+      13,
+      14,
+      39,
+      41,
+      46,
+      47,
+      78,
+      111,
+      115
+    ],
+    "evidence": [
+      "research/catalog-evidence/command-editor-index.json",
+      "research/catalog-evidence/riding-development-index.json"
+    ],
+    "validation_scope": "Installed a15 save, cancel, guard and Creative revocation passed. Vanilla control also displayed an empty command field despite retained metadata; prefill and deferred-filter stress remain unqualified."
+  },
+  {
+    "id": "structure",
+    "category": "editor",
+    "commands": [
+      "/workstations open structure"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.structure",
+    "backend": "native-structure-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Real structure editor with scoped native source/save ownership, native filtering and template Save/Load/export controls. Display-relative offsets preserve the actual source selection and are converted back before native application. Default disabled and restricted to Creative administrators.",
+    "requirements": [
+      "administrator",
+      "explicit feature enable",
+      "real permitted editor context"
+    ],
+    "slot_roles": {},
+    "administrator_only": true,
+    "context_kind": "block-editor",
+    "api_method": "open_linked",
+    "container_type": 14,
+    "researched_packet_ids": [
+      21,
+      46,
+      47,
+      56,
+      90,
+      115,
+      132,
+      133
+    ],
+    "evidence": [
+      "research/catalog-evidence/structure-editor-index.json"
+    ],
+    "validation_scope": "Installed a17 passed real-source preview, Save, one-block Load and exact native export. Its silent Back close retained the lease; a18 adds post-save gameplay cleanup. Full option/filter/device coverage remains unqualified."
+  },
+  {
+    "id": "jigsaw",
+    "category": "editor",
+    "commands": [
+      "/workstations open jigsaw"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.jigsaw",
+    "backend": "native-jigsaw-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Actual native source/window and metadata save through BDS block-actor validation. Default disabled; Creative operator and administrator permission required. Scoped native generation/source/save hooks preserve ordinary edits. Jigsaw structure generation is not part of this metadata editor.",
+    "requirements": [
+      "administrator",
+      "explicit feature enable",
+      "real permitted editor context"
+    ],
+    "slot_roles": {},
+    "administrator_only": true,
+    "context_kind": "block-editor",
+    "api_method": "open_linked",
+    "container_type": 32,
+    "researched_packet_ids": [
+      21,
+      46,
+      47,
+      56,
+      115,
+      313
+    ],
+    "evidence": [
+      "research/catalog-evidence/jigsaw-index.json"
+    ],
+    "validation_scope": "Installed a10 metadata save/reopen, cancellation, guard and Creative revocation passed with exact player baseline preservation. Generation is a separate operation."
+  },
+  {
+    "id": "compoundcreator",
+    "category": "education",
+    "commands": [
+      "/workstations open compoundcreator"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.compoundcreator",
+    "backend": "native-chemistry-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Uses the exact native chemistry manager and reads the actual world Education feature flag. Per-manager distance adaptation retains source and subcontainer validation. BDS owns element controls, recipe validation, input consumption and results. Requires an authorized real table and explicit opt-in.",
+    "requirements": [
+      "native.enabled=true, native.linked.enabled=true and native.chemistry.enabled=true",
+      "native world Education features enabled; exact admitted Windows client and runtime",
+      "real loaded source BlockContext in the player dimension",
+      "source permission and protection guards"
+    ],
+    "slot_roles": {
+      "compoundcreatorinput": 35,
+      "compoundcreatoroutputpreview": 36
+    },
+    "administrator_only": false,
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 20,
+    "researched_packet_ids": [
+      21,
+      46,
+      47,
+      49,
+      50,
+      51,
+      115,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/education-native-audit.json",
+      "research/catalog-evidence/chemistry-installed-a22-index.json"
+    ],
+    "validation_scope": "Installed a22 covered hydrogen, water, cobblestone reduction, reducer/compound cancellation and native Lab ice-bomb/failure reactions. The invalid-Lab world output was not captured. The older cancellation failure and its fix remain recorded. Current a24 recipes and crash qualification are separate."
+  },
+  {
+    "id": "elementconstructor",
+    "category": "education",
+    "commands": [
+      "/workstations open elementconstructor"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.elementconstructor",
+    "backend": "native-chemistry-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Uses the exact native chemistry manager and reads the actual world Education feature flag. Per-manager distance adaptation retains source and subcontainer validation. BDS owns element controls, recipe validation, input consumption and results. Requires an authorized real table and explicit opt-in.",
+    "requirements": [
+      "native.enabled=true, native.linked.enabled=true and native.chemistry.enabled=true",
+      "native world Education features enabled; exact admitted Windows client and runtime",
+      "real loaded source BlockContext in the player dimension",
+      "source permission and protection guards"
+    ],
+    "slot_roles": {
+      "elementconstructoroutputpreview": 37
+    },
+    "administrator_only": false,
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 21,
+    "researched_packet_ids": [
+      21,
+      46,
+      47,
+      49,
+      50,
+      51,
+      115,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/education-native-audit.json",
+      "research/catalog-evidence/chemistry-installed-a22-index.json"
+    ],
+    "validation_scope": "Installed a22 covered hydrogen, water, cobblestone reduction, reducer/compound cancellation and native Lab ice-bomb/failure reactions. The invalid-Lab world output was not captured. The older cancellation failure and its fix remain recorded. Current a24 recipes and crash qualification are separate."
+  },
+  {
+    "id": "materialreducer",
+    "category": "education",
+    "commands": [
+      "/workstations open materialreducer"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.materialreducer",
+    "backend": "native-chemistry-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Uses the exact native chemistry manager and reads the actual world Education feature flag. Per-manager distance adaptation retains source and subcontainer validation. BDS owns element controls, recipe validation, input consumption and results. Requires an authorized real table and explicit opt-in.",
+    "requirements": [
+      "native.enabled=true, native.linked.enabled=true and native.chemistry.enabled=true",
+      "native world Education features enabled; exact admitted Windows client and runtime",
+      "real loaded source BlockContext in the player dimension",
+      "source permission and protection guards"
+    ],
+    "slot_roles": {
+      "materialreducerinput": 38,
+      "materialreduceroutput": 39
+    },
+    "administrator_only": false,
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 22,
+    "researched_packet_ids": [
+      21,
+      46,
+      47,
+      49,
+      50,
+      51,
+      115,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/education-native-audit.json",
+      "research/catalog-evidence/chemistry-installed-a22-index.json"
+    ],
+    "validation_scope": "Installed a22 covered hydrogen, water, cobblestone reduction, reducer/compound cancellation and native Lab ice-bomb/failure reactions. The invalid-Lab world output was not captured. The older cancellation failure and its fix remain recorded. Current a24 recipes and crash qualification are separate."
+  },
+  {
+    "id": "labtable",
+    "category": "education",
+    "commands": [
+      "/workstations open labtable"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.labtable",
+    "backend": "native-chemistry-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Uses the exact native chemistry manager and reads the actual world Education feature flag. Per-manager distance adaptation retains source and subcontainer validation. BDS owns element controls, recipe validation, input consumption and results. Requires an authorized real table and explicit opt-in.",
+    "requirements": [
+      "native.enabled=true, native.linked.enabled=true and native.chemistry.enabled=true",
+      "native world Education features enabled; exact admitted Windows client and runtime",
+      "real loaded source BlockContext in the player dimension",
+      "source permission and protection guards"
+    ],
+    "slot_roles": {
+      "labtableinput": 40
+    },
+    "administrator_only": false,
+    "context_kind": "block",
+    "api_method": "open_linked",
+    "container_type": 23,
+    "researched_packet_ids": [
+      21,
+      46,
+      47,
+      49,
+      50,
+      51,
+      109,
+      115,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/education-native-audit.json",
+      "research/catalog-evidence/chemistry-installed-a22-index.json"
+    ],
+    "validation_scope": "Installed a22 covered hydrogen, water, cobblestone reduction, reducer/compound cancellation and native Lab ice-bomb/failure reactions. The invalid-Lab world output was not captured. The older cancellation failure and its fix remain recorded. Current a24 recipes and crash qualification are separate."
+  },
+  {
+    "id": "inventory2x2",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open inventory2x2"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.inventory2x2",
+    "backend": "native-player-inventory-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Opens the actual BDS player inventory, shared by 2x2 crafting, armor, offhand and recipe book. Native 2x2 crafting and an offhand map transfer were exercised; individual tab selection remains client-owned. Cancellation releases plugin tracking; Windows ignores server close packets for this screen, so the player closes it normally before another native UI can open.",
+    "requirements": [
+      "exact admitted Windows BDS/runtime and native.enabled=true",
+      "Windows Bedrock 1.26.45",
+      "living permitted player; current inventory closed"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "embedded",
+    "api_method": "open_native",
+    "container_type": 255,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/catalog-player-inventory-fixed.json",
+      "research/catalog-evidence/2x2-crafted-state.json"
+    ],
+    "validation_scope": "Selected inventory operations and native open; armor variants and every recipe are not qualified."
+  },
+  {
+    "id": "armor",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open armor"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.armor",
+    "backend": "native-player-inventory-windows",
+    "status": "implemented-unverified",
+    "enabled_by_default": false,
+    "reason": "Opens the actual BDS player inventory, shared by 2x2 crafting, armor, offhand and recipe book. Native 2x2 crafting and an offhand map transfer were exercised; individual tab selection remains client-owned. Cancellation releases plugin tracking; Windows ignores server close packets for this screen, so the player closes it normally before another native UI can open.",
+    "requirements": [
+      "exact admitted Windows BDS/runtime and native.enabled=true",
+      "Windows Bedrock 1.26.45",
+      "living permitted player; current inventory closed"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "embedded",
+    "api_method": "open_native",
+    "container_type": 255,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/catalog-player-inventory-fixed.json",
+      "research/catalog-evidence/2x2-crafted-state.json"
+    ],
+    "validation_scope": "Selected inventory operations and native open; armor variants and every recipe are not qualified."
+  },
+  {
+    "id": "offhand",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open offhand"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.offhand",
+    "backend": "native-player-inventory-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Opens the actual BDS player inventory, shared by 2x2 crafting, armor, offhand and recipe book. Native 2x2 crafting and an offhand map transfer were exercised; individual tab selection remains client-owned. Cancellation releases plugin tracking; Windows ignores server close packets for this screen, so the player closes it normally before another native UI can open.",
+    "requirements": [
+      "exact admitted Windows BDS/runtime and native.enabled=true",
+      "Windows Bedrock 1.26.45",
+      "living permitted player; current inventory closed"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "embedded",
+    "api_method": "open_native",
+    "container_type": 255,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/catalog-player-inventory-fixed.json",
+      "research/catalog-evidence/2x2-crafted-state.json"
+    ],
+    "validation_scope": "Selected inventory operations and native open; armor variants and every recipe are not qualified."
+  },
+  {
+    "id": "cursor",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open cursor"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.cursor",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "The cursor is transient state belonging to the active inventory transaction context. It has no standalone window; the native or packet backend owns its validation and cleanup inside the corresponding supported screen.",
+    "requirements": [],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "embedded",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "recipebook",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open recipebook"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.recipebook",
+    "backend": "native-player-inventory-windows",
+    "status": "implemented-tested",
+    "enabled_by_default": false,
+    "reason": "Opens the actual BDS player inventory, shared by 2x2 crafting, armor, offhand and recipe book. Native 2x2 crafting and an offhand map transfer were exercised; individual tab selection remains client-owned. Cancellation releases plugin tracking; Windows ignores server close packets for this screen, so the player closes it normally before another native UI can open.",
+    "requirements": [
+      "exact admitted Windows BDS/runtime and native.enabled=true",
+      "Windows Bedrock 1.26.45",
+      "living permitted player; current inventory closed"
+    ],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "embedded",
+    "api_method": "open_native",
+    "container_type": 255,
+    "researched_packet_ids": [
+      46,
+      47,
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-evidence/catalog-player-inventory-fixed.json",
+      "research/catalog-evidence/2x2-crafted-state.json"
+    ],
+    "validation_scope": "Selected inventory operations and native open; armor variants and every recipe are not qualified."
+  },
+  {
+    "id": "bundle",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open bundle"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.bundle",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "DynamicContainer role 63 references item-backed contents with a dynamic identity. Weight limits, nested item rules and ownership are distinct from chest slots; a verified held-bundle executor and save reconciliation are not implemented.",
+    "requirements": [],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "held-item",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [
+      49,
+      50,
+      147,
+      148
+    ],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "hud",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open hud"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.hud",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "The HUD container enum describes the client gameplay layer. It is not a separately openable inventory or workstation. Supported inventory entry points open the actual player inventory instead.",
+    "requirements": [],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "embedded",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "cauldron",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open cauldron"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.cauldron",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "Cauldron enum 9 does not provide a vanilla workstation screen. Filling, dyeing and potion interactions act on the real block and held item; no standalone remote vanilla container is established.",
+    "requirements": [],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "interaction-only",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "jukebox",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open jukebox"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.jukebox",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "Jukebox enum 17 represents an item-bearing interaction block. Disc insertion/ejection and playback use world interaction, not a standalone player inventory screen.",
+    "requirements": [],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "interaction-only",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "decoratedpot",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open decoratedpot"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.decoratedpot",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "Decorated-pot enum 35 and item storage do not provide a standalone vanilla GUI. Insertion and break/drop behavior remain real block interactions; a custom storage menu would be a different interface.",
+    "requirements": [],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "interaction-only",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "fletching",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open fletching"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.fletching",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "The pinned vanilla fletching table has no usable crafting GUI or corresponding remote recipe manager. A custom recipe selector may use the dependency menu API, explicitly labeled custom.",
+    "requirements": [],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "interaction-only",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "campfire",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open campfire"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.campfire",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "Campfire cooking uses placed world inputs and native block ticking, with no standalone inventory GUI. A furnace screen would change its input, fuel and timing rules.",
+    "requirements": [],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "interaction-only",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  },
+  {
+    "id": "composter",
+    "category": "embedded-or-interaction",
+    "commands": [
+      "/workstations open composter"
+    ],
+    "aliases": [],
+    "permission": "remoteworkstations.open.composter",
+    "backend": "none",
+    "status": "unsupported",
+    "enabled_by_default": false,
+    "reason": "Composting is a real block interaction with native fill probability and extraction. There is no standalone vanilla inventory screen; presenting chest slots would be a custom replacement.",
+    "requirements": [],
+    "slot_roles": {},
+    "administrator_only": false,
+    "context_kind": "interaction-only",
+    "api_method": null,
+    "container_type": null,
+    "researched_packet_ids": [],
+    "evidence": [
+      "research/catalog-disposition-audit.json"
+    ],
+    "validation_scope": "Disabled or feature-gated: schema/component/native evidence establishes this precise gap; no successful remote gameplay claim."
+  }
+]

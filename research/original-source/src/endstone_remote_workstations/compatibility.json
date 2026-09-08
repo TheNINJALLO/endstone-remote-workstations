@@ -1,0 +1,227 @@
+{
+  "plugin": "RemoteWorkstations",
+  "version": "0.3.0a1",
+  "release_kind": "alpha-dependency-api-partial-live-validation",
+  "dependency_api": {
+    "version": "1.0",
+    "custom_menu_backend": "Endstone ActionForm",
+    "native_open": "seven admitted stations",
+    "packet_slot_menus": "unavailable"
+  },
+  "public_api": {
+    "baseline": "0.11.0",
+    "metadata_api_version": "0.11",
+    "mechanical_symbols_checked": 52,
+    "all_present": true
+  },
+  "python": ">=3.11; native companion CPython 3.11 only",
+  "runtime_target": {
+    "endstone": "0.11.10",
+    "bds": "1.26.45.1",
+    "protocol": 2169
+  },
+  "builds": [
+    {
+      "archive": "bedrock-server-Linux-1.26.45.1.zip",
+      "archive_sha256": "b0db86098ee418a9bb226f6f3f51ff2be36542236839375627b29aef3dfa5cda",
+      "executable": "bedrock_server",
+      "binary_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+      "binary_bytes": 243724200,
+      "expected_linux_sha256_match": true,
+      "executed": false,
+      "native_abi_validated": false,
+      "format": "ELF64 little-endian",
+      "machine": 62,
+      "has_symtab": false,
+      "has_dynsym": true,
+      "debug_sections": []
+    },
+    {
+      "archive": "bedrock-server-Windows-1.26.45.1.zip",
+      "archive_sha256": "b27216dd32d034f3bc5fbe3094a70d2b3cec9a9871ca3d7b46a2b8690a1c0b14",
+      "executable": "bedrock_server.exe",
+      "binary_sha256": "92d09c7b74ac6a9805bafc166d8e0a13ac9e5db73dbbb0819e5a14093699d44f",
+      "binary_bytes": 219384144,
+      "expected_linux_sha256_match": false,
+      "executed": false,
+      "native_abi_validated": false,
+      "format": "PE",
+      "machine": 34404
+    }
+  ],
+  "historical_public_plugin_smoke": "research/windows-smoke.json (0.1.0, before native implementation)",
+  "linux_runtime_executed": false,
+  "verified_gameplay_client_paths": [
+    {
+      "platform": "Windows",
+      "client": "1.26.45",
+      "input": "keyboard/mouse",
+      "ui": "Classic",
+      "scope": "selected seven-workstation operations; see research/live-evidence/index.json"
+    }
+  ],
+  "other_client_paths_admitted": false,
+  "native": {
+    "binary_produced": true,
+    "callable_abi_verified": true,
+    "bridge_verified": true,
+    "platform": "windows-x86_64",
+    "compiled_manifest": {
+      "bridge_api": 1,
+      "platform": "windows-x86_64",
+      "python": "CPython 3.11",
+      "endstone_runtime": "0.11.10",
+      "public_api": "0.11",
+      "protocol": 2169,
+      "bds_sha256": "92d09c7b74ac6a9805bafc166d8e0a13ac9e5db73dbbb0819e5a14093699d44f",
+      "runtime_sha256": "0c6f0861c5f9a677058b25776d975654a3586a80d2e4421b069b5e98f536f819",
+      "symbols": [
+        {
+          "runtime": true,
+          "rva": 748752,
+          "size": 109,
+          "purpose": "EndstoneActorBase<Player,Player>::getHandle; matching runtime PDB",
+          "sha256": "33fd7bdb6050a841c13d7e3417ab0d5d762245cf362bd2e06f3abc7ead79a66f"
+        },
+        {
+          "runtime": false,
+          "rva": 2251472,
+          "size": 65,
+          "purpose": "native container opening guard",
+          "sha256": "999af3b3e496f024fc668b30027d61c88cf0f35a11bed264b9549e3bde531ce1"
+        },
+        {
+          "runtime": false,
+          "rva": 6897536,
+          "size": 139,
+          "purpose": "workbench screen source and window allocation",
+          "sha256": "b2566182cea0bae9d96ef4837307f2aa9ed149fb6cc131693eb3a9c1b96aa494"
+        },
+        {
+          "runtime": false,
+          "rva": 41203024,
+          "size": 83,
+          "purpose": "ItemStackNetManager context callback; live vtable slot 6",
+          "sha256": "e8ea8b753882d85988819e1de98fc8fa0aa2fd4469d4220ddc0ee5e816b90900"
+        },
+        {
+          "runtime": false,
+          "rva": 25072176,
+          "size": 1036,
+          "purpose": "anvil native container factory; captured vanilla open stack",
+          "sha256": "c327fe4e93b25bae97fcb1e89b10ffef7ad912f4282b16c71ee415677e0b23ec"
+        },
+        {
+          "runtime": false,
+          "rva": 25097184,
+          "size": 1036,
+          "purpose": "stonecutter native container factory; exact dispatch table",
+          "sha256": "4ff9ddc0779c4af8026a5698296e7e6d403b646159408c2db276ec2ae6441a92"
+        },
+        {
+          "runtime": false,
+          "rva": 25089856,
+          "size": 1036,
+          "purpose": "grindstone native container factory; exact dispatch table and live disenchant",
+          "sha256": "055c2d70f89392128238908824882e2edc7938a7c53b65644133084e7e6da080"
+        },
+        {
+          "runtime": false,
+          "rva": 25070784,
+          "size": 1036,
+          "purpose": "smithing native container factory; exact dispatch table and live upgrade",
+          "sha256": "75f8e6e92dc7f01f56211024be7121204ee58e63c47c0512b0a7a724ddc3db64"
+        },
+        {
+          "runtime": false,
+          "rva": 25093200,
+          "size": 1036,
+          "purpose": "loom native container factory; exact dispatch table and live banner patterns",
+          "sha256": "8497aa4d369b2c732134bc835a60e35e0da6e87b7707e87d9f21de7f1b733660"
+        },
+        {
+          "runtime": false,
+          "rva": 25077200,
+          "size": 1036,
+          "purpose": "cartography native container factory; exact dispatch table and live map scale",
+          "sha256": "2d2f80df657a7fe593ccbe9950eabdd208e4a185c0d97a940d341e4b27413695"
+        }
+      ],
+      "ownership": "BDS retains all container models; bridge retains no native player or item pointers",
+      "hooks": false,
+      "source": "native/windows_bridge.cpp"
+    },
+    "known_build_operation": "explicit candidate opt-in; BDS exclusively owns transactions",
+    "unknown_build_operation": "refused"
+  },
+  "transactional_production_enabled": [],
+  "transactional_candidate_implemented": [
+    "craft",
+    "anvil",
+    "stonecutter",
+    "grindstone",
+    "smithing",
+    "loom",
+    "cartography"
+  ],
+  "default_native_enabled": false,
+  "fixtures": {
+    "origin": "synthetic codecs plus actual isolated Windows captures",
+    "verified_snapshot_comparisons": 23
+  },
+  "release_gaps": [
+    "live storage round trip",
+    "actual remote Ender Chest usability",
+    "held-shulker escrow and writeback",
+    "processing and contextual backends",
+    "complete recipe and XP parity matrix",
+    "full-inventory durable overflow",
+    "BDS crash-save boundaries",
+    "mobile and controller",
+    "third-party interoperability and load"
+  ],
+  "references": [
+    {
+      "name": "chest-ui",
+      "repository": "https://github.com/Herobrine643928/Chest-UI",
+      "requested_ref": "main",
+      "commit": "115d95c8239a0ee2f578a9a7710699a8f6627f26",
+      "archive_sha256": "f75f1a99441fd78d723a39b2cf5de1c857dbd44784f19d181d4086f659777c04"
+    },
+    {
+      "name": "inventoryui",
+      "repository": "https://github.com/Shock95/endstone-inventoryui",
+      "requested_ref": "main",
+      "commit": "a463cf110d2f799b4382ff5fbca829d1f912d2a7",
+      "archive_sha256": "050f765dda0ec4d9abd2f92358e155609a65c1db444d9399afdce3e1f9583026"
+    },
+    {
+      "name": "endstone-0.11.0",
+      "repository": "https://github.com/EndstoneMC/endstone",
+      "requested_ref": "v0.11.0",
+      "commit": "f534d435043029e6010b435e4480bfdb76fe39ae",
+      "archive_sha256": "f7021b8d1f901396dfe286707add20db3a76a262a5217e44c734680fd8fbfe46"
+    },
+    {
+      "name": "endstone-0.11.10",
+      "repository": "https://github.com/EndstoneMC/endstone",
+      "requested_ref": "v0.11.10",
+      "commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+      "archive_sha256": "bf9bb8d08b1f2209228e0ecfd05492cc229f7586e27fd68f31d2004adb467997"
+    },
+    {
+      "name": "protocol-r26_u4",
+      "repository": "https://github.com/EndstoneMC/protocol-docs",
+      "requested_ref": "r26_u4",
+      "commit": "e125b570c1cec03199083eaa845a23fe91b2a9c5",
+      "archive_sha256": "219bca71bef977753b0a90ef2f068bd7c616aa330b0add267bfb443bef4809ce"
+    },
+    {
+      "name": "mojang-protocol",
+      "repository": "https://github.com/Mojang/bedrock-protocol-docs",
+      "requested_ref": "main",
+      "commit": "990a3b62f030dbd934a031ad07b2aa7d017f389d",
+      "archive_sha256": "74ab8f485da425a5efe3a0be5adc2e43fb0b0dbb375347279a95789d9e5e5c1e"
+    }
+  ]
+}
