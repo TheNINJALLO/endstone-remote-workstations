@@ -24,7 +24,9 @@ jobs:
           $env:VCF_EXPECTED_ROOT="$pwd/.native-deps/expected-lite"
           ./tools/native/build-windows.ps1 -Preset ${{ matrix.preset }}
       - name: Check immutable migration scope
-        run: python tools/native/scope.py
+        run: |
+          python tools/native/scope.py
+          python tools/native/test_scope.py
       - name: Upload development artifacts
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
@@ -37,7 +39,9 @@ jobs:
       - name: Build in pinned linux/amd64 container
         run: sh tools/native/build-linux.sh
       - name: Check immutable migration scope
-        run: python3 tools/native/scope.py
+        run: |
+          python3 tools/native/scope.py
+          python3 tools/native/test_scope.py
       - name: Upload development ELF and link report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

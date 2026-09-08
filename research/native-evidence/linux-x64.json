@@ -9,7 +9,7 @@
     "protocol": null,
     "bds_sha256": null,
     "loader_sha256": null,
-    "artifact_sha256": "869ee272568e4135971276fe222a66bd21634dad3bbda3c69e793950f32c01f2"
+    "artifact_sha256": "f79e40db42ed9e55afc44e7a962f3d53018ae06e3116b252c2c0e998db13b5a9"
   },
   "build": "tested-in-linux-docker-ci",
   "native_loader_smoke": "blocked",
@@ -8496,11 +8496,11 @@
     }
   },
   "build_evidence": {
-    "source_revision": "404aa913dae1a5f6c29d796d4dd17f1a4e24126b",
-    "workflow": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34282759521",
+    "source_revision": "577edd781a112625dfb620d45972ba98d743b765",
+    "workflow": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34285780448",
     "host": "GitHub ubuntu-24.04 runner, pinned linux/amd64 Docker image",
-    "native_tests": "11/11 passed; ASan/UBSan passed; NBT and storage fuzzing each passed 100000 inputs",
-    "elf_report": "linux-404aa91-elf-report.txt",
+    "native_tests": "12/12 passed; ASan/UBSan passed; NBT, storage and item-wire fuzzing each passed 100000 inputs",
+    "elf_report": "linux-577edd7-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.14",
     "direct_libraries": [
       "libc++.so.1",
@@ -8514,13 +8514,37 @@
   },
   "sdk_version": "1.1; ABI 1.0 prefix retained",
   "sanitizers": {
-    "source_revision": "404aa913dae1a5f6c29d796d4dd17f1a4e24126b",
+    "source_revision": "577edd781a112625dfb620d45972ba98d743b765",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
     "storage_fuzz_inputs": 100000,
-    "test_report": "linux-404aa91-sanitizer-tests.txt",
-    "nbt_report": "linux-404aa91-fuzz-nbt.txt",
-    "storage_report": "linux-404aa91-fuzz-storage.txt"
+    "test_report": "linux-577edd7-sanitizer-tests.txt",
+    "nbt_report": "linux-577edd7-fuzz-nbt.txt",
+    "storage_report": "linux-577edd7-fuzz-storage.txt",
+    "items_fuzz_inputs": 100000,
+    "items_report": "linux-577edd7-fuzz-items.txt"
+  },
+  "native_tests": {
+    "source_revision": "577edd781a112625dfb620d45972ba98d743b765",
+    "ci": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34285780448",
+    "ctest": "12/12 passed: core, asynchronous lifecycle, SDK guards/actions, storage reservations, item wire/registry/observation, C ABI, six journal crash boundaries",
+    "core_checks": 50181,
+    "storage_checks": 10309,
+    "item_wire_checks": 20754,
+    "sanitizers": "12/12 passed under Linux ASan/UBSan",
+    "fuzz_inputs": {
+      "nbt": 100000,
+      "storage": 100000,
+      "items": 100000
+    }
+  },
+  "item_wire_observation": {
+    "implementation": "native bounded packet codecs and passive outgoing observer",
+    "runtime_connection": "compiled; Linux runtime admission unavailable",
+    "actual_player_registry_and_snapshot": "untested; no client connected to the new DLL",
+    "inventory_publication": "not-implemented",
+    "fixture_kind": "generated independent conformance vectors, not client captures",
+    "fixture_sha256": "5376d1c38b47a8f8bc775c9cf7624c145500c2eea35c690ed21ec48d7bd5ae56"
   }
 }

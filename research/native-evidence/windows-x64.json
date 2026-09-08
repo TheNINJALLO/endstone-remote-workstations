@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "92d09c7b74ac6a9805bafc166d8e0a13ac9e5db73dbbb0819e5a14093699d44f",
     "loader_sha256": "0c6f0861c5f9a677058b25776d975654a3586a80d2e4421b069b5e98f536f819",
-    "artifact_sha256": "229976cdfb09fa157ce48fe1bb3d69bb139f15f76c2fd4075ca37e766c09fa21"
+    "artifact_sha256": "ee0e5fe6155fea9470a4438d935ff5d7a02ea64962685fa7223dc90e978254b3"
   },
   "build": "tested",
   "native_loader_smoke": "tested",
@@ -8496,18 +8496,19 @@
     }
   },
   "native_tests": {
-    "ctest": "11/11 passed (core, asynchronous lifecycle, SDK guards/actions, storage captures/reservations, C ABI and six journal crash boundaries)",
+    "ctest": "12/12 passed: core, asynchronous lifecycle, SDK guards/actions, storage reservations, item wire/registry/observation, C ABI, six journal crash boundaries",
     "scope": "69 entries and 10 additional surfaces retained",
     "qualification": "not-qualified",
     "core_checks": 50181,
     "storage_checks": 10309,
-    "source_revision": "404aa913dae1a5f6c29d796d4dd17f1a4e24126b",
-    "ci": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34282759521",
+    "source_revision": "577edd781a112625dfb620d45972ba98d743b765",
+    "ci": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34285780448",
     "ci_configurations": [
       "windows-release: passed",
       "windows-debug: passed"
     ],
-    "live_client_gameplay": "untested; foreground input unavailable after interrupted server-add flow"
+    "live_client_gameplay": "untested; foreground input unavailable after interrupted server-add flow",
+    "item_wire_checks": 20754
   },
   "experimental_configuration": {
     "experimental_original_windows": true,
@@ -8530,5 +8531,13 @@
       "native_loader_smoke": "tested",
       "client_gameplay": "untested"
     }
-  ]
+  ],
+  "item_wire_observation": {
+    "implementation": "native bounded packet codecs and passive outgoing observer",
+    "runtime_connection": "loaded and diagnose command tested",
+    "actual_player_registry_and_snapshot": "untested; no client connected to the new DLL",
+    "inventory_publication": "not-implemented",
+    "fixture_kind": "generated independent conformance vectors, not client captures",
+    "fixture_sha256": "5376d1c38b47a8f8bc775c9cf7624c145500c2eea35c690ed21ec48d7bd5ae56"
+  }
 }

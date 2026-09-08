@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "source_revision": "577edd781a112625dfb620d45972ba98d743b765",
+  "native_ci": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34285780448",
+  "legacy_ci": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34285780454",
+  "tests": {
+    "native_ctest": 12,
+    "core_checks": 50181,
+    "storage_checks": 10309,
+    "item_wire_checks": 20754,
+    "fuzz_inputs": {
+      "nbt": 100000,
+      "storage": 100000,
+      "items": 100000
+    },
+    "legacy_pytest": 661
+  },
+  "windows_dll_sha256": "ee0e5fe6155fea9470a4438d935ff5d7a02ea64962685fa7223dc90e978254b3",
+  "linux_so_sha256": "f79e40db42ed9e55afc44e7a962f3d53018ae06e3116b252c2c0e998db13b5a9",
+  "windows_native_loader_smoke": "passed with original ABI 1.0 catalog consumer and ABI 1.1 NativePassthrough consumer",
+  "new_native_client_gameplay": "untested; Minecraft foreground unavailable and 0 connected players",
+  "all_ui_acceptance": "not-qualified",
+  "incomplete_canonical_platform_outcomes": 138,
+  "incomplete_extra_platform_outcomes": 20,
+  "runtime_blockers": [
+    "No local Docker CLI/Desktop or installed WSL",
+    "Exact Onistone SDK/runtime not supplied or admitted",
+    "No foreground Minecraft input for current native client tests"
+  ],
+  "remaining_implementation": [
+    "Linux native ABI/UI adapters",
+    "Remaining original UI families and all end-to-end custom UI integrations",
+    "Protected inventory menus, pagination and remaining family SDK consumers",
+    "Native inventory publication and full native item/held storage bindings",
+    "Merchant/machine/map services, persistent storage and BDS/plugin save reconciliation",
+    "Configuration migration, complete SDK/CMake packaging and final per-entry qualification"
+  ],
+  "publication": "Feature branch development artifacts only; no release, tag, production deployment or main merge"
+}

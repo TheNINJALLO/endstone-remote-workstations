@@ -8,6 +8,7 @@ Native builds produce a Windows DLL and a Linux ELF `.so`, a C ABI/C++ SDK and a
 All 69 original catalog entries, aliases, permissions and source contracts are preserved in an immutable migration baseline. Catalog retention is distinct from native/custom gameplay implementation; the full-scope acceptance gate currently fails. Docker builds execute on GitHub's Linux runner. Local Docker/WSL and exact Onistone runtime inputs remain unavailable; Linux private ABI admission and gameplay remain blocked.
 
 - [Migration audit and remaining work](docs/MIGRATION_AUDIT.md)
+- [Current implementation report, tested artifacts and exact remaining scope](docs/NATIVE_IMPLEMENTATION_REPORT.md)
 - [Native build and test instructions](docs/NATIVE_BUILDING.md)
 - [Native SDK and compiled consumer](docs/NATIVE_SDK.md)
 - [Native storage transactions and current integration boundary](docs/NATIVE_STORAGE.md)
@@ -16,6 +17,7 @@ All 69 original catalog entries, aliases, permissions and source contracts are p
 - [Capability matrix](docs/CAPABILITY_MATRIX.md)
 - [All-entry examples and gaps](docs/ALL_UI_EXAMPLES.md)
 - [Frozen original catalog](research/original-ui-catalog.json)
+- [Interactive qualification records and release gate](docs/NATIVE_QUALIFICATION_RECORDS.md)
 
 Implemented core work includes staged item transfers, exact metadata policies, recipe/stock revisions, bounded processing, deferred permission-checked actions, consumer-owned session lifetimes and a durable uncertainty journal. Native inventory publication, screen customization, full SDK parity, map integration and cross-save recovery qualification remain incomplete.
 

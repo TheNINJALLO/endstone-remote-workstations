@@ -31,6 +31,13 @@ Do not regenerate it from the C++ catalog.
 
 ## Build and runtime evidence
 
+The current [implementation checkpoint](NATIVE_IMPLEMENTATION_REPORT.md)
+records source `577edd7`, its exact installed Windows DLL and Linux CI ELF,
+12 passing native test jobs, three 100,000-input sanitizer fuzz targets and
+the remaining all-UI scope. Older runs below retain their original provenance.
+The new item descriptor/registry observer is passive; it does not complete
+native inventory publication or qualify a new custom UI.
+
 The Windows build uses C++20, CMake 3.31.6, MSVC 19.44.35222.0,
 toolset 14.44.35207, dynamic MSVC runtime and iterator ABI level 0.
 The exact 191 public SDK input files are checked by CMake.
