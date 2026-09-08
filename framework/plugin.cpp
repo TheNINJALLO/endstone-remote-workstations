@@ -1,5 +1,6 @@
 #include <oni/vcf/core.hpp>
 #include <oni/vcf/sdk.hpp>
+#include <oni/vcf/packet_items.hpp>
 #include "platform/runtime.hpp"
 #ifdef _WIN32
 #include "platform/windows/bridge.hpp"
@@ -24,6 +25,7 @@ class VirtualContainerFramework:public endstone::Plugin {
  std::unique_ptr<Engine> engine_;std::unique_ptr<sdk::Client> self_;vcf_api api_{};
  platform::Admission admission_;std::shared_ptr<endstone::Task> task_;
  bool original_native_enabled_=false;
+ wire::Inbox item_observations_;
 #ifdef _WIN32
  std::unique_ptr<platform::windows::NativeUi> native_ui_;
 #endif
@@ -170,6 +172,7 @@ public:
    for(uint32_t i=0;i<catalog().size();++i){auto name="catalog."+std::string(catalog()[i].id);catalog_actions_.emplace(name,i);self_->action(name,choose,this,std::string(catalog()[i].permission));}
    *lifetime_=true;
    task_=getServer().getScheduler().runTaskTimer(*this,[this]{try{
+    item_observations_.poll();
     poll_forms();
 #ifdef _WIN32
     if(native_ui_)native_ui_->tick();
@@ -197,13 +200,14 @@ public:
 #endif
   if(engine_){try{engine_->shutdown();}catch(...){}}
   forms_.clear();
+  item_observations_.clear();
 #ifdef _WIN32
   native_ui_.reset();
   try{platform::windows::shutdown_editors();}catch(...){}
 #endif
   self_.reset();attach_engine(nullptr);engine_.reset();
  }
- void quit(endstone::PlayerQuitEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
+ void quit(endstone::PlayerQuitEvent&e){item_observations_.remove(e.getPlayer().getUniqueId().str());if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
  void death(endstone::PlayerDeathEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
  void teleport(endstone::PlayerTeleportEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
  void dimension(endstone::PlayerDimensionChangeEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
@@ -215,6 +219,11 @@ public:
  }
  void sent(endstone::PacketSendEvent&e){
   if(e.getPlayer()&&!e.isCancelled()){
+   // The payload schema is pinned to the admitted build. This passive cache
+   // never cancels traffic or grants authority over BDS inventory.
+   if(engine_&&e.getPlayer()->getGameVersion()=="1.26.45"&&(e.getPacketId()==162||e.getPacketId()==49||e.getPacketId()==50)){
+    const auto& payload=e.getPayload();item_observations_.submit(e.getPlayer()->getUniqueId().str(),e.getPacketId(),{reinterpret_cast<const uint8_t*>(payload.data()),payload.size()});
+   }
    auto it=forms_.find(e.getPlayer()->getUniqueId().str());
    if(it!=forms_.end()){
     if(e.getPacketId()==100){
@@ -234,7 +243,11 @@ public:
    if(name=="vcf"||name=="workstations"){
     if(!args.empty()&&(args[0]=="status"||args[0]=="diagnose"||args[0]=="sessions")){
      if(!sender.hasPermission("remoteworkstations.status")){sender.sendErrorMessage("Permission denied.");return true;}
-     sender.sendMessage("Native VCF C ABI 1.1; sessions "+std::to_string(engine_->session_count())+"; 69 entries retained; all-UI NOT QUALIFIED.");return true;
+     sender.sendMessage("Native VCF C ABI 1.1; sessions "+std::to_string(engine_->session_count())+"; 69 entries retained; all-UI NOT QUALIFIED.");
+     if(args[0]=="diagnose"){
+      auto stats=item_observations_.stats();sender.sendMessage("Item packet observations: registries "+std::to_string(stats.registries)+", complete snapshots "+std::to_string(stats.inventories)+", queued "+std::to_string(stats.pending)+", refused "+std::to_string(stats.rejected)+". Observation is not inventory-write qualification.");
+     }
+     return true;
     }
     if(!args.empty()&&(args[0]=="capabilities"||args[0]=="list")){
      for(const auto&row:catalog())sender.sendMessage(std::string(row.id)+": native/custom migration unqualified");return true;

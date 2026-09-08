@@ -42,8 +42,11 @@ of this successful build.
 
 The additional `sanitizer-export` Docker target runs the core, asynchronous
 lifecycle and six journal crash-boundary tests under ASan/UBSan, then executes
-100,000 bounded libFuzzer inputs each for NBT and the storage request decoder.
+100,000 bounded libFuzzer inputs each for NBT, storage requests/responses, and
+item descriptor/content/slot/registry decoding.
 Storage seeds come from the exact hashed, sanitized original capture fixture.
+Item-wire seeds are separately labeled generated conformance vectors from the
+independent Python codecs; their fixture hash is also locked.
 The image's distro libFuzzer archive was
 built against libstdc++ and failed to link with this project's libc++ build.
 The test target therefore builds the official standalone libFuzzer sources at

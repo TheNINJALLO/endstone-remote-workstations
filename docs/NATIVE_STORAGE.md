@@ -6,6 +6,40 @@ native core implementation; no active server packet handler or valuable-item
 writer uses it yet. Storage, Ender Chest, shulker and bundle gameplay therefore
 remain unqualified.
 
+`framework/packet_items.cpp` now supplies the separate native descriptor,
+content (49), slot (50) and registry (162) codecs. The plugin connects these to
+a passive outgoing-packet observer, with deferred decoding from the server
+scheduler. `/vcf diagnose` reports complete registry/inventory observations,
+pending packets and refusals. The observer sends no packets, invokes no consumer
+callbacks, and writes no inventory. Its data is not a native ItemStack or an
+authorization grant; packets sent by another plugin cannot authorize transfers.
+
+Descriptor user data remains byte-exact, including opaque NBT, predicate-like
+data and item-specific tails. Auxiliary values, block runtime IDs, signed item
+IDs, optional stack IDs and dynamic-container references are retained. Registry
+component data remains network NBT, with bounded depth, node/array counts,
+canonical integers, valid UTF-8, distinct compound keys and unique identifiers
+and numeric IDs. This does not synthesize legal shield, nested-container or
+adventure-predicate items from partial metadata. Actual native item construction
+and metadata-safe publication still need their own implementation and evidence.
+
+The observer requires a complete 36-slot server inventory packet; deltas cannot
+invent missing slots. A changed registry invalidates that baseline. Packet
+errors, limits and disconnect discard the affected player's cache. Queued data
+does not report a ready snapshot. Bounds are 16 players, 32 queued packets per
+player, 16 MiB of queued payload, 16 MiB of retained wire data and 65,536 registry
+entries across players. Inventory payloads are at most 64 KiB; a registry is at
+most 8 MiB. One queued packet is decoded per scheduler tick with fair rotation;
+the maximum-size registry's real server latency remains unmeasured.
+
+`item-wire-conformance-2169.json` contains **generated conformance vectors** from
+independent Python protocol/rapidnbt serializers, with exact versions and source
+hashes. It is explicitly not a client capture. Tests preserve every descriptor
+byte, reject every truncated prefix and trailing byte, check malformed network
+NBT and queue accounting, and run 10,000 generated content/slot round trips.
+The additional item-wire fuzzer checks decode/re-encode equality for all three
+packet shapes. These tests cannot qualify stock-client rendering or BDS saves.
+
 The decoder accepts take/place/swap/drop-shaped storage actions, validates both
 action discriminants, canonical integers/booleans, slot-reference fields and
 negative odd request IDs, and rejects filter strings, trailing data and partial
