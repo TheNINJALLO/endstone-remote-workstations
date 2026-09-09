@@ -7,7 +7,8 @@ are experimental and do not demonstrate custom station gameplay.
 1. Build the native artifacts and copy `endstone_onistone_vcf.dll` and
    `endstone_vcf_native_passthrough.dll` to an isolated Windows server's plugins
    directory. No project wheel is needed. Linux uses the corresponding `.so`
-   files and admits eight workstation contexts plus the four shared inventory roles;
+   files and admits eight workstation contexts, four shared inventory roles and
+   three nearby linked furnace-family sources;
    see [the Linux example](../../docs/examples/linux-native-workstations.md).
 2. After first startup, stop the server and set
    `experimental_original_windows` (or `experimental_original_linux`) to `true` in
@@ -25,12 +26,22 @@ are experimental and do not demonstrate custom station gameplay.
 6. Inspect `/vcf_native status` for open, close, refusal and guard callback counts.
    Test each screen separately: `craft`, `anvil`, `grindstone`, `smithing`,
    `stonecutter`, `loom`, `cartography`, `inventory2x2`, `armor`, `offhand`,
-   `recipebook`, and `enchanting` (Linux only). Each entry retains its own exact-build qualification record.
+   `recipebook`, and `enchanting` (Linux only). Linux also accepts
+   `/vcf_native furnace "2,81,5"`, `/vcf_native blastfurnace "2,81,4"` and
+   `/vcf_native smoker "2,81,6"`. Replace those positions with your authorized
+   existing blocks and retain the literal quotes. Each of the 15 requests
+   retains its own exact-build qualification record.
 
 Workstation requests explicitly choose `VCF_NATIVE_CONTEXT`, leaving original
 recipes and items owned by BDS. The four player roles explicitly choose
 `VCF_REAL_SOURCE`; they share client-owned inventory navigation and closure.
 No separate armor/offhand tab selection is promised.
+
+The three Linux linked machines also use `VCF_REAL_SOURCE`, with an explicit
+dimension, position and permission. See [the linked-source example](../../docs/examples/linux-linked-furnaces.md)
+for source guards and actual processing/cleanup checks. They cannot be bound
+to the example compass trigger, which has no source configuration. Windows
+does not yet admit these three linked adapters.
 
 For each entry, record the installed provider and consumer SHA-256, client/input
 profile, actual ingredient/result behavior, cursor/grid cleanup, rapid reopen,

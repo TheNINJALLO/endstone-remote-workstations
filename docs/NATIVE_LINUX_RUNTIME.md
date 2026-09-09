@@ -169,3 +169,29 @@ SDK close with unused input, compass opening, two controlled disconnect cases
 and a form callback passed. Grindstone's first plain-click output was rejected;
 later Shift-click and plain-click repeats succeeded, leaving the first cause
 unresolved. Custom logic and crash/save recovery remain unqualified.
+
+## Experimental linked furnace sources
+
+The same opt-in Linux adapter accepts nearby `furnace`, `blastfurnace` and
+`smoker` sources with `VCF_REAL_SOURCE`. Each factory has its own complete
+fingerprint in the [linked-furnace ABI manifest](../research/native-evidence/linux-linked-furnace-abi-126451.json).
+An independently compiled header probe and native caller analysis establish
+the source accessor, actor position/type and factory arguments. Loaded chunk,
+dimension, range, permission, family and captured actor address are rechecked.
+These are actual world blocks with vanilla-owned processing and contents.
+
+The [exact `7a938e5` PC run](../research/native-evidence/linux-7a938e5-furnace-smoke.json)
+delivered and counted three stone, three iron ingots and three cooked beef.
+SDK closure passed while processing and after reopening. Wrong-family and
+distant requests refused; removing the empty furnace and revoking permission
+closed active views. The smoker retained one unfueled input across permission
+loss and returned it after access was restored. Enchanting and crafting close
+regressions and the form callback passed. Twelve opens ended in ten normal
+closes and two active denials, plus two refusals before opening; zero sessions
+remained at clean shutdown. See the [screenshots and developer example](examples/linux-linked-furnaces.md).
+
+The preceding `26528a7` run exposed an ignored SDK ContainerClose packet using
+type None. The tested fix sends the active container type. The earlier failure
+and successful recovery of all three stones remain in the smoke record.
+Custom processing, source-configuration aliases, active source unload/transition
+checks and cross-save recovery remain incomplete.

@@ -2,7 +2,8 @@
 
 The experimental Linux adapter accepts `furnace`, `blastfurnace` and `smoker`
 with `VCF_REAL_SOURCE`. Each uses its own fingerprinted native factory and
-requires an existing matching block actor. Gameplay qualification is pending.
+requires an existing matching block actor. Selected stock-PC gameplay and cleanup
+checks passed on the exact `7a938e5` build; full qualification remains incomplete.
 Custom machine recipes, timers and plugin-owned contents remain incomplete.
 
 Use the exact admitted Endstone 0.11.10 / BDS 1.26.45.1 Linux runtime and the
@@ -70,5 +71,36 @@ The first `26528a7` PC run exposed an SDK-close failure: it sent container type
 None, the furnace stayed open and the five-second timeout quarantined the
 session. Rejoining retained all three smelted stones; ordinary-click extraction
 and native Escape closure passed. The close packet now carries the actual
-active container type. That fix requires its own PC cleanup and workstation
-regression checks before this path can be described as tested.
+active container type. The `7a938e5` run verified SDK closure for all three
+machines and regression closure for enchanting and crafting.
+
+## Recorded PC checks
+
+The [exact smoke record](../../research/native-evidence/linux-7a938e5-furnace-smoke.json)
+identifies the server, runtime, provider and client, and hashes nine reviewed
+screenshots. These are original vanilla processes in real test blocks.
+
+| Source | Supplied | Delivered and counted | Closure checked |
+|---|---|---|---|
+| Furnace | One coal, three cobblestone | Three new stone; six total including three preexisting | SDK while processing; Escape after extraction |
+| Blast furnace | One coal, three raw iron | Three iron ingots | SDK while processing; native X after extraction |
+| Smoker | One coal, three raw beef | Three cooked beef | SDK while processing and after extraction |
+
+![Furnace processing the test input](../images/native-linux-furnaces/furnace-processing.png)
+![Blast furnace with three completed ingots](../images/native-linux-furnaces/blast-output.png)
+![Smoker with three completed cooked beef](../images/native-linux-furnaces/smoker-output.png)
+
+Wrong-family and distant-source requests refused before opening. Removing the
+verified empty test furnace closed its view. Revoking the consumer permission
+closed a smoker containing one unfueled raw beef; restoring permission and
+reopening showed that exact input still present. It was recovered by Shift-click
+and counted in the player inventory.
+
+![Single input retained after permission was restored](../images/native-linux-furnaces/retained-input.png)
+
+The run ended with 12 opens, 10 normal closes, four expected denial callbacks
+(two before opening), 1,359 guard checks and zero tickets or provider sessions.
+Enchanting returned its unused pickaxe and two lapis on SDK close; crafting
+opened and SDK-closed without an ingredient transfer. The SDK form callback
+also passed, followed by clean server shutdown. These observations do not
+qualify active distance/dimension changes, unloading, death or crash recovery.

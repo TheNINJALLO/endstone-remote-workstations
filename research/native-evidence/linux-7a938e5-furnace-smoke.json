@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-smoke-not-qualification",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "7a938e542a7ea9f1101ee6b2af3a92f9a2b31ac1",
+  "platform": "linux-x64",
+  "artifact_sha256": "455b00e950b817f2ea0fee1092545ef1a6d3544af386e396c8a4e8760268c12c",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "started_utc": "2026-09-09T05:09:28Z",
+  "clean_stop_utc": "2026-09-09T05:22:12Z",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "loaded_shadow_copies_match_exports": true,
+  "one_bundled_libcxx_family": true,
+  "private_probe_installed": false,
+  "observations": {
+    "furnace": "First opened and SDK-closed the empty furnace. Then inserted one coal and three cobblestone, observed flame/progress and SDK-closed while processing. Reopened and Shift-clicked three stone into the inventory. Read-only count changed from three preexisting stone to six; native Escape closed normally.",
+    "blastfurnace": "Inserted one coal and three raw iron, observed native processing and SDK-closed. Reopened and Shift-clicked all three iron ingots into inventory; read-only count three. Native X closed normally.",
+    "smoker": "Inserted one coal and three raw beef, observed native processing and SDK-closed. Reopened and ordinary-clicked three cooked beef into inventory; read-only count three. SDK closure passed again.",
+    "wrong_source": "Requested furnace against the nearby blast-furnace block. Refused before opening; one expected failure callback, zero tickets.",
+    "distant_source": "Requested furnace at a position more than six blocks away. Refused before opening; one expected failure callback, zero tickets. This does not establish an active distance-change test.",
+    "source_removed": "Opened the visually verified empty furnace, removed only that test block and observed closure with one expected denial callback. Re-created that test furnace in the resulting air. No input/output was present during source removal.",
+    "permission_loss": "Inserted one unfueled raw beef into the smoker. Temporarily de-opped the tester, revoking the example source permission. The screen closed with an expected denial and no ticket leak. Read-only player beef count was zero. Restored the previous operator status, reopened and verified the single input remained at the smoker. Shift-click recovery delivered exactly one raw beef; native Escape closed.",
+    "enchanting_regression": "Inserted an unenchanted wooden pickaxe and two lapis, observed original options, then SDK-closed. Read-only counts remained three total pickaxes and two lapis. No enchantment selected in this run.",
+    "craft_regression": "Opened the native 3x3 context and SDK-closed successfully. No crafting transfer in this exact regression.",
+    "form_regression": "One SDK form action callback, zero outstanding form tickets."
+  },
+  "sdk_counters": {
+    "opens": 12,
+    "closes": 10,
+    "failure_callbacks": 4,
+    "expected_denial_failures": 4,
+    "refusals_before_open": 2,
+    "guard_checks": 1359,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "counter_limit": "Two preparations were refused before opening. Two opened views ended with expected denial events rather than normal closes. The 12 opens therefore correspond to 10 normal closes plus two active denials. SDK events do not certify every native transaction.",
+  "not_qualified": [
+    "Custom machines, recipes, timers or plugin-owned inventory writes",
+    "Unrestricted remote source distance",
+    "Native source-configuration migration for the short catalog aliases",
+    "Active dimension/distance transition and source unload tests",
+    "Same-address source replacement by competing native code",
+    "Cross-save/crash and death/drop recovery",
+    "Full catalog on either platform",
+    "Other devices and multiplayer",
+    "Exact Onistone runtime admission"
+  ],
+  "earlier_anomalies": "Source26528a7 sent ContainerClose with type None and quarantined one furnace session. Rejoining retained all three output stones; natural Escape closure passed. This build uses the active container type and passed subsequent SDK closure tests. Earlier ca30255 grindstone extraction rejection and 171e0aa missing-plank/death remain unresolved.",
+  "screenshots": {
+    "furnace-processing": {
+      "path": "docs/images/native-linux-furnaces/furnace-processing.png",
+      "sha256": "cf3c51378b06abad37083beb1299fe541ce30b3aa72d1c41ba6ab86259824b1e",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "furnace-output": {
+      "path": "docs/images/native-linux-furnaces/furnace-output.png",
+      "sha256": "685b3a1abb7f494666962443b5bfdd2e61ce5476244c4d77d9b98ec1cc54c920",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "blast-processing": {
+      "path": "docs/images/native-linux-furnaces/blast-processing.png",
+      "sha256": "7e8890d356417561b3a8bad7ab4ea99037e74fcc7894a492830af38e8ae51545",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "blast-output": {
+      "path": "docs/images/native-linux-furnaces/blast-output.png",
+      "sha256": "cdd19cc02a5398f5361d06aedd980cad1ae7e8bc36ac38eaccfdc6a8a2fbe607",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "smoker-processing": {
+      "path": "docs/images/native-linux-furnaces/smoker-processing.png",
+      "sha256": "142bd37aad390b6cd06f1fb5f58cd330f9122720c68ef5300b12ee30586e4455",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "smoker-output": {
+      "path": "docs/images/native-linux-furnaces/smoker-output.png",
+      "sha256": "4bb3af59dcc80cdcf297cd91c4d298e1649a7a22334c4df8ac0c9bba3b951d73",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "delivered": {
+      "path": "docs/images/native-linux-furnaces/delivered.png",
+      "sha256": "80f22656c5522f59bdc916b6d5ac005e1d03c74c0bebe094fa8041c203029f06",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "retained-input": {
+      "path": "docs/images/native-linux-furnaces/retained-input.png",
+      "sha256": "c048e7761a8dbd3a077b9f0d8bfb5781322f58b7015c1df1c48079a49bf3a386",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "enchanting-regression": {
+      "path": "docs/images/native-linux-furnaces/enchanting-regression.png",
+      "sha256": "c6a5cdd8f54d86e99c66cfebfb228f38842d0ce76d9766f5cd79bf481c2120f4",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-7a938e5-furnace-counters.txt",
+    "sha256": "209ef62c7240a8b1042742f22a32618ccfb1de80d004ffae22dbf9da0a145340"
+  },
+  "abi_manifest": "research/native-evidence/linux-linked-furnace-abi-126451.json"
+}

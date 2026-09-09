@@ -146,6 +146,13 @@ See the [Linux workstation example](examples/linux-native-workstations.md).
 Linux enchanting's original offers/costs have PC smoke evidence; custom offers
 and linked real-table mode remain incomplete. Windows enchanting is not admitted.
 
+Linux also admits `furnace`, `blastfurnace` and `smoker` with `VCF_REAL_SOURCE`.
+Supply an explicit dimension, block position and source permission. The source
+must be loaded, nearby and of the exact matching block family. See the
+[linked-machine example and PC evidence](examples/linux-linked-furnaces.md).
+These views retain the real block's vanilla contents and processing. Windows
+does not yet admit these three source adapters.
+
 The original-mode adapter rejects preloaded items, changed slot policies,
 recipe definitions, replacement titles and unrelated source descriptors. It
 never reports success while silently ignoring requested custom behavior.

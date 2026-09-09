@@ -1,6 +1,6 @@
 # Native implementation checkpoint — incomplete
 
-The native source checkpoint is `e0dbb78fafdd7acb468a51c09f939c45a76fd349` on
+The native source checkpoint is `7a938e542a7ea9f1101ee6b2af3a92f9a2b31ac1` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
@@ -58,6 +58,21 @@ shutdown. The [enchanting record](../research/native-evidence/linux-e0dbb78-ench
 includes six actual screenshots. Linked real-table access, custom offers and
 crash/save recovery remain incomplete.
 
+The exact `7a938e5` linked-source build processed and delivered three stone,
+three iron ingots and three cooked beef through the actual furnace, blast
+furnace and smoker screens. SDK closure while processing, reopening and native
+closure passed. Wrong-family and distant-source requests refused. Removing
+the empty furnace closed its view; permission loss closed the smoker while
+retaining its one unfueled raw-beef input for recovery after access returned.
+Enchanting and crafting SDK-close regressions and a form callback also passed.
+Twelve opens ended in ten normal closes and two active denials, plus two
+refusals before opening; all tickets and sessions retired before clean shutdown.
+The [linked-machine example](examples/linux-linked-furnaces.md) includes actual
+screenshots and the [exact record](../research/native-evidence/linux-7a938e5-furnace-smoke.json).
+The earlier `26528a7` SDK-close timeout exposed a ContainerClose type mismatch;
+this build sends the active type and passed the follow-up checks. Custom
+processing, source-configuration aliases and crash/save recovery remain incomplete.
+
 Live testing exposed and fixed two SDK issues: Linux cross-module player
 conversion now uses Endstone's virtual `asPlayer()` method, and a selected menu
 action completes the caller's original ticket instead of leaking a hidden
@@ -90,7 +105,7 @@ packaging checks do not upgrade native gameplay qualification.
 - Local Linux Docker build: **14/14 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `e0dbb78`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `7a938e5`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
@@ -102,13 +117,13 @@ packaging checks do not upgrade native gameplay qualification.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-e0dbb78.json`](../research/native-evidence/checkpoint-e0dbb78.json).
+[`checkpoint-7a938e5.json`](../research/native-evidence/checkpoint-7a938e5.json).
 Older checkpoints keep their original source and artifact identities.
 
-At `e0dbb78`, [native CI run 34311044004](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34311044004)
+At `7a938e5`, [native CI run 34313667983](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34313667983)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34311044020](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34311044020)
+refuses the incomplete catalog. [Legacy regression run 34313667987](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34313667987)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux workstation example](examples/linux-native-workstations.md).
 All three Linux CI plugin hashes match the locally tested exports. The Windows
@@ -121,7 +136,7 @@ proprietary BDS UI process.
 
 | Target | Export | SHA-256 |
 |---|---|---|
-| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `b5d64937f0f59432f43058d8a95cdda7c24c7716cf415babb09f71662aca51ce` |
+| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `455b00e950b817f2ea0fee1092545ef1a6d3544af386e396c8a4e8760268c12c` |
 | Windows x64 | `dist/windows-release/plugins/endstone_onistone_vcf.dll` | `07b037e42a832571448022fdea6385b2db08e0839a9e5b611965aeac500e3dfb` |
 
 Paths are relative to the native checkout. The loaded Linux shadow copy and
@@ -158,8 +173,8 @@ boundary. Test scripts are development tools only.
 All 69 original entries, aliases, permissions and source contracts remain in
 the frozen baseline and platform reports. **No custom native catalog entry is
 fully qualified.** Eleven Windows original-mode paths have experimental
-orchestration behind an opt-in flag. Eight Linux workstation contexts and four shared
-inventory roles have experimental original adapters; other Linux catalog
+orchestration behind an opt-in flag. Eight Linux workstation contexts, four shared
+inventory roles and three nearby linked machines have experimental original adapters; other Linux catalog
 adapters remain incomplete.
 The current form is an SDK action demonstration; it is not a workstation.
 

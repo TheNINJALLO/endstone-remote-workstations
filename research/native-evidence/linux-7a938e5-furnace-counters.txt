@@ -1,0 +1,25 @@
+[05:10:37 INFO]: Original-mode SDK example: opens 1, closes 1, failures 0, guard checks 12, outstanding tickets 0
+[05:12:17 INFO]: Original-mode SDK example: opens 2, closes 2, failures 0, guard checks 236, outstanding tickets 0
+[05:13:38 INFO]: Original-mode SDK example: opens 3, closes 3, failures 0, guard checks 494, outstanding tickets 0
+[05:15:18 INFO]: <test-player> has 6 items that match the criteria
+[05:15:18 INFO]: Original-mode SDK example: opens 5, closes 5, failures 0, guard checks 731, outstanding tickets 0
+[05:15:59 INFO]: <test-player> has 3 items that match the criteria
+[05:16:00 INFO]: Original-mode SDK example: opens 6, closes 6, failures 0, guard checks 790, outstanding tickets 0
+[05:16:44 INFO]: <test-player> has 3 items that match the criteria
+[05:16:44 INFO]: Original-mode SDK example: opens 7, closes 7, failures 0, guard checks 863, outstanding tickets 0
+[05:17:21 INFO]: Original-mode SDK example: opens 7, closes 7, failures 1, guard checks 864, outstanding tickets 0
+[05:17:29 INFO]: Original-mode SDK example: opens 7, closes 7, failures 2, guard checks 865, outstanding tickets 0
+[05:18:03 INFO]: Original-mode SDK example: opens 8, closes 7, failures 3, guard checks 959, outstanding tickets 0
+[05:18:43 INFO]: De-opped: <test-player>
+[05:18:47 INFO]: Opped: <test-player>
+[05:18:47 INFO]: Original-mode SDK example: opens 9, closes 7, failures 4, guard checks 1081, outstanding tickets 0
+[05:19:27 INFO]: <test-player> has 1 items that match the criteria
+[05:20:32 INFO]: <test-player> has 3 items that match the criteria
+[05:20:32 INFO]: <test-player> has 2 items that match the criteria
+[05:20:32 INFO]: Original-mode SDK example: opens 11, closes 9, failures 4, guard checks 1344, outstanding tickets 0
+[05:21:01 INFO]: Original-mode SDK example: opens 12, closes 10, failures 4, guard checks 1359, outstanding tickets 0
+[05:22:10 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[05:22:10 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[05:22:10 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[05:22:10 INFO]: Original-mode SDK example: opens 12, closes 10, failures 4, guard checks 1359, outstanding tickets 0
+Quit correctly

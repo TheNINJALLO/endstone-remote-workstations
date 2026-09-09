@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
     "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
-    "artifact_sha256": "b5d64937f0f59432f43058d8a95cdda7c24c7716cf415babb09f71662aca51ce"
+    "artifact_sha256": "455b00e950b817f2ea0fee1092545ef1a6d3544af386e396c8a4e8760268c12c"
   },
   "build": "tested-in-local-linux-docker",
   "native_loader_smoke": "passed",
@@ -2152,11 +2152,11 @@
       "family": "workstation",
       "historical_status": "implemented-unverified",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -2164,17 +2164,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Nearby linked original processing/output and SDK closure have PC smoke evidence. Custom machine logic, remote source distance, alias source configuration, adversarial lifecycle and crash/save recovery remain incomplete.",
+          "smoke_record": "research/native-evidence/linux-7a938e5-furnace-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -2276,11 +2277,11 @@
       "family": "workstation",
       "historical_status": "implemented-unverified",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -2288,17 +2289,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Nearby linked original processing/output and SDK closure have PC smoke evidence. Custom machine logic, remote source distance, alias source configuration, adversarial lifecycle and crash/save recovery remain incomplete.",
+          "smoke_record": "research/native-evidence/linux-7a938e5-furnace-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -2400,11 +2402,11 @@
       "family": "workstation",
       "historical_status": "implemented-unverified",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -2412,17 +2414,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Nearby linked original processing/output and SDK closure have PC smoke evidence. Custom machine logic, remote source distance, alias source configuration, adversarial lifecycle and crash/save recovery remain incomplete.",
+          "smoke_record": "research/native-evidence/linux-7a938e5-furnace-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -8513,10 +8516,10 @@
     }
   },
   "build_evidence": {
-    "source_revision": "e0dbb78fafdd7acb468a51c09f939c45a76fd349",
+    "source_revision": "7a938e542a7ea9f1101ee6b2af3a92f9a2b31ac1",
     "host": "Windows Docker Desktop 4.90.0 / WSL 2, pinned linux/amd64 Clang 20.1.8 image",
-    "native_tests": "14/14 CTest locally/CI including SDK package relocation; ASan/UBSan and 300000 fuzz inputs passed.",
-    "elf_report": "linux-e0dbb78-elf-report.txt",
+    "native_tests": "14/14 CTest locally/CI including copied source descriptors and SDK relocation; ASan/UBSan and300000 fuzz inputs passed.",
+    "elf_report": "linux-7a938e5-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.34",
     "direct_libraries": [
       "libcrypto.so.3",
@@ -8527,23 +8530,23 @@
       "libgcc_s.so.1",
       "libc.so.6"
     ],
-    "runtime_restriction": "Exact Linux files and opt-in adapter admit eight original workstation contexts and four shared inventory roles. Each smoke record identifies its own source/artifact; linked enchanting and full/custom qualification remain incomplete."
+    "runtime_restriction": "Exact Linux files and opt-in adapter admit eight original workstation contexts, four shared inventory roles and three nearby linked machines. Each smoke identifies its own artifacts; custom/full qualification remains incomplete."
   },
   "sdk_version": "1.1; ABI 1.0 prefix retained",
   "sanitizers": {
-    "source_revision": "e0dbb78fafdd7acb468a51c09f939c45a76fd349",
+    "source_revision": "7a938e542a7ea9f1101ee6b2af3a92f9a2b31ac1",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
     "storage_fuzz_inputs": 100000,
     "items_fuzz_inputs": 100000,
-    "test_report": "linux-e0dbb78-sanitizer-tests.txt",
-    "nbt_report": "linux-e0dbb78-fuzz-nbt.txt",
-    "storage_report": "linux-e0dbb78-fuzz-storage.txt",
-    "items_report": "linux-e0dbb78-fuzz-items.txt"
+    "test_report": "linux-7a938e5-sanitizer-tests.txt",
+    "nbt_report": "linux-7a938e5-fuzz-nbt.txt",
+    "storage_report": "linux-7a938e5-fuzz-storage.txt",
+    "items_report": "linux-7a938e5-fuzz-items.txt"
   },
   "native_tests": {
-    "source_revision": "e0dbb78fafdd7acb468a51c09f939c45a76fd349",
+    "source_revision": "7a938e542a7ea9f1101ee6b2af3a92f9a2b31ac1",
     "ctest": "14/14 passed locally and CI",
     "sanitizers": "14/14 passed; proprietary BDS UI execution not instrumented.",
     "fuzz_inputs": {
@@ -8564,5 +8567,6 @@
   "native_inventory_smoke": "research/native-evidence/linux-ca30255-workstation-smoke.json",
   "native_workstation_smoke": "research/native-evidence/linux-ca30255-workstation-smoke.json",
   "native_crafting_smoke": "research/native-evidence/linux-7aacb36-crafting-smoke.json",
-  "native_enchanting_smoke": "research/native-evidence/linux-e0dbb78-enchanting-smoke.json"
+  "native_enchanting_smoke": "research/native-evidence/linux-e0dbb78-enchanting-smoke.json",
+  "native_linked_furnace_smoke": "research/native-evidence/linux-7a938e5-furnace-smoke.json"
 }
