@@ -19,7 +19,8 @@ extern "C" {
 #define VCF_ABI_VERSION_1_0 0x00010000u
 #define VCF_ABI_VERSION_1_1 0x00010001u
 #define VCF_ABI_VERSION_1_2 0x00010002u
-#define VCF_ABI_VERSION 0x00010003u
+#define VCF_ABI_VERSION_1_3 0x00010003u
+#define VCF_ABI_VERSION 0x00010004u
 typedef uint64_t vcf_handle;
 typedef int32_t vcf_status;
 enum { VCF_OK=0, VCF_INVALID=1, VCF_VERSION=2, VCF_NOT_FOUND=3, VCF_DENIED=4,
@@ -137,10 +138,21 @@ typedef struct vcf_api {
     storage. A size query is an observation, not a reservation for a retry. */
  vcf_status (VCF_CALL *read_inventory_item)(vcf_handle,vcf_string,uint32_t,
    vcf_inventory_item_info *,uint8_t *,uint32_t,uint32_t *);
+ /* ABI 1.4 tail. Consumer-owned optimistic observations of a nonempty slot.
+    Vanilla operations remain enabled. Validate rechecks permissions, lifetime,
+    mutation revisions and complete saved bytes; this grants no write authority.
+    Observe before reading, validate after reading and before using the result.
+    Any validation failure permanently invalidates the observation. Release it
+    on the server thread; consumer revocation/player departure also remove it.
+    Maximum 64 per consumer, 256 total. Failure leaves the output unchanged. */
+ vcf_status (VCF_CALL *observe_inventory_item)(vcf_handle,vcf_string,uint32_t,vcf_handle *);
+ vcf_status (VCF_CALL *validate_inventory_observation)(vcf_handle,vcf_handle);
+ vcf_status (VCF_CALL *release_inventory_observation)(vcf_handle,vcf_handle);
 } vcf_api;
 #define VCF_API_1_0_SIZE ((uint32_t)offsetof(vcf_api,action_count))
 #define VCF_API_1_1_SIZE ((uint32_t)offsetof(vcf_api,inspect_held))
 #define VCF_API_1_2_SIZE ((uint32_t)offsetof(vcf_api,read_inventory_item))
+#define VCF_API_1_3_SIZE ((uint32_t)offsetof(vcf_api,observe_inventory_item))
 VCF_EXPORT vcf_status VCF_CALL oni_vcf_get_api(uint32_t version, uint32_t size, vcf_api *output);
 #ifdef __cplusplus
 }

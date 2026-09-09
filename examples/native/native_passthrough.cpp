@@ -29,6 +29,8 @@ class NativePassthrough : public endstone::Plugin {
     uint64_t opened_=0,closed_=0,refused_=0,guard_checks_=0;
     uint64_t held_reads_=0,held_refused_=0;
     uint64_t item_reads_=0,item_refused_=0;
+    std::map<std::string,vcf_handle> observations_;
+    uint64_t observed_=0,validated_=0,invalidated_=0;
     struct DeniedSource {std::string dimension;std::array<int32_t,3> position;};
     std::optional<DeniedSource> denied_source_;
 
@@ -115,18 +117,23 @@ public:
             },1,1);
             registerEvent(&NativePassthrough::interact,*this,endstone::EventPriority::Highest);
             registerEvent(&NativePassthrough::quit,*this);
-            getLogger().info("NativePassthrough connected through SDK 1.3; twenty-six original-mode requests available subject to provider admission; read-only held inspection available.");
+            getLogger().info("NativePassthrough connected through SDK 1.4; twenty-six original-mode requests available subject to provider admission; saved-item observations available.");
         } catch(const std::exception& e) {getLogger().error("NativePassthrough unavailable: {}",e.what());ui_.reset();}
     }
     void onDisable() override {
-        if(cleanup_)cleanup_->cancel();bindings_.clear();tickets_.clear();
+        if(cleanup_)cleanup_->cancel();bindings_.clear();tickets_.clear();observations_.clear();
         if(ui_) {
             auto status=ui_->dispose();
             if(status!=VCF_OK)getLogger().error("Consumer revocation status {}; restart before unloading native code.",status);
             ui_.reset();
         }
     }
-    void quit(endstone::PlayerQuitEvent& event) {bindings_.erase(event.getPlayer().getUniqueId().str());}
+    void quit(endstone::PlayerQuitEvent& event) {
+        auto id=event.getPlayer().getUniqueId().str();bindings_.erase(id);
+        if(auto it=observations_.find(id);it!=observations_.end()){
+            if(ui_)ui_->api().release_inventory_observation(ui_->owner(),it->second);observations_.erase(it);
+        }
+    }
     void interact(endstone::PlayerInteractEvent& event) {
         if(!ui_||event.isCancelled()||!event.getPlayer().isSneaking()||!event.getItem())return;
         if(event.getAction()!=endstone::PlayerInteractEvent::Action::RightClickAir
@@ -144,7 +151,16 @@ public:
                 +", failures "+std::to_string(refused_)+", guard checks "+std::to_string(guard_checks_)
                 +", outstanding tickets "+std::to_string(tickets_.size()));
             sender.sendMessage("Held inspections: successes "+std::to_string(held_reads_)+", refusals "+std::to_string(held_refused_));
-            sender.sendMessage("Saved item reads: successes "+std::to_string(item_reads_)+", refusals "+std::to_string(item_refused_));return true;
+            sender.sendMessage("Saved item reads: successes "+std::to_string(item_reads_)+", refusals "+std::to_string(item_refused_));
+            sender.sendMessage("Item observations: created "+std::to_string(observed_)+", valid "+std::to_string(validated_)+", invalid "+std::to_string(invalidated_)+", outstanding "+std::to_string(observations_.size()));return true;
+        }
+        if(args[0]=="validate-items"&&args.size()==1&&!sender.asPlayer()){
+            for(const auto&[id,token]:observations_){
+                auto result=ui_->api().validate_inventory_observation(ui_->owner(),token);
+                if(result==VCF_OK)++validated_;else ++invalidated_;
+                sender.sendMessage("Item observation "+std::to_string(token)+": status "+std::to_string(result));
+            }
+            sender.sendMessage("Validated "+std::to_string(observations_.size())+" owned item observations.");return true;
         }
         if(args[0]=="guard-clear"&&args.size()==1){
             denied_source_.reset();sender.sendMessage("Cleared the example source guard.");return true;
@@ -174,7 +190,25 @@ public:
         }
         if(!player){sender.sendErrorMessage("Request screens from a connected player.");return true;}
         try {
-            if(args[0]=="read-item"&&args.size()==2){
+            if(args[0]=="observe-item"&&args.size()==2){
+                uint32_t slot=0;auto parsed=std::from_chars(args[1].data(),args[1].data()+args[1].size(),slot);
+                if(parsed.ec!=std::errc{}||parsed.ptr!=args[1].data()+args[1].size()||slot>=36)throw std::runtime_error("Choose inventory slot 0 through 35.");
+                auto id=player->getUniqueId().str();
+                if(auto old=observations_.find(id);old!=observations_.end()){
+                    ui_->api().release_inventory_observation(ui_->owner(),old->second);observations_.erase(old);
+                }
+                observations_[id]=ui_->observe_inventory_item(id,slot);++observed_;
+                player->sendMessage("Observing inventory slot "+std::to_string(slot)+". Use /vcf_native validate-item, then /vcf_native release-item.");
+            }else if(args[0]=="validate-item"&&args.size()==1){
+                auto it=observations_.find(player->getUniqueId().str());if(it==observations_.end())throw std::runtime_error("Observe an item first.");
+                const auto result=ui_->api().validate_inventory_observation(ui_->owner(),it->second);
+                if(result==VCF_OK)++validated_;else ++invalidated_;
+                player->sendMessage("Item observation "+std::to_string(it->second)+": status "+std::to_string(result));
+            }else if(args[0]=="release-item"&&args.size()==1){
+                auto it=observations_.find(player->getUniqueId().str());if(it==observations_.end())throw std::runtime_error("Observe an item first.");
+                auto result=ui_->api().release_inventory_observation(ui_->owner(),it->second);
+                if(result!=VCF_NOT_FOUND)sdk::checked(result);observations_.erase(it);player->sendMessage("Released the item observation.");
+            }else if(args[0]=="read-item"&&args.size()==2){
                 uint32_t slot=0;auto parsed=std::from_chars(args[1].data(),args[1].data()+args[1].size(),slot);
                 if(parsed.ec!=std::errc{}||parsed.ptr!=args[1].data()+args[1].size()||slot>=36)throw std::runtime_error("Choose inventory slot 0 through 35.");
                 sdk::SavedInventoryItem saved;

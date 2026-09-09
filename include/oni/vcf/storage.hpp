@@ -79,8 +79,13 @@ class Reservation {
 public:
     using Reader=std::function<State()>;
     using Writer=std::function<vcf_status(const State&,const State&)>;
+    // Required native admission check: player/consumer/source lifetime,
+    // permissions, mutation lease and request depth. Byte equality alone is
+    // insufficient for A -> B -> A or in-place component mutations. A successful
+    // writer must renew its admission baseline after verified publication.
+    using Guard=std::function<void()>;
     struct Result { bool replayed,committed; };
-    Reservation(State,Layout,Reader,Writer);
+    Reservation(State,Layout,Reader,Writer,Guard);
     Result apply(const Request&,uint64_t generation,uint64_t revision);
     void cancel();
     const State& state()const{return state_;}
@@ -89,7 +94,7 @@ public:
 private:
     State state_,baseline_;
     Layout layout_;
-    Reader reader_;Writer writer_;
+    Reader reader_;Writer writer_;Guard guard_;
     bool closed_=false,quarantined_=false;
     int32_t last_request_=0;
     std::deque<Request> history_;

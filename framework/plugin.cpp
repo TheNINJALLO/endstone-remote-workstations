@@ -9,6 +9,7 @@
 #else
 #include "platform/linux/native_ui.hpp"
 #include "platform/linux/item_save.hpp"
+#include "platform/linux/inventory_watch.hpp"
 #endif
 #include <nlohmann/json.hpp>
 #include <endstone/plugin/plugin.h>
@@ -133,6 +134,10 @@ public:
    if(getServer().getPluginManager().getPlugin("remote_workstations")){
     getLogger().error("VCF refuses to enable beside legacy remote_workstations. Stop, back up, and migrate the old installation.");return;
    }
+#ifndef _WIN32
+   require(getServer().isPrimaryThread()&&getServer().getOnlinePlayers().empty(),VCF_UNAVAILABLE);
+   platform::linux_native::initialize_inventory_watches();
+#endif
    std::filesystem::create_directories(getDataFolder());
    auto config_path=getDataFolder()/"config.json";
    if(!std::filesystem::exists(config_path)){
@@ -154,6 +159,8 @@ public:
    host.inspect_held=[this](std::string_view id){auto*p=player(id);require(p,VCF_CLOSED);return held::inspect(*p);};
 #ifndef _WIN32
    host.read_inventory_item=[this](std::string_view id,uint32_t slot){auto*p=player(id);require(p,VCF_CLOSED);return platform::linux_native::read_inventory_item(*p,slot);};
+   host.observe_inventory_item=[this](std::string_view id,uint32_t slot){auto*p=player(id);require(p,VCF_CLOSED);
+    return platform::linux_native::observe_inventory_item(*p,slot,[this,id=std::string(id)]{return player(id);});};
 #endif
    host.native_available=[this](std::string_view id){
     return original_native_enabled_&&native_ui_&&NativeUi::supports(id);
@@ -190,7 +197,7 @@ public:
    registerEvent(&VirtualContainerFramework::sent,*this,endstone::EventPriority::Monitor);
    std::filesystem::create_directories(getDataFolder());
    std::ofstream receipt(getDataFolder()/"native-startup.txt");receipt<<"native C++ plugin; no project Python runtime\nBDS "<<admission_.bds_sha256<<"\nEndstone "<<admission_.runtime_sha256<<"\n69 retained entries; all-UI acceptance NOT QUALIFIED\n";
-   getLogger().info("Native VCF enabled: C ABI 1.3 (1.0/1.1/1.2 compatible), 69 catalog entries retained, C++ forms/actions/guards active; all-UI acceptance NOT QUALIFIED.");
+   getLogger().info("Native VCF enabled: C ABI 1.4 (1.0/1.1/1.2/1.3 compatible), 69 catalog entries retained, C++ forms/actions/guards active; all-UI acceptance NOT QUALIFIED.");
   }catch(const std::exception&e){getLogger().error("VCF startup failed: {}",e.what());onDisable();}
    catch(const Error&e){getLogger().error("VCF startup failed with status {}",e.status);onDisable();}
  }
@@ -201,16 +208,26 @@ public:
   if(engine_){try{engine_->shutdown();}catch(...){}}
   forms_.clear();
   item_observations_.clear();
+#ifndef _WIN32
+  platform::linux_native::shutdown_inventory_watches();
+#endif
   native_ui_.reset();
 #ifdef _WIN32
   try{platform::windows::shutdown_editors();}catch(...){}
 #endif
   self_.reset();attach_engine(nullptr);engine_.reset();
  }
- void quit(endstone::PlayerQuitEvent&e){item_observations_.remove(e.getPlayer().getUniqueId().str());if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
- void death(endstone::PlayerDeathEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
- void teleport(endstone::PlayerTeleportEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
- void dimension(endstone::PlayerDimensionChangeEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
+ void retire_player(endstone::Player& player){
+  const auto id=player.getUniqueId().str();
+#ifndef _WIN32
+  platform::linux_native::retire_inventory_watches(id);
+#endif
+  if(engine_)engine_->player_gone(id);
+ }
+ void quit(endstone::PlayerQuitEvent&e){item_observations_.remove(e.getPlayer().getUniqueId().str());retire_player(e.getPlayer());}
+ void death(endstone::PlayerDeathEvent&e){retire_player(e.getPlayer());}
+ void teleport(endstone::PlayerTeleportEvent&e){retire_player(e.getPlayer());}
+ void dimension(endstone::PlayerDimensionChangeEvent&e){retire_player(e.getPlayer());}
  void consumer_disabled(endstone::PluginDisableEvent&e){if(engine_)engine_->release_named(e.getPlugin().getName());}
  void received(endstone::PacketReceiveEvent&e){
   if(native_ui_)native_ui_->receive(e);

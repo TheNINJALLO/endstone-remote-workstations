@@ -6,5 +6,5 @@ set_property(TARGET OnistoneVCF::abi PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${O
 # provider import library, core archive, Endstone runtime, or Python library.
 # Resolve the loader dependency for the consumer's platform, not the producer.
 set_property(TARGET OnistoneVCF::sdk PROPERTY INTERFACE_LINK_LIBRARIES "OnistoneVCF::abi;${CMAKE_DL_LIBS}")
-set(OnistoneVCF_ABI_VERSION "1.3")
+set(OnistoneVCF_ABI_VERSION "1.4")
 check_required_components(OnistoneVCF)

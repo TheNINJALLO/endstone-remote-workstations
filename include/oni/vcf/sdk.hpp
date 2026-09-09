@@ -15,7 +15,7 @@ class Client {
  vcf_api table_;const vcf_api* api_;vcf_handle owner_=0;
 public:
  Client(const vcf_api&api,std::string_view name):table_(api),api_(&table_){
-  if(api.version!=VCF_ABI_VERSION||api.size<sizeof(vcf_api))throw std::runtime_error("This SDK requires VCF ABI 1.3");
+  if(api.version!=VCF_ABI_VERSION||api.size<sizeof(vcf_api))throw std::runtime_error("This SDK requires VCF ABI 1.4");
   auto d=descriptor<vcf_consumer_desc>();d.name=view(name);checked(api_->register_consumer(&d,&owner_));
  }
  Client(const Client&)=delete;Client&operator=(const Client&)=delete;
@@ -35,6 +35,11 @@ public:
   result.nbt.resize(written);return result;
  }
  uint32_t resolve(std::string_view id)const{uint32_t n=0;checked(api_->resolve(view(id),&n));return n;}
+ vcf_handle observe_inventory_item(std::string_view player,uint32_t slot)const{
+  vcf_handle id=0;checked(api_->observe_inventory_item(owner_,view(player),slot,&id));return id;
+ }
+ void validate_inventory_observation(vcf_handle id)const{checked(api_->validate_inventory_observation(owner_,id));}
+ void release_inventory_observation(vcf_handle id)const{checked(api_->release_inventory_observation(owner_,id));}
  vcf_capability capability(uint32_t n)const{auto c=descriptor<vcf_capability>();checked(api_->capability(n,&c));return c;}
  vcf_handle prepare(std::string_view player,std::string_view kind,uint32_t mode,std::string_view title=""){
   auto d=descriptor<vcf_session_desc>();d.player=view(player);d.canonical_id=view(kind);d.mode=mode;d.title=view(title);vcf_handle s=0;checked(api_->prepare(owner_,&d,&s));return s;

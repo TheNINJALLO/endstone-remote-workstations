@@ -97,6 +97,11 @@ do not call the writer again; changed, old or out-of-order requests refuse.
 The replay cache is bounded to 128 accepted requests.
 
 A writer must report a clean pre-write conflict separately from uncertainty.
+The constructor also requires a guard. Bind native source lifetime, permission,
+and [mutation observation](NATIVE_ITEM_OBSERVATIONS.md) checks to it. It runs
+before and after the baseline read and immediately before a completed gesture
+reaches the writer. Equal inventory bytes alone cannot admit a moved-and-returned
+source. A guard refusal closes the reservation before any writer call.
 After any possible mutation, exceptions, failed verification and allocation
 failures keep the reservation quarantined and closed. Cancellation then retains
 the reconciliation evidence; it never overwrites native inventory or mints a

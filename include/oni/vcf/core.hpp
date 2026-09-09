@@ -70,6 +70,7 @@ struct Host {
  std::function<vcf_status(const Session&)> close;
  std::function<vcf_held_info(std::string_view)> inspect_held;
  std::function<InventoryItemSnapshot(std::string_view,uint32_t)> read_inventory_item;
+ std::function<std::function<void()>(std::string_view,uint32_t)> observe_inventory_item;
 };
 class Engine {
 public:
@@ -90,6 +91,9 @@ public:
  void authorize_block(vcf_handle,vcf_handle,uint32_t,int32_t,int32_t,int32_t);
  vcf_held_info inspect_held(vcf_handle,std::string_view);
  InventoryItemSnapshot read_inventory_item(vcf_handle,std::string_view,uint32_t);
+ vcf_handle observe_inventory_item(vcf_handle,std::string_view,uint32_t);
+ void validate_inventory_observation(vcf_handle,vcf_handle);
+ void release_inventory_observation(vcf_handle,vcf_handle);
  uint32_t collect_terminal(vcf_handle,uint32_t limit=32);
  vcf_handle invoke(vcf_handle,std::string,std::string);
  vcf_handle prepare(vcf_handle,Session);
@@ -121,11 +125,15 @@ private:
  std::map<vcf_handle,Guard> guards_;
  uint64_t action_revision_=1;
  std::map<vcf_handle,Session> sessions_;
+ struct Observation {vcf_handle owner;std::string player;std::function<void()> validate;vcf_status failure=VCF_OK;};
+ std::map<vcf_handle,Observation> observations_;
+ bool observing_=false;
  std::deque<Task> queue_;
  std::set<vcf_handle> revoked_;
  void drain_revoked();
  void authorize_at(vcf_handle,vcf_handle,uint32_t,const int32_t*);
  void check() const;
+ void inventory_permission(vcf_handle,std::string_view)const;
  std::string qualify(vcf_handle,std::string_view) const;
  void emit(Session&,uint32_t,std::string_view={});
  void finish(Session&,vcf_status);

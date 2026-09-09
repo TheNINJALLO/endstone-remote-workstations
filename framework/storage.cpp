@@ -199,14 +199,18 @@ State plan(const State& before,const Layout& layout,const Request& request,uint6
     }
     ++after.revision;validate(after,layout);return after;
 }
-Reservation::Reservation(State state,Layout layout,Reader reader,Writer writer)
-    :state_(std::move(state)),baseline_(state_),layout_(layout),reader_(std::move(reader)),writer_(std::move(writer)){
-    validate(state_,layout_);require(state_.cursor.value.item.empty()&&reader_&&writer_);
+Reservation::Reservation(State state,Layout layout,Reader reader,Writer writer,Guard guard)
+    :state_(std::move(state)),baseline_(state_),layout_(layout),reader_(std::move(reader)),writer_(std::move(writer)),guard_(std::move(guard)){
+    validate(state_,layout_);require(state_.cursor.value.item.empty()&&reader_&&writer_&&guard_);guard_();
 }
 Reservation::Result Reservation::apply(const Request& request,uint64_t generation,uint64_t revision){
     require(!closed_,quarantined_?VCF_QUARANTINED:VCF_CLOSED);
     require(generation==state_.generation,VCF_STALE);request_id(request.id);
+    auto admitted=[&]{try{guard_();}catch(const Error&e){closed_=true;quarantined_=e.status==VCF_QUARANTINED;throw;}
+        catch(...){closed_=true;throw Error{VCF_CONFLICT};}};
+    admitted();
     bool matching=false;try{matching=same_inventory(baseline_,reader_());}catch(...){}
+    admitted();
     if(!matching){closed_=true;throw Error{VCF_CONFLICT};}
     for(const auto& old:history_)if(old.id==request.id){require(old==request,VCF_STALE);return {true,false};}
     require(request.id<last_request_,VCF_STALE);last_request_=request.id;
@@ -214,6 +218,7 @@ Reservation::Result Reservation::apply(const Request& request,uint64_t generatio
     // Allocate the replay record before publishing anything to a native writer.
     history_.push_back(request);if(history_.size()>128)history_.pop_front();
     if(commit){
+        admitted();
         // Keep uncertainty latched through post-write reads AND allocations.
         // An exception after native mutation must never leave a retryable owner.
         closed_=true;quarantined_=true;

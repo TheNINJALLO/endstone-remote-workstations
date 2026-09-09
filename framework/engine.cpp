@@ -22,7 +22,7 @@ vcf_handle Engine::consumer(std::string name,uint32_t version) {
  check();require(name_ok(name));require(host_.consumer_allowed && host_.consumer_allowed(name),VCF_DENIED);
  require(consumers_.size()<128,VCF_CAPACITY);
  for(const auto&[id,c]:consumers_)require(c.name!=name,VCF_CONFLICT);
- require(version==VCF_ABI_VERSION||version==VCF_ABI_VERSION_1_2||version==VCF_ABI_VERSION_1_1||version==VCF_ABI_VERSION_1_0,VCF_VERSION);
+ require(version==VCF_ABI_VERSION||version==VCF_ABI_VERSION_1_3||version==VCF_ABI_VERSION_1_2||version==VCF_ABI_VERSION_1_1||version==VCF_ABI_VERSION_1_0,VCF_VERSION);
  auto id=next_++;consumers_.emplace(id,Consumer{std::move(name),version});return id;
 }
 std::string Engine::qualify(vcf_handle owner,std::string_view action)const {
@@ -34,6 +34,7 @@ void Engine::release(vcf_handle id){
  check();require(!callbacks_&&!dispatching_,VCF_REENTRANT);require(consumers_.contains(id),VCF_NOT_FOUND);
  if(std::erase_if(actions_,[id](const auto&v){return v.second.owner==id;}))++action_revision_;
  std::erase_if(guards_,[id](const auto&v){return v.second.owner==id;});
+ std::erase_if(observations_,[id](const auto&v){return v.second.owner==id;});
  for(auto&[key,s]:sessions_)if(s.owner==id){
   s.callback=nullptr;s.context=nullptr;
   if(s.host_started && s.state!=VCF_TERMINAL && host_.close){
@@ -54,6 +55,7 @@ void Engine::release_named(std::string_view name){
   // callable pointers immediately, but retain borrowed session storage until
   // dispatch unwinds. No exception crosses the plugin-disable event boundary.
   c.revoked=true;revoked_.insert(id);
+  std::erase_if(observations_,[id](const auto&v){return v.second.owner==id;});
   if(std::erase_if(actions_,[id](const auto&v){return v.second.owner==id;}))++action_revision_;
   std::erase_if(guards_,[id](const auto&v){return v.second.owner==id;});
   for(auto&[key,s]:sessions_)if(s.owner==id){s.callback=nullptr;s.context=nullptr;}
@@ -162,6 +164,40 @@ InventoryItemSnapshot Engine::read_inventory_item(vcf_handle owner,std::string_v
  require(end!=std::begin(result.info.identifier)&&end!=std::end(result.info.identifier),VCF_INTERNAL);
  validate_nbt(result.nbt);return result;
 }
+void Engine::inventory_permission(vcf_handle owner,std::string_view player)const{
+ check();qualify(owner,"");require(host_.consumer_allowed(consumers_.at(owner).name),VCF_CLOSED);
+ require(host_.permission&&host_.permission(player,"remoteworkstations.use")
+  &&host_.permission(player,"remoteworkstations.inventory.read"),VCF_DENIED);
+}
+vcf_handle Engine::observe_inventory_item(vcf_handle owner,std::string_view player,uint32_t slot){
+ check();require(!callbacks_&&!dispatching_&&!observing_,VCF_REENTRANT);
+ observing_=true;struct Exit{bool& flag;~Exit(){flag=false;}} exit{observing_};
+ require(!player.empty()&&player.size()<=128&&player.find('\0')==std::string_view::npos&&slot<36);
+ inventory_permission(owner,player);require(observations_.size()<256,VCF_CAPACITY);
+ require(std::count_if(observations_.begin(),observations_.end(),[&](const auto& row){return row.second.owner==owner;})<64,VCF_CAPACITY);
+ require(bool(host_.observe_inventory_item),VCF_UNAVAILABLE);
+ auto validator=host_.observe_inventory_item(player,slot);require(bool(validator),VCF_INTERNAL);
+ inventory_permission(owner,player);require(next_&&next_!=UINT64_MAX,VCF_CAPACITY);
+ const auto id=next_++;observations_.emplace(id,Observation{owner,std::string(player),std::move(validator)});return id;
+}
+void Engine::validate_inventory_observation(vcf_handle owner,vcf_handle id){
+ check();require(!callbacks_&&!dispatching_&&!observing_,VCF_REENTRANT);qualify(owner,"");
+ observing_=true;struct Exit{bool& flag;~Exit(){flag=false;}} exit{observing_};
+ auto it=observations_.find(id);require(it!=observations_.end(),VCF_NOT_FOUND);require(it->second.owner==owner,VCF_DENIED);
+ require(it->second.failure==VCF_OK,it->second.failure);
+ // Copy the provider closure before invoking it; an Endstone event may revoke
+ // its consumer. No map iterator/reference survives a call into the host.
+ auto validator=it->second.validate;auto player=it->second.player;
+ try{
+  inventory_permission(owner,player);validator();inventory_permission(owner,player);
+  require(observations_.contains(id),VCF_CLOSED);
+ }catch(const Error&e){if(auto found=observations_.find(id);found!=observations_.end())found->second.failure=e.status;throw;}
+ catch(...){if(auto found=observations_.find(id);found!=observations_.end())found->second.failure=VCF_INTERNAL;throw Error{VCF_INTERNAL};}
+}
+void Engine::release_inventory_observation(vcf_handle owner,vcf_handle id){
+ check();require(!callbacks_&&!dispatching_&&!observing_,VCF_REENTRANT);qualify(owner,"");auto it=observations_.find(id);
+ require(it!=observations_.end(),VCF_NOT_FOUND);require(it->second.owner==owner,VCF_DENIED);observations_.erase(it);
+}
 uint32_t Engine::collect_terminal(vcf_handle owner,uint32_t limit){
  check();require(!callbacks_&&!dispatching_,VCF_REENTRANT);qualify(owner,"");uint32_t n=0;
  for(auto it=sessions_.begin();it!=sessions_.end()&&n<std::min(limit,256u);){
@@ -180,7 +216,7 @@ vcf_handle Engine::prepare(vcf_handle owner,Session s){
  s.owner=owner;s.id=next_++;s.generation=s.id;sessions_.emplace(s.id,s);return s.id;
 }
 Item Engine::item(const vcf_item& in)const{
- check();require(in.size>=sizeof(vcf_item)&&(in.version==VCF_ABI_VERSION||in.version==VCF_ABI_VERSION_1_2||in.version==VCF_ABI_VERSION_1_1||in.version==VCF_ABI_VERSION_1_0));
+ check();require(in.size>=sizeof(vcf_item)&&(in.version==VCF_ABI_VERSION||in.version==VCF_ABI_VERSION_1_3||in.version==VCF_ABI_VERSION_1_2||in.version==VCF_ABI_VERSION_1_1||in.version==VCF_ABI_VERSION_1_0));
  Item i;i.id=str(in.identifier);i.count=in.count;
  if(!i.count){require(i.id.empty() && !in.nbt.length);return i;}
  require(host_.item_limit!=nullptr,VCF_UNAVAILABLE);i.limit=host_.item_limit(i.id);
@@ -277,6 +313,7 @@ void Engine::selected(vcf_handle id,std::string_view player,uint32_t index){
  queue_.push_back({TaskType::invoke,id,std::move(key)});s.state=VCF_OPENING;
 }
 void Engine::player_gone(std::string_view player){
+ check();std::erase_if(observations_,[player](const auto&v){return v.second.player==player;});
  check();for(auto&[id,s]:sessions_)if(s.player==player&&s.state!=VCF_TERMINAL)close(s.owner,id);
 }
 void Engine::opened(vcf_handle owner,vcf_handle id,vcf_status result){

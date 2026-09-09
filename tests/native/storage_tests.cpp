@@ -43,7 +43,7 @@ void captures(){
     auto actual=initial();auto before=actual;int writes=0;
     s::Reservation reservation(actual,s::Layout("enderchest"),[&]{return actual;},[&](const auto& expected,const auto& next){
         check(s::same_inventory(expected,actual));++writes;actual=next;return VCF_OK;
-    });
+    },[]{});
     auto a=reservation.apply(requests[0],917,0);check(a.committed&&writes==1&&actual.storage[0].value.item.count==1);
     auto replay=reservation.apply(requests[0],917,0);check(replay.replayed&&writes==1);
     auto altered=requests[0];altered.actions[0].count=2;refused([&]{reservation.apply(altered,917,1);},VCF_STALE);
@@ -55,17 +55,17 @@ void captures(){
 }
 void lifecycle(){
     auto actual=initial(12);auto before=actual;int writes=0;
-    s::Reservation reservation(actual,s::Layout("chest"),[&]{return actual;},[&](auto&,auto& next){actual=next;++writes;return VCF_OK;});
+    s::Reservation reservation(actual,s::Layout("chest"),[&]{return actual;},[&](auto&,auto& next){actual=next;++writes;return VCF_OK;},[]{});
     auto take=move(-1,ref(28,1,21),ref(59,0,0),5);
     refused([&]{reservation.apply(take,99,0);},VCF_STALE);
     reservation.apply(take,917,0);check(writes==0&&reservation.state().cursor.value.item.count==5);
     reservation.cancel();check(reservation.closed()&&s::same_inventory(actual,before)&&reservation.state().cursor.value.item.empty());
     refused([&]{reservation.apply(take,917,0);},VCF_CLOSED);
     auto send=move(-3,ref(28,1,21),ref(7,0,0),5);
-    s::Reservation conflict(actual,s::Layout("chest"),[&]{return actual;},[](auto&,auto&){return VCF_CONFLICT;});
+    s::Reservation conflict(actual,s::Layout("chest"),[&]{return actual;},[](auto&,auto&){return VCF_CONFLICT;},[]{});
     refused([&]{conflict.apply(send,917,0);},VCF_CONFLICT);check(!conflict.quarantined()&&s::same_inventory(actual,before));
     bool unreadable=false;
-    s::Reservation uncertain(actual,s::Layout("chest"),[&]{if(unreadable)throw std::runtime_error("post-write read failure");return actual;},[&](auto&,auto& next){actual=next;unreadable=true;return VCF_OK;});
+    s::Reservation uncertain(actual,s::Layout("chest"),[&]{if(unreadable)throw std::runtime_error("post-write read failure");return actual;},[&](auto&,auto& next){actual=next;unreadable=true;return VCF_OK;},[]{});
     refused([&]{uncertain.apply(send,917,0);},VCF_QUARANTINED);check(uncertain.closed()&&uncertain.quarantined());
     uncertain.cancel();refused([&]{uncertain.apply(send,917,0);},VCF_QUARANTINED);
     check(actual.storage[0].value.item.count==5); // No compensating overwrite/mint.

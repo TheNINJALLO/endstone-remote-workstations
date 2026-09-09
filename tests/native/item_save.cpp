@@ -52,6 +52,13 @@ void api(){
  vcf_handle older=0;check(old.register_consumer(&descriptor,&older)==VCF_OK);
  auto held=sdk::descriptor<vcf_held_info>();held.version=VCF_ABI_VERSION_1_2;check(old.inspect_held(older,sdk::view("player"),&held)==VCF_OK&&held.version==VCF_ABI_VERSION_1_2);
  check(old.unregister_consumer(older)==VCF_OK);
+ vcf_api old_save{};check(oni_vcf_get_api(VCF_ABI_VERSION_1_3,VCF_API_1_3_SIZE,&old_save)==VCF_OK);
+ descriptor.version=VCF_ABI_VERSION_1_3;descriptor.name=sdk::view("old_item_reader");
+ check(old_save.register_consumer(&descriptor,&older)==VCF_OK);
+ auto old_info=sdk::descriptor<vcf_inventory_item_info>();old_info.version=VCF_ABI_VERSION_1_3;
+ std::vector<uint8_t> old_buffer(512);uint32_t old_required=0;
+ check(old_save.read_inventory_item(older,sdk::view("player"),19,&old_info,old_buffer.data(),static_cast<uint32_t>(old_buffer.size()),&old_required)==VCF_OK);
+ check(old_info.version==VCF_ABI_VERSION_1_3&&old_required==bytes.size());check(old_save.unregister_consumer(older)==VCF_OK);
  auto info=sdk::descriptor<vcf_inventory_item_info>();info.slot=99;const auto initial=info;uint32_t required=77;
  std::array<uint8_t,512> buffer;buffer.fill(0xa5);const auto untouched=buffer;
  check(table.read_inventory_item(client.owner(),sdk::view("player"),19,&info,nullptr,0,&required)==VCF_BUFFER&&required==bytes.size());
