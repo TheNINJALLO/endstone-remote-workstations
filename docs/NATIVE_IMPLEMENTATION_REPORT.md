@@ -1,6 +1,6 @@
 # Native implementation checkpoint â€” incomplete
 
-The latest recorded native source checkpoint is `ea7c6cfa4bcd2e0f2bb039d66b25188414bceb1d` on
+The latest recorded native source checkpoint is `f1bbfbd645bfed8c2bb35049c01e98ed8aff1288` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
@@ -9,8 +9,11 @@ SDK 1.2 adds [read-only held inspection](NATIVE_HELD_ITEMS.md), with selected
 shulker and book PC evidence. The initial bundle test exposed unchanged metadata
 despite stored contents; the corrected code refuses bundle snapshots pending
 complete source access. Native held editors, writeback and recovery remain
-incomplete. The initial run's passive packet observer also refused a packet and
-lost its baseline; this is recorded, not classified as a successful observation.
+incomplete. The corrected public build passed two bundle refusals, five supported
+held inspections, the double-chest partner guard/SDK-close regression and a form
+callback, with no outstanding tickets. Its passive packet observer reproduced
+the earlier refusal immediately after login, before new item operations; the
+cause remains unresolved. See the [recorded run](../research/native-evidence/linux-f1bbfbd-held-smoke.json).
 
 ## What now runs locally
 
@@ -23,8 +26,10 @@ The operator explicitly confirmed the supplied server's license before startup.
 The exact Linux provider and both independent SDK consumers load and enable.
 A stock Windows Bedrock 1.26.45 client joins the server. The public SDK action
 form renders and dispatches the consumer's callback. All 69 catalog IDs resolve.
-The live inventory observer now reports one registry, one complete snapshot,
-zero queued packets and zero refusals. It does not write native inventories.
+The earlier `b0ebf22` inventory observer reported one registry, one complete
+snapshot and zero refusals. Both held-inspection runs instead ended with zero
+registries/snapshots and one refusal; a complete current baseline is not proven.
+The observer does not write native inventories.
 
 The opt-in Linux original inventory adapter now opens `inventory2x2`, `armor`,
 `offhand` and `recipebook` through independently derived and fingerprinted Linux
@@ -153,10 +158,10 @@ packaging checks do not upgrade native gameplay qualification.
   exported. The exact current provider and both consumer DLLs loaded in the
   isolated Windows server, verified their hashes and primitive manifest, and
   shut down cleanly. This Windows build has not had stock-client UI tests.
-- Local Linux Docker build at `ea7c6cf`: **15/15 CTest jobs passed**, ELF, SDK and consumers
+- Local Linux Docker build at `f1bbfbd`: **15/15 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `ea7c6cf`: its CI job passed **15/15 tests**, including held snapshots, and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `f1bbfbd`: its CI job passed **15/15 tests**, including held snapshots, and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
@@ -168,13 +173,13 @@ packaging checks do not upgrade native gameplay qualification.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-b0ebf22.json`](../research/native-evidence/checkpoint-b0ebf22.json).
+[`checkpoint-f1bbfbd.json`](../research/native-evidence/checkpoint-f1bbfbd.json).
 Older checkpoints keep their original source and artifact identities.
 
-At `b0ebf22`, [native CI run 34333637463](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34333637463)
+At `f1bbfbd`, [native CI run 34343707162](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34343707162)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34333637557](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34333637557)
+refuses the incomplete catalog. [Legacy regression run 34343706962](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34343706962)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux workstation example](examples/linux-native-workstations.md).
 All three Linux CI plugin hashes match the locally tested exports. The Windows

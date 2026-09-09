@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-held-refusal-and-regression-smoke",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "f1bbfbd645bfed8c2bb35049c01e98ed8aff1288",
+  "platform": "linux-x64",
+  "artifact_sha256": "bbd1e3b46a224c0cd5f81453259217b56a2766cf7e9049d7bf1c7c0e5295fae3",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "started_utc": "2026-09-09T11:09:33Z",
+  "clean_stop_utc": "2026-09-09T11:25:49Z",
+  "loaded_shadow_copies_match_exports": true,
+  "private_probe_installed": false,
+  "observations": {
+    "writtenbook": "One inspection after clean restart returned writtenbook, selected slot6, amount1 and metadata199, with the same digest as the prior signed fixture. Moved the book to empty main inventory slot20; no book edits this run.",
+    "bundle_refusal": "Selected the retained empty bundle in hotbar6. Two inspect-held calls both refused with VCF_UNAVAILABLE (status5). The tooltip confirmed empty. Returned it to main inventory slot19. No successful bundle snapshot or content-complete bundle support claimed.",
+    "shulker": "Selected the retained VCF Held Box fixture. Two reads before UI regressions and two after returned shulker, amount1, metadata53 and the same digest as before the clean restart. No ID assigned, editor opened or item written.",
+    "doublechest": "Opened the empty ordinary pair through1,91,7 and rendered54 slots. Denying only partner Overworld|2,91,7 closed the active view with expected event4/status4. A status read issued immediately after guard command still preceded the closing tick; settled client callback verified closure. Cleared the guard, reopened through2,91,7 and rendered54 empty slots; SDK-close completed event2/status13.",
+    "form": "Public C ABI consumer form rendered. Clicking its action produced one callback and zero outstanding tickets.",
+    "packet_observer": "At11:12:20 after join, before new bundle/item operations, observer already reported zero registries/zero complete snapshots/zero queued/one refusal. Final result stayed the same. Reproduces the separate observer defect at login; exact cause/packet not yet captured.",
+    "inventory": "Restored compass to original hotbar6. Retained empty bundle19, signed book20 and named shulker21 in main inventory. Read-only clear maxCount0 verified six stones, three wooden pickaxes including wildcard damage, two iron ingots, four planks, one undyed shulker and one bundle. Signed book has SDK/UI amount evidence; no invalid written_book console query repeated. No items supplied or consumed this run; no cursor item."
+  },
+  "sdk_counters": {
+    "inspection_successes": 5,
+    "inspection_refusals": 2,
+    "opens": 2,
+    "closes": 1,
+    "failure_callbacks": 1,
+    "expected_active_partner_denials": 1,
+    "guard_checks": 775,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "setup": "Normal rebuilt runtime image; three public plugins only, exact export/CI/loaded hashes. Existing accepted license reused. Saved isolated29179 server selected explicitly. Guard cleared and operator permission retained at clean shutdown.",
+  "not_qualified": [
+    "Content-complete bundle snapshot",
+    "Persistent held identities and exclusivity",
+    "Held native editors or custom behavior",
+    "Held writeback and crash/save reconciliation",
+    "All registered colors, metadata and input profiles",
+    "Live permission/revocation races for inspection",
+    "Windows stock-client runtime",
+    "Other devices/multiplayer",
+    "Exact Onistone runtime admission",
+    "Complete passive inventory snapshot on this run",
+    "Full catalog migration"
+  ],
+  "screenshots": {
+    "final-info": {
+      "path": "docs/images/native-held-refusal/final-info.png",
+      "sha256": "2fa440027b9ed7bc14e43d0c8ff23ffedaf29501373ad5a56f4744daf6977850",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "bundle-selected": {
+      "path": "docs/images/native-held-refusal/bundle-selected.png",
+      "sha256": "72c53dc153776f244ebeb1e39aa3c5f6e1c9631b2b66797086a9ec8f4fdcd556",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "box-selected": {
+      "path": "docs/images/native-held-refusal/box-selected.png",
+      "sha256": "76e0f33f3f4922c83c4547653ad07d190737dede6a60133087a814c08dc74897",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "chest-other": {
+      "path": "docs/images/native-held-refusal/chest-other.png",
+      "sha256": "57b0d7903526ae729c07a7e49e28b95eb759c75db42e67d9f4bd086727c531d8",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "form-ready": {
+      "path": "docs/images/native-held-refusal/form-ready.png",
+      "sha256": "79ba439a3adc23c35fcd27abadc4c379579b28fd1a3d89d6f30ede9a3136ef45",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "inventory-restored": {
+      "path": "docs/images/native-held-refusal/inventory-restored.png",
+      "sha256": "1ec731208a80179a3d3eb005b9d3e14539257e46ad19112e5d5fcead356dba68",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-f1bbfbd-held-counters.txt",
+    "sha256": "d40a0e290673e43cf36f512d6f97832d6dfa2c5d0f982c56d35e5d7314a2af9a"
+  }
+}

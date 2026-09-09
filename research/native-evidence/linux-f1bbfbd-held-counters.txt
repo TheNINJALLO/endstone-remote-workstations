@@ -1,0 +1,21 @@
+[11:12:20 INFO]: Native VCF C ABI 1.2; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[11:12:20 INFO]: Item packet observations: registries 0, complete snapshots 0, queued 0, refused 1. Observation is not inventory-write qualification.
+[11:15:56 INFO]: Original-mode SDK example: opens 0, closes 0, failures 0, guard checks 0, outstanding tickets 0
+[11:15:56 INFO]: Held inspections: successes 1, refusals 2
+[11:19:19 INFO]: Original-mode SDK example: opens 1, closes 0, failures 0, guard checks 464, outstanding tickets 1
+[11:19:19 INFO]: Held inspections: successes 3, refusals 2
+[11:20:50 INFO]: Queued closure of 1 owned SDK tickets.
+[11:22:23 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[11:22:23 INFO]: Original-mode SDK example: opens 2, closes 1, failures 1, guard checks 775, outstanding tickets 0
+[11:22:23 INFO]: Held inspections: successes 3, refusals 2
+[11:22:24 INFO]: Native VCF C ABI 1.2; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[11:22:24 INFO]: Item packet observations: registries 0, complete snapshots 0, queued 0, refused 1. Observation is not inventory-write qualification.
+[11:25:45 INFO]: Original-mode SDK example: opens 2, closes 1, failures 1, guard checks 775, outstanding tickets 0
+[11:25:45 INFO]: Held inspections: successes 5, refusals 2
+[11:25:45 INFO]: <test-player> has 6 items that match the criteria
+[11:25:46 INFO]: <test-player> has 3 items that match the criteria
+[11:25:46 INFO]: <test-player> has 2 items that match the criteria
+[11:25:46 INFO]: <test-player> has 4 items that match the criteria
+[11:25:46 INFO]: <test-player> has 1 items that match the criteria
+[11:25:47 INFO]: <test-player> has 1 items that match the criteria
+Quit correctly

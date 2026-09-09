@@ -145,3 +145,36 @@ after Windows rejected foreground activation. The `clear written_book` count
 query was rejected by BDS command parsing; only SDK/UI amount evidence exists
 for that signed fixture. No editor, bundle-content or all-UI qualification is
 claimed from this run.
+
+## Corrected Linux client results
+
+The [public `f1bbfbd` run](../research/native-evidence/linux-f1bbfbd-held-smoke.json)
+verified the bundle refusal on the client: two calls returned `VCF_UNAVAILABLE`.
+One signed-book read and four named-shulker reads succeeded with their prior
+digests after a clean server restart. The three Linux plugin files matched CI
+and the actual loaded modules; no diagnostic plugin was installed.
+
+![Bundle refusals and repeated supported-item reads](images/native-held-refusal/final-info.png)
+
+The empty double chest rendered all 54 slots from both halves. Denying only the
+partner source closed the active view with the expected denial. Clearing that
+guard allowed reopening, and SDK-close completed. The public action form
+rendered and delivered its callback. Final counters were two opens, one normal
+close, one expected denial, 775 guard checks and zero outstanding tickets.
+
+![Double chest reopened from its other half](images/native-held-refusal/chest-other.png)
+
+![Actual SDK action form](images/native-held-refusal/form-ready.png)
+
+No items were supplied or consumed in this run. The compass returned to its
+original hotbar slot; the empty bundle, signed test book and named shulker were
+retained. Read-only item counts confirmed six stones, three wooden pickaxes,
+two iron ingots, four planks, one shulker and one bundle.
+
+![Retained fixtures and restored compass](images/native-held-refusal/inventory-restored.png)
+
+The separate passive observer already showed zero registries/snapshots and one
+refusal immediately after login, before these item operations. Its cause remains
+under investigation. Fifteen native/sanitizer tests, 300,000 fuzz inputs and
+Windows Debug/Release builds passed; this does not qualify held editors,
+bundle contents, crash/save recovery or the full catalog.
