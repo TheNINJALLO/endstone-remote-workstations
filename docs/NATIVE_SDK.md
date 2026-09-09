@@ -167,6 +167,11 @@ input attempts remain documented. These original
 views do not implement custom processors or routing; Windows admission remains
 incomplete.
 
+The separate [linked hopper example](examples/linux-linked-hopper.md) uses
+`VCF_REAL_SOURCE` and five real source slots, with a native current-contents
+refresh. Selected PC transfer, metadata and cleanup checks passed in `9a656e3`.
+It does not implement custom routing or hopper-minecart access.
+
 The original-mode adapter rejects preloaded items, changed slot policies,
 recipe definitions, replacement titles and unrelated source descriptors. It
 never reports success while silently ignoring requested custom behavior.

@@ -1,0 +1,19 @@
+[08:35:56 INFO]: Original-mode SDK example: opens 1, closes 0, failures 0, guard checks 86, outstanding tickets 1
+[08:37:29 INFO]: Queued closure of 1 owned SDK tickets.
+[08:37:32 INFO]: Original-mode SDK example: opens 1, closes 1, failures 0, guard checks 420, outstanding tickets 0
+[08:39:25 INFO]: <test-player> has 6 items that match the criteria
+[08:39:25 INFO]: <test-player> has 3 items that match the criteria
+[08:40:47 INFO]: Original-mode SDK example: opens 2, closes 1, failures 1, guard checks 1096, outstanding tickets 0
+[08:41:55 INFO]: <test-player> has 2 items that match the criteria
+[08:42:29 INFO]: Original-mode SDK example: opens 3, closes 1, failures 2, guard checks 1412, outstanding tickets 0
+[08:43:28 INFO]: Original-mode SDK example: opens 4, closes 2, failures 3, guard checks 1582, outstanding tickets 0
+[08:44:28 INFO]: Queued closure of 1 owned SDK tickets.
+[08:45:18 INFO]: Queued closure of 1 owned SDK tickets.
+[08:46:36 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[08:46:37 INFO]: Original-mode SDK example: opens 6, closes 4, failures 3, guard checks 1880, outstanding tickets 0
+[08:46:37 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[08:46:37 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[08:46:37 INFO]: <test-player> has 2 items that match the criteria
+[08:46:38 INFO]: <test-player> has 3 items that match the criteria
+[08:46:38 INFO]: <test-player> has 6 items that match the criteria
+Quit correctly

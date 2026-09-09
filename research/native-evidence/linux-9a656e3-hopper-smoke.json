@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-selected-hopper-smoke",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "9a656e3311df2a7bc49d39b7ab347067b32f51ef",
+  "platform": "linux-x64",
+  "artifact_sha256": "7e2f91d201b2097756073268f2943b473e95200642824a986556769864f138d8",
+  "native_source_sha256": "3b7d31d21ae181f4985b54ee040997e04442860b367827e587308f28f1f562e4",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "started_utc": "2026-09-09T08:34:01Z",
+  "clean_stop_utc": "2026-09-09T08:46:46Z",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "loaded_shadow_copies_match_exports": true,
+  "one_bundled_libcxx_family": true,
+  "private_probe_installed": false,
+  "observations": {
+    "hopper_sdk": "The native five-slot hopper opened. Ordinary-click placed the named Efficiency I wooden pickaxe into slot4; Shift-click placed six stone into slot0. Both were visually confirmed before SDK closure. Closure completed without disconnect and reopening published both retained items in their original source slots.",
+    "hopper_withdrawal": "Shift-click withdrew all six stone, routing them to the empty hotbar slot. Ordinary-click withdrew the pickaxe to the cursor and placed it in the now-empty first inventory slot. Tooltip retained VCF Enchanted Pickaxe and Efficiency I. Read-only counts confirmed six stone and three total pickaxes.",
+    "hopper_permission": "Shift-click deposited two ingots into slot0. Intentional de-op closed the active view with one expected denial and zero outstanding tickets. Operator permission was restored. Reopening retained both ingots, and Shift-click recovered them; read-only count two.",
+    "hopper_source": "After visually confirming the third hopper view was empty, removed its exact source. The view closed with an expected source denial and no ticket leak. Recreated the hopper with keep in the resulting air, reopened empty and closed with the native X button.",
+    "hopper_wrong_source": "A hopper request against the nearby brewing stand was refused before opening, with one expected denial.",
+    "regressions": "One empty beacon with Haste state retained and one empty crafter opened and SDK-closed. One independent form callback completed. All form tickets and provider sessions returned to zero.",
+    "native_contents": "Hopper openings require an observed uncancelled matching InventoryContent with five items. Reopened nonempty views rendered the retained contents, and ordinary/Shift interactions delivered their items; the refresh path is not qualified solely from a sent packet."
+  },
+  "sdk_counters": {
+    "opens": 6,
+    "closes": 4,
+    "failure_callbacks": 3,
+    "sdk_close_quarantines": 0,
+    "expected_denial_failures": 3,
+    "refusals_before_open": 1,
+    "guard_checks": 1880,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "counter_limit": "Four hopper opens (one SDK close, one native X close, one active permission denial, one empty-source denial), plus one beacon and one crafter SDK-close regression. A separate wrong-family request refused before opening. No disconnect quarantine occurred.",
+  "setup_observations": "Verified the iron block below4,91,8 before placing the test hopper with keep in air; no downward target inventory existed. No new test items were supplied or consumed. Recreated only the verified-empty hopper after source-loss testing. Read-only clear always specified maxCount0. Operator status restored before subsequent tests and clean shutdown.",
+  "not_qualified": [
+    "Native world automation, redstone, item suction and downstream routing",
+    "Custom storage policies or virtual hopper contents",
+    "Active dimension/unload, competing owners and adversarial source races",
+    "Source configuration aliases and unrestricted remote distance",
+    "Cross-save/crash and death/drop recovery",
+    "All metadata/input profiles",
+    "Windows stock-client qualification",
+    "Other devices and multiplayer",
+    "Exact Onistone runtime admission",
+    "Full catalog/custom framework"
+  ],
+  "earlier_anomalies": "This run does not resolve the d6adf87 initially unaccepted crafter/beacon inputs, ca30255 grindstone rejection or171e0aa missing-plank observation.",
+  "screenshots": {
+    "ready": {
+      "path": "docs/images/native-linux-hopper/ready.png",
+      "sha256": "fba348dc12257b2834d4daf65d85cbebd19a08e857a11f5da241e2c3f22f18c1",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "retained": {
+      "path": "docs/images/native-linux-hopper/retained.png",
+      "sha256": "437970629f5af41137d779460c5aa824e8875909f7cc0037b49f655fa5184b4c",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "returned-metadata": {
+      "path": "docs/images/native-linux-hopper/returned-metadata.png",
+      "sha256": "7df01840484c7633cc79f9c85b6ea6c53ce323c9bf02c4158e116587696e6968",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "permission-retained": {
+      "path": "docs/images/native-linux-hopper/permission-retained.png",
+      "sha256": "d82384980e298c37516f697a3a0db506bcb7b9102c57c3a0e490d126bfafc22e",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "restored": {
+      "path": "docs/images/native-linux-hopper/restored.png",
+      "sha256": "901c70920ec28f592bcc9d6bf2248205bc217261b94bbb4a072cbb5f6898252c",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-9a656e3-hopper-counters.txt",
+    "sha256": "95d6457756d015c1d2168c985dc5fbc60f0ef119622709feda3bd79e7cdd0613"
+  },
+  "abi_manifest": "research/native-evidence/linux-linked-hopper-abi-126451.json"
+}

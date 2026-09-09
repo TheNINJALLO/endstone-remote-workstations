@@ -238,3 +238,15 @@ seven normal closes and two expected denials, zero tickets and clean shutdown.
 One crafter Shift-click attempt had no effect, and an initial beacon sequence
 needed cursor-state inspection before successful deposit. These observations
 remain limitations; this run does not qualify every input path or custom mode.
+
+## Experimental linked hopper
+
+The [exact `9a656e3` hopper run](../research/native-evidence/linux-9a656e3-hopper-smoke.json)
+passed first/last-slot transfers, native contents on reopen, name/enchantment
+retention, SDK and native X closure, stored-ingot retention across permission
+loss, empty-source removal/recreation and wrong-family refusal. Empty beacon
+and crafter SDK-close regressions and the form callback passed. Six opens ended
+in four normal closes and three expected denials (two active, one pre-open),
+zero tickets/provider sessions and clean shutdown. The [hopper SDK example](examples/linux-linked-hopper.md)
+includes five actual screenshots. Native world automation, custom routing and
+cross-save/crash recovery remain incomplete.

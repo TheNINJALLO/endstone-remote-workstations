@@ -1,6 +1,6 @@
 # Native implementation checkpoint â€” incomplete
 
-The native source checkpoint is `d6adf8738e6a7156b5f6b41f6b2b60fe362ea277` on
+The native source checkpoint is `9a656e3311df2a7bc49d39b7ab347067b32f51ef` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
@@ -107,6 +107,16 @@ One crafter Shift-click attempt had no effect, and an initial beacon sequence
 needed cursor-state inspection before successful deposit. These observations
 remain limitations; this run does not qualify every input path or custom mode.
 
+The [exact `9a656e3` hopper run](../research/native-evidence/linux-9a656e3-hopper-smoke.json)
+passed first/last-slot transfers, native contents on reopen, name/enchantment
+retention, SDK and native X closure, stored-ingot retention across permission
+loss, empty-source removal/recreation and wrong-family refusal. Empty beacon
+and crafter SDK-close regressions and the form callback passed. Six opens ended
+in four normal closes and three expected denials (two active, one pre-open),
+zero tickets/provider sessions and clean shutdown. The [hopper SDK example](examples/linux-linked-hopper.md)
+includes five actual screenshots. Native world automation, custom routing and
+cross-save/crash recovery remain incomplete.
+
 Live testing exposed and fixed two SDK issues: Linux cross-module player
 conversion now uses Endstone's virtual `asPlayer()` method, and a selected menu
 action completes the caller's original ticket instead of leaking a hidden
@@ -139,7 +149,7 @@ packaging checks do not upgrade native gameplay qualification.
 - Local Linux Docker build: **14/14 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `d6adf87`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `9a656e3`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
@@ -151,13 +161,13 @@ packaging checks do not upgrade native gameplay qualification.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-d6adf87.json`](../research/native-evidence/checkpoint-d6adf87.json).
+[`checkpoint-9a656e3.json`](../research/native-evidence/checkpoint-9a656e3.json).
 Older checkpoints keep their original source and artifact identities.
 
-At `d6adf87`, [native CI run 34326591005](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34326591005)
+At `9a656e3`, [native CI run 34329568131](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34329568131)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34326591057](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34326591057)
+refuses the incomplete catalog. [Legacy regression run 34329568221](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34329568221)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux workstation example](examples/linux-native-workstations.md).
 All three Linux CI plugin hashes match the locally tested exports. The Windows
@@ -211,8 +221,8 @@ orchestration behind an opt-in flag. Eight Linux workstation contexts, four shar
 inventory roles, three nearby linked machines and two nearby linked storage entries
 have experimental original adapters. Five additional linked utilities have
 selected PC evidence, including later repeated beacon/crafter SDK closure and
-item/control restoration. Initial unaccepted input attempts remain recorded. Other
-Linux catalog adapters remain incomplete.
+item/control restoration. Initial unaccepted input attempts remain recorded. The separate linked hopper path now has
+selected transfer, metadata and cleanup evidence. Other Linux catalog adapters remain incomplete.
 The current form is an SDK action demonstration; it is not a workstation.
 
 Required work still includes original and custom merchant, machine, map-printing,

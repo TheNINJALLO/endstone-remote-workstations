@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
     "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
-    "artifact_sha256": "d9f832be1fc67e6b0cfc148f1382f656218d61fc78e8fb3ed26e0554792a8464"
+    "artifact_sha256": "7e2f91d201b2097756073268f2943b473e95200642824a986556769864f138d8"
   },
   "build": "tested-in-local-linux-docker",
   "native_loader_smoke": "passed",
@@ -278,11 +278,11 @@
       "family": "storage",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -290,17 +290,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
-            "restoration": "untested",
+            "closing": "passed",
+            "restoration": "passed",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Selected PC original hopper transfer/metadata/close/source smoke passed; world automation, custom storage/routing, adversarial lifecycle and crash/save recovery remain incomplete.",
+          "smoke_record": "research/native-evidence/linux-9a656e3-hopper-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -8523,10 +8524,10 @@
     }
   },
   "build_evidence": {
-    "source_revision": "d6adf8738e6a7156b5f6b41f6b2b60fe362ea277",
+    "source_revision": "9a656e3311df2a7bc49d39b7ab347067b32f51ef",
     "host": "Windows Docker Desktop 4.90.0 / WSL 2, pinned linux/amd64 Clang 20.1.8 image",
     "native_tests": "14/14 CTest locally/CI including copied source descriptors and SDK relocation; ASan/UBSan and300000 fuzz inputs passed.",
-    "elf_report": "linux-d6adf87-elf-report.txt",
+    "elf_report": "linux-9a656e3-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.34",
     "direct_libraries": [
       "libcrypto.so.3",
@@ -8537,23 +8538,23 @@
       "libgcc_s.so.1",
       "libc.so.6"
     ],
-    "runtime_restriction": "Exact opt-in Linux original adapter has22 entry paths. Beacon/crafter repeated SDK-close, selected return/retention and control restoration passed. Initial unaccepted inputs remain recorded. Each smoke identifies its own artifacts; custom/full qualification remains incomplete."
+    "runtime_restriction": "Exact opt-in Linux original adapter has23 entry paths. Linked hopper passed selected first/last slot transfers, name/enchantment retention, SDK/native close, permission/source-loss cleanup and wrong-family refusal. Each smoke identifies its own artifacts; custom/full qualification remains incomplete."
   },
   "sdk_version": "1.1; ABI 1.0 prefix retained",
   "sanitizers": {
-    "source_revision": "d6adf8738e6a7156b5f6b41f6b2b60fe362ea277",
+    "source_revision": "9a656e3311df2a7bc49d39b7ab347067b32f51ef",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
     "storage_fuzz_inputs": 100000,
     "items_fuzz_inputs": 100000,
-    "test_report": "linux-d6adf87-sanitizer-tests.txt",
-    "nbt_report": "linux-d6adf87-fuzz-nbt.txt",
-    "storage_report": "linux-d6adf87-fuzz-storage.txt",
-    "items_report": "linux-d6adf87-fuzz-items.txt"
+    "test_report": "linux-9a656e3-sanitizer-tests.txt",
+    "nbt_report": "linux-9a656e3-fuzz-nbt.txt",
+    "storage_report": "linux-9a656e3-fuzz-storage.txt",
+    "items_report": "linux-9a656e3-fuzz-items.txt"
   },
   "native_tests": {
-    "source_revision": "d6adf8738e6a7156b5f6b41f6b2b60fe362ea277",
+    "source_revision": "9a656e3311df2a7bc49d39b7ab347067b32f51ef",
     "ctest": "14/14 passed locally and CI",
     "sanitizers": "14/14 passed; proprietary BDS UI execution not instrumented.",
     "fuzz_inputs": {
@@ -8578,5 +8579,6 @@
   "native_linked_furnace_smoke": "research/native-evidence/linux-7a938e5-furnace-smoke.json",
   "native_linked_storage_smoke": "research/native-evidence/linux-1d88dfa-storage-smoke.json",
   "native_linked_utility_smoke": "research/native-evidence/linux-961e9ec-utilities-smoke.json",
-  "native_block_actor_close_smoke": "research/native-evidence/linux-d6adf87-close-smoke.json"
+  "native_block_actor_close_smoke": "research/native-evidence/linux-d6adf87-close-smoke.json",
+  "native_linked_hopper_smoke": "research/native-evidence/linux-9a656e3-hopper-smoke.json"
 }
