@@ -174,7 +174,10 @@ two iron ingots, four planks, one shulker and one bundle.
 ![Retained fixtures and restored compass](images/native-held-refusal/inventory-restored.png)
 
 The separate passive observer already showed zero registries/snapshots and one
-refusal immediately after login, before these item operations. Its cause remains
-under investigation. Fifteen native/sanitizer tests, 300,000 fuzz inputs and
+refusal immediately after login, before these item operations. A subsequent
+[private diagnostic](../research/native-evidence/linux-login-dynamic-container-diagnostic.json)
+traced it to a separate 64-slot dynamic registry packet exceeding the old
+54-slot decoder limit. The correction does not enable bundle inspection.
+Fifteen native/sanitizer tests, 300,000 fuzz inputs and
 Windows Debug/Release builds passed; this does not qualify held editors,
 bundle contents, crash/save recovery or the full catalog.

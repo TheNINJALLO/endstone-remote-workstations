@@ -105,19 +105,29 @@ bool player_inventory_container(const Container& c){
     // these only behind the window/slot bounds below, never a dynamic container.
     return !c.dynamic_id&&(c.role==0||c.role==12);
 }
+size_t content_slots(uint32_t window){
+    // Registry window125 is distinct from ordinary UI storage. The pinned
+    // Linux client sends a 64-slot dynamic container there at login when the
+    // player carries a bundle. Keep ordinary windows capped at54.
+    return window==125?64u:54u;
+}
+void content_shape(const Content& c){
+    require(c.window<=255&&c.items.size()<=content_slots(c.window),VCF_CAPACITY);
+    if(c.items.size()>54)require(c.window==125&&c.container.role==63&&c.container.dynamic_id.has_value());
+}
 }
 Content decode_content(std::span<const uint8_t> bytes){
     bounded(bytes,inventory_bound);Reader r{bytes};Content c;c.window=static_cast<uint32_t>(r.var());require(c.window<=255);
-    auto n=r.var();require(n<=54,VCF_CAPACITY);c.items.reserve(static_cast<size_t>(n));
+    auto n=r.var();require(n<=content_slots(c.window),VCF_CAPACITY);c.items.reserve(static_cast<size_t>(n));
     for(size_t i=0;i<n;++i)c.items.push_back(r.descriptor());
-    c.container=r.container();c.storage=r.descriptor();r.end();return c;
+    c.container=r.container();c.storage=r.descriptor();r.end();content_shape(c);return c;
 }
 Slot decode_slot(std::span<const uint8_t> bytes){
     bounded(bytes,inventory_bound);Reader r{bytes};Slot s;s.window=r.byte();s.slot=static_cast<uint32_t>(r.var());require(s.slot<=255);
     if(r.boolean())s.container=r.container();if(r.boolean())s.storage=r.descriptor();s.item=r.descriptor();r.end();return s;
 }
 std::vector<uint8_t> encode(const Content& c){
-    require(c.window<=255&&c.items.size()<=54);Writer w;w.var(c.window);w.var(static_cast<uint32_t>(c.items.size()));
+    require(c.window<=255);content_shape(c);Writer w;w.var(c.window);w.var(static_cast<uint32_t>(c.items.size()));
     for(const auto& d:c.items)w.descriptor(d);w.container(c.container);w.descriptor(c.storage);return std::move(w.data);
 }
 std::vector<uint8_t> encode(const Slot& s){

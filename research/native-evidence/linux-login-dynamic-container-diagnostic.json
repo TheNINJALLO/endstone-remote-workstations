@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "kind": "private-read-only-diagnostic-summary-not-public-runtime-qualification",
+  "recorded": "2026-09-09",
+  "public_codec_source_revision": "f1bbfbd645bfed8c2bb35049c01e98ed8aff1288",
+  "bds": "1.26.45.1",
+  "endstone": "0.11.10",
+  "client": "Windows PC Bedrock 1.26.45, protocol2169",
+  "diagnostic_plugin_sha256": "fc7d7117edb94556ae9bbce98c71795f20f66e22d21b2608e169e8f85e71ee70",
+  "private_probe_installed_during_run": true,
+  "private_probe_removed_after_clean_stop": true,
+  "clean_stop_utc": "2026-09-09T11:45:20Z",
+  "traffic": "Read-only outgoing packet162/49/50 capture; no packet modification or cancellation, no item writes or client inventory operations. Raw captures remain private.",
+  "capture_count": 15,
+  "observations": [
+    "Packet6 was a108252-byte item registry with1976 entries; the original public decoder accepted it.",
+    "Packets7 and11 were full window0 inventories,36 slots, role0, no dynamic ID; the original public decoder accepted both and established a baseline.",
+    "Other packets described armor120, offhand119 and player UI124, all accepted by the original decoder.",
+    "Packet15 was559 bytes: InventoryContent49, window125,64 slots, role63, dynamic ID present. The player carried the retained empty bundle. The original decoder refused VCF_CAPACITY at byte offset2 because it limited every window to54 slots.",
+    "The Inbox discards the entire affected player's cache after this decode failure, explaining the observed0 registries/0 snapshots/1 refusal at login.",
+    "A private offline decoder experiment admitted up to64 slots only in window125. All15 captured packets decoded, the64-slot packet re-encoded byte-for-byte, and the36-slot player baseline remained unchanged.",
+    "Primary local Endstone headers name125 CONTAINER_ID_REGISTRY; the supplied protocol2169 enum names63 dynamiccontainer. FullContainerName contains a byte role and optional uint32 dynamic ID."
+  ],
+  "correction": "Permit up to64 descriptors only in window125; above54 additionally require role63 and an explicit dynamic ID. Preserve ordinary54-slot and64KiB payload bounds. Passive player observation ignores this separate window; it does not merge its slots into player inventory.",
+  "regression_vectors": "New independently generated528-byte empty-descriptor vector with a synthetic dynamic ID; no captured item/book data. Covers every truncated prefix, trailing bytes, wrong windows/roles, missing ID,65 slots, preserved baseline, separate-window deltas and fail-closed cache invalidation.",
+  "not_qualified": [
+    "Corrected public-only stock-client runtime, pending separate run",
+    "Dynamic container lifetime and registry cleanup handling",
+    "Authoritative or content-complete bundle inspection",
+    "Held editors, inventory publication or writeback",
+    "Native crash/save recovery",
+    "Full catalog release"
+  ]
+}

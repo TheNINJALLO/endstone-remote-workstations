@@ -32,6 +32,16 @@ entries across players. Inventory payloads are at most 64 KiB; a registry is at
 most 8 MiB. One queued packet is decoded per scheduler tick with fair rotation;
 the maximum-size registry's real server latency remains unmeasured.
 
+Ordinary content packets are capped at 54 slots. Registry window 125 permits
+up to 64; above 54 it must carry dynamic-container role 63 and an explicit
+dynamic ID. A [private login diagnostic](../research/native-evidence/linux-login-dynamic-container-diagnostic.json)
+found this 64-slot packet after a valid player inventory while the tester held
+an empty bundle. The earlier universal 54-slot limit rejected it and discarded
+the player's cache. The corrected decoder retains the separate packet shape,
+while the passive observer continues to use only window 0 for its 36-slot
+baseline. It neither merges dynamic contents nor grants bundle write authority.
+Public-only client verification of the correction is recorded separately.
+
 `item-wire-conformance-2169.json` contains **generated conformance vectors** from
 independent Python protocol/rapidnbt serializers, with exact versions and source
 hashes. It is explicitly not a client capture. Tests preserve every descriptor

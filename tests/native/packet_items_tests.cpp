@@ -109,6 +109,45 @@ void linux_live_empty_inventory(){
     w::Inbox inbox;inbox.submit("player",162,w::encode_registry(registry()));inbox.submit("player",49,bytes);
     inbox.poll(2);check(inbox.stats().registries==1&&inbox.stats().inventories==1&&inbox.stats().rejected==0);
 }
+void linux_dynamic_registry_inventory(){
+    // Independently generated empty descriptors with the structural shape of
+    // the login capture: window125/count64/role63/present LE32 dynamic ID.
+    // No captured inventory, book data, runtime item ID or real dynamic ID.
+    std::vector<uint8_t> bytes(528,0);bytes[0]=125;bytes[1]=64;
+    bytes[514]=63;bytes[515]=1;bytes[516]=7;
+    auto dynamic=w::decode_content(bytes);
+    check(dynamic.window==125&&dynamic.items.size()==64&&dynamic.container.role==63&&dynamic.container.dynamic_id==7);
+    check(w::encode(dynamic)==bytes);
+    for(size_t n=0;n<bytes.size();++n)refused([&]{w::decode_content(std::span(bytes).first(n));});
+    auto trailing=bytes;trailing.push_back(0);refused([&]{w::decode_content(trailing);});
+    for(unsigned window=0;window<256;++window){
+        if(window==125)continue;
+        auto invalid=dynamic;invalid.window=window;refused([&]{w::encode(invalid);});
+        auto wire=bytes;wire[0]=static_cast<uint8_t>(window);
+        if(window>=128){wire[0]=static_cast<uint8_t>((window&127)|128);wire.insert(wire.begin()+1,1);}
+        refused([&]{w::decode_content(wire);});
+    }
+    for(unsigned role=0;role<256;++role){
+        if(role==63)continue;
+        auto invalid=dynamic;invalid.container.role=static_cast<uint8_t>(role);refused([&]{w::encode(invalid);});
+        auto wire=bytes;wire[514]=static_cast<uint8_t>(role);refused([&]{w::decode_content(wire);});
+    }
+    auto no_id=bytes;no_id[515]=0;no_id.erase(no_id.begin()+516,no_id.begin()+520);
+    refused([&]{w::decode_content(no_id);});
+    auto invalid=dynamic;invalid.container.dynamic_id.reset();refused([&]{w::encode(invalid);});
+    invalid=dynamic;invalid.items.resize(65);refused([&]{w::encode(invalid);});
+    auto too_many=bytes;too_many[1]=65;too_many.insert(too_many.begin()+514,8,0);refused([&]{w::decode_content(too_many);});
+    w::Content main;main.items.resize(36);main.items[7]={1,6,0,101,0,{}};
+    w::Inbox inbox;inbox.submit("player",162,w::encode_registry(registry()));
+    inbox.submit("player",49,w::encode(main));inbox.submit("player",49,bytes);
+    check(inbox.poll(3)==3&&inbox.stats().registries==1&&inbox.stats().inventories==1&&inbox.stats().rejected==0);
+    w::Observation observed;observed.registry(registry());observed.content(main);observed.content(dynamic);
+    w::Slot delta;delta.window=125;delta.slot=63;delta.container=dynamic.container;delta.item={1,1,0,102,0,{}};
+    observed.slot(w::decode_slot(w::encode(delta)));
+    check(observed.inventory_ready()&&observed.inventory()[7]==main.items[7]&&observed.inventory()[0].count==0);
+    inbox.submit("player",49,no_id);inbox.poll();
+    check(inbox.stats().rejected==1&&!inbox.stats().registries&&!inbox.stats().inventories&&inbox.stats().resident_wire_bytes==0);
+}
 void inbox(){
     w::Inbox inbox;auto entries=registry();auto bytes=w::encode_registry(entries);
     w::Content content;content.items.resize(36);content.container={12,{}};auto items=w::encode(content);
@@ -143,6 +182,6 @@ void inbox(){
     refused([&]{inbox.poll(0);});refused([&]{inbox.poll(33);});
 }
 }
-int main(){try{conformance();malformed();observation();properties();linux_live_empty_inventory();inbox();std::cout<<checks<<" item wire checks passed\n";return 0;}
+int main(){try{conformance();malformed();observation();properties();linux_live_empty_inventory();linux_dynamic_registry_inventory();inbox();std::cout<<checks<<" item wire checks passed\n";return 0;}
     catch(const Error&e){std::cerr<<"unexpected status "<<e.status<<" after "<<checks<<" checks\n";return 1;}
     catch(const std::exception&e){std::cerr<<e.what()<<" after "<<checks<<" checks\n";return 1;}}

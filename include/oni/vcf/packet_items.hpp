@@ -20,6 +20,8 @@ struct Container {
     bool operator==(const Container&)const=default;
 };
 struct Content {
+    // At most54 slots, or up to64 for window125 with dynamic role63 and an
+    // explicit dynamic ID. Decoding does not make that container authoritative.
     uint32_t window=0;
     std::vector<Descriptor> items;
     Container container;

@@ -12,8 +12,12 @@ complete source access. Native held editors, writeback and recovery remain
 incomplete. The corrected public build passed two bundle refusals, five supported
 held inspections, the double-chest partner guard/SDK-close regression and a form
 callback, with no outstanding tickets. Its passive packet observer reproduced
-the earlier refusal immediately after login, before new item operations; the
-cause remains unresolved. See the [recorded run](../research/native-evidence/linux-f1bbfbd-held-smoke.json).
+the earlier refusal immediately after login, before new item operations. See
+the [recorded run](../research/native-evidence/linux-f1bbfbd-held-smoke.json).
+A later [private diagnostic](../research/native-evidence/linux-login-dynamic-container-diagnostic.json)
+identified a 64-slot dynamic registry packet rejected by the old universal
+54-slot limit. The parser correction preserves the separate window and the
+player baseline; its public-only runtime verification remains pending.
 
 ## What now runs locally
 
