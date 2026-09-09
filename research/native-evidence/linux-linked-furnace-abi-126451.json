@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "architecture": "linux-x86_64-itanium-libc++",
+  "sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "compiler": "Clang 20.1.8",
+  "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "inventory_bridge_manifest": "research/native-evidence/linux-native-abi-126451.json",
+  "header": "src/bedrock/world/events/player_events.h",
+  "header_sha256": "57ba88daa951733740463179fbcea2e86c4472ecdde30d5f1a821bf7e542dcca",
+  "layout_probe_sha256": "2ff8f5dbe59a43ea2c7e7855739f570fbe58f41bf30ca48618205cb26afe64c4",
+  "layout_ir_sha256": "c7d0df9e9af474c57669c84f485523aa84453533c8e8685e92a227c75be656a4",
+  "layout": {
+    "PlayerOpenContainerEvent": 48,
+    "container_type_offset": 24,
+    "block_position_offset": 28,
+    "entity_unique_id_offset": 40,
+    "BlockPos": 12,
+    "BlockPos_alignment": 4,
+    "ActorUniqueID": 8
+  },
+  "layout_flags": [
+    "-std=c++20",
+    "-stdlib=libc++",
+    "-DNDEBUG",
+    "-DENTT_SPARSE_PAGE=2048",
+    "-DENTT_PACKED_PAGE=128",
+    "-DENTT_NO_MIXIN",
+    "-DRAKNET_SUPPORT_IPV6=1",
+    "-fms-extensions"
+  ],
+  "kind": "linux-linked-furnace-abi-research-not-ui-qualification",
+  "caller": {
+    "rva": "0x44fe540",
+    "function_size": 3071,
+    "arguments": "Player* in rdi, const BlockPos* in rsi, ActorUniqueID by value in rdx",
+    "branches": {
+      "furnace": "0x44fe8e1",
+      "blastfurnace": "0x44fe87d",
+      "smoker": "0x44fe8b9"
+    }
+  },
+  "method": "Linux ELF relocations and independent event jump-table branches identify each distinct factory. Exact Linux headers compile to BlockActor position/type offsets and IConstBlockSource getBlockEntity slot 4. Native type-0 caller independently calls the dimension-source and block-entity lookup functions. Furnace constructor resolves the real block actor.",
+  "admission": "Prototype requires exact BDS/runtime, full function hashes, explicit same-dimension source and permission, loaded source chunk, distance at most six blocks, corresponding lit/unlit block family and block actor type/position. Revalidates captured actor address and guards. Native BDS owns source items and processing. Custom machines, unrestricted remote distance, ABA source replacement, cross-save recovery and full qualification remain incomplete.",
+  "factories": [
+    {
+      "id": "furnace",
+      "container_type": 2,
+      "block_actor_type": 1,
+      "rva": "0x4504310",
+      "size": 1361,
+      "sha256": "0e383c03452396000e3b8172d842681a8a3ec306b801877e3547ac0b1bd2ea1f"
+    },
+    {
+      "id": "blastfurnace",
+      "container_type": 27,
+      "block_actor_type": 38,
+      "rva": "0x45002b0",
+      "size": 1377,
+      "sha256": "d01db5face49184f9ccf8b1c743068972005c9ffbdc2e71a31f29a7b0356f8bd"
+    },
+    {
+      "id": "smoker",
+      "container_type": 28,
+      "block_actor_type": 39,
+      "rva": "0x4506390",
+      "size": 1377,
+      "sha256": "2b4c79354fe036ebf52282642e1c1323fc4f1512e5182fc6304a012a57f394b5"
+    }
+  ],
+  "source_lookup": [
+    {
+      "rva": "0xabca640",
+      "size": 80,
+      "sha256": "6caf7e767cd5f86483dd3b2a5c2009c00150feea372680986d80aaf0827f0a54"
+    },
+    {
+      "rva": "0xc0f7b00",
+      "size": 107,
+      "sha256": "9498b5979d73d97111504ba1bb8fe0114fed7b9a88dac90198d57d748170f292"
+    },
+    {
+      "rva": "0xc0f7b70",
+      "size": 107,
+      "sha256": "36cab4406e21d0092a57c6ea4ae468d46357b31a19351eeaf4dce1ddcfa8abe5"
+    }
+  ],
+  "source_layout": {
+    "header": "src/bedrock/world/level/block/actor/block_actor.h",
+    "header_sha256": "97a0e2e3d2b8e6fc78459a4891347d526c112922a844354f96ca86501b5d315b",
+    "probe_sha256": "2712d89dc45fef0dde3810da76a4ea903a2f69b26184cdc1417a64e660b54caa",
+    "llvm_ir_sha256": "c63006c838e0e2d9ad5b909f8853d99640146312a43f29a6530256cde0f6edfb",
+    "BlockActor_size": 40,
+    "position_offset": 8,
+    "type_offset": 20,
+    "getBlockEntity_vtable_byte_offset": 32,
+    "probe_flags": [
+      "-std=c++20",
+      "-stdlib=libc++",
+      "-DNDEBUG",
+      "-DENTT_SPARSE_PAGE=2048",
+      "-DENTT_PACKED_PAGE=128",
+      "-DENTT_NO_MIXIN",
+      "-DRAKNET_SUPPORT_IPV6=1",
+      "-fms-extensions"
+    ],
+    "probe_warning": "Clang accepts conditional offsetof for the polymorphic header layout with -Winvalid-offset warnings; the resulting offsets also match independent native caller/constructor accesses.",
+    "BlockSource_vtable_rva": "0xe725730",
+    "getBlockEntity_const_rva": "0xc0f7b70",
+    "nonvirtual_nonconst_comparison_rva": "0xc0f7b00",
+    "const_nonconst_distinction": "The virtual const accessor is a separate 107-byte implementation, not the non-const helper used by the type-0 caller."
+  },
+  "constructor_research": [
+    {
+      "rva": "0x45a31c0",
+      "size": 1014,
+      "sha256": "0a4266157f53d978d48024c085c8fe69d53c540087c2af7ea3d659e5bcc34b6a"
+    }
+  ]
+}

@@ -43,6 +43,37 @@ void exercise(){
  check(one.dispose()==VCF_OK&&two.dispose()==VCF_OK);
  engine.shutdown();attach_engine(nullptr);
 }
+struct SourceGuardState {int calls=0;bool allow=true;};
+vcf_status VCF_CALL source_guard(void* context,const vcf_guard_event* event){
+ auto& state=*static_cast<SourceGuardState*>(context);++state.calls;
+ auto text=[](vcf_string value){return std::string_view(value.data,value.length);};
+ const auto& request=event->request;
+ check(request.mode==VCF_REAL_SOURCE&&text(request.canonical_id)=="furnace");
+ check(text(request.dimension)=="overworld"&&text(request.source_permission)=="machine.owner");
+ check(request.x==-17&&request.y==81&&request.z==5&&request.entity_id.length==0&&request.held_id.length==0);
+ return state.allow?VCF_OK:VCF_DENIED;
 }
-int main(){try{exercise();std::cout<<"Detached actions, stale revisions, scoped guards and callback revocation passed\n";}
+void copied_source_guards(){
+ Host host;host.consumer_allowed=[](auto){return true;};host.permission=[](auto,auto){return true;};
+ int opens=0;host.open=[&](const auto&){++opens;return VCF_PENDING;};host.close=[](auto&){return VCF_PENDING;};
+ Engine engine(host);attach_engine(&engine);vcf_api api{};check(oni_vcf_get_api(VCF_ABI_VERSION,sizeof(api),&api)==VCF_OK);
+ sdk::Client caller(api,"machine"),protector(api,"source_protection");SourceGuardState guard_state;
+ protector.guard("source",source_guard,&guard_state,"furnace");
+ std::string dimension="overworld",permission="machine.owner",kind="furnace";
+ auto request=sdk::descriptor<vcf_session_desc>();request.player=sdk::view("player");request.canonical_id=sdk::view(kind);
+ request.mode=VCF_REAL_SOURCE;request.dimension=sdk::view(dimension);request.source_permission=sdk::view(permission);
+ request.x=-17;request.y=81;request.z=5;vcf_handle ticket=0;
+ check(api.prepare(caller.owner(),&request,&ticket)==VCF_OK);
+ // The caller may release or reuse all borrowed descriptor storage as soon
+ // as prepare returns. Every asynchronous guard must still see the source.
+ dimension.assign(200,'x');permission.clear();kind="smoker";request.x=999;
+ caller.open(ticket);engine.tick();check(opens==1&&guard_state.calls==1);
+ engine.opened(caller.owner(),ticket,VCF_OK);check(guard_state.calls==2&&caller.info(ticket).state==VCF_ACTIVE);
+ guard_state.allow=false;refused(VCF_DENIED,[&]{engine.authorize(caller.owner(),ticket,VCF_GUARD_ACTIVE);});
+ check(guard_state.calls==3);caller.close(ticket);engine.tick();engine.retired(caller.owner(),ticket,VCF_CLOSED);
+ check(api.forget(caller.owner(),ticket)==VCF_OK);check(caller.dispose()==VCF_OK&&protector.dispose()==VCF_OK);
+ engine.shutdown();attach_engine(nullptr);
+}
+}
+int main(){try{exercise();copied_source_guards();std::cout<<"Detached actions, copied source descriptors, stale revisions, scoped guards and callback revocation passed\n";}
  catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(const Error& e){std::cerr<<"Unexpected status "<<e.status<<'\n';return 2;}}

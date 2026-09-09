@@ -7,14 +7,17 @@
 #include <endstone/scheduler/scheduler.h>
 #include <algorithm>
 #include <array>
+#include <charconv>
+#include <endstone/level/dimension.h>
 #include <map>
 #include <memory>
 
 namespace sdk = oni::vcf::sdk;
 class NativePassthrough : public endstone::Plugin {
-    static constexpr std::array<std::string_view,12> screens = {
+    static constexpr std::array<std::string_view,15> screens = {
         "craft", "anvil", "grindstone", "smithing", "stonecutter", "loom",
-        "cartography", "inventory2x2", "armor", "offhand", "recipebook", "enchanting"
+        "cartography", "inventory2x2", "armor", "offhand", "recipebook", "enchanting",
+        "furnace", "blastfurnace", "smoker"
     };
     std::unique_ptr<sdk::Client> ui_;
     std::shared_ptr<endstone::Task> cleanup_;
@@ -48,8 +51,20 @@ class NativePassthrough : public endstone::Plugin {
     static bool known(std::string_view screen) {
         return std::find(screens.begin(),screens.end(),screen)!=screens.end();
     }
-    void open(endstone::Player& player,std::string_view screen) {
-        if(!ui_||!known(screen))throw std::runtime_error("Choose one of the twelve documented original entry points.");
+    static bool linked(std::string_view screen){return screen=="furnace"||screen=="blastfurnace"||screen=="smoker";}
+    static std::array<int32_t,3> coordinates(std::string_view text){
+        std::array<int32_t,3> result{};
+        for(size_t i=0;i<3;++i){
+            auto comma=text.find(',');auto part=text.substr(0,comma);
+            auto parsed=std::from_chars(part.data(),part.data()+part.size(),result[i]);
+            if(part.empty()||parsed.ec!=std::errc{}||parsed.ptr!=part.data()+part.size()
+                ||(i<2)==(comma==std::string_view::npos))throw std::runtime_error("Use absolute block coordinates x,y,z.");
+            if(i<2)text.remove_prefix(comma+1);
+        }
+        return result;
+    }
+    void open(endstone::Player& player,std::string_view screen,std::string_view source={}) {
+        if(!ui_||!known(screen))throw std::runtime_error("Choose one of the fifteen documented original entry points.");
         if(!player.hasPermission("vcf.examples.passthrough"))throw std::runtime_error("Permission denied.");
         if(tickets_.size()>=128)throw std::runtime_error("Example ticket limit reached.");
         auto capability=ui_->capability(ui_->resolve(screen));
@@ -58,7 +73,12 @@ class NativePassthrough : public endstone::Plugin {
         request.player=sdk::view(player_id);request.canonical_id=sdk::view(screen);
         request.source_permission=sdk::view("vcf.examples.passthrough");
         const bool shared=screen=="inventory2x2"||screen=="armor"||screen=="offhand"||screen=="recipebook";
-        request.mode=shared?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
+        request.mode=(shared||linked(screen))?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
+        std::string dimension;
+        if(linked(screen)){
+            auto xyz=coordinates(source);dimension=player.getDimension().getName();request.dimension=sdk::view(dimension);
+            request.x=xyz[0];request.y=xyz[1];request.z=xyz[2];
+        }else if(!source.empty())throw std::runtime_error("This entry does not accept a block source.");
         request.callback=completed;request.context=this;
         vcf_handle ticket=0;sdk::checked(ui_->api().prepare(ui_->owner(),&request,&ticket));
         tickets_.emplace(ticket,player_id);ui_->open(ticket);
@@ -79,7 +99,7 @@ public:
             },1,1);
             registerEvent(&NativePassthrough::interact,*this,endstone::EventPriority::Highest);
             registerEvent(&NativePassthrough::quit,*this);
-            getLogger().info("NativePassthrough connected through SDK 1.1; twelve original-mode requests available subject to provider admission.");
+            getLogger().info("NativePassthrough connected through SDK 1.1; fifteen original-mode requests available subject to provider admission.");
         } catch(const std::exception& e) {getLogger().error("NativePassthrough unavailable: {}",e.what());ui_.reset();}
     }
     void onDisable() override {
@@ -124,12 +144,13 @@ public:
         if(!player){sender.sendErrorMessage("Request screens from a connected player.");return true;}
         try {
             if(args[0]=="unbind")bindings_.erase(player->getUniqueId().str());
-            else if(args[0]=="bind"&&args.size()==2&&known(args[1])) {
+            else if(args[0]=="bind"&&args.size()==2&&known(args[1])&&!linked(args[1])) {
                 if(bindings_.size()>=100&&!bindings_.contains(player->getUniqueId().str()))throw std::runtime_error("Binding limit reached.");
                 bindings_[player->getUniqueId().str()]=args[1];
                 player->sendMessage("Sneak and right-click with a compass to request "+args[1]+". Use /vcf_native unbind to clear.");
-            } else if(args.size()==1)open(*player,args[0]);
-            else throw std::runtime_error("Use /vcf_native <screen> or /vcf_native bind <screen>.");
+            } else if(args.size()==2&&linked(args[0]))open(*player,args[0],args[1]);
+            else if(args.size()==1)open(*player,args[0]);
+            else throw std::runtime_error("Use /vcf_native <screen>, /vcf_native <machine> <x,y,z>, or /vcf_native bind <screen>.");
         }catch(const std::exception& e){sender.sendErrorMessage(e.what());}
         return true;
     }

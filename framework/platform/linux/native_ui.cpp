@@ -36,7 +36,7 @@ struct alignas(8) CraftContext {uintptr_t player;uint8_t type=1;std::array<uint8
 static_assert(sizeof(CraftOwner)==24&&alignof(CraftOwner)==8&&offsetof(CraftOwner,index)==16&&std::is_trivially_copyable_v<CraftOwner>);
 static_assert(sizeof(CraftContext)==40&&alignof(CraftContext)==8&&offsetof(CraftContext,type)==8&&offsetof(CraftContext,position)==16&&offsetof(CraftContext,index)==32);
 std::string container_open(uint8_t window,uint8_t type,Point position);
-struct Spec {std::string_view id,block;uint8_t type;uintptr_t factory;std::string_view hash;size_t factory_size=1502;};
+struct Spec {std::string_view id,block;uint8_t type;uintptr_t factory;std::string_view hash;size_t factory_size=1502;uint8_t source_type=0;std::string_view lit_block{};};
 // Linux ELF RTTI, complete FDE extents and the independently compiled
 // PlayerOpenContainerEvent layout establish these System V caller arguments.
 constexpr Spec specs[]={
@@ -48,6 +48,9 @@ constexpr Spec specs[]={
  {"loom","minecraft:loom",24,0x45057d0,"c1a48f261804a4284d852e66d3b0c49bc09c435089acc52c41a4984c147ff21c"},
  {"stonecutter","minecraft:stonecutter_block",29,0x4506900,"50a4d7c092c689e223a84db196a999bd8e98194938b89bb64d9137fd61fda4df"},
  {"enchanting","minecraft:enchanting_table",3,0x4503dc0,"943bc11ba415fe3029ec484b2992911b1c98923590d09968a9c7b072ea0cc093",1345},
+ {"furnace","minecraft:furnace",2,0x4504310,"0e383c03452396000e3b8172d842681a8a3ec306b801877e3547ac0b1bd2ea1f",1361,1,"minecraft:lit_furnace"},
+ {"blastfurnace","minecraft:blast_furnace",27,0x45002b0,"d01db5face49184f9ccf8b1c743068972005c9ffbdc2e71a31f29a7b0356f8bd",1377,38,"minecraft:lit_blast_furnace"},
+ {"smoker","minecraft:smoker",28,0x4506390,"2b4c79354fe036ebf52282642e1c1323fc4f1512e5182fc6304a012a57f394b5",1377,39,"minecraft:lit_smoker"},
  {"inventory2x2","",255,0,{}},{"armor","",255,0,{}},{"offhand","",255,0,{}},{"recipebook","",255,0,{}}
 };
 const Spec* spec(std::string_view id){for(const auto& row:specs)if(row.id==id)return &row;return nullptr;}
@@ -112,6 +115,22 @@ struct Bridge {
   const auto window=memory.field<uint8_t>(player,3232);require(window<=99,VCF_UNAVAILABLE);
   const auto manager=memory.field<uintptr_t>(player,1368);
   return {player,manager==0&&depth<=1,window,manager};
+ }
+ uintptr_t source(endstone::Player& p,const Spec& layout,const Point& position)const{
+  const auto native=inspect(p);Memory memory;
+  memory.function(bedrock+0xabca640,bedrock,0xabca640,80,"6caf7e767cd5f86483dd3b2a5c2009c00150feea372680986d80aaf0827f0a54");
+  // The independent Linux type-0 caller obtains the player's dimension
+  // source, then calls the non-const getBlockEntity helper. The independently
+  // compiled IConstBlockSource slot uses its separate const overload below.
+  auto region=reinterpret_cast<uintptr_t(*)(void*)>(bedrock+0xabca640)(reinterpret_cast<void*>(native.player));
+  const auto table=memory.field<uintptr_t>(region);
+  require(table==bedrock+0xe725730,VCF_UNAVAILABLE);
+  auto lookup=memory.field<uintptr_t>(table,4*8);
+  memory.function(lookup,bedrock,0xc0f7b70,107,"36cab4406e21d0092a57c6ea4ae468d46357b31a19351eeaf4dce1ddcfa8abe5");
+  auto actor=reinterpret_cast<uintptr_t(*)(const void*,const Point*)>(lookup)(reinterpret_cast<void*>(region),&position);
+  require(actor,VCF_NOT_FOUND);memory.readable(actor,40);
+  require(memory.field<Point>(actor,8)==position&&memory.field<uint8_t>(actor,20)==layout.source_type,VCF_CONFLICT);
+  return actor;
  }
  uint8_t open(endstone::Player& p)const{
   auto state=inspect(p);require(state.ready,VCF_CONFLICT);
@@ -195,7 +214,8 @@ struct NativeUi::Impl {
  struct View{vcf_handle owner,id;std::string player,kind,dimension,permission;uint32_t nonce;int window=-1;
   bool prepared=false,ack=false,activating=false,observed=false,active=false,closing=false,close_seen=false,superseded=false;
   bool projected=false,projecting=false,restored=false,attempted=false,close_sent=false;
-  Point position;
+  uintptr_t source_actor=0;
+  Point position{};
   Clock::time_point queued=Clock::now(),next_check{},closed{};};
  endstone::Server& server;Engine& engine;Bridge bridge;std::map<vcf_handle,View> views;
  WindowLeases close_leases;
@@ -205,6 +225,22 @@ struct NativeUi::Impl {
  bool allowed(endstone::Player&p,const View&v){const auto* row=resolve(v.kind);
   return row&&p.isValid()&&!p.isDead()&&p.getGameVersion()=="1.26.45"&&p.getDeviceOS()=="Windows"&&p.getDimension().getName()==v.dimension
    &&p.hasPermission("remoteworkstations.use")&&p.hasPermission(std::string(row->permission))&&(v.permission.empty()||p.hasPermission(v.permission));
+ }
+ bool source_allowed(endstone::Player&p,const View&v){
+  const auto& layout=*spec(v.kind);if(!layout.source_type)return true;
+  if(p.getDimension().getName()!=v.dimension)return false;
+  auto location=p.getLocation();const double dx=double(location.getX())-(double(v.position.x)+0.5);
+  const double dy=double(location.getY())-(double(v.position.y)+0.5),dz=double(location.getZ())-(double(v.position.z)+0.5);
+  if(!std::isfinite(dx)||!std::isfinite(dy)||!std::isfinite(dz)||dx*dx+dy*dy+dz*dz>36)return false;
+  // Require the source chunk already loaded; never generate or load a
+  // remote chunk as a side effect of a developer request.
+  auto chunks=p.getDimension().getLoadedChunks();bool loaded=false;
+  const auto cx=static_cast<int32_t>(std::floor(double(v.position.x)/16)),cz=static_cast<int32_t>(std::floor(double(v.position.z)/16));
+  for(const auto& chunk:chunks)if(chunk&&chunk->getX()==cx&&chunk->getZ()==cz){loaded=true;break;}
+  if(!loaded)return false;
+  const auto block=p.getDimension().getBlockAt(v.position.x,v.position.y,v.position.z)->getType();
+  if(block!=layout.block&&block!=layout.lit_block)return false;
+  const auto actor=bridge.source(p,layout,v.position);return !v.source_actor||actor==v.source_actor;
  }
  void retire(View&v,vcf_status result){
   if(v.window>=1&&v.window<=99){auto now=milliseconds();close_leases.retire(v.player,static_cast<uint8_t>(v.window),now+60000,now);}
@@ -236,7 +272,7 @@ struct NativeUi::Impl {
   auto*p=player(v.player);const auto now=Clock::now();
   if(!p||!p->isValid()){retire(v,VCF_CLOSED);return true;}
   if(v.superseded){restore(*p,v);retire(v,VCF_CLOSED);return true;}
-  if(!allowed(*p,v)){
+  if(!v.closing&&(!allowed(*p,v)||!source_allowed(*p,v))){
    try{engine.session(v.owner,v.id).result=VCF_DENIED;}catch(const Error&){}
    close(p,v);
   }
@@ -250,7 +286,8 @@ struct NativeUi::Impl {
   if(!v.prepared){
    auto native=bridge.inspect(*p);require(native.ready,VCF_CONFLICT);
    require(!close_leases.reserved(v.player,next_window(native.window),milliseconds()),VCF_CONFLICT);
-   if(!spec(v.kind)->block.empty()){
+   if(spec(v.kind)->source_type){v.restored=true;}
+   else if(!spec(v.kind)->block.empty()){
     v.position=projection(*p);auto data=server.createBlockData(std::string(spec(v.kind)->block));
     v.projecting=true;v.projected=true;
     try{p->sendPacket(21,block_update(v.position,data->getRuntimeId()));}catch(...){v.projecting=false;throw;}
@@ -264,12 +301,13 @@ struct NativeUi::Impl {
    engine.authorize(v.owner,v.id,VCF_GUARD_DISPATCH);
    auto native=bridge.inspect(*p);require(native.ready,VCF_CONFLICT);
    require(!close_leases.reserved(v.player,next_window(native.window),milliseconds()),VCF_CONFLICT);
-   if(!spec(v.kind)->block.empty())require(p->getDimension().getBlockAt(v.position.x,v.position.y,v.position.z)->getType()=="minecraft:air",VCF_CONFLICT);
+   if(spec(v.kind)->source_type)require(source_allowed(*p,v),VCF_CONFLICT);
+   else if(!spec(v.kind)->block.empty())require(p->getDimension().getBlockAt(v.position.x,v.position.y,v.position.z)->getType()=="minecraft:air",VCF_CONFLICT);
    v.activating=true;v.attempted=true;
    uint8_t window;
    try{window=bridge.station(*p,*spec(v.kind),v.position,[&]{
     return !v.closing&&!v.superseded&&!v.close_seen&&allowed(*p,v)
-     &&p->getDimension().getBlockAt(v.position.x,v.position.y,v.position.z)->getType()=="minecraft:air";
+     &&(spec(v.kind)->source_type?source_allowed(*p,v):p->getDimension().getBlockAt(v.position.x,v.position.y,v.position.z)->getType()=="minecraft:air");
    });}catch(...){v.activating=false;throw;}
    v.activating=false;
    // Native sends can synchronously disable the requesting consumer. Its
@@ -293,12 +331,20 @@ NativeUi::~NativeUi()=default;
 bool NativeUi::supports(std::string_view id){return spec(id)!=nullptr;}
 vcf_status NativeUi::open(const Session&s){
  const auto* layout=spec(s.kind);
- if(!layout||s.mode!=(layout->block.empty()?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT)||!s.title.empty()||!s.rules.empty())return VCF_UNAVAILABLE;
+ if(!layout||s.mode!=((layout->block.empty()||layout->source_type)?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT)||!s.title.empty()||!s.rules.empty())return VCF_UNAVAILABLE;
  for(const auto& slot:s.inventory.slots)if(!slot.item.empty()||slot.policy!=(VCF_INSERT|VCF_EXTRACT))return VCF_UNAVAILABLE;
- if(!s.dimension.empty()||!s.entity_id.empty()||!s.held_id.empty()||s.x||s.y||s.z)return VCF_INVALID;
+ if(!s.entity_id.empty()||!s.held_id.empty())return VCF_INVALID;
+ if(layout->source_type){
+  if(s.dimension.empty()||s.permission.empty())return VCF_DENIED;
+  if(s.x < -30000000||s.x>30000000||s.z < -30000000||s.z>30000000||s.y < -64||s.y>319)return VCF_INVALID;
+ }else if(!s.dimension.empty()||s.x||s.y||s.z)return VCF_INVALID;
  auto*p=impl_->player(s.player);if(!p)return VCF_CLOSED;require(impl_->views.size()<100,VCF_CAPACITY);
  for(const auto&[_,view]:impl_->views)require(view.player!=s.player,VCF_CONFLICT);
  Impl::View v{s.owner,s.id,s.player,s.kind,p->getDimension().getName(),s.permission,++impl_->nonce};
+ if(layout->source_type){
+  require(s.dimension==v.dimension,VCF_DENIED);v.position={s.x,s.y,s.z};
+  require(impl_->source_allowed(*p,v),VCF_DENIED);v.source_actor=impl_->bridge.source(*p,*layout,v.position);
+ }
  require(impl_->allowed(*p,v),VCF_DENIED);require(impl_->bridge.inspect(*p).ready,VCF_CONFLICT);
  impl_->views.emplace(s.id,std::move(v));return VCF_PENDING;
 }
@@ -344,7 +390,15 @@ void NativeUi::receive(endstone::PacketReceiveEvent&e){
  for(auto&[_,v]:impl_->views)if(!v.closing&&v.player==e.getPlayer()->getUniqueId().str()){
   if(e.getPacketId()==115&&v.prepared&&reply(e.getPayload(),v.nonce))v.ack=true;
   if(e.getPacketId()==47&&e.getPayload().size()==3&&static_cast<uint8_t>(e.getPayload()[0])==v.window)v.close_seen=true;
-  if(e.getPacketId()==147&&v.window>=1&&!v.superseded&&!spec(v.kind)->block.empty()&&!impl_->allowed(*e.getPlayer(),v))e.setCancelled(true);
+  if(e.getPacketId()==147&&v.window>=1&&!v.superseded&&!spec(v.kind)->block.empty()){
+   try{
+    require(impl_->allowed(*e.getPlayer(),v)&&impl_->source_allowed(*e.getPlayer(),v),VCF_DENIED);
+    if(spec(v.kind)->source_type)impl_->engine.authorize(v.owner,v.id,VCF_GUARD_ACTIVE);
+   }catch(...){
+    e.setCancelled(true);
+    try{impl_->engine.session(v.owner,v.id).result=VCF_DENIED;impl_->close(e.getPlayer(),v);}catch(...){}
+   }
+  }
   return;
  }
 }
