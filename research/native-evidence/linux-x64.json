@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
     "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
-    "artifact_sha256": "bbd1e3b46a224c0cd5f81453259217b56a2766cf7e9049d7bf1c7c0e5295fae3"
+    "artifact_sha256": "919c38e3d7412a005b54fac36d1e59fe5e6c53fb5714803e17b94d29d813e6fa"
   },
   "build": "tested-in-local-linux-docker",
   "native_loader_smoke": "passed",
@@ -8527,10 +8527,10 @@
     }
   },
   "build_evidence": {
-    "source_revision": "f1bbfbd645bfed8c2bb35049c01e98ed8aff1288",
+    "source_revision": "170c27b85476ea6a7cca2385aaa87f1c0f637399",
     "host": "Windows Docker Desktop 4.90.0 / WSL 2, pinned linux/amd64 Clang 20.1.8 image",
     "native_tests": "15/15 CTest locally/CI including held snapshots, source descriptors and SDK relocation; ASan/UBSan and300000 fuzz inputs passed.",
-    "elf_report": "linux-f1bbfbd-elf-report.txt",
+    "elf_report": "linux-170c27b-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.34",
     "direct_libraries": [
       "libcrypto.so.3",
@@ -8541,23 +8541,23 @@
       "libgcc_s.so.1",
       "libc.so.6"
     ],
-    "runtime_restriction": "SDK1.2 read-only held inspection has selected shulker/book evidence; incomplete bundle snapshots now refuse and two client refusals passed. Twenty-six original paths remain opt-in. Native/custom held editors, full migration and inventory observer qualification remain incomplete."
+    "runtime_restriction": "SDK1.2 held inspection remains read-only and bundles refuse. Corrected dynamic registry parsing retained the player baseline at login and through actual bundle insertion/extraction; one complete snapshot and zero refusals. Twenty-six original paths remain opt-in. Native/custom held editors, writeback, recovery and full migration remain incomplete."
   },
   "sdk_version": "1.2; ABI 1.0 and 1.1 prefixes retained",
   "sanitizers": {
-    "source_revision": "f1bbfbd645bfed8c2bb35049c01e98ed8aff1288",
+    "source_revision": "170c27b85476ea6a7cca2385aaa87f1c0f637399",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
     "storage_fuzz_inputs": 100000,
     "items_fuzz_inputs": 100000,
-    "test_report": "linux-f1bbfbd-sanitizer-tests.txt",
-    "nbt_report": "linux-f1bbfbd-fuzz-nbt.txt",
-    "storage_report": "linux-f1bbfbd-fuzz-storage.txt",
-    "items_report": "linux-f1bbfbd-fuzz-items.txt"
+    "test_report": "linux-170c27b-sanitizer-tests.txt",
+    "nbt_report": "linux-170c27b-fuzz-nbt.txt",
+    "storage_report": "linux-170c27b-fuzz-storage.txt",
+    "items_report": "linux-170c27b-fuzz-items.txt"
   },
   "native_tests": {
-    "source_revision": "f1bbfbd645bfed8c2bb35049c01e98ed8aff1288",
+    "source_revision": "170c27b85476ea6a7cca2385aaa87f1c0f637399",
     "ctest": "15/15 passed locally and CI",
     "sanitizers": "15/15 passed; proprietary BDS UI execution not instrumented.",
     "fuzz_inputs": {
@@ -8569,7 +8569,7 @@
   "item_wire_observation": {
     "implementation": "native bounded packet codecs and passive outgoing observer",
     "runtime_connection": "actual exact Linux runtime, stock PC client 1.26.45 connected",
-    "actual_player_registry_and_snapshot": "Historical b0ebf22 run: registries1/snapshots1/queued0/refused0. Current f1bbfbd login and final checks: registries0/snapshots0/queued0/refused1, also seen in ea7c6cf; cause unresolved, not a current passing baseline. No project inventory writes.",
+    "actual_player_registry_and_snapshot": "170c27b public-only run passed: registries1/complete player snapshots1/queued0/refused0 at login, empty/filled/extracted bundle states, double-chest open and final form. Previous ea7c6cf/f1bbfbd failure traced to window125/count64 packet rejected by54-slot limit; fixed with bounded dynamic shape support. No project inventory writes or authoritative bundle mapping.",
     "inventory_publication": "not-implemented",
     "fixture_kind": "generated independent conformance vectors, not client captures",
     "fixture_sha256": "5376d1c38b47a8f8bc775c9cf7624c145500c2eea35c690ed21ec48d7bd5ae56",
@@ -8586,5 +8586,6 @@
   "native_linked_hopper_smoke": "research/native-evidence/linux-9a656e3-hopper-smoke.json",
   "native_linked_chest_smoke": "research/native-evidence/linux-b0ebf22-chest-smoke.json",
   "native_held_inspection_smoke": "research/native-evidence/linux-f1bbfbd-held-smoke.json",
-  "native_held_initial_smoke": "research/native-evidence/linux-ea7c6cf-held-smoke.json"
+  "native_held_initial_smoke": "research/native-evidence/linux-ea7c6cf-held-smoke.json",
+  "native_dynamic_observation_smoke": "research/native-evidence/linux-170c27b-dynamic-smoke.json"
 }

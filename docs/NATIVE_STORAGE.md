@@ -40,7 +40,20 @@ an empty bundle. The earlier universal 54-slot limit rejected it and discarded
 the player's cache. The corrected decoder retains the separate packet shape,
 while the passive observer continues to use only window 0 for its 36-slot
 baseline. It neither merges dynamic contents nor grants bundle write authority.
-Public-only client verification of the correction is recorded separately.
+The [public-only `170c27b` test](../research/native-evidence/linux-170c27b-dynamic-smoke.json)
+verified one registry/one complete player snapshot/zero refusals at login and
+through native bundle insertion/extraction. All six existing stones returned;
+empty and filled bundle inspection still refused. Double-chest SDK-close and
+the public form callback passed with zero outstanding tickets. All three Linux
+plugins matched CI and their loaded modules; no private probe was present.
+
+![Six existing stones inside the native bundle during observation testing](images/native-dynamic-observer/filled.png)
+
+![Actual final observer counters after transfers and UI regressions](images/native-dynamic-observer/final-diagnose.png)
+
+This verifies bounded passive decoding and baseline preservation. Authoritative
+bundle mapping, registry cleanup, held editors and crash/save recovery remain
+separate incomplete work.
 
 `item-wire-conformance-2169.json` contains **generated conformance vectors** from
 independent Python protocol/rapidnbt serializers, with exact versions and source

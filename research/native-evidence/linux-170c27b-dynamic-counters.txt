@@ -1,0 +1,28 @@
+[11:53:07 INFO]: Native VCF C ABI 1.2; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[11:53:07 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[11:56:17 INFO]: Original-mode SDK example: opens 0, closes 0, failures 0, guard checks 0, outstanding tickets 0
+[11:56:17 INFO]: Held inspections: successes 0, refusals 1
+[11:56:18 INFO]: Native VCF C ABI 1.2; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[11:56:18 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[11:57:53 INFO]: Native VCF C ABI 1.2; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[11:57:53 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[11:57:53 ERROR]: Could not clear the inventory of <test-player>, no items to remove
+[11:59:01 INFO]: Original-mode SDK example: opens 0, closes 0, failures 0, guard checks 0, outstanding tickets 0
+[11:59:01 INFO]: Held inspections: successes 0, refusals 2
+[12:00:03 INFO]: <test-player> has 6 items that match the criteria
+[12:00:03 INFO]: Native VCF C ABI 1.2; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[12:00:03 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[12:02:38 INFO]: Native VCF C ABI 1.2; sessions 1; 69 entries retained; all-UI NOT QUALIFIED.
+[12:02:38 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[12:03:06 INFO]: Queued closure of 1 owned SDK tickets.
+[12:03:10 INFO]: Original-mode SDK example: opens 1, closes 1, failures 0, guard checks 438, outstanding tickets 0
+[12:03:10 INFO]: Held inspections: successes 0, refusals 2
+[12:04:41 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[12:04:41 INFO]: Native VCF C ABI 1.2; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[12:04:41 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[12:05:10 INFO]: Original-mode SDK example: opens 1, closes 1, failures 0, guard checks 438, outstanding tickets 0
+[12:05:10 INFO]: Held inspections: successes 0, refusals 2
+[12:05:10 INFO]: <test-player> has 6 items that match the criteria
+[12:05:11 INFO]: <test-player> has 1 items that match the criteria
+[12:05:11 INFO]: <test-player> has 1 items that match the criteria
+Quit correctly

@@ -181,3 +181,10 @@ traced it to a separate 64-slot dynamic registry packet exceeding the old
 Fifteen native/sanitizer tests, 300,000 fuzz inputs and
 Windows Debug/Release builds passed; this does not qualify held editors,
 bundle contents, crash/save recovery or the full catalog.
+
+The subsequent [public-only `170c27b` run](../research/native-evidence/linux-170c27b-dynamic-smoke.json)
+verified that parser correction. The observer retained one complete player
+snapshot and zero refusals at login, with the bundle empty, with six stones
+stored, after extracting all six stones, and across double-chest/form
+regressions. Empty and filled bundle inspection both still returned unavailable.
+The [storage notes](NATIVE_STORAGE.md) include the actual final counter screenshot.

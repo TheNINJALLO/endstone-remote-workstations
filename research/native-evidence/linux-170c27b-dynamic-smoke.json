@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-dynamic-observation-regression-smoke",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "170c27b85476ea6a7cca2385aaa87f1c0f637399",
+  "platform": "linux-x64",
+  "artifact_sha256": "919c38e3d7412a005b54fac36d1e59fe5e6c53fb5714803e17b94d29d813e6fa",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "started_utc": "2026-09-09T11:51:37Z",
+  "clean_stop_utc": "2026-09-09T12:06:02Z",
+  "loaded_shadow_copies_match_exports": true,
+  "private_probe_installed": false,
+  "observations": {
+    "login": "After actual stock-client login with the retained empty bundle in inventory, diagnose reported one registry/one complete36-slot player snapshot/zero queued/zero refusals. This reproduced the previous fixture state with the corrected public decoder and no private probe.",
+    "bundle": "Moved compass temporarily to empty main18 and selected bundle in hotbar6. Empty-bundle inspect-held correctly returned VCF_UNAVAILABLE. Using vanilla controls, inserted all six existing stones; tooltip showed6 and read-only top-level stone count found none. Observer remained1/1/0/0. Filled-bundle inspect-held also correctly returned VCF_UNAVAILABLE. Vanilla extraction returned all six stones to hotbar7; read-only count6 and observer1/1/0/0 passed.",
+    "inventory_restored": "Returned the empty bundle to main19 and compass to original selected hotbar6. Signed test book20 and named shulker21 remained untouched. Final read-only counts stone6/bundle1/shulker1. Screenshot shows the other retained equipment and fixtures. No new items, consumption, item writes by the framework or cursor item.",
+    "doublechest": "Public SDK opened the existing empty ordinary pair through1,91,7 and rendered54 slots. Observer remained1/1/0/0 while open. SDK-close completed event2/status13: one open/one close/no failures/438 guard checks/zero tickets.",
+    "form": "Public C ABI consumer form rendered. Clicking its action produced one callback and zero outstanding tickets.",
+    "final": "Final diagnose in console and Minecraft showed zero provider sessions, one registry/one complete snapshot/zero queued/zero refusals. Stopped cleanly; operator permission and source fixtures retained."
+  },
+  "sdk_counters": {
+    "inspection_successes": 0,
+    "inspection_refusals": 2,
+    "opens": 1,
+    "closes": 1,
+    "failure_callbacks": 0,
+    "guard_checks": 438,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "item_observer": {
+    "registries": 1,
+    "complete_player_snapshots": 1,
+    "queued": 0,
+    "refused": 0,
+    "checks": "login, selected empty bundle, filled bundle, extracted contents, double-chest open, final form and final client diagnose"
+  },
+  "diagnostic_history": "Separate preceding private-probe run identified window125/count64/role63/present dynamic ID rejected by universal54-slot bound. Private probe was hash-verified and removed before this public run; raw captures remain private.",
+  "not_qualified": [
+    "Authoritative dynamic-container mapping and cleanup",
+    "Content-complete bundle inspection",
+    "Persistent held identities and exclusivity",
+    "Held native editors or custom behavior",
+    "Held writeback and crash/save reconciliation",
+    "Windows stock-client runtime",
+    "Other devices/multiplayer",
+    "Exact Onistone runtime admission",
+    "Full catalog migration"
+  ],
+  "screenshots": {
+    "filled": {
+      "path": "docs/images/native-dynamic-observer/filled.png",
+      "sha256": "0088b8881441902b8686d1b28bbf6926419846f7163d7c1af2d0c666b68be756",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "filled-refusal": {
+      "path": "docs/images/native-dynamic-observer/filled-refusal.png",
+      "sha256": "7388204e17ae2c22a3e10c155e85fdcc69e4bf90578dc343c589e9ad3a5e754e",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "restored": {
+      "path": "docs/images/native-dynamic-observer/restored.png",
+      "sha256": "d81244f39a83bb3e7ae6e6e5596c148e8a925b427e4293af38fa06b1b2622259",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "chest-ready": {
+      "path": "docs/images/native-dynamic-observer/chest-ready.png",
+      "sha256": "5f86e9eb085136a2fef6c08842716b53d8a82783bc82fb5079112e30e4f384b7",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "form-ready": {
+      "path": "docs/images/native-dynamic-observer/form-ready.png",
+      "sha256": "289499fa90c7d1f3229d7dba748f3cab9d012e40223c338f8fe68e38b9143d1c",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "final-diagnose": {
+      "path": "docs/images/native-dynamic-observer/final-diagnose.png",
+      "sha256": "7e4f1eb11a27d7a9e445df77601f781f96be058cfcc6b89a233f118c7661de4f",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-170c27b-dynamic-counters.txt",
+    "sha256": "c8d4b902be0fa0d3ed6fbb18b28f1ea8eb50b6f43cccd97ffec305f2307a40d4"
+  }
+}

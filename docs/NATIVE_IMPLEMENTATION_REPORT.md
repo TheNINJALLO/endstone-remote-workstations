@@ -1,6 +1,6 @@
 # Native implementation checkpoint â€” incomplete
 
-The latest recorded native source checkpoint is `f1bbfbd645bfed8c2bb35049c01e98ed8aff1288` on
+The latest recorded native source checkpoint is `170c27b85476ea6a7cca2385aaa87f1c0f637399` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
@@ -17,7 +17,11 @@ the [recorded run](../research/native-evidence/linux-f1bbfbd-held-smoke.json).
 A later [private diagnostic](../research/native-evidence/linux-login-dynamic-container-diagnostic.json)
 identified a 64-slot dynamic registry packet rejected by the old universal
 54-slot limit. The parser correction preserves the separate window and the
-player baseline; its public-only runtime verification remains pending.
+player baseline. The [public-only `170c27b` run](../research/native-evidence/linux-170c27b-dynamic-smoke.json)
+then retained one registry/one complete player snapshot/zero refusals at login,
+through insertion and extraction of six real bundle contents, and during native
+double-chest and form regressions. Both empty/filled bundle inspection calls
+still refused safely. All six stones returned and no UI tickets remained open.
 
 ## What now runs locally
 
@@ -31,8 +35,9 @@ The exact Linux provider and both independent SDK consumers load and enable.
 A stock Windows Bedrock 1.26.45 client joins the server. The public SDK action
 form renders and dispatches the consumer's callback. All 69 catalog IDs resolve.
 The earlier `b0ebf22` inventory observer reported one registry, one complete
-snapshot and zero refusals. Both held-inspection runs instead ended with zero
-registries/snapshots and one refusal; a complete current baseline is not proven.
+snapshot and zero refusals. Both earlier held-inspection runs instead ended with
+zero registries/snapshots and one refusal. The corrected `170c27b` run restored
+the complete baseline with zero refusals across the tested operations.
 The observer does not write native inventories.
 
 The opt-in Linux original inventory adapter now opens `inventory2x2`, `armor`,
@@ -162,12 +167,12 @@ packaging checks do not upgrade native gameplay qualification.
   exported. The exact current provider and both consumer DLLs loaded in the
   isolated Windows server, verified their hashes and primitive manifest, and
   shut down cleanly. This Windows build has not had stock-client UI tests.
-- Local Linux Docker build at `f1bbfbd`: **15/15 CTest jobs passed**, ELF, SDK and consumers
+- Local Linux Docker build at `170c27b`: **15/15 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `f1bbfbd`: its CI job passed **15/15 tests**, including held snapshots, and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `170c27b`: its CI job passed **15/15 tests**, including held snapshots, and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
-- Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
+- Model checks: 50,181 core, 10,309 storage, 23,371 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
   cancellation, action failure, and explicit action-ticket collection.
 - Six standalone journal crash-boundary tests passed. These do not establish
@@ -177,13 +182,13 @@ packaging checks do not upgrade native gameplay qualification.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-f1bbfbd.json`](../research/native-evidence/checkpoint-f1bbfbd.json).
+[`checkpoint-170c27b.json`](../research/native-evidence/checkpoint-170c27b.json).
 Older checkpoints keep their original source and artifact identities.
 
-At `f1bbfbd`, [native CI run 34343707162](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34343707162)
+At `170c27b`, [native CI run 34347628599](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34347628599)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34343706962](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34343706962)
+refuses the incomplete catalog. [Legacy regression run 34347628552](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34347628552)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux workstation example](examples/linux-native-workstations.md).
 All three Linux CI plugin hashes match the locally tested exports. The Windows
