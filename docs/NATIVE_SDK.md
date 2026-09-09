@@ -55,7 +55,8 @@ table's boundary with sentinel bytes. This is compatibility with this project's
 development ABI, not with legacy Python imports.
 
 `ui.inspect_held(player_uuid)` returns a detached, bounded description of the
-selected held shulker, bundle, written book or writable book. It checks the
+selected held shulker, written book or writable book. Bundles refuse because
+their separately stored contents are absent from the public item snapshot. It checks the
 selected slot against the public main-hand snapshot, the player's permissions,
 and the consumer's lifetime. It does not change items or open an editor. See the
 [held-item contract and example](NATIVE_HELD_ITEMS.md) before using its digest

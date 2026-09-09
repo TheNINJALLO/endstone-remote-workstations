@@ -66,7 +66,13 @@ struct Frozen {
  bool operator==(const Frozen&)const=default;
 };
 inline Frozen freeze(std::string identifier,int amount,int auxiliary,const endstone::CompoundTag& nbt){
- require(amount>0&&amount<=64);Frozen result{std::string(kind(identifier)),std::move(identifier),{},static_cast<uint32_t>(amount),auxiliary,Encoder{}.encode(nbt)};
+ require(amount>0&&amount<=64);const auto canonical=kind(identifier);
+ // The exact Linux client test filled a real bundle with six stones while
+ // ItemStack::getNbt() and its digest stayed unchanged. Its separate contents
+ // are not exposed by this public SDK snapshot. Never return a partial bundle
+ // as a content snapshot, including empty bundles that may later be filled.
+ require(canonical!="bundle",VCF_UNAVAILABLE);
+ Frozen result{std::string(canonical),std::move(identifier),{},static_cast<uint32_t>(amount),auxiliary,Encoder{}.encode(nbt)};
  constexpr auto identity="remote_workstations:held_id";
  if(nbt.contains(identity)){
   const auto& tag=nbt.at(identity);require(tag.type()==endstone::nbt::Type::String);

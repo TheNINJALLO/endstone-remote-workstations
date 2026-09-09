@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
     "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
-    "artifact_sha256": "1f1e9c96f2ce59c88e4c6442a1e59254ffa6379c70e676ec7fd575a802dad246"
+    "artifact_sha256": "e411c35b17bc4ff9601aad051f5e5ccb5c6164723ecf6ca4531fbac706ad6604"
   },
   "build": "tested-in-local-linux-docker",
   "native_loader_smoke": "passed",
@@ -8527,10 +8527,10 @@
     }
   },
   "build_evidence": {
-    "source_revision": "b0ebf229065c5a6b7c5708bd95980d04a8319658",
+    "source_revision": "ea7c6cfa4bcd2e0f2bb039d66b25188414bceb1d",
     "host": "Windows Docker Desktop 4.90.0 / WSL 2, pinned linux/amd64 Clang 20.1.8 image",
-    "native_tests": "14/14 CTest locally/CI including copied source descriptors and SDK relocation; ASan/UBSan and300000 fuzz inputs passed.",
-    "elf_report": "linux-b0ebf22-elf-report.txt",
+    "native_tests": "15/15 CTest locally/CI including held snapshots, source descriptors and SDK relocation; ASan/UBSan and300000 fuzz inputs passed.",
+    "elf_report": "linux-ea7c6cf-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.34",
     "direct_libraries": [
       "libcrypto.so.3",
@@ -8541,25 +8541,25 @@
       "libgcc_s.so.1",
       "libc.so.6"
     ],
-    "runtime_restriction": "Exact opt-in Linux original adapter has26 entry paths. Linked chest/trappedchest27 and ordinary doublechest54 passed selected transfer, metadata, SDK/native close and source/paired-guard smoke. Each earlier smoke identifies its own artifacts; custom/full qualification remains incomplete."
+    "runtime_restriction": "SDK1.2 read-only held inspection has selected shulker/book evidence but bundle contents were not reflected in its digest. Twenty-six original paths remain opt-in. Native/custom held editors, full migration and inventory observer qualification remain incomplete."
   },
-  "sdk_version": "1.1; ABI 1.0 prefix retained",
+  "sdk_version": "1.2; ABI 1.0 and 1.1 prefixes retained",
   "sanitizers": {
-    "source_revision": "b0ebf229065c5a6b7c5708bd95980d04a8319658",
+    "source_revision": "ea7c6cfa4bcd2e0f2bb039d66b25188414bceb1d",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
     "storage_fuzz_inputs": 100000,
     "items_fuzz_inputs": 100000,
-    "test_report": "linux-b0ebf22-sanitizer-tests.txt",
-    "nbt_report": "linux-b0ebf22-fuzz-nbt.txt",
-    "storage_report": "linux-b0ebf22-fuzz-storage.txt",
-    "items_report": "linux-b0ebf22-fuzz-items.txt"
+    "test_report": "linux-ea7c6cf-sanitizer-tests.txt",
+    "nbt_report": "linux-ea7c6cf-fuzz-nbt.txt",
+    "storage_report": "linux-ea7c6cf-fuzz-storage.txt",
+    "items_report": "linux-ea7c6cf-fuzz-items.txt"
   },
   "native_tests": {
-    "source_revision": "b0ebf229065c5a6b7c5708bd95980d04a8319658",
-    "ctest": "14/14 passed locally and CI",
-    "sanitizers": "14/14 passed; proprietary BDS UI execution not instrumented.",
+    "source_revision": "ea7c6cfa4bcd2e0f2bb039d66b25188414bceb1d",
+    "ctest": "15/15 passed locally and CI",
+    "sanitizers": "15/15 passed; proprietary BDS UI execution not instrumented.",
     "fuzz_inputs": {
       "nbt": 100000,
       "storage": 100000,
@@ -8584,5 +8584,6 @@
   "native_linked_utility_smoke": "research/native-evidence/linux-961e9ec-utilities-smoke.json",
   "native_block_actor_close_smoke": "research/native-evidence/linux-d6adf87-close-smoke.json",
   "native_linked_hopper_smoke": "research/native-evidence/linux-9a656e3-hopper-smoke.json",
-  "native_linked_chest_smoke": "research/native-evidence/linux-b0ebf22-chest-smoke.json"
+  "native_linked_chest_smoke": "research/native-evidence/linux-b0ebf22-chest-smoke.json",
+  "native_held_inspection_smoke": "research/native-evidence/linux-ea7c6cf-held-smoke.json"
 }

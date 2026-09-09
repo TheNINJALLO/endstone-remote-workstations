@@ -1,0 +1,26 @@
+[10:29:11 INFO]: Original-mode SDK example: opens 0, closes 0, failures 0, guard checks 0, outstanding tickets 0
+[10:29:11 INFO]: Held inspections: successes 0, refusals 0
+[10:30:05 INFO]: Original-mode SDK example: opens 0, closes 0, failures 0, guard checks 0, outstanding tickets 0
+[10:30:05 INFO]: Held inspections: successes 0, refusals 1
+[10:31:56 INFO]: Original-mode SDK example: opens 0, closes 0, failures 0, guard checks 0, outstanding tickets 0
+[10:31:56 INFO]: Held inspections: successes 1, refusals 1
+[10:31:57 INFO]: <test-player> has 1 items that match the criteria
+[10:34:46 INFO]: Queued closure of 1 owned SDK tickets.
+[10:35:37 INFO]: Original-mode SDK example: opens 1, closes 1, failures 0, guard checks 314, outstanding tickets 0
+[10:35:37 INFO]: Held inspections: successes 5, refusals 1
+[10:35:38 INFO]: <test-player> has 1 items that match the criteria
+[10:44:55 INFO]: Original-mode SDK example: opens 1, closes 1, failures 0, guard checks 314, outstanding tickets 0
+[10:44:55 INFO]: Held inspections: successes 8, refusals 2
+[10:46:00 ERROR]: Could not clear the inventory of <test-player>, no items to remove
+[10:46:00 INFO]: <test-player> has 1 items that match the criteria
+[10:47:42 INFO]: <test-player> has 6 items that match the criteria
+[10:53:27 ERROR]: Syntax error: Unexpected "written_book": at "eN1NJ4LL0 >>written_book<< -1 0"
+[10:53:47 INFO]: Original-mode SDK example: opens 1, closes 1, failures 0, guard checks 314, outstanding tickets 0
+[10:53:47 INFO]: Held inspections: successes 13, refusals 2
+[10:55:32 INFO]: Native VCF C ABI 1.2; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[10:55:32 INFO]: Item packet observations: registries 0, complete snapshots 0, queued 0, refused 1. Observation is not inventory-write qualification.
+[10:55:32 INFO]: C ABI consumer active; callbacks 0; outstanding tickets 0
+[10:55:33 INFO]: <test-player> has 6 items that match the criteria
+[10:55:33 INFO]: <test-player> has 1 items that match the criteria
+[10:55:33 INFO]: <test-player> has 1 items that match the criteria
+Quit correctly

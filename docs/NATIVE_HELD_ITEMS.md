@@ -6,6 +6,12 @@ Native held editors, item locking, identity assignment, writeback and crash/save
 reconciliation remain incomplete. `native_open_available` is always zero.
 A placed shulker block is not a substitute for the catalog's held-item source.
 
+**Bundles currently refuse with `VCF_UNAVAILABLE`.** The initial `ea7c6cf`
+client test stored six real stones in a bundle but its public item metadata
+and digest stayed identical to the empty bundle. The API now refuses that
+incomplete snapshot, including empty and colored bundles. Full bundle inspection
+requires independently verified access to the separately stored contents.
+
 ## Call from another plugin
 
 Use the [installed SDK](NATIVE_SDK.md), declare `depend = {"onistone_vcf"}`, and
@@ -29,7 +35,7 @@ by this read-only operation. A consumer must apply any additional access policy
 before inspecting another player's item.
 
 The provider requires `remoteworkstations.use` and the matching canonical
-`remoteworkstations.open.shulker`, `.bundle`, `.writtenbook` or `.bookediting`
+`remoteworkstations.open.shulker`, `.writtenbook` or `.bookediting`
 permission on the target player. It reads the selected slot, main hand and
 selected slot again through Endstone 0.11.10's public API. A changed selection or
 different item snapshot refuses with `VCF_STALE`. Empty hands return
@@ -38,8 +44,9 @@ returns `VCF_INVALID`, and exceeded bounds return `VCF_CAPACITY`. Invalid,
 dead or disconnected players and revoked consumers refuse; off-thread calls
 return `VCF_WRONG_THREAD`. C output storage is unchanged on failure.
 
-Recognized identifiers are vanilla written/writable books, base bundles,
-undyed/base shulker boxes and the 16 named vanilla colors of shulkers/bundles.
+Recognized identifiers are vanilla written/writable books, undyed/base shulker
+boxes and the 16 named vanilla shulker colors. Bundle identifiers remain in the
+classifier/catalog for later work but cannot produce a successful snapshot.
 The provider classifies an actual registered item returned by Endstone; it does
 not create items from these names. This list is not runtime qualification of
 every color on every platform. Arbitrary namespace lookalikes refuse.
@@ -60,6 +67,11 @@ An absent tag remains absent. This operation never assigns an ID, changes a tag,
 rewrites metadata, marks a slot dirty, sends an item packet or installs a native
 editor. Duplicate IDs and identical content are not distinguished as physical
 items; consumers must not use inspection as a reservation or writeback token.
+
+The digest covers the public item metadata snapshot, not arbitrary state in
+separate native components or other containers referenced by nested items.
+Native held editors and writeback must establish their own complete source
+contract before using any observation. Inspection is not that contract.
 
 SHA-256 hashes a private versioned frame: ASCII `VCFH`, byte `1`, little-endian
 32-bit identifier length, identifier bytes, 32-bit amount, auxiliary bits,
@@ -91,3 +103,45 @@ table boundaries; SDK tests cover unchanged failure output, permissions,
 revocation, thread rejection and 1.1 guard callback versions. The sanitizer
 configuration explicitly includes held snapshot tests. Stock-client and artifact
 evidence must be recorded separately; these tests do not qualify a held editor.
+
+## Initial Linux client results
+
+The [exact `ea7c6cf` run](../research/native-evidence/linux-ea7c6cf-held-smoke.json)
+used the public provider and two public SDK consumers, with every Linux binary
+matching CI. Fifteen native and sanitizer tests and 300,000 fuzz inputs passed;
+Windows Debug/Release and the legacy regression workflow also passed. These
+checks did not reveal the separate bundle-storage limitation; the client test did.
+
+| Actual held item | Observed metadata bytes | Result |
+|---|---|---|
+| Empty undyed shulker, then vanilla anvil rename | 4, then 53 | Stable repeated reads; one item retained |
+| Empty writable book, then saved test page | 4, then 85 | Digest changed; native reopening retained page |
+| The same book, signed through vanilla controls | 199 | `writtenbook`, amount 1, stable repeated digest |
+| Empty bundle, then six real stored stones | 20 in both cases | Incomplete snapshot; corrected path now refuses |
+
+![Actual repeated named-shulker inspection results](images/native-held-inspection/named-info.png)
+
+The following page was created with vanilla item use to prepare test metadata.
+This is not an SDK-opened book editor:
+
+![Saved test page reopened through vanilla item use](images/native-held-inspection/book-reopened.png)
+
+![Writable and signed book inspection results](images/native-held-inspection/signed-info.png)
+
+The bundle test is retained as failure evidence. Its native tooltip shows six
+stones, while its inspection digest remained unchanged. All six stones were
+subsequently extracted and independently counted; the empty bundle was retained.
+
+![Native bundle containing six test stones](images/native-held-inspection/bundle-filled.png)
+
+![Empty and filled bundle results exposing the unchanged digest](images/native-held-inspection/filled-info.png)
+
+There were 13 successful inspection calls, of which three were the incomplete
+bundle observations, and two expected refusals (compass and empty hand).
+The original anvil rename/SDK-close regression passed with zero leaked tickets.
+The passive packet observer ended with one refusal and no complete baseline;
+its cause remains unresolved. Planned chest/form regressions were not executed
+after Windows rejected foreground activation. The `clear written_book` count
+query was rejected by BDS command parsing; only SDK/UI amount evidence exists
+for that signed fixture. No editor, bundle-content or all-UI qualification is
+claimed from this run.

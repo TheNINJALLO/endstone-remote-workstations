@@ -1,9 +1,16 @@
 # Native implementation checkpoint â€” incomplete
 
-The native source checkpoint is `b0ebf229065c5a6b7c5708bd95980d04a8319658` on
+The latest recorded native source checkpoint is `ea7c6cfa4bcd2e0f2bb039d66b25188414bceb1d` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
+
+SDK 1.2 adds [read-only held inspection](NATIVE_HELD_ITEMS.md), with selected
+shulker and book PC evidence. The initial bundle test exposed unchanged metadata
+despite stored contents; the corrected code refuses bundle snapshots pending
+complete source access. Native held editors, writeback and recovery remain
+incomplete. The initial run's passive packet observer also refused a packet and
+lost its baseline; this is recorded, not classified as a successful observation.
 
 ## What now runs locally
 
@@ -146,10 +153,10 @@ packaging checks do not upgrade native gameplay qualification.
   exported. The exact current provider and both consumer DLLs loaded in the
   isolated Windows server, verified their hashes and primitive manifest, and
   shut down cleanly. This Windows build has not had stock-client UI tests.
-- Local Linux Docker build: **14/14 CTest jobs passed**, ELF, SDK and consumers
+- Local Linux Docker build at `ea7c6cf`: **15/15 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `b0ebf22`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `ea7c6cf`: its CI job passed **15/15 tests**, including held snapshots, and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending

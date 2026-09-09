@@ -127,11 +127,11 @@ vcf_status VCF_CALL older_guard(void* calls,const vcf_guard_event* event){
  ++*static_cast<int*>(calls);return VCF_OK;
 }
 void held_inspection_api(){
- Host host;bool allowed=true,enabled=true;int reads=0;
+ Host host;bool allowed=true,enabled=true,bundle=false;int reads=0;
  host.consumer_allowed=[&](auto){return enabled;};host.permission=[&](auto,auto permission){return permission!="remoteworkstations.open.shulker"||allowed;};
  host.inspect_held=[&](auto player){
   check(player=="player");++reads;vcf_held_info result{};
-  std::strcpy(result.canonical_id,"shulker");std::strcpy(result.identifier,"minecraft:purple_shulker_box");
+  std::strcpy(result.canonical_id,bundle?"bundle":"shulker");std::strcpy(result.identifier,bundle?"minecraft:bundle":"minecraft:purple_shulker_box");
   result.slot=6;result.amount=1;result.metadata_bytes=123;result.native_open_available=1;return result;
  };
  host.open=[](auto&){return VCF_PENDING;};Engine engine(host);attach_engine(&engine);
@@ -139,6 +139,7 @@ void held_inspection_api(){
  auto info=caller.inspect_held("player");check(info.slot==6&&info.amount==1&&info.metadata_bytes==123&&!info.native_open_available&&reads==1);
  info=sdk::descriptor<vcf_held_info>();info.slot=77;auto before=info;allowed=false;
  check(api.inspect_held(caller.owner(),sdk::view("player"),&info)==VCF_DENIED&&std::memcmp(&before,&info,sizeof(info))==0);allowed=true;
+ bundle=true;check(api.inspect_held(caller.owner(),sdk::view("player"),&info)==VCF_UNAVAILABLE&&std::memcmp(&before,&info,sizeof(info))==0);bundle=false;
  enabled=false;check(api.inspect_held(caller.owner(),sdk::view("player"),&info)==VCF_CLOSED);enabled=true;
  vcf_status status=VCF_OK;std::thread thread([&]{auto out=sdk::descriptor<vcf_held_info>();status=api.inspect_held(caller.owner(),sdk::view("player"),&out);});thread.join();check(status==VCF_WRONG_THREAD);
  auto owner=caller.owner();check(caller.dispose()==VCF_OK);check(api.inspect_held(owner,sdk::view("player"),&info)==VCF_NOT_FOUND);

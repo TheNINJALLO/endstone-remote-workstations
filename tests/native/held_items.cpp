@@ -25,6 +25,10 @@ void snapshots(){
  check(held::digest_input(a)!=held::digest_input(held::freeze(a.identifier,2,0,saved)));
  check(held::kind("minecraft:light_gray_bundle")=="bundle"&&held::kind("minecraft:undyed_shulker_box")=="shulker");
  check(held::kind("minecraft:written_book")=="writtenbook"&&held::kind("minecraft:writable_book")=="bookediting");
+ // A bundle's externally stored contents are absent from getNbt(). Even a
+ // perfectly valid metadata compound cannot qualify its complete snapshot.
+ refuses(VCF_UNAVAILABLE,[&]{held::freeze("minecraft:bundle",1,0,CompoundTag{});});
+ refuses(VCF_UNAVAILABLE,[&]{held::freeze("minecraft:light_gray_bundle",1,0,saved);});
  refuses(VCF_UNAVAILABLE,[&]{held::kind("myplugin:purple_shulker_box");});
  refuses(VCF_UNAVAILABLE,[&]{held::kind("minecraft:chartreuse_shulker_box");});
  check(!held::uuid("00000000-0000-0000-0000-000000000000")&&!held::uuid("12345678-1234-1234-1234-123456789ABC"));

@@ -142,6 +142,7 @@ vcf_held_info Engine::inspect_held(vcf_handle owner,std::string_view player){
  const auto* row=resolve(std::string_view(result.canonical_id,static_cast<size_t>(length-std::begin(result.canonical_id))));
  require(row&&row->source_kind=="held-item",VCF_UNAVAILABLE);
  require(host_.permission(player,row->permission),VCF_DENIED);
+ require(row->id!="bundle",VCF_UNAVAILABLE);
  qualify(owner,"");require(host_.consumer_allowed(consumers_.at(owner).name),VCF_CLOSED);
  // Inspection cannot qualify or unlock a native held-item editor.
  result.native_open_available=0;return result;

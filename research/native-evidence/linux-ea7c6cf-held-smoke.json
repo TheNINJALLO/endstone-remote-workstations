@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-held-inspection-partial-smoke",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "ea7c6cfa4bcd2e0f2bb039d66b25188414bceb1d",
+  "platform": "linux-x64",
+  "artifact_sha256": "e411c35b17bc4ff9601aad051f5e5ccb5c6164723ecf6ca4531fbac706ad6604",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "started_utc": "2026-09-09T10:18:59Z",
+  "clean_stop_utc": "2026-09-09T10:55:34Z",
+  "loaded_shadow_copies_match_exports": true,
+  "private_probe_installed": false,
+  "observations": {
+    "shulker": "Supplied one undyed shulker. Three slot6 inspections returned amount1/metadata4 and the same digest. Original SDK anvil renamed it VCF Held Box for one vanilla level, then SDK-close completed. Two subsequent reads returned amount1/metadata53 and a stable different digest. Read-only count1; item tooltip retained the name. No durable ID assigned.",
+    "bundle_incomplete": "Supplied one bundle. Empty slot6 inspection returned metadata20. Native inventory left-click insertion stored the six existing stones; tooltip showed six and top-level clear maxCount0 found none. Two filled-bundle reads at slot7 still returned metadata20 and exactly the empty-bundle digest. Thus these three successful API results do NOT establish content-complete bundle snapshots. SDK did not mutate the bundle. Vanilla extraction returned all six stones; final empty-bundle tooltip and read-only stone6/bundle1 counts verified.",
+    "bookediting": "Supplied one writable book. Empty inspection metadata4. Used native item-use editor (not a framework editor) to save the test-only page VCF held snapshot test. Six stones returned. Two later reads returned metadata85 and the same changed digest; native reopening retained the page.",
+    "writtenbook": "Signed the supplied test book VCF Held Test through vanilla controls. Two SDK reads classified writtenbook, amount1 and metadata199 with the same new digest. The C API exposed no page/author/title strings. A console clear written_book query was rejected by BDS command parsing; it is not a successful independent count check.",
+    "refusals": "One unsupported ordinary compass returned VCF_UNAVAILABLE; one empty selected slot returned VCF_NOT_FOUND. Both were recorded separately from successful reads.",
+    "regressions": "Original anvil rename and SDK-close passed: one open/one close/no failure/314 guard checks/zero tickets. Planned chest/form regressions did not run after Windows refused foreground activation. They are not marked passed.",
+    "packet_observer": "Final passive observer reported zero registries/zero complete snapshots/zero queued/one refusal. Cause and packet were not captured. This run does not claim a complete inventory observation."
+  },
+  "sdk_counters": {
+    "inspection_successes": 13,
+    "inspection_refusals": 2,
+    "incomplete_bundle_results": 3,
+    "opens": 1,
+    "closes": 1,
+    "failure_callbacks": 0,
+    "guard_checks": 314,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 0,
+    "form_outstanding_tickets": 0
+  },
+  "setup": "First attempt lost Docker connectivity during supplied-file checks, before BDS started. Normal Docker restart timed out. Terminated only docker-desktop WSL VM and restarted path-verified Docker processes, retained world volume. Retried image after all three artifact hash checks. No private probe. Reconnect dialog input did not join; saved isolated29179 entry selected explicitly.",
+  "input_limitations": "Escape did not consistently leave chat. Visible Back control succeeded. Initial direct bundle/shulker swap did not transfer; right-click bundle/stone swapped instead of inserting. Observed left-click insertion and empty-cursor right-click extraction completed, with all stones recovered. Later Windows foreground refusal stopped further GUI work; no rejected input replayed blindly.",
+  "not_qualified": [
+    "Bundle content-complete snapshot; requires separately stored contents or refusal",
+    "Persistent held identities and exclusivity",
+    "Held native editors or custom behavior",
+    "Held writeback and crash/save reconciliation",
+    "All registered colors, metadata and input profiles",
+    "Live permission/revocation races for inspection",
+    "Windows stock-client runtime",
+    "Other devices/multiplayer",
+    "Exact Onistone runtime admission",
+    "Complete passive inventory snapshot on this run",
+    "Full catalog migration"
+  ],
+  "screenshots": {
+    "named-info": {
+      "path": "docs/images/native-held-inspection/named-info.png",
+      "sha256": "c9f9501677244b8131643cb6002c518d6ffb30dab8862d35af95322a293b4b79",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "bundle-filled": {
+      "path": "docs/images/native-held-inspection/bundle-filled.png",
+      "sha256": "6c732e0a320158f6dfd04586af47c206479db86ddc5373f97f204a134adcc531",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "filled-info": {
+      "path": "docs/images/native-held-inspection/filled-info.png",
+      "sha256": "874878ac8102366927bbafdceb563388043776d6aa81feafccd42c437b3e8bb9",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "book-reopened": {
+      "path": "docs/images/native-held-inspection/book-reopened.png",
+      "sha256": "409f3c431bf6dd146f8b16780bb72b7ad6fd49ae4c2fd4f6c0227e553b4ca9ea",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "book-written-info": {
+      "path": "docs/images/native-held-inspection/book-written-info.png",
+      "sha256": "5d55787d7254507345d155f0e5a7750e5290f1e6f78b4143b8465e61f0c2b8cb",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "signed-info": {
+      "path": "docs/images/native-held-inspection/signed-info.png",
+      "sha256": "6ea0ba825b65e7010c1ece97781af4df17576623387cf93c4b41979beb0817f9",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-ea7c6cf-held-counters.txt",
+    "sha256": "29bce7e6cfdab995f78eae0bc958b854448544e6b7244026ca403f64cf9df4e0"
+  }
+}
