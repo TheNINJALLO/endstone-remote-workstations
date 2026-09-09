@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-saved-item-read-smoke",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "a3fbf78f77640ac29757986bfa7532bde3789376",
+  "platform": "linux-x64",
+  "artifact_sha256": "2b46202b649a59e566b23538c48e44d9745ce4b9c20c71de3ca47ddf90d7efd4",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "started_utc": "2026-09-09T14:09:08Z",
+  "clean_stop_utc": "2026-09-09T14:43:53Z",
+  "loaded_shadow_copies_match_exports": true,
+  "private_probe_installed": false,
+  "observations": {
+    "public_reads": "Actual client commands invoked SDK1.3 saved-item reads: empty bundle twice, named enchanted wooden pickaxe, awkward potion, signed test book, named empty held shulker, filled bundle in main19, the same filled bundle moved to selected hot7, and restored empty bundle in main19. Nine successes. These reads did not open held editors or write items.",
+    "bundle": "Vanilla client gestures inserted six existing stones into the existing bundle, then moved it to hot7. Both filled reads returned3593 identical saved bytes/digest. Reading vacated19 refused. Vanilla extraction returned all six stones to hot7 and the empty bundle to19. Final empty3521 bytes/digest matched both initial reads. Compass returned selected tohot6; no cursor item or new items.",
+    "refusals": "Empty35 and vacated19 returned VCF_NOT_FOUND (two saved-read refusals). Legacy inspect-held on the filled selected bundle still returned VCF_UNAVAILABLE (one separate held-inspection refusal).",
+    "command_syntax": "The generic example second argument is a string and requires quoted numeric slots. An initial bare slot was rejected by BDS before the plugin; documentation now includes quotes. Later console execute-as attempts did not invoke a saved read: one lost quotes in PowerShell, then the preserved-quote command was refused because its sender was not a Player. These are not SDK read attempts.",
+    "final": "Zero provider sessions and zero consumer tickets; observer registries1/complete player snapshots1/queued0/refused0. Final clear-max-count0 observations counted stone6/bundle1/shulker1. Server stopped cleanly; operator permission retained.",
+    "blocked_regressions": "Windows Remote Desktop took foreground; guarded screenshots and focus/input requests refused. The planned stone-only read, double-chest opening/close and form click regression were NOT RUN on this artifact. Prior checkpoint170 retains its separate chest/form evidence."
+  },
+  "saved_item_fixtures": [
+    {
+      "kind": "bundle-empty-restored",
+      "slot": 19,
+      "amount": 1,
+      "bytes": 3521,
+      "sha256": "4b9453eef08cb7cf97abd125c49c34be38843de0658438d341ab14f0f7b42a80"
+    },
+    {
+      "kind": "bundle-six-stones",
+      "slots": [
+        19,
+        7
+      ],
+      "amount": 1,
+      "bytes": 3593,
+      "sha256": "e3700f7f9291982f7cca2d450cc0f4ff86d2a15167912a08288707a242a729bb"
+    },
+    {
+      "kind": "enchanted-named-wooden-pickaxe",
+      "slot": 11,
+      "amount": 1,
+      "bytes": 178,
+      "sha256": "fed108563cb0684d0c49ee6508493333ff14355ff7ef3b99082f1c194af60a6c"
+    },
+    {
+      "kind": "awkward-potion",
+      "slot": 14,
+      "amount": 1,
+      "bytes": 88,
+      "sha256": "4ec9f3cd76b0fd460794f177fd8c3e3b03248e2bcff6595a318a518924132aa1"
+    },
+    {
+      "kind": "signed-book",
+      "slot": 20,
+      "amount": 1,
+      "bytes": 272,
+      "sha256": "223e60080c1a3bcf9628523dcc2dabe9befb4c409b98ff88f6b4ffa7a98b1911"
+    },
+    {
+      "kind": "named-empty-shulker",
+      "slot": 21,
+      "amount": 1,
+      "bytes": 202,
+      "sha256": "5fb1cfff9917394437be25529133f3fbbcd08238a39657c0dc09d4c1d97ef6a4"
+    }
+  ],
+  "sdk_counters": {
+    "saved_item_successes": 9,
+    "saved_item_refusals": 2,
+    "legacy_inspection_successes": 0,
+    "legacy_inspection_refusals": 1,
+    "opens": 0,
+    "closes": 0,
+    "failure_callbacks": 0,
+    "guard_checks": 0,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 0,
+    "form_outstanding_tickets": 0
+  },
+  "item_observer": {
+    "registries": 1,
+    "complete_player_snapshots": 1,
+    "queued": 0,
+    "refused": 0
+  },
+  "not_qualified": [
+    "Held native editors",
+    "Safe native reconstruction and dynamic-container ownership",
+    "Persistent identities and exclusivity",
+    "Writeback/save/crash recovery",
+    "Current-artifact chest/form regression (foreground blocked)",
+    "Windows saved-item native adapter and stock-client tests",
+    "Other devices/multiplayer",
+    "Exact Onistone runtime admission",
+    "Full catalog migration"
+  ],
+  "screenshots": {
+    "filled": {
+      "path": "docs/images/native-saved-items/filled.png",
+      "sha256": "e8bbf724db4bf1b33c5ae23ebf414fa5b29b964fb90482da3649a22f31c8f4e4",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "filled-read": {
+      "path": "docs/images/native-saved-items/filled-read.png",
+      "sha256": "04c778cd7fd5f45d3de50514e51011826ba1e57b19c1d3d5db831170238e4031",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "restored-read-command": {
+      "path": "docs/images/native-saved-items/restored-read-command.png",
+      "sha256": "3ddb953a6a70c46b99bf94815e3c97a5991b80b1878edadfc0e8a8d91cc70c23",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "book": {
+      "path": "docs/images/native-saved-items/book.png",
+      "sha256": "c1e6754e4c0b9216b10757511f8db4cd45f883e1b2b4311f45f83eef5e4e80c9",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "box": {
+      "path": "docs/images/native-saved-items/box.png",
+      "sha256": "4131e333b2ef60e2da374ccd61ea31234541cdcb17996325df1b28d286b6a3f0",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "legacy-refusal": {
+      "path": "docs/images/native-saved-items/legacy-refusal.png",
+      "sha256": "6ac2d20bb3d6a1fa37e829cbe7bd7cfd2e3ef0d7fb885c4ba558e9a0ae30f105",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-a3fbf78-saved-item-counters.txt",
+    "sha256": "5de628b1713429cf1e7f08df5239e09d6ddb0220c73b4e3bacb731e096b4c87a"
+  }
+}

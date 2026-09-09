@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "kind": "development-build-and-runtime-checkpoint",
+  "source_revision": "a3fbf78f77640ac29757986bfa7532bde3789376",
+  "all_ui_acceptance": "not-qualified",
+  "local_ctest": {
+    "linux": "16/16 passed; public Docker build exit0",
+    "windows": "Local installed server DLLs remain171e0aa; current CI binaries have no local client tests."
+  },
+  "artifacts": {
+    "linux": {
+      "endstone_onistone_vcf.so": "2b46202b649a59e566b23538c48e44d9745ce4b9c20c71de3ca47ddf90d7efd4",
+      "endstone_vcf_catalog_showcase.so": "9534072633c8b61d83af92ed861e4b916d402b0b0eb6f5a9a44bdd02b6cd16f4",
+      "endstone_vcf_native_passthrough.so": "614d125090f0724120123bf57d16a76b56137ed09321ae2dd5abbe0237fa844e"
+    }
+  },
+  "runtime_evidence": "research/native-evidence/linux-a3fbf78-saved-item-smoke.json",
+  "previous_windows_checkpoint": "research/native-evidence/checkpoint-171e0aa.json",
+  "ci": {
+    "url": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34361320872",
+    "conclusion": "failure",
+    "jobs": {
+      "linux-docker": "success",
+      "windows (windows-debug)": "success",
+      "windows (windows-release)": "success",
+      "linux-sanitizers": "success",
+      "full-scope-acceptance": "failure"
+    },
+    "failure_reason": "All 138 canonical/platform and 20 additional surface/platform outcomes remain unqualified.",
+    "legacy_regression": {
+      "url": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34361320762",
+      "conclusion": "success"
+    }
+  },
+  "ci_artifacts": {
+    "native-linux-x64-UNQUALIFIED": {
+      "examples/endstone_vcf_catalog_showcase.so": "9534072633c8b61d83af92ed861e4b916d402b0b0eb6f5a9a44bdd02b6cd16f4",
+      "examples/endstone_vcf_native_passthrough.so": "614d125090f0724120123bf57d16a76b56137ed09321ae2dd5abbe0237fa844e",
+      "plugins/endstone_onistone_vcf.so": "2b46202b649a59e566b23538c48e44d9745ce4b9c20c71de3ca47ddf90d7efd4"
+    },
+    "native-windows-release-UNQUALIFIED": {
+      "examples/endstone_vcf_catalog_showcase.dll": "ff028bbf9c8e381abd9b51c59c28ea04db98aafb3acf8c0bf5bffd5bd6ee2ef5",
+      "examples/endstone_vcf_native_passthrough.dll": "6b4ad0f1bb1fce7c4352434316eefa9e58dbf8f5616e6fc9ed870912f79c9530",
+      "plugins/endstone_onistone_vcf.dll": "587c02937a4cf806ff446ee0779f76297d1e357f4dd5cf65a809479f4d01b211"
+    },
+    "native-windows-debug-UNQUALIFIED": {
+      "examples/endstone_vcf_catalog_showcase.dll": "acaa4811c84fe4c2d4d4e743524dcbcd048090fdd93456a6fed70c95ee254015",
+      "examples/endstone_vcf_native_passthrough.dll": "853e9254dcbddc10ddbdf5d3ecd94f8b2d7b71b7f2a1ce8afb5a453fb323f2ac",
+      "plugins/endstone_onistone_vcf.dll": "22959537c94c6849ea5a9f2cd6004c78be32abc3026e6be74e3eaced7418c355"
+    }
+  },
+  "linux_local_and_ci_plugins_identical": true,
+  "windows_ci_artifact_runtime_tested": false,
+  "sanitizers": {
+    "ctest": "16/16 passed including native saved-item reads and ABI1.2 compatibility",
+    "fuzz_runs_per_target": 100000,
+    "targets": {
+      "nbt": {
+        "path": "research/native-evidence/linux-a3fbf78-fuzz-nbt.txt",
+        "sha256": "7223b6144a534bc2ee76404bf4fe5650b88b052cc7541e4fb39f344c102e55c8"
+      },
+      "storage": {
+        "path": "research/native-evidence/linux-a3fbf78-fuzz-storage.txt",
+        "sha256": "4eb4af234b1eea57bf8b39233345331fda5360d8f18a1926e65a1ffd1c006b14"
+      },
+      "items": {
+        "path": "research/native-evidence/linux-a3fbf78-fuzz-items.txt",
+        "sha256": "d8fbb02a966324c99475a2ffbc54a8447a28f9d8d596a1877a9289cc90d02343"
+      }
+    },
+    "test_report": {
+      "path": "research/native-evidence/linux-a3fbf78-sanitizer-tests.txt",
+      "sha256": "5b56f3ded647c547380823b1ae1ba052becd2da6d4394285c530ecd61e0fda2e"
+    },
+    "limit": "Core/model/parser/runtime identity tests; no instrumented proprietary BDS UI. Standalone package consumers compile without inherited sanitizer flags."
+  }
+}

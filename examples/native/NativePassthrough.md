@@ -10,7 +10,7 @@ contents are not captured. See the [held-item contract](../../docs/NATIVE_HELD_I
 for permissions, metadata bounds and identity limitations. This does not open
 or qualify a held editor. `/vcf_native status` includes inspection counters.
 
-SDK 1.3 adds `/vcf_native read-item <slot>` for main inventory slots 0?35.
+SDK 1.3 adds `/vcf_native read-item "19"` (quote the slot number) for main inventory slots 0?35.
 On the admitted Linux build it reports the native saved-item byte count and
 digest, including the tested bundle contents. It requires
 `remoteworkstations.inventory.read`. See the separate [saved-item API](../../docs/NATIVE_ITEM_SAVE.md);

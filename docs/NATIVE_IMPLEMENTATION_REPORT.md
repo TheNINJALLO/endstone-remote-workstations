@@ -1,9 +1,17 @@
 # Native implementation checkpoint â€” incomplete
 
-The latest recorded native source checkpoint is `170c27b85476ea6a7cca2385aaa87f1c0f637399` on
+The latest recorded native source checkpoint is `a3fbf78f77640ac29757986bfa7532bde3789376` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
+
+SDK 1.3 adds [native saved-item reads](NATIVE_ITEM_SAVE.md). The exact public
+Linux binaries passed nine client reads, including a bundle containing six
+stones, signed-book and shulker saves, two expected empty-slot refusals and
+byte-identical bundle restoration. The run stopped cleanly. Current-artifact
+chest/form regressions remain unrun because Windows blocked Minecraft focus.
+The Windows saved-item adapter, held editors, writeback and recovery remain
+incomplete. See the [runtime record](../research/native-evidence/linux-a3fbf78-saved-item-smoke.json).
 
 SDK 1.2 adds [read-only held inspection](NATIVE_HELD_ITEMS.md), with selected
 shulker and book PC evidence. The initial bundle test exposed unchanged metadata
@@ -167,10 +175,10 @@ packaging checks do not upgrade native gameplay qualification.
   exported. The exact current provider and both consumer DLLs loaded in the
   isolated Windows server, verified their hashes and primitive manifest, and
   shut down cleanly. This Windows build has not had stock-client UI tests.
-- Local Linux Docker build at `170c27b`: **15/15 CTest jobs passed**, ELF, SDK and consumers
+- Local Linux Docker build at `a3fbf78`: **16/16 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `170c27b`: its CI job passed **15/15 tests**, including held snapshots, and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `a3fbf78`: its CI job passed **16/16 tests**, including native saved-item reads and ABI compatibility, and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 23,371 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
@@ -182,13 +190,13 @@ packaging checks do not upgrade native gameplay qualification.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-170c27b.json`](../research/native-evidence/checkpoint-170c27b.json).
+[`checkpoint-a3fbf78.json`](../research/native-evidence/checkpoint-a3fbf78.json).
 Older checkpoints keep their original source and artifact identities.
 
-At `170c27b`, [native CI run 34347628599](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34347628599)
+At `a3fbf78`, [native CI run 34361320872](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34361320872)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34347628552](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34347628552)
+refuses the incomplete catalog. [Legacy regression run 34361320762](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34361320762)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux workstation example](examples/linux-native-workstations.md).
 All three Linux CI plugin hashes match the locally tested exports. The Windows

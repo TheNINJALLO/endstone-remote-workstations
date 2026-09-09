@@ -27,7 +27,9 @@ result is returned. Consumers must apply their own policy before reading
 another player's inventory. Saved NBT can include private book text and other
 item data; the example prints only counts, types and digests.
 
-Try `/vcf_native read-item 19` with the matching compiled example consumer.
+Try `/vcf_native read-item "19"` with the matching compiled example consumer.
+Keep the quotes: this generic example command declares its second argument as
+a string, so Bedrock rejects an unquoted number before invoking the plugin.
 `/vcf_native status` reports saved-item read successes and refusals separately
 from held inspection and UI tickets. Invalid slots refuse; an empty slot returns
 `VCF_NOT_FOUND`. Unsupported native layouts or changed function fingerprints
@@ -80,6 +82,32 @@ That diagnostic is ABI evidence, not public-artifact qualification or evidence
 of safe bundle reconstruction, dynamic-container reassignment or held editing.
 The older SDK 1.2 `inspect_held` contract remains unchanged and still refuses
 bundles because its public user-metadata observation omits their contents.
+
+## Public Linux client evidence
+
+The [SDK 1.3 runtime record](../research/native-evidence/linux-a3fbf78-saved-item-smoke.json)
+uses the same three public plugin binaries as CI, with no diagnostic plugin
+installed. Nine reads passed: empty/filled/restored bundle states, a named
+enchanted pickaxe, an awkward potion, a signed book and a named empty shulker.
+The two empty-slot reads refused as expected. Moving the filled bundle from
+main inventory to the selected hotbar slot preserved its save bytes and digest.
+
+![Six existing stones inside the test bundle](images/native-saved-items/filled.png)
+
+![SDK read of the filled bundle: 3,593 saved bytes](images/native-saved-items/filled-read.png)
+
+After vanilla extraction returned all six stones, the empty bundle again
+produced its original 3,521-byte save and digest. The server stopped cleanly
+with no open sessions, tickets or packet-observer refusals.
+
+![Restored empty bundle has its original saved digest](images/native-saved-items/restored-read-command.png)
+
+The planned chest/form regressions on this artifact remain unrun because
+Windows refused to foreground Minecraft. Earlier UI evidence remains linked
+to its own source revision. This checkpoint does not qualify native editors,
+writeback, reconstruction, recovery or the Windows saved-item adapter.
+See the [build and CI checkpoint](../research/native-evidence/checkpoint-a3fbf78.json)
+for the 16-test sanitizer run, 300,000 fuzz inputs and exact artifact hashes.
 
 ## C caller storage
 
