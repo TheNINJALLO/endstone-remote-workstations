@@ -63,6 +63,15 @@ published.
 
 ## Builds and checks
 
+SDK packaging source `2711123` adds the relocatable CMake dependency package.
+Its local Linux suite passes **14/14** tests; the new standalone package test
+also passes locally with MSVC. CI passes Linux Docker, Windows Debug/Release,
+14 Linux sanitizer tests and 300,000 fuzz inputs. The
+[SDK package checkpoint](../research/native-evidence/sdk-package-2711123.json)
+records the exported files and CI identities. All three Linux plugin binaries
+remain byte-for-byte identical to the `7aacb36` client-tested exports. These
+packaging checks do not upgrade native gameplay qualification.
+
 - Previous local Windows build (`171e0aa`): **12/12 CTest jobs passed**, DLL, SDK, consumers and PDB
   exported. The exact current provider and both consumer DLLs loaded in the
   isolated Windows server, verified their hashes and primitive manifest, and

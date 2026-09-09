@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "kind": "sdk-packaging-and-build-evidence-not-gameplay-qualification",
+  "source_revision": "2711123e193bc8d34ba4320e3563310c67d272df",
+  "all_ui_acceptance": "not-qualified",
+  "sdk_package_version": "1.1.0",
+  "sdk_abi": "1.1",
+  "targets": [
+    "OnistoneVCF::abi",
+    "OnistoneVCF::sdk"
+  ],
+  "sdk_files_linux": {
+    "include/oni/vcf/abi.h": "daf2d2530dc3af84c4501b5246ac77b0a727f046ecf7aafd69c8f8146b0877a0",
+    "include/oni/vcf/loader.hpp": "28cb3391783f95b8e56128a1e9006026a98e832ccc4cb8a7c7334b74e07ec39a",
+    "include/oni/vcf/sdk.hpp": "d21b28ffd3bf12bff3b4f80dc474429eb10aa65959d5100fa8b48d0155ad9872",
+    "lib/cmake/OnistoneVCF/OnistoneVCFConfig.cmake": "396b513a369238ae0d5e0a340fb246b4a2ad0cf4f6c2517a98c4ffded34ea036",
+    "lib/cmake/OnistoneVCF/OnistoneVCFConfigVersion.cmake": "287853d69059703b7761ca8ec085e3484fd9689fd24e3cd2af46d93f41f03e98",
+    "lib/cmake/OnistoneVCF/OnistoneVCFTargets.cmake": "84eedff5aae01d20b0579daa1d6d1083ab245ef85c73f369fea1107a01702b02",
+    "LICENSE": "0bd64593db1951332d5cb1421e906552e5c8336c86c2efc08a600918a18b2f82"
+  },
+  "local_checks": {
+    "linux": "14/14 CTest passed including installed SDK relocation; public Docker build exit 0",
+    "windows": "Installed SDK relocation test passed in separate MSVC 19.44 build tree; server DLL exports unchanged"
+  },
+  "package_test": "Install only sdk component; move and rename SDK into a directory containing spaces; copy standalone C/C++ consumer source into separate project; find_package twice; configure/build/run using only installed headers and targets; verify discovery refuses an absent provider.",
+  "ci": {
+    "url": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34309418182",
+    "conclusion": "failure",
+    "jobs": {
+      "linux-docker": "success",
+      "windows (windows-debug)": "success",
+      "windows (windows-release)": "success",
+      "linux-sanitizers": "success",
+      "full-scope-acceptance": "failure"
+    },
+    "failure_reason": "All 138 canonical/platform and 20 extra surface/platform outcomes remain unqualified.",
+    "legacy_regression": {
+      "url": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34309418174",
+      "conclusion": "success"
+    }
+  },
+  "ci_artifacts": {
+    "native-linux-x64-UNQUALIFIED": {
+      "examples/endstone_vcf_catalog_showcase.so": "f2ed69e30d69b25d024e6caafcaef1298f764accac50b273e07716ef7b3070da",
+      "examples/endstone_vcf_native_passthrough.so": "d491ffd16a0bb3af56e46b8c1a0288fce3bca747fe31f28c1b688fa2b459e9fd",
+      "plugins/endstone_onistone_vcf.so": "ccba81331609e9ae98f451840136d3c22ce6334987c4e7a0afd7a75476fc13d7"
+    },
+    "native-windows-release-UNQUALIFIED": {
+      "examples/endstone_vcf_catalog_showcase.dll": "48c8fa689d2d08d6eb467b47bcb844e1878b1243d1a40475fd5459640119a19b",
+      "examples/endstone_vcf_native_passthrough.dll": "f0e5703a088f49bcfc79e5feddbae2a3894b350d8249445a7d15acc3ca228129",
+      "plugins/endstone_onistone_vcf.dll": "30a7f7b48e6172d5a2b7b7508c6074a77d9597fea2d1695f3c84958bc2b4d1b6"
+    },
+    "native-windows-debug-UNQUALIFIED": {
+      "examples/endstone_vcf_catalog_showcase.dll": "ff42ae80cfa5672d440e8ea69f7c0ea3b8ed8ce393aa0f1a94a4dd7a5fedf7be",
+      "examples/endstone_vcf_native_passthrough.dll": "0fd0d7902cd1a2103090b89d15c4fe013b2177711a218effe7e656ff6e72917b",
+      "plugins/endstone_onistone_vcf.dll": "d055a3d1f0647be74903b2ef42b7cc2d97d11f08a6da4827aca972ba2cbe47a9"
+    }
+  },
+  "linux_local_and_ci_plugins_identical": true,
+  "linux_provider_and_consumers_unchanged_from_crafting_smoke": true,
+  "runtime_evidence": "research/native-evidence/linux-7aacb36-crafting-smoke.json",
+  "windows_ci_artifact_runtime_tested": false,
+  "sanitizers": {
+    "ctest": "14/14 passed including SDK package test",
+    "fuzz_inputs": {
+      "nbt": 100000,
+      "storage": 100000,
+      "items": 100000
+    },
+    "limit": "Core/parser/model/runtime identity checks; proprietary BDS UI execution is not instrumented. Standalone package consumer executables are compiled without inherited sanitizer flags."
+  },
+  "limits": [
+    "Package version tracks the SDK ABI and is not a production release claim.",
+    "Endstone SDK/toolchain and exact native runtime admission remain separate requirements.",
+    "No custom native catalog row is fully qualified."
+  ]
+}
