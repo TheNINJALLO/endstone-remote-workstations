@@ -142,7 +142,7 @@ typedef struct vcf_api {
     Vanilla operations remain enabled. Validate rechecks permissions, lifetime,
     mutation revisions and complete saved bytes; this grants no write authority.
     Observe before reading, validate after reading and before using the result.
-    Any validation failure permanently invalidates the observation. Release it
+    Permission or native validation failure invalidates the observation. Release it
     on the server thread; consumer revocation/player departure also remove it.
     Maximum 64 per consumer, 256 total. Failure leaves the output unchanged. */
  vcf_status (VCF_CALL *observe_inventory_item)(vcf_handle,vcf_string,uint32_t,vcf_handle *);

@@ -256,7 +256,7 @@ public:
    if(name=="vcf"||name=="workstations"){
     if(!args.empty()&&(args[0]=="status"||args[0]=="diagnose"||args[0]=="sessions")){
      if(!sender.hasPermission("remoteworkstations.status")){sender.sendErrorMessage("Permission denied.");return true;}
-     sender.sendMessage("Native VCF C ABI 1.3; sessions "+std::to_string(engine_->session_count())+"; 69 entries retained; all-UI NOT QUALIFIED.");
+     sender.sendMessage("Native VCF C ABI "+std::to_string(VCF_ABI_VERSION>>16)+"."+std::to_string(VCF_ABI_VERSION&0xffffu)+"; sessions "+std::to_string(engine_->session_count())+"; 69 entries retained; all-UI NOT QUALIFIED.");
      if(args[0]=="diagnose"){
       auto stats=item_observations_.stats();sender.sendMessage("Item packet observations: registries "+std::to_string(stats.registries)+", complete snapshots "+std::to_string(stats.inventories)+", queued "+std::to_string(stats.pending)+", refused "+std::to_string(stats.rejected)+". Observation is not inventory-write qualification.");
      }

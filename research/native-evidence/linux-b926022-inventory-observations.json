@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "kind": "public-native-sdk-inventory-observations",
+  "source_revision": "b9260226093b406de14ea7e379dd9ba0fb8d41e0",
+  "sdk_abi": "1.4",
+  "all_ui_acceptance": "not-qualified",
+  "server_enabled_utc": "2026-09-09T22:41:21Z",
+  "client_joined_utc": "2026-09-09T22:42:06Z",
+  "client_left_utc": "2026-09-09T22:59:14Z",
+  "clean_stop_utc": "2026-09-09T23:00:07Z",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "installed_and_mapped_plugins": {
+    "endstone_onistone_vcf.so": "2020b2443ee025f0704ef2a50fd70016163369a54b4776cda7d13ebbdee3c490",
+    "endstone_vcf_catalog_showcase.so": "2255edf6b618d3edebd499ae18e088bc82bf697d6ef9a819a09dcc1208d895b5",
+    "endstone_vcf_native_passthrough.so": "6a0028f02cf67d39a7b0aeafde6a80a2a68ea568669f042923fc07d2b1e3a7ef"
+  },
+  "private_probe_installed": false,
+  "checks": {
+    "saved_item_reads": {
+      "successes": 4,
+      "refusals": 0,
+      "stone_slot": 7,
+      "stone_amount": 6,
+      "stone_bytes": 120,
+      "bundle_slot": 19,
+      "bundle_bytes": 3521,
+      "bundle_digest_before_after": "4b9453eef08cb7cf97abd125c49c34be38843de0658438d341ab14f0f7b42a80"
+    },
+    "observations": {
+      "created": 6,
+      "valid_results": 7,
+      "invalid_results": 5,
+      "outstanding_after_quit": 0,
+      "idle_and_inventory_open_valid": true,
+      "moved_away_and_returned_same_bytes_stale": true,
+      "native_bundle_extraction_stale": true,
+      "fresh_observation_after_restore_valid": true,
+      "explicit_release": true,
+      "teleport_retires_held_box_observation": true,
+      "fresh_observation_after_teleport_valid": true,
+      "observation_stale_after_chest_and_form_activity": true,
+      "valid_observation_removed_on_quit": true
+    },
+    "double_chest": {
+      "opens": 1,
+      "sdk_closes": 1,
+      "failures": 0,
+      "guard_checks": 208,
+      "outstanding_tickets": 0,
+      "source": [
+        1,
+        91,
+        7
+      ],
+      "slots": 54
+    },
+    "form": {
+      "rendered": true,
+      "callbacks": 1,
+      "outstanding_tickets": 0
+    },
+    "final_counts_zero_removal_queries": {
+      "stone": 6,
+      "bundle": 1,
+      "undyed_shulker_box": 1
+    },
+    "inventory_restored": true,
+    "cursor_empty": true,
+    "provider_sessions_after_quit": 0,
+    "packet_observer_after_quit": {
+      "registries": 0,
+      "complete_snapshots": 0,
+      "queued": 0,
+      "refused": 0
+    }
+  },
+  "screenshots": [
+    {
+      "path": "docs/images/native-item-observations/observe-bundle.png",
+      "sha256": "ff897353ecf49702463d8f560b325ae61802ac8fa235f4adae18a491c03af26e",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    {
+      "path": "docs/images/native-item-observations/stale-after-return.png",
+      "sha256": "b03755c0614fc67f87f7f81b0fa01bad55d64142eba3183d3f9738e8772dbec6",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    {
+      "path": "docs/images/native-item-observations/restored-inventory.png",
+      "sha256": "811d13ff6ad9d732445bfbbfaf22c464805aa39f6a7b7d3da4e1c828ce4284e0",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  ],
+  "validation": {
+    "local_linux_tests": 18,
+    "local_windows_release_tests": 17,
+    "local_windows_debug_tests": 17,
+    "local_asan_ubsan_tests": 18,
+    "scope_gate_adversarial_tests": 5,
+    "native_ci": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34414423513",
+    "native_ci_passed_jobs": [
+      "linux-docker",
+      "linux-sanitizers",
+      "windows (windows-release)",
+      "windows (windows-debug)"
+    ],
+    "legacy_ci": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34414423526",
+    "legacy_ci_result": "success",
+    "full_scope_release_gate": {
+      "exit_code": 2,
+      "canonical_platform_outcomes_incomplete": 138,
+      "additional_surface_platform_outcomes_incomplete": 20
+    }
+  },
+  "scope": "Actual SDK 1.4 observation handles and forwarded native mutation hooks; four saved-item reads, vanilla bundle gestures, teleport/quit cleanup, original double-chest and form regressions. No framework inventory writes, held-container editor, BDS/plugin crash reconciliation, Windows native observation or full-catalog qualification.",
+  "notes": [
+    "The old diagnostic status string printed ABI 1.3; negotiation and startup correctly used 1.4. A later source-only display correction derives the label from the ABI constant.",
+    "The form screenshot contained an unrelated notification and was not published.",
+    "An observation became stale after chest/form activity; the exact invalidating hook was not instrumented in this public run. The implementation conservatively invalidates any nonempty native request batch, even one that ultimately makes no change.",
+    "A direct mutator outside the admitted native hooks needs separate qualification. These optimistic observations are not exclusive item locks."
+  ]
+}
