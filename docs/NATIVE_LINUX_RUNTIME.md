@@ -105,6 +105,13 @@ identity, recovery, stale-close replay or the full catalog. Trading and sign
 function identities in the manifest are research candidates with no enabled
 calls.
 
+The [inventory SDK example](examples/linux-native-inventory.md) includes six
+actual screenshots and the exact `171e0aa` build's client observations. Eight
+opens and eight closes returned to zero tickets, with vanilla crafting,
+equipment and held-compass interaction tests. The controlled disconnect check
+passed; the earlier missing-ingredient check followed by death is retained as
+unresolved. None of these records upgrades full-catalog acceptance.
+
 The example's `vcf_native close` console command queues closure of that
 consumer's tickets; when run by a player it addresses only that player's
 tickets. `vcf_native status` reports outstanding tickets as well as open,

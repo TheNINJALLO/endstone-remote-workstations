@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "recorded": "2026-09-08",
+  "recorded": "2026-09-09",
   "platform": "linux-x64",
   "baseline_sha256": "33242db49532f56835d955307491c2aff5d956ac990e0591697a500e6c6c0342",
   "runtime": {
@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
     "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
-    "artifact_sha256": "65a22206e359e0aaf2565f20e7291408486051553e05e5525aa9e51b5eecac12"
+    "artifact_sha256": "07434bbb77a9290eaaf67f66a3d2e9e9cc54fa8382e5a1cd393eba8fb9e65946"
   },
   "build": "tested-in-local-linux-docker",
   "native_loader_smoke": "passed",
@@ -6878,11 +6878,11 @@
       "family": "embedded-or-interaction",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -6890,17 +6890,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Original PC inventory smoke passed. Custom ownership, death/drop conservation, stale/forged request tests and recovery remain unqualified; see exact smoke record.",
+          "smoke_record": "research/native-evidence/linux-171e0aa-inventory-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -6999,11 +7000,11 @@
       "family": "embedded-or-interaction",
       "historical_status": "implemented-unverified",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -7011,17 +7012,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Original PC inventory smoke passed. Custom ownership, death/drop conservation, stale/forged request tests and recovery remain unqualified; see exact smoke record.",
+          "smoke_record": "research/native-evidence/linux-171e0aa-inventory-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -7120,11 +7122,11 @@
       "family": "embedded-or-interaction",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -7132,17 +7134,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Original PC inventory smoke passed. Custom ownership, death/drop conservation, stale/forged request tests and recovery remain unqualified; see exact smoke record.",
+          "smoke_record": "research/native-evidence/linux-171e0aa-inventory-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -7362,11 +7365,11 @@
       "family": "embedded-or-interaction",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -7374,17 +7377,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Original PC inventory smoke passed. Custom ownership, death/drop conservation, stale/forged request tests and recovery remain unqualified; see exact smoke record.",
+          "smoke_record": "research/native-evidence/linux-171e0aa-inventory-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -8552,5 +8556,6 @@
     "fixture_kind": "generated independent conformance vectors, not client captures",
     "fixture_sha256": "5376d1c38b47a8f8bc775c9cf7624c145500c2eea35c690ed21ec48d7bd5ae56",
     "live_empty_inventory_shape_sha256": "9eb16cf918c14fdd34c720d989e3279b59944af76f9a047b752ea403dfa2a0d6"
-  }
+  },
+  "native_inventory_smoke": "research/native-evidence/linux-171e0aa-inventory-smoke.json"
 }

@@ -1,0 +1,34 @@
+[01:44:15 INFO]: Original-mode SDK example: opens 0, closes 0, failures 0, guard checks 0, outstanding tickets 0
+[01:46:41 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[01:46:41 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[01:46:47 INFO]: Original-mode SDK example: opens 1, closes 0, failures 0, guard checks 8, outstanding tickets 1
+[01:46:47 INFO]: Queued closure of 1 owned SDK tickets.
+[01:46:47 INFO]: Original-mode SDK example: opens 1, closes 1, failures 0, guard checks 9, outstanding tickets 0
+[01:46:47 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[01:48:00 INFO]: [test-player] has 8 items that match the criteria
+[01:48:00 INFO]: Original-mode SDK example: opens 2, closes 2, failures 0, guard checks 182, outstanding tickets 0
+[01:49:31 INFO]: Original-mode SDK example: opens 5, closes 4, failures 0, guard checks 458, outstanding tickets 1
+[01:49:45 INFO]: Original-mode SDK example: opens 5, closes 5, failures 0, guard checks 490, outstanding tickets 0
+[01:49:45 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[01:49:45 INFO]: Item packet observations: registries 0, complete snapshots 0, queued 0, refused 0. Observation is not inventory-write qualification.
+[01:50:52 ERROR]: Could not clear the inventory of [test-player], no items to remove
+[01:51:07 INFO]: [test-player] was slain by Zombie
+[01:51:18 INFO]: Original-mode SDK example: opens 5, closes 5, failures 0, guard checks 490, outstanding tickets 0
+[01:51:19 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[01:51:19 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[01:51:26 INFO]: [test-player] was slain by Zombie
+[01:51:48 INFO]: Set game difficulty to PEACEFUL
+[01:53:25 INFO]: Original-mode SDK example: opens 5, closes 5, failures 0, guard checks 490, outstanding tickets 0
+[01:54:14 INFO]: [test-player] has 8 items that match the criteria
+[01:55:13 INFO]: Original-mode SDK example: opens 6, closes 5, failures 0, guard checks 513, outstanding tickets 1
+[01:55:25 INFO]: Original-mode SDK example: opens 6, closes 6, failures 0, guard checks 556, outstanding tickets 0
+[01:56:22 INFO]: [test-player] has 8 items that match the criteria
+[01:56:27 INFO]: Original-mode SDK example: opens 7, closes 6, failures 0, guard checks 563, outstanding tickets 1
+[01:57:15 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[01:57:15 INFO]: Original-mode SDK example: opens 7, closes 7, failures 0, guard checks 696, outstanding tickets 0
+[01:58:11 INFO]: Original-mode SDK example: opens 8, closes 7, failures 0, guard checks 705, outstanding tickets 1
+[01:58:45 INFO]: Original-mode SDK example: opens 8, closes 8, failures 0, guard checks 805, outstanding tickets 0
+[01:58:45 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[01:58:45 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[01:58:46 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+Quit correctly

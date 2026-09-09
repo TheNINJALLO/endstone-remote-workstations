@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "kind": "development-build-and-runtime-checkpoint",
+  "source_revision": "171e0aa08b67404e26c71a5060c545699a73ce63",
+  "all_ui_acceptance": "not-qualified",
+  "ci": {
+    "url": "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34300277289",
+    "conclusion": "failure",
+    "jobs": {
+      "windows (windows-debug)": "success",
+      "windows (windows-release)": "success",
+      "linux-sanitizers": "success",
+      "full-scope-acceptance": "failure",
+      "linux-docker": "success"
+    }
+  },
+  "local_ctest": {
+    "linux": "13/13 passed",
+    "windows": "12/12 passed"
+  },
+  "artifacts": {
+    "linux": {
+      "dist/linux-x64-dev/plugins/endstone_onistone_vcf.so": "07434bbb77a9290eaaf67f66a3d2e9e9cc54fa8382e5a1cd393eba8fb9e65946",
+      "dist/linux-x64-dev/examples/endstone_vcf_catalog_showcase.so": "f2ed69e30d69b25d024e6caafcaef1298f764accac50b273e07716ef7b3070da",
+      "dist/linux-x64-dev/examples/endstone_vcf_native_passthrough.so": "d491ffd16a0bb3af56e46b8c1a0288fce3bca747fe31f28c1b688fa2b459e9fd"
+    },
+    "windows": {
+      "dist/windows-release/plugins/endstone_onistone_vcf.dll": "07b037e42a832571448022fdea6385b2db08e0839a9e5b611965aeac500e3dfb",
+      "dist/windows-release/examples/endstone_vcf_catalog_showcase.dll": "ff5474a7e50b74be438c5262169196f1587447ac618274f3123723afcbdb30ec",
+      "dist/windows-release/examples/endstone_vcf_native_passthrough.dll": "f1e8c6ce92c6d57c6c6db904059a4e5a1e7af70edcfd43bb35cbef2292136da9"
+    }
+  },
+  "runtime_evidence": "research/native-evidence/linux-171e0aa-inventory-smoke.json",
+  "windows_current_artifact_runtime_tested": true,
+  "windows_runtime_test_scope": "Provider and two SDK consumer startup, loaded DLL identities, primitive manifest and clean shutdown; no stock client.",
+  "windows_current_artifact_client_tested": false,
+  "windows_runtime_evidence": "research/native-evidence/windows-171e0aa-startup-smoke.json"
+}

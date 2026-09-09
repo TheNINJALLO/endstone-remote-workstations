@@ -2,9 +2,9 @@
 
 This matrix describes the new C++ artifact only. **Full scope: NOT QUALIFIED.**
 
-Windows development artifact SHA-256: `229976cdfb09fa157ce48fe1bb3d69bb139f15f76c2fd4075ca37e766c09fa21`. Native loader and separate C ABI consumer startup passed. No catalog screen has completed gameplay qualification under this artifact.
+The current Windows provider SHA-256 is `07b037e42a832571448022fdea6385b2db08e0839a9e5b611965aeac500e3dfb`. It and both SDK consumers passed [startup and clean shutdown](../research/native-evidence/windows-171e0aa-startup-smoke.json), including loaded-file identities and the native primitive manifest. Stock-client UI tests for this exact Windows build remain outstanding. No catalog screen has completed gameplay qualification under the native Windows plugin.
 
-The Linux Docker build passes locally and in CI and produces a real ELF `.so`. Exact local BDS/Endstone files are admitted for the public SDK; two native consumers load, and stock-client form actions, close/disconnect cleanup and passive inventory observation have passed smoke tests. Private Linux workstation adapters remain unavailable. These results do not upgrade any catalog row to full qualification.
+The Linux Docker build passes locally and in CI and produces a real ELF `.so`. Exact local BDS/Endstone files are admitted for the public SDK. Stock-client forms, passive inventory observation and four opt-in real-inventory roles have passed [smoke checks](examples/linux-native-inventory.md). The controlled ingredient-disconnect test passed; an earlier failed check followed by a zombie death remains unresolved. Other private Linux workstation adapters remain unavailable. These results do not upgrade any catalog row to full qualification.
 
 | Entry | Family | Windows original/custom | Linux original/custom |
 |---|---|---|---|
@@ -64,11 +64,11 @@ The Linux Docker build passes locally and in CI and produces a real ELF `.so`. E
 | `elementconstructor` | education | Not qualified / not implemented | Blocked / not implemented |
 | `materialreducer` | education | Not qualified / not implemented | Blocked / not implemented |
 | `labtable` | education | Not qualified / not implemented | Blocked / not implemented |
-| `inventory2x2` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
-| `armor` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
-| `offhand` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
+| `inventory2x2` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Experimental original, PC crafting smoke passed / not implemented |
+| `armor` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Experimental original, PC equipment smoke passed / not implemented |
+| `offhand` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Experimental original, PC equipment smoke passed / not implemented |
 | `cursor` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |
-| `recipebook` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Blocked / not implemented |
+| `recipebook` | embedded-or-interaction | Experimental original adapter, client untested / not implemented | Experimental original, PC selection smoke passed / not implemented |
 | `bundle` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |
 | `hud` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |
 | `cauldron` | embedded-or-interaction | Not qualified / not implemented | Blocked / not implemented |

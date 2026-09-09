@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-client-smoke",
+  "recorded_utc": "2026-09-09T01:59:13Z",
+  "source_revision": "171e0aa08b67404e26c71a5060c545699a73ce63",
+  "platform": "linux-x64",
+  "runtime": {
+    "server": "Endstone 0.11.10",
+    "bds": "1.26.45.1",
+    "protocol": 2169,
+    "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+    "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+    "artifact_sha256": "07434bbb77a9290eaaf67f66a3d2e9e9cc54fa8382e5a1cd393eba8fb9e65946"
+  },
+  "installed_plugins": {
+    "endstone_onistone_vcf.so": "07434bbb77a9290eaaf67f66a3d2e9e9cc54fa8382e5a1cd393eba8fb9e65946",
+    "endstone_vcf_catalog_showcase.so": "f2ed69e30d69b25d024e6caafcaef1298f764accac50b273e07716ef7b3070da",
+    "endstone_vcf_native_passthrough.so": "d491ffd16a0bb3af56e46b8c1a0288fce3bca747fe31f28c1b688fa2b459e9fd"
+  },
+  "loaded_plugin_hashes_match_exports": true,
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "input": "Classic keyboard/mouse",
+    "stock": true
+  },
+  "config": {
+    "schema_version": 1,
+    "experimental_original_windows": false,
+    "experimental_original_linux": true
+  },
+  "test_probe_installed": false,
+  "test_probe_mapped": false,
+  "all_ui_acceptance": "not-qualified",
+  "entries": {
+    "inventory2x2": {
+      "mode": "real-source",
+      "opening": "passed",
+      "rendering": "passed",
+      "closing": "passed",
+      "input": "Moved one test oak log into the 2x2 grid; took four planks into the inventory. Server count increased from four to eight.",
+      "custom_behavior": "not-implemented"
+    },
+    "armor": {
+      "mode": "real-source",
+      "opening": "passed",
+      "rendering": "passed",
+      "closing": "passed",
+      "input": "Moved a test iron helmet into the head slot; remained equipped on the subsequent opening.",
+      "custom_behavior": "not-implemented"
+    },
+    "offhand": {
+      "mode": "real-source",
+      "opening": "passed",
+      "rendering": "passed",
+      "closing": "passed",
+      "input": "Moved a test shield into the offhand slot; remained equipped on the subsequent opening.",
+      "custom_behavior": "not-implemented"
+    },
+    "recipebook": {
+      "mode": "real-source",
+      "opening": "passed",
+      "rendering": "passed",
+      "closing": "passed",
+      "input": "Selected the stock stick recipe, placing four planks into each of two crafting slots without taking the output.",
+      "custom_behavior": "not-implemented"
+    }
+  },
+  "observed": {
+    "sdk_cancel": "One active ticket closed and forgotten; native inventory remained open and usable.",
+    "opens": 8,
+    "closes": 8,
+    "failures": 0,
+    "guard_checks": 805,
+    "outstanding_tickets": 0,
+    "sessions": 0,
+    "form_callback_count_after_native_tests": 1,
+    "form_outstanding_tickets": 0,
+    "held_compass_trigger": "Sneak/right-click through the public SDK consumer opened inventory; binding cleared after test.",
+    "controlled_disconnect": "Peaceful difficulty: eight planks in the crafting grid before kick; eight in player inventory after reconnect; SDK reopened successfully.",
+    "vanilla_control": "Peaceful difficulty: stock E-key inventory, same recipe and kick; eight planks present after reconnect; no SDK native ticket opened.",
+    "initial_disconnect_anomaly": "Earlier test returned no planks after reconnect, followed by a zombie death. This failed mixed-condition check is retained; its cause and death/drop conservation remain unresolved.",
+    "inventory_after_final_join": {
+      "registries": 1,
+      "complete_snapshots": 1,
+      "queued": 0,
+      "refused": 0
+    },
+    "clean_stop": "All three C++ plugins disabled and BDS reported Quit correctly."
+  },
+  "limits": [
+    "Original vanilla item behavior only; no custom recipes or inventory replacement.",
+    "One PC client; no multiplayer, touch or controller qualification.",
+    "Death/drop conservation, forged requests, stale-close replay, provider hot-disable/reentrancy and crash/save recovery are unqualified.",
+    "Compasses demonstrate an interaction trigger, not persistent held-container identity.",
+    "Only the exact Linux server/runtime and client profile above were exercised."
+  ],
+  "counters": {
+    "path": "research/native-evidence/linux-171e0aa-inventory-counters.txt",
+    "sha256": "a8130db30a0fa73dba91cc7229dce5b6a497d2fd63f115df1ec13123c6618cec"
+  },
+  "screenshots": [
+    {
+      "path": "docs/images/native-linux-inventory/inventory.png",
+      "sha256": "8d736170a7e2c0a7fd96bc3a8ba1b334e49d5a626fdf8fbf1700432fae1486b6"
+    },
+    {
+      "path": "docs/images/native-linux-inventory/vanilla-crafting.png",
+      "sha256": "ad980cbd80f35f4de9e6429ed1bd52d32350f816de413bb054571d514d3d4e4e"
+    },
+    {
+      "path": "docs/images/native-linux-inventory/armor.png",
+      "sha256": "f897188a2088c4274810563560a45e419923af486926b899812896e42b980fbc"
+    },
+    {
+      "path": "docs/images/native-linux-inventory/offhand.png",
+      "sha256": "8e5ae8f5c9d65b83bc7c958a828f73270d41c0485bf56f33217818c3b638c466"
+    },
+    {
+      "path": "docs/images/native-linux-inventory/recipebook.png",
+      "sha256": "ea37e558e4611678191f3cf4a564aeb7ab317a8d68e0498a9607f494156ffa1c"
+    },
+    {
+      "path": "docs/images/native-linux-inventory/compass-trigger.png",
+      "sha256": "c4470bcef1381b603132b106d98ff7daf31b827c9c916dad556d5a7ced8796cb"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Native implementation checkpoint — incomplete
 
-The native source checkpoint is `0a91902ef4f676b3ce2244f4344fec3c05d581ab` on
+The native source checkpoint is `171e0aa08b67404e26c71a5060c545699a73ce63` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
@@ -19,6 +19,20 @@ form renders and dispatches the consumer's callback. All 69 catalog IDs resolve.
 The live inventory observer now reports one registry, one complete snapshot,
 zero queued packets and zero refusals. It does not write native inventories.
 
+The opt-in Linux original inventory adapter now opens `inventory2x2`, `armor`,
+`offhand` and `recipebook` through independently derived and fingerprinted Linux
+ABI facts. The exact current build completed eight opens and eight closes with
+zero failures and outstanding tickets. PC tests exercised vanilla log-to-plank
+crafting, helmet and shield equipment, recipe selection, SDK cancellation and
+a held-compass interaction binding. The client/BDS retain real item ownership.
+
+On Peaceful difficulty, eight planks left in the crafting grid survived a
+disconnect/reconnect through both the framework and an E-key control. An earlier
+check returned no planks and was followed by a zombie death; its cause and
+death/drop conservation remain unresolved. This checkpoint does not qualify
+recovery or all inventory lifecycle cases. The [inventory example](examples/linux-native-inventory.md)
+includes actual screenshots, the failed observation and the controlled passes.
+
 Live testing exposed and fixed two SDK issues: Linux cross-module player
 conversion now uses Endstone's virtual `asPlayer()` method, and a selected menu
 action completes the caller's original ticket instead of leaking a hidden
@@ -36,11 +50,13 @@ published.
 ## Builds and checks
 
 - Local Windows build: **12/12 CTest jobs passed**, DLL, SDK, consumers and PDB
-  exported. This newest Windows DLL has not been loaded in the Windows server.
+  exported. The exact current provider and both consumer DLLs loaded in the
+  isolated Windows server, verified their hashes and primitive manifest, and
+  shut down cleanly. This Windows build has not had stock-client UI tests.
 - Local Linux Docker build: **13/13 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan: **13/13 jobs passed**; 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan: the current CI job passed **13/13 tests** and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
@@ -52,13 +68,13 @@ published.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-0a91902.json`](../research/native-evidence/checkpoint-0a91902.json).
+[`checkpoint-171e0aa.json`](../research/native-evidence/checkpoint-171e0aa.json).
 Older checkpoints keep their original source and artifact identities.
 
-At this source revision, [native CI run 34295813503](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34295813503)
+At this source revision, [native CI run 34300277289](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34300277289)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34295813531](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34295813531)
+refuses the incomplete catalog. [Legacy regression run 34300277354](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34300277354)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux SDK example](examples/linux-native-sdk.md).
 
@@ -66,13 +82,17 @@ screenshots are in the [Linux SDK example](examples/linux-native-sdk.md).
 
 | Target | Export | SHA-256 |
 |---|---|---|
-| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `65a22206e359e0aaf2565f20e7291408486051553e05e5525aa9e51b5eecac12` |
-| Windows x64 | `dist/windows-release/plugins/endstone_onistone_vcf.dll` | `45a641af2ffe85bb23854556cca606aa43f26ca2c33111af56f14bde546c2820` |
+| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `07434bbb77a9290eaaf67f66a3d2e9e9cc54fa8382e5a1cd393eba8fb9e65946` |
+| Windows x64 | `dist/windows-release/plugins/endstone_onistone_vcf.dll` | `07b037e42a832571448022fdea6385b2db08e0839a9e5b611965aeac500e3dfb` |
 
 Paths are relative to the native checkout. The loaded Linux shadow copy and
 installed provider match the Linux export byte-for-byte. Linux debug information
 is still embedded in this development ELF; Windows PDBs are under `symbols/`.
 These are development artifacts, not completed all-UI release packages.
+
+The [Windows startup record](../research/native-evidence/windows-171e0aa-startup-smoke.json)
+also verifies the retained two-key configuration and the loaded shadow-copy
+identities. Startup evidence is separate from native gameplay qualification.
 
 ## Compatibility boundaries
 
@@ -99,7 +119,8 @@ boundary. Test scripts are development tools only.
 All 69 original entries, aliases, permissions and source contracts remain in
 the frozen baseline and platform reports. **No custom native catalog entry is
 fully qualified.** Eleven Windows original-mode paths have experimental
-orchestration behind an opt-in flag. Linux private UI adapters remain unavailable.
+orchestration behind an opt-in flag. Four shared Linux inventory roles now have
+an experimental original adapter; other Linux private UI adapters remain unavailable.
 The current form is an SDK action demonstration; it is not a workstation.
 
 Required work still includes original and custom merchant, machine, map-printing,

@@ -1,0 +1,46 @@
+{
+  "kind": "native-runtime-startup-smoke",
+  "source_revision": "171e0aa08b67404e26c71a5060c545699a73ce63",
+  "platform": "windows-x64",
+  "bds_sha256": "92d09c7b74ac6a9805bafc166d8e0a13ac9e5db73dbbb0819e5a14093699d44f",
+  "installed_plugins": {
+    "endstone_onistone_vcf.dll": "07b037e42a832571448022fdea6385b2db08e0839a9e5b611965aeac500e3dfb",
+    "endstone_vcf_catalog_showcase.dll": "ff5474a7e50b74be438c5262169196f1587447ac618274f3123723afcbdb30ec",
+    "endstone_vcf_native_passthrough.dll": "f1e8c6ce92c6d57c6c6db904059a4e5a1e7af70edcfd43bb35cbef2292136da9"
+  },
+  "loaded_modules": [
+    {
+      "name": "endstone_onistone_vcf-86b4ff35b48fa15d.dll",
+      "sha256": "07b037e42a832571448022fdea6385b2db08e0839a9e5b611965aeac500e3dfb"
+    },
+    {
+      "name": "endstone_vcf_catalog_showcase-0ad1c98612c799d5.dll",
+      "sha256": "ff5474a7e50b74be438c5262169196f1587447ac618274f3123723afcbdb30ec"
+    },
+    {
+      "name": "endstone_vcf_native_passthrough-6ea8c3c7c37c957a.dll",
+      "sha256": "f1e8c6ce92c6d57c6c6db904059a4e5a1e7af70edcfd43bb35cbef2292136da9"
+    },
+    {
+      "name": "endstone_runtime.dll",
+      "sha256": "0c6f0861c5f9a677058b25776d975654a3586a80d2e4421b069b5e98f536f819"
+    }
+  ],
+  "experimental_config": {
+    "schema_version": 1,
+    "experimental_original_windows": true
+  },
+  "private_test_probe_loaded": false,
+  "stock_client_tested": false,
+  "all_ui_acceptance": "not-qualified",
+  "schema_version": 1,
+  "recorded_utc": "2026-09-09T02:07:24Z",
+  "native_manifest_verified_in_loaded_memory": true,
+  "native_consumer_count": 2,
+  "old_two_key_config_accepted": true,
+  "shutdown": "clean",
+  "limitations": [
+    "No stock-client gameplay test under this exact Windows DLL.",
+    "No full native/custom catalog qualification."
+  ]
+}
