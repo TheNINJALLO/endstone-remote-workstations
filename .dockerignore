@@ -2,6 +2,7 @@
 !Dockerfile
 !CMakeLists.txt
 !CMakePresets.json
+!LICENSE
 !cmake/
 !cmake/**
 !include/

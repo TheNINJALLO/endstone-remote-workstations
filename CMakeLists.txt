@@ -34,6 +34,7 @@ add_library(vcf_core STATIC framework/catalog.cpp framework/transactions.cpp fra
 target_include_directories(vcf_core PUBLIC include)
 target_compile_definitions(vcf_core PRIVATE VCF_BUILD)
 set_target_properties(vcf_core PROPERTIES CXX_VISIBILITY_PRESET hidden)
+include(cmake/VcfSdk.cmake)
 if(VCF_BUILD_PLUGIN)
  include(cmake/EndstoneSdk.cmake)
  add_library(onistone_vcf SHARED framework/plugin.cpp)
@@ -71,6 +72,14 @@ if(VCF_BUILD_PLUGIN)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+ add_test(NAME installed_sdk_package COMMAND ${CMAKE_COMMAND}
+  "-DVCF_PACKAGE_SOURCE=${PROJECT_SOURCE_DIR}" "-DVCF_PACKAGE_BINARY=${PROJECT_BINARY_DIR}"
+  "-DVCF_PACKAGE_GENERATOR=${CMAKE_GENERATOR}" "-DVCF_PACKAGE_CONFIG=$<CONFIG>"
+  "-DVCF_PACKAGE_C_COMPILER=${CMAKE_C_COMPILER}" "-DVCF_PACKAGE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
+  "-DVCF_PACKAGE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}"
+  "-DVCF_PACKAGE_CTEST_COMMAND=${CMAKE_CTEST_COMMAND}"
+  -P "${PROJECT_SOURCE_DIR}/tools/native/test-sdk-package.cmake")
+ set_tests_properties(installed_sdk_package PROPERTIES TIMEOUT 120)
  if(NOT WIN32)
   add_executable(vcf_linux_identity_tests tests/native/linux_identity.cpp framework/platform/linux.cpp)
   target_include_directories(vcf_linux_identity_tests PRIVATE framework/platform)
@@ -141,4 +150,3 @@ if(VCF_FUZZERS)
  target_link_libraries(vcf_fuzz_items PRIVATE vcf_core vcf_fuzzer_runtime)
  target_compile_options(vcf_fuzz_items PRIVATE -fsanitize=fuzzer-no-link)
 endif()
-install(FILES include/oni/vcf/abi.h include/oni/vcf/sdk.hpp include/oni/vcf/loader.hpp DESTINATION sdk/include/oni/vcf)

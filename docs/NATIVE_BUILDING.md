@@ -19,6 +19,12 @@ public headers, PDB and separate consumer into `dist/windows-release/`.
 Use `-Preset windows-debug` for the separate debug build tree.
 No project wheel or Python package participates in native loading.
 
+The exported `sdk/` directory includes a relocatable `OnistoneVCF` CMake package,
+public headers and the MIT license. Consumers can use
+`find_package(OnistoneVCF 1.1 CONFIG REQUIRED)` and link `OnistoneVCF::sdk`;
+see [the SDK setup](NATIVE_SDK.md#use-the-installed-cmake-package). CTest verifies
+installation and consumption from a renamed directory containing spaces.
+
 Linux is the primary deployment target, but its runtime implementation remains
 incomplete. With an existing Linux Docker engine reachable from the host:
 

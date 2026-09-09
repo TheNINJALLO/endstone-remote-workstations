@@ -147,8 +147,9 @@ Required work still includes original and custom merchant, machine, map-printing
 editable/persistent storage, workshop, equipment/cargo, editor/dialogue,
 chemistry, held-container and correct-role services. Protected inventory menus,
 pagination, native item publication, durable held identity, cross-save recovery,
-remaining SDK consumers, configuration migration, CMake SDK package exports
-and final release packaging remain incomplete. The native transaction model
+remaining SDK consumers, configuration migration and final release packaging
+remain incomplete. The installable CMake SDK package is documented in
+[the SDK setup](NATIVE_SDK.md#use-the-installed-cmake-package). The native transaction model
 and journal must be connected to BDS writes and qualified at real save/crash
 boundaries before claiming durable delivery.
 

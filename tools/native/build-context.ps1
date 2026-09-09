@@ -11,7 +11,7 @@ function New-VcfBuildContext {
  try {
   $vcfPending=New-Object 'System.Collections.Generic.Queue[string]'
   $vcfChecked=New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
-  foreach($vcfRelative in @('.dockerignore','Dockerfile','CMakeLists.txt','CMakePresets.json','cmake','include','framework','third_party','tests/native','examples/native','tools/native','research/original-ui-catalog.json','research/original-ui-catalog.sha256')) {$vcfPending.Enqueue($vcfRelative)}
+  foreach($vcfRelative in @('.dockerignore','Dockerfile','CMakeLists.txt','CMakePresets.json','LICENSE','cmake','include','framework','third_party','tests/native','examples/native','tools/native','research/original-ui-catalog.json','research/original-ui-catalog.sha256')) {$vcfPending.Enqueue($vcfRelative)}
   while($vcfPending.Count) {
    $vcfRelative=$vcfPending.Dequeue()
    $vcfItem=Get-Item -LiteralPath (Join-Path $vcfSource $vcfRelative) -Force -ErrorAction Stop

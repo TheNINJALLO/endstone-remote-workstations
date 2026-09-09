@@ -1,0 +1,10 @@
+@PACKAGE_INIT@
+set_and_check(OnistoneVCF_INCLUDE_DIR "${PACKAGE_PREFIX_DIR}/include")
+include("${CMAKE_CURRENT_LIST_DIR}/OnistoneVCFTargets.cmake")
+set_property(TARGET OnistoneVCF::abi PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${OnistoneVCF_INCLUDE_DIR}")
+# These headers discover the already-loaded provider. They do not link a
+# provider import library, core archive, Endstone runtime, or Python library.
+# Resolve the loader dependency for the consumer's platform, not the producer.
+set_property(TARGET OnistoneVCF::sdk PROPERTY INTERFACE_LINK_LIBRARIES "OnistoneVCF::abi;${CMAKE_DL_LIBS}")
+set(OnistoneVCF_ABI_VERSION "1.1")
+check_required_components(OnistoneVCF)

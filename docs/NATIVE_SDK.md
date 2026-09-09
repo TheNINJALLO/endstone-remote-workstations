@@ -4,6 +4,35 @@ This ABI is provisional. It is separate from Endstone's public C++ ABI and from
 private BDS hooks. Compile consumers with an appropriate Endstone SDK/toolchain
 and declare `depend = {"onistone_vcf"}` in their native plugin metadata.
 
+## Use the installed CMake package
+
+Copy the exported `sdk/` directory into your dependency directory. It can be
+renamed and moved independently of the provider. Set `CMAKE_PREFIX_PATH` to
+that directory, then add this to your existing native plugin project:
+
+```cmake
+find_package(OnistoneVCF 1.1 CONFIG REQUIRED)
+target_link_libraries(MyUiPlugin PRIVATE OnistoneVCF::sdk)
+```
+
+`OnistoneVCF::sdk` supplies the public headers, C++20 requirement and the
+consumer platform's loader library. A C consumer can use `OnistoneVCF::abi`
+for the C function-table headers. Neither target links the provider, its core
+archive or the Endstone runtime. Keep your plugin's compatible Endstone SDK
+and compiler configuration; this package does not certify a native ABI.
+
+The CMake package version `1.1.0` tracks SDK ABI 1.1, separately from the
+development provider's release version. To export just the SDK and its MIT
+license, run `cmake --install <build-directory> --component sdk --prefix <export>`;
+the standalone package is written under `<export>/sdk/`.
+
+The `installed_sdk_package` test relocates and renames that directory into a
+path containing spaces, then configures, builds and runs independent C/C++
+consumers using only the installed package. The discovery test verifies that
+an absent provider is refused without loading another module.
+
+## Discover and call the provider
+
 Include `oni/vcf/sdk.hpp` and `oni/vcf/loader.hpp`. The
 [compiled consumer](../examples/native/consumer.cpp) is the reference.
 `sdk::discover()` resolves the provider's existing loaded module, including

@@ -15,6 +15,7 @@ COPY cmake cmake
 COPY tools/native/fetch-sdk.sh tools/native/fetch-sdk.sh
 RUN sh tools/native/fetch-sdk.sh /opt/vcf-deps
 COPY CMakeLists.txt CMakePresets.json ./
+COPY LICENSE ./
 COPY include include
 COPY framework framework
 COPY third_party third_party
