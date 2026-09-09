@@ -36,7 +36,7 @@ struct alignas(8) CraftContext {uintptr_t player;uint8_t type=1;std::array<uint8
 static_assert(sizeof(CraftOwner)==24&&alignof(CraftOwner)==8&&offsetof(CraftOwner,index)==16&&std::is_trivially_copyable_v<CraftOwner>);
 static_assert(sizeof(CraftContext)==40&&alignof(CraftContext)==8&&offsetof(CraftContext,type)==8&&offsetof(CraftContext,position)==16&&offsetof(CraftContext,index)==32);
 std::string container_open(uint8_t window,uint8_t type,Point position);
-struct Spec {std::string_view id,block;uint8_t type;uintptr_t factory;std::string_view hash;};
+struct Spec {std::string_view id,block;uint8_t type;uintptr_t factory;std::string_view hash;size_t factory_size=1502;};
 // Linux ELF RTTI, complete FDE extents and the independently compiled
 // PlayerOpenContainerEvent layout establish these System V caller arguments.
 constexpr Spec specs[]={
@@ -47,6 +47,7 @@ constexpr Spec specs[]={
  {"grindstone","minecraft:grindstone",26,0x4504870,"2290a6eb96441a2430a453a892f08991deff670a1a207786226e6fb7a2053886"},
  {"loom","minecraft:loom",24,0x45057d0,"c1a48f261804a4284d852e66d3b0c49bc09c435089acc52c41a4984c147ff21c"},
  {"stonecutter","minecraft:stonecutter_block",29,0x4506900,"50a4d7c092c689e223a84db196a999bd8e98194938b89bb64d9137fd61fda4df"},
+ {"enchanting","minecraft:enchanting_table",3,0x4503dc0,"943bc11ba415fe3029ec484b2992911b1c98923590d09968a9c7b072ea0cc093",1345},
  {"inventory2x2","",255,0,{}},{"armor","",255,0,{}},{"offhand","",255,0,{}},{"recipebook","",255,0,{}}
 };
 const Spec* spec(std::string_view id){for(const auto& row:specs)if(row.id==id)return &row;return nullptr;}
@@ -150,7 +151,7 @@ struct Bridge {
   if(layout.type==1)return craft(p,layout,position,proceed);
   auto state=inspect(p);require(state.ready,VCF_CONFLICT);
   Memory memory;const auto function=bedrock+layout.factory;
-  memory.function(function,bedrock,layout.factory,1502,layout.hash);
+  memory.function(function,bedrock,layout.factory,layout.factory_size,layout.hash);
   // Native Linux caller passes Player*, const BlockPos*, and ActorUniqueID
   // by value in rdi/rsi/rdx. BDS allocates and owns the complete model.
   reinterpret_cast<void(*)(void*,const Point*,int64_t)>(function)(reinterpret_cast<void*>(state.player),&position,-1);

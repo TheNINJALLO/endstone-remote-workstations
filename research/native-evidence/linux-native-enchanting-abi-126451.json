@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "architecture": "linux-x86_64-itanium-libc++",
+  "sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "compiler": "Clang 20.1.8",
+  "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "inventory_bridge_manifest": "research/native-evidence/linux-native-abi-126451.json",
+  "header": "src/bedrock/world/events/player_events.h",
+  "header_sha256": "57ba88daa951733740463179fbcea2e86c4472ecdde30d5f1a821bf7e542dcca",
+  "layout_probe_sha256": "2ff8f5dbe59a43ea2c7e7855739f570fbe58f41bf30ca48618205cb26afe64c4",
+  "layout_ir_sha256": "c7d0df9e9af474c57669c84f485523aa84453533c8e8685e92a227c75be656a4",
+  "layout": {
+    "PlayerOpenContainerEvent": 48,
+    "container_type_offset": 24,
+    "block_position_offset": 28,
+    "entity_unique_id_offset": 40,
+    "BlockPos": 12,
+    "BlockPos_alignment": 4,
+    "ActorUniqueID": 8
+  },
+  "layout_flags": [
+    "-std=c++20",
+    "-stdlib=libc++",
+    "-DNDEBUG",
+    "-DENTT_SPARSE_PAGE=2048",
+    "-DENTT_PACKED_PAGE=128",
+    "-DENTT_NO_MIXIN",
+    "-DRAKNET_SUPPORT_IPV6=1",
+    "-fms-extensions"
+  ],
+  "kind": "linux-native-enchanting-abi-research-not-ui-qualification",
+  "caller": {
+    "rva": "0x44fe540",
+    "function_size": 3071,
+    "branch_rva": "0x44fe9aa",
+    "call_rva": "0x44fe9b4",
+    "arguments": "Player* in rdi, const BlockPos* in rsi, ActorUniqueID by value in rdx"
+  },
+  "factory": {
+    "rva": "0x4503dc0",
+    "size": 1345,
+    "sha256": "943bc11ba415fe3029ec484b2992911b1c98923590d09968a9c7b072ea0cc093"
+  },
+  "initializer_research": [
+    {
+      "rva": "0xb2d0130",
+      "size": 269,
+      "sha256": "22e10a384108cb834432b6a6e8ae19c0b3e00431c0511bf02dd62dd37ef32302"
+    },
+    {
+      "rva": "0xb2f56f0",
+      "size": 586,
+      "sha256": "815180c372f93a004695ce33add744c11750ecdf105b4c6ab39bad1cb35aefee"
+    },
+    {
+      "rva": "0xb2d0400",
+      "size": 3097,
+      "sha256": "168424922fbcbefbc25a641dcdf6e2cbf4fc4a6caf1d0f80b31b17b0a6dfaa0a"
+    }
+  ],
+  "container_type": 3,
+  "client_projection_block": "minecraft:enchanting_table",
+  "shared_control_block_rtti": "NSt3__120__shared_ptr_emplaceI31EnchantingContainerManagerModelNS_9allocatorIS1_EEEE",
+  "shared_control_block_vtable_rva": "0xe2a39b8",
+  "native_model_vtable_rva": "0xe63eb98",
+  "method": "ELF relative RTTI relocations, complete unwind FDE bounds, independently compiled Linux event layout, caller arguments, constructor type initialization and native ContainerOpen type 3 establish this factory. BDS owns model, context, inventory and original enchantment behavior.",
+  "admission": "Exact admitted Linux BDS/runtime; complete 1345-byte factory hash checked before each call; existing bounded wrapper, native readiness, position, permission, observed-window and closure checks. Custom offers and linked real-source enchanting remain incomplete."
+}
