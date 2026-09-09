@@ -1,6 +1,6 @@
 # Native implementation checkpoint — incomplete
 
-The native source checkpoint is `7aacb361a66eb5b927b692899fe3eccd8da43049` on
+The native source checkpoint is `e0dbb78fafdd7acb468a51c09f939c45a76fd349` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
@@ -21,8 +21,8 @@ zero queued packets and zero refusals. It does not write native inventories.
 
 The opt-in Linux original inventory adapter now opens `inventory2x2`, `armor`,
 `offhand` and `recipebook` through independently derived and fingerprinted Linux
-ABI facts. It also admits seven original workstations: crafting, anvil, smithing,
-stonecutter, grindstone, loom and cartography. The earlier `ca30255` build completed
+ABI facts. It also admits eight original workstation contexts: crafting, anvil, smithing,
+stonecutter, grindstone, loom, cartography and enchanting. The earlier `ca30255` build completed
 15 opens and 15 closes with zero failure callbacks and outstanding tickets.
 PC tests exercised vanilla transformations, equipment, recipe selection,
 SDK cancellation and a held-compass interaction binding. The client/BDS retain
@@ -46,6 +46,17 @@ Four example opens/closes plus the provider-owned alias ticket returned to zero
 provider sessions, with a clean server shutdown. The
 [crafting record](../research/native-evidence/linux-7aacb36-crafting-smoke.json)
 identifies this run separately from the earlier six-workstation results.
+
+The exact `e0dbb78` enchanting build delivered Efficiency I on a wooden
+pickaxe for one lapis and one level. SDK closure, native X closure and
+intentional consumer-permission loss returned unused inputs. Restoring the
+permission allowed another opening. Anvil renaming preserved the enchantment;
+crafting, `/etable` and the SDK form also passed their recorded checks. Five
+example opens ended in four normal closes and one expected permission-denial
+failure, with zero outstanding tickets or provider sessions and a clean
+shutdown. The [enchanting record](../research/native-evidence/linux-e0dbb78-enchanting-smoke.json)
+includes six actual screenshots. Linked real-table access, custom offers and
+crash/save recovery remain incomplete.
 
 Live testing exposed and fixed two SDK issues: Linux cross-module player
 conversion now uses Endstone's virtual `asPlayer()` method, and a selected menu
@@ -76,10 +87,10 @@ packaging checks do not upgrade native gameplay qualification.
   exported. The exact current provider and both consumer DLLs loaded in the
   isolated Windows server, verified their hashes and primitive manifest, and
   shut down cleanly. This Windows build has not had stock-client UI tests.
-- Local Linux Docker build: **13/13 CTest jobs passed**, ELF, SDK and consumers
+- Local Linux Docker build: **14/14 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `7aacb36`: its CI job passed **13/13 tests** and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `e0dbb78`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
@@ -91,13 +102,13 @@ packaging checks do not upgrade native gameplay qualification.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-7aacb36.json`](../research/native-evidence/checkpoint-7aacb36.json).
+[`checkpoint-e0dbb78.json`](../research/native-evidence/checkpoint-e0dbb78.json).
 Older checkpoints keep their original source and artifact identities.
 
-At `7aacb36`, [native CI run 34307955147](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34307955147)
+At `e0dbb78`, [native CI run 34311044004](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34311044004)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34307955129](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34307955129)
+refuses the incomplete catalog. [Legacy regression run 34311044020](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34311044020)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux workstation example](examples/linux-native-workstations.md).
 All three Linux CI plugin hashes match the locally tested exports. The Windows
@@ -110,7 +121,7 @@ proprietary BDS UI process.
 
 | Target | Export | SHA-256 |
 |---|---|---|
-| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `ccba81331609e9ae98f451840136d3c22ce6334987c4e7a0afd7a75476fc13d7` |
+| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `b5d64937f0f59432f43058d8a95cdda7c24c7716cf415babb09f71662aca51ce` |
 | Windows x64 | `dist/windows-release/plugins/endstone_onistone_vcf.dll` | `07b037e42a832571448022fdea6385b2db08e0839a9e5b611965aeac500e3dfb` |
 
 Paths are relative to the native checkout. The loaded Linux shadow copy and
@@ -147,7 +158,7 @@ boundary. Test scripts are development tools only.
 All 69 original entries, aliases, permissions and source contracts remain in
 the frozen baseline and platform reports. **No custom native catalog entry is
 fully qualified.** Eleven Windows original-mode paths have experimental
-orchestration behind an opt-in flag. Seven Linux workstations and four shared
+orchestration behind an opt-in flag. Eight Linux workstation contexts and four shared
 inventory roles have experimental original adapters; other Linux catalog
 adapters remain incomplete.
 The current form is an SDK action demonstration; it is not a workstation.

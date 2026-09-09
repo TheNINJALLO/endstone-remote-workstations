@@ -1,0 +1,18 @@
+[04:17:25 INFO]: <test-player> has 3 items that match the criteria
+[04:19:33 INFO]: <test-player> has 2 items that match the criteria
+[04:19:34 INFO]: <test-player> has 3 items that match the criteria
+[04:21:02 INFO]: De-opped: <test-player>
+[04:21:26 INFO]: <test-player> has 2 items that match the criteria
+[04:21:27 INFO]: <test-player> has 3 items that match the criteria
+[04:21:27 INFO]: Original-mode SDK example: opens 2, closes 1, failures 1, guard checks 585, outstanding tickets 0
+[04:21:27 INFO]: Opped: <test-player>
+[04:23:11 INFO]: <test-player> has 2 items that match the criteria
+[04:23:11 INFO]: <test-player> has 3 items that match the criteria
+[04:23:11 INFO]: Original-mode SDK example: opens 3, closes 2, failures 1, guard checks 875, outstanding tickets 0
+[04:25:28 INFO]: <test-player> has 3 items that match the criteria
+[04:25:28 INFO]: Original-mode SDK example: opens 4, closes 3, failures 1, guard checks 1194, outstanding tickets 0
+[04:29:14 INFO]: Original-mode SDK example: opens 5, closes 4, failures 1, guard checks 1264, outstanding tickets 0
+[04:29:14 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[04:29:15 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[04:29:15 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+Quit correctly

@@ -1,7 +1,7 @@
 # Native workstation SDK example on Linux
 
 The experimental Linux adapter opens **crafting, anvil, smithing, stonecutter,
-grindstone, loom and cartography** through the native C++ SDK. The screenshots below come
+grindstone, loom, cartography and enchanting** through the native C++ SDK. The screenshots below come
 from a stock Windows Bedrock 1.26.45 client connected to the isolated Linux
 Endstone 0.11.10 / BDS 1.26.45.1 server.
 
@@ -27,6 +27,7 @@ remain incomplete. The full-catalog release gate remains **NOT QUALIFIED**.
 | Command | Original operation observed in the linked smoke records |
 |---|---|
 | `/vcf_native craft` | 3×3 pickaxe recipe, ordinary/Shift-click output, unused-input return and ingredient reconnect |
+| `/vcf_native enchanting` | Native offer selection, Efficiency I delivery, lapis/level cost and permission-loss cleanup |
 | `/vcf_native anvil` | Rename, one-level cost and sword delivery |
 | `/vcf_native smithing` | Netherite upgrade with template and ingredient consumption |
 | `/vcf_native stonecutter` | Stone-brick selection, output and unused-input return |
@@ -59,6 +60,32 @@ identifies the provider, client, counters and five screenshots. It also records
 stonecutter, shared-inventory and form regressions. The six workstation
 screenshots below retain their separate `ca30255` evidence. Neither run
 qualifies custom recipes, custom inventory writes or crash/save recovery.
+
+## Enchanting
+
+Source `e0dbb78` adds `/vcf_native enchanting` and the preserved `/etable` alias.
+Use canonical ID `enchanting` with `VCF_NATIVE_CONTEXT` from a dependent plugin.
+This opens the original native context; a linked real table and custom offers
+are not implemented by this adapter.
+
+![Native enchantment offer showing Efficiency I and the one-lapis/one-level cost](../images/native-linux-enchanting/offer-cost.png)
+
+The PC test selected Efficiency I for a wooden pickaxe, consumed one lapis and
+one level, and delivered the enchanted item through an ordinary click. SDK
+closure and the native X both returned unused inputs. Revoking the example
+consumer's permission closed an active screen and returned its contents; the
+expected failure callback left no ticket behind. Restoring permission allowed
+the next opening.
+
+The existing anvil then renamed the pickaxe for one level. Reopening crafting
+verified the new name and retained Efficiency I:
+
+![Renamed enchanted pickaxe inspected through the native crafting screen](../images/native-linux-enchanting/renamed-result.png)
+
+The [exact enchanting record](../../research/native-evidence/linux-e0dbb78-enchanting-smoke.json)
+contains all six reviewed screenshots, item counts, costs and SDK counters.
+It does not qualify arbitrary offers, custom enchantments, cross-save recovery
+or the other remaining catalog entries.
 
 ## Use the provider as a dependency
 

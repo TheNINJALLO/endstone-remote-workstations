@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
     "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
-    "artifact_sha256": "ccba81331609e9ae98f451840136d3c22ce6334987c4e7a0afd7a75476fc13d7"
+    "artifact_sha256": "b5d64937f0f59432f43058d8a95cdda7c24c7716cf415babb09f71662aca51ce"
   },
   "build": "tested-in-local-linux-docker",
   "native_loader_smoke": "passed",
@@ -2027,7 +2027,7 @@
       "family": "workstation",
       "historical_status": "implemented-unverified",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
@@ -2094,7 +2094,7 @@
           "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -2102,17 +2102,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Selected original PC offer, cost, delivery, SDK/X close and consumer-permission-loss smoke passed. Custom offers, linked real-source, adversarial lifecycle and crash/save recovery remain incomplete.",
+          "smoke_record": "research/native-evidence/linux-e0dbb78-enchanting-smoke.json"
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -8512,10 +8513,10 @@
     }
   },
   "build_evidence": {
-    "source_revision": "7aacb361a66eb5b927b692899fe3eccd8da43049",
+    "source_revision": "e0dbb78fafdd7acb468a51c09f939c45a76fd349",
     "host": "Windows Docker Desktop 4.90.0 / WSL 2, pinned linux/amd64 Clang 20.1.8 image",
-    "native_tests": "13/13 CTest locally and CI; current ASan/UBSan and 300000 fuzz inputs passed.",
-    "elf_report": "linux-7aacb36-elf-report.txt",
+    "native_tests": "14/14 CTest locally/CI including SDK package relocation; ASan/UBSan and 300000 fuzz inputs passed.",
+    "elf_report": "linux-e0dbb78-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.34",
     "direct_libraries": [
       "libcrypto.so.3",
@@ -8526,25 +8527,25 @@
       "libgcc_s.so.1",
       "libc.so.6"
     ],
-    "runtime_restriction": "Exact Linux files and opt-in adapter admit seven original workstations and four shared inventory roles on the pinned PC client. Each smoke record identifies its own source and artifact; full/custom qualification remains incomplete."
+    "runtime_restriction": "Exact Linux files and opt-in adapter admit eight original workstation contexts and four shared inventory roles. Each smoke record identifies its own source/artifact; linked enchanting and full/custom qualification remain incomplete."
   },
   "sdk_version": "1.1; ABI 1.0 prefix retained",
   "sanitizers": {
-    "source_revision": "7aacb361a66eb5b927b692899fe3eccd8da43049",
+    "source_revision": "e0dbb78fafdd7acb468a51c09f939c45a76fd349",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
     "storage_fuzz_inputs": 100000,
     "items_fuzz_inputs": 100000,
-    "test_report": "linux-7aacb36-sanitizer-tests.txt",
-    "nbt_report": "linux-7aacb36-fuzz-nbt.txt",
-    "storage_report": "linux-7aacb36-fuzz-storage.txt",
-    "items_report": "linux-7aacb36-fuzz-items.txt"
+    "test_report": "linux-e0dbb78-sanitizer-tests.txt",
+    "nbt_report": "linux-e0dbb78-fuzz-nbt.txt",
+    "storage_report": "linux-e0dbb78-fuzz-storage.txt",
+    "items_report": "linux-e0dbb78-fuzz-items.txt"
   },
   "native_tests": {
-    "source_revision": "7aacb361a66eb5b927b692899fe3eccd8da43049",
-    "ctest": "13/13 passed locally",
-    "sanitizers": "13/13 passed under Linux ASan/UBSan; private BDS execution not instrumented.",
+    "source_revision": "e0dbb78fafdd7acb468a51c09f939c45a76fd349",
+    "ctest": "14/14 passed locally and CI",
+    "sanitizers": "14/14 passed; proprietary BDS UI execution not instrumented.",
     "fuzz_inputs": {
       "nbt": 100000,
       "storage": 100000,
@@ -8562,5 +8563,6 @@
   },
   "native_inventory_smoke": "research/native-evidence/linux-ca30255-workstation-smoke.json",
   "native_workstation_smoke": "research/native-evidence/linux-ca30255-workstation-smoke.json",
-  "native_crafting_smoke": "research/native-evidence/linux-7aacb36-crafting-smoke.json"
+  "native_crafting_smoke": "research/native-evidence/linux-7aacb36-crafting-smoke.json",
+  "native_enchanting_smoke": "research/native-evidence/linux-e0dbb78-enchanting-smoke.json"
 }

@@ -16,7 +16,7 @@ fingerprints. The exact allowed files are:
 | Endstone 0.11.10, CPython 3.11 Linux wheel runtime | `ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc` | `ba6af2ee50effc20b461a2fbef80e145ad6f6a51` |
 
 Admission enables the public SDK integration. An opt-in experimental adapter
-also calls the verified player-inventory opener, six native workstation
+also calls the verified player-inventory opener, seven native workstation
 factories and the separate crafting context path. Other Linux catalog adapters remain incomplete. Onistone and other Endstone builds need separate
 evidence and admission; a matching version label does not suffice.
 
@@ -122,7 +122,7 @@ handles.
 ## Experimental original workstations
 
 The same Linux flag now admits `craft`, `anvil`, `smithing`, `stonecutter`, `grindstone`,
-`loom` and `cartography` with `VCF_NATIVE_CONTEXT`. The
+`loom`, `cartography` and `enchanting` with `VCF_NATIVE_CONTEXT`. The
 [workstation SDK example](examples/linux-native-workstations.md) documents
 installation, dependency use, actual screenshots and exact smoke results.
 Three-by-three `craft` uses a separate verified Linux ABI path, added in `7aacb36`.
@@ -146,6 +146,15 @@ compass-triggered opening, ingredient disconnect/reconnect, and `/workbench`.
 Stonecutter, shared-inventory closure and the SDK form also passed regression
 checks. Four example opens/closes and the separate alias ticket returned to
 zero provider sessions. Clean shutdown completed; crash recovery was not tested.
+
+The [enchanting ABI manifest](../research/native-evidence/linux-native-enchanting-abi-126451.json)
+adds an independently verified 1345-byte factory with the same three native
+caller arguments. Its [exact `e0dbb78` client record](../research/native-evidence/linux-e0dbb78-enchanting-smoke.json)
+includes Efficiency I offer selection and delivery, one-lapis/one-level cost,
+SDK/X closure, and consumer-permission loss with input return. The deliberate
+denial generated one expected failure callback; all tickets retired. Anvil
+renaming preserved the enchantment. Linked real-table and custom-offer modes
+remain unavailable.
 
 The adapter projects a client-side workstation onto a nearby real-air position,
 waits for the ordered client reply, and requires the matching native window,

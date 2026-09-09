@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-smoke-not-qualification",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "e0dbb78fafdd7acb468a51c09f939c45a76fd349",
+  "platform": "linux-x64",
+  "artifact_sha256": "b5d64937f0f59432f43058d8a95cdda7c24c7716cf415babb09f71662aca51ce",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "started_utc": "2026-09-09T04:15:48Z",
+  "clean_stop_utc": "2026-09-09T04:29:15Z",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "loaded_shadow_copies_match_exports": true,
+  "one_bundled_libcxx_family": true,
+  "private_probe_installed": false,
+  "observations": {
+    "enchanting": "Inserted an unenchanted wooden pickaxe and three lapis. The first native offer displayed Efficiency I, required level 2, and cost one lapis/one level. Selection applied Efficiency I; ordinary-click extraction delivered the item. SDK close returned two unused lapis. Counts: three total pickaxes, two lapis; level 4 before to 3 after.",
+    "permission_loss": "Inserted another unenchanted pickaxe and two lapis. Temporarily de-opped the test player, revoking the example consumer permission. The native screen closed and returned its inputs; read-only counts stayed three pickaxes/two lapis. One failure callback was expected from this intentional denial. No ticket leaked. Restored the previous operator status and reopened successfully.",
+    "native_x_close": "After reopening, inserted an unenchanted pickaxe/two lapis and clicked the native X. Item counts remained unchanged and ticket retired.",
+    "anvil_regression": "Renamed the Efficiency I pickaxe to VCF Enchanted Pickaxe for one level, delivered with an ordinary click. The next crafting screen tooltip verified both the name and Efficiency I; count stayed three pickaxes and HUD level changed 3 to 2.",
+    "craft_regression": "Opened native 3x3 screen, inspected the renamed item, and closed with the SDK. No crafting ingredient transfer in this exact regression.",
+    "alias": "/etable opened the native enchanting screen and Escape closed its separate provider-owned ticket.",
+    "form_regression": "One SDK form action callback, zero outstanding form tickets."
+  },
+  "sdk_counters": {
+    "opens": 5,
+    "closes": 4,
+    "failure_callbacks": 1,
+    "expected_permission_denial_failures": 1,
+    "guard_checks": 1264,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "counter_limit": "The deliberate permission loss terminates with a failure event rather than a normal close. The provider-owned etable alias is outside the example counters. SDK events do not certify every native transaction.",
+  "not_qualified": [
+    "Custom enchantment offers or plugin-owned item writes",
+    "Linked real-source enchanting",
+    "All offer/metadata/XP combinations",
+    "Adversarial competing-plugin and replay lifecycle",
+    "Cross-save/crash and death/drop recovery",
+    "Full catalog on either platform",
+    "Other devices and multiplayer",
+    "Exact Onistone runtime admission"
+  ],
+  "earlier_anomalies": "This run does not resolve ca30255 grindstone initial extraction rejection or the older 171e0aa missing-plank/death observation.",
+  "screenshots": {
+    "offers": {
+      "path": "docs/images/native-linux-enchanting/offers.png",
+      "sha256": "0e013be1e2376e594d2106164adbfe0ce67ac75dfb1133f955efda6d00cea57c",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "offer-cost": {
+      "path": "docs/images/native-linux-enchanting/offer-cost.png",
+      "sha256": "20a2595c334e390596afc24bfe7a04c343c4d618509937b15fb26994572f9a5a",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "delivered": {
+      "path": "docs/images/native-linux-enchanting/delivered.png",
+      "sha256": "1bf8dbd4535b746b8b4a2ba3c359948129ef86c4212e894a2904c1115874793f",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "level-after": {
+      "path": "docs/images/native-linux-enchanting/level-after.png",
+      "sha256": "720b7765859176b6f2e9e840f03a977adc53382c02ffde4bbefea37bdcf35601",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "permission-inputs": {
+      "path": "docs/images/native-linux-enchanting/permission-inputs.png",
+      "sha256": "8f8f3e8dcc7e1d57095596acb0c78321614c38ae3b42cdce0d846e800a5d4104",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "renamed-result": {
+      "path": "docs/images/native-linux-enchanting/renamed-result.png",
+      "sha256": "21d3bbc9614a69c5bb6d462d26ae91e66540b2702ed8e932f453888ac5bec54c",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-e0dbb78-enchanting-counters.txt",
+    "sha256": "5fda189ab26421613cdaa4b94597539f2a132a16122f684ea6c26aeb7c02b680"
+  },
+  "abi_manifest": "research/native-evidence/linux-native-enchanting-abi-126451.json"
+}

@@ -139,10 +139,12 @@ screen. This configuration flag does not certify client or custom behavior.
 
 Linux has a separate `experimental_original_linux: true` flag for the four
 shared player-inventory roles in `VCF_REAL_SOURCE` mode, plus `craft`, `anvil`, `smithing`,
-`stonecutter`, `grindstone`, `loom` and `cartography` in `VCF_NATIVE_CONTEXT`.
+`stonecutter`, `grindstone`, `loom`, `cartography` and `enchanting` in `VCF_NATIVE_CONTEXT`.
 It uses independently verified Linux ABI facts, including crafting's by-value
 owner argument and BDS-owned stack context.
 See the [Linux workstation example](examples/linux-native-workstations.md).
+Linux enchanting's original offers/costs have PC smoke evidence; custom offers
+and linked real-table mode remain incomplete. Windows enchanting is not admitted.
 
 The original-mode adapter rejects preloaded items, changed slot policies,
 recipe definitions, replacement titles and unrelated source descriptors. It
