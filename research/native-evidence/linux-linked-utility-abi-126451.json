@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "architecture": "linux-x86_64-itanium-libc++",
+  "sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "compiler": "Clang 20.1.8",
+  "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "inventory_bridge_manifest": "research/native-evidence/linux-native-abi-126451.json",
+  "header": "src/bedrock/world/events/player_events.h",
+  "header_sha256": "57ba88daa951733740463179fbcea2e86c4472ecdde30d5f1a821bf7e542dcca",
+  "layout_probe_sha256": "2ff8f5dbe59a43ea2c7e7855739f570fbe58f41bf30ca48618205cb26afe64c4",
+  "layout_ir_sha256": "c7d0df9e9af474c57669c84f485523aa84453533c8e8685e92a227c75be656a4",
+  "layout": {
+    "PlayerOpenContainerEvent": 48,
+    "container_type_offset": 24,
+    "block_position_offset": 28,
+    "entity_unique_id_offset": 40,
+    "BlockPos": 12,
+    "BlockPos_alignment": 4,
+    "ActorUniqueID": 8
+  },
+  "layout_flags": [
+    "-std=c++20",
+    "-stdlib=libc++",
+    "-DNDEBUG",
+    "-DENTT_SPARSE_PAGE=2048",
+    "-DENTT_PACKED_PAGE=128",
+    "-DENTT_NO_MIXIN",
+    "-DRAKNET_SUPPORT_IPV6=1",
+    "-fms-extensions"
+  ],
+  "source_lookup": [
+    {
+      "rva": "0xabca640",
+      "size": 80,
+      "sha256": "6caf7e767cd5f86483dd3b2a5c2009c00150feea372680986d80aaf0827f0a54"
+    },
+    {
+      "rva": "0xc0f7b00",
+      "size": 107,
+      "sha256": "9498b5979d73d97111504ba1bb8fe0114fed7b9a88dac90198d57d748170f292"
+    },
+    {
+      "rva": "0xc0f7b70",
+      "size": 107,
+      "sha256": "36cab4406e21d0092a57c6ea4ae468d46357b31a19351eeaf4dce1ddcfa8abe5"
+    }
+  ],
+  "source_layout": {
+    "header": "src/bedrock/world/level/block/actor/block_actor.h",
+    "header_sha256": "97a0e2e3d2b8e6fc78459a4891347d526c112922a844354f96ca86501b5d315b",
+    "probe_sha256": "2712d89dc45fef0dde3810da76a4ea903a2f69b26184cdc1417a64e660b54caa",
+    "llvm_ir_sha256": "c63006c838e0e2d9ad5b909f8853d99640146312a43f29a6530256cde0f6edfb",
+    "BlockActor_size": 40,
+    "position_offset": 8,
+    "type_offset": 20,
+    "getBlockEntity_vtable_byte_offset": 32,
+    "probe_flags": [
+      "-std=c++20",
+      "-stdlib=libc++",
+      "-DNDEBUG",
+      "-DENTT_SPARSE_PAGE=2048",
+      "-DENTT_PACKED_PAGE=128",
+      "-DENTT_NO_MIXIN",
+      "-DRAKNET_SUPPORT_IPV6=1",
+      "-fms-extensions"
+    ],
+    "probe_warning": "Clang accepts conditional offsetof for the polymorphic header layout with -Winvalid-offset warnings; the resulting offsets also match independent native caller/constructor accesses.",
+    "BlockSource_vtable_rva": "0xe725730",
+    "getBlockEntity_const_rva": "0xc0f7b70",
+    "nonvirtual_nonconst_comparison_rva": "0xc0f7b00",
+    "const_nonconst_distinction": "The virtual const accessor is a separate 107-byte implementation, not the non-const helper used by the type-0 caller."
+  },
+  "kind": "linux-linked-utility-abi-research-not-ui-qualification",
+  "caller": {
+    "rva": "0x44fe540",
+    "size": 3071,
+    "sha256": "c6ca07f81da451bc86dadf33035287ae560c4acb6c271f2f74e2470b6eb75585",
+    "arguments": "Player* in rdi; const BlockPos* in rsi; ActorUniqueID by value in rdx"
+  },
+  "factories": [
+    {
+      "id": "brewing",
+      "container_type": 4,
+      "block_actor_type": 8,
+      "caller_branch": "0x44fe8f5",
+      "rva": "0x4500820",
+      "size": 1534,
+      "sha256": "f01b8db1fce0dcdaec2345f8fd3486d67d38e1bc5c9437a7f751fd2095cf47c4",
+      "model_rtti": "33BrewingStandContainerManagerModel",
+      "model_vtable_rva": "0xe33bc38"
+    },
+    {
+      "id": "dispenser",
+      "container_type": 6,
+      "block_actor_type": 13,
+      "caller_branch": "0x44feb80",
+      "rva": "0x4502610",
+      "size": 1531,
+      "sha256": "730b22f750dd927afca4bc14222ee5badb1259995c2cdbcc2f3d5325182edde8",
+      "model_rtti": "30DispenserContainerManagerModel",
+      "model_vtable_rva": "0xe33c020"
+    },
+    {
+      "id": "dropper",
+      "container_type": 7,
+      "block_actor_type": 14,
+      "caller_branch": "0x44feb94",
+      "rva": "0x4502c10",
+      "size": 1531,
+      "sha256": "c3c0ffd24083d5b37be149fb914cd301284b9543acaa6f2db696ebbb825adecb",
+      "model_rtti": "28DropperContainerManagerModel",
+      "model_vtable_rva": "0xe2aa818"
+    },
+    {
+      "id": "beacon",
+      "container_type": 13,
+      "block_actor_type": 21,
+      "caller_branch": "0x44fecf6",
+      "rva": "0x44ffd00",
+      "size": 1441,
+      "sha256": "3304172e4b07bf22114c36e9e2e6154ce11bc3b1ba4a6d61291d9abb73f2b5f4",
+      "model_rtti": "27BeaconContainerManagerModel",
+      "model_vtable_rva": "0xe33baa8"
+    },
+    {
+      "id": "crafter",
+      "container_type": 36,
+      "block_actor_type": 55,
+      "caller_branch": "0x44fe869",
+      "rva": "0x4503210",
+      "size": 1480,
+      "sha256": "cab27e94c49f70f58ccec3721b3f8491d99d420c98bd6a074e70dba073150867",
+      "model_rtti": "28CrafterContainerManagerModel",
+      "model_vtable_rva": "0xe33bf58"
+    }
+  ],
+  "admission": "Exact Linux fixture only, experimental original REAL_SOURCE. Requires explicit source dimension/position/permission, nearby loaded matching block family and actor, unchanged captured actor address, complete factory hashes and resulting model vtable. BDS owns real block processing and world effects. Runtime client qualification is separate.",
+  "crafter_control": {
+    "packet_id": 306,
+    "id_header": "src/bedrock/network/packet.h",
+    "id_header_sha256": "70d4f4febeb64c650aab3e7fc96c5ae087fc3c240ae037358061018c0f23e8d7",
+    "expected_wire": "14 bytes: three little-endian signed int32 coordinates, slot uint8, disabled uint8. Validate slot0..8/disabled0..1 and authorize matching owned source; foreign coordinates pass through. Current Linux stock-client tests pending.",
+    "prior_protocol_reference": "research/original-source/src/endstone_remote_workstations/native_backend.py (wire format reference, not Linux private-layout evidence)"
+  },
+  "rejected_hopper_candidate": "Container type8 branches to separate block/entity creators and manual ContainerOpen emission; do not call either as this three-argument factory. Hopper remains unavailable.",
+  "incomplete": [
+    "Custom storage policies/routing",
+    "Custom brewing machines, recipes and progress",
+    "Virtual beacon choices/payment/effects",
+    "Custom crafter processors/routing",
+    "Source configuration aliases and unrestricted remote distance",
+    "Cross-save/crash recovery",
+    "Windows runtime admission and full catalog qualification"
+  ]
+}

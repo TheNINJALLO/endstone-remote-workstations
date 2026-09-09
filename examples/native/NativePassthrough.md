@@ -32,7 +32,9 @@ are experimental and do not demonstrate custom station gameplay.
    existing blocks and retain the literal quotes. Linux also accepts
    `/vcf_native enderchest "2,82,5"` and `/vcf_native barrel "2,82,4"` through
    the [linked-storage adapter](../../docs/examples/linux-linked-storage.md).
-   Each of the 17 requests
+   The [linked utility examples](../../docs/examples/linux-linked-utilities.md)
+   add Linux `dispenser`, `dropper`, `brewing`, `beacon` and `crafter`, each
+   requiring its own explicit source. Each of the 22 requests
    retains its own exact-build qualification record.
 
 Workstation requests explicitly choose `VCF_NATIVE_CONTEXT`, leaving original

@@ -14,10 +14,11 @@
 
 namespace sdk = oni::vcf::sdk;
 class NativePassthrough : public endstone::Plugin {
-    static constexpr std::array<std::string_view,17> screens = {
+    static constexpr std::array<std::string_view,22> screens = {
         "craft", "anvil", "grindstone", "smithing", "stonecutter", "loom",
         "cartography", "inventory2x2", "armor", "offhand", "recipebook", "enchanting",
-        "furnace", "blastfurnace", "smoker", "enderchest", "barrel"
+        "furnace", "blastfurnace", "smoker", "enderchest", "barrel",
+        "dispenser", "dropper", "brewing", "beacon", "crafter"
     };
     std::unique_ptr<sdk::Client> ui_;
     std::shared_ptr<endstone::Task> cleanup_;
@@ -51,7 +52,10 @@ class NativePassthrough : public endstone::Plugin {
     static bool known(std::string_view screen) {
         return std::find(screens.begin(),screens.end(),screen)!=screens.end();
     }
-    static bool linked(std::string_view screen){return screen=="furnace"||screen=="blastfurnace"||screen=="smoker"||screen=="enderchest"||screen=="barrel";}
+    static bool linked(std::string_view screen){
+        return screen=="furnace"||screen=="blastfurnace"||screen=="smoker"||screen=="enderchest"||screen=="barrel"
+            ||screen=="dispenser"||screen=="dropper"||screen=="brewing"||screen=="beacon"||screen=="crafter";
+    }
     static std::array<int32_t,3> coordinates(std::string_view text){
         std::array<int32_t,3> result{};
         for(size_t i=0;i<3;++i){
@@ -99,7 +103,7 @@ public:
             },1,1);
             registerEvent(&NativePassthrough::interact,*this,endstone::EventPriority::Highest);
             registerEvent(&NativePassthrough::quit,*this);
-            getLogger().info("NativePassthrough connected through SDK 1.1; seventeen original-mode requests available subject to provider admission.");
+            getLogger().info("NativePassthrough connected through SDK 1.1; twenty-two original-mode requests available subject to provider admission.");
         } catch(const std::exception& e) {getLogger().error("NativePassthrough unavailable: {}",e.what());ui_.reset();}
     }
     void onDisable() override {

@@ -36,7 +36,7 @@ struct alignas(8) CraftContext {uintptr_t player;uint8_t type=1;std::array<uint8
 static_assert(sizeof(CraftOwner)==24&&alignof(CraftOwner)==8&&offsetof(CraftOwner,index)==16&&std::is_trivially_copyable_v<CraftOwner>);
 static_assert(sizeof(CraftContext)==40&&alignof(CraftContext)==8&&offsetof(CraftContext,type)==8&&offsetof(CraftContext,position)==16&&offsetof(CraftContext,index)==32);
 std::string container_open(uint8_t window,uint8_t type,Point position);
-struct Spec {std::string_view id,block;uint8_t type;uintptr_t factory;std::string_view hash;size_t factory_size=1502;uint8_t source_type=0;std::string_view lit_block{};};
+struct Spec {std::string_view id,block;uint8_t type;uintptr_t factory;std::string_view hash;size_t factory_size=1502;uint8_t source_type=0;std::string_view lit_block{};uintptr_t model=0;};
 // Linux ELF RTTI, complete FDE extents and the independently compiled
 // PlayerOpenContainerEvent layout establish these System V caller arguments.
 constexpr Spec specs[]={
@@ -53,6 +53,11 @@ constexpr Spec specs[]={
  {"smoker","minecraft:smoker",28,0x4506390,"2b4c79354fe036ebf52282642e1c1323fc4f1512e5182fc6304a012a57f394b5",1377,39,"minecraft:lit_smoker"},
  {"enderchest","minecraft:ender_chest",0,0x4502000,"150a860837f231c587480396c7668e66c94294e66c9ecd67a98b867abae3d66a",1550,23},
  {"barrel","minecraft:barrel",0,0x4502000,"150a860837f231c587480396c7668e66c94294e66c9ecd67a98b867abae3d66a",1550,42},
+ {"dispenser","minecraft:dispenser",6,0x4502610,"730b22f750dd927afca4bc14222ee5badb1259995c2cdbcc2f3d5325182edde8",1531,13,{},0xe33c020},
+ {"dropper","minecraft:dropper",7,0x4502c10,"c3c0ffd24083d5b37be149fb914cd301284b9543acaa6f2db696ebbb825adecb",1531,14,{},0xe2aa818},
+ {"brewing","minecraft:brewing_stand",4,0x4500820,"f01b8db1fce0dcdaec2345f8fd3486d67d38e1bc5c9437a7f751fd2095cf47c4",1534,8,{},0xe33bc38},
+ {"beacon","minecraft:beacon",13,0x44ffd00,"3304172e4b07bf22114c36e9e2e6154ce11bc3b1ba4a6d61291d9abb73f2b5f4",1441,21,{},0xe33baa8},
+ {"crafter","minecraft:crafter",36,0x4503210,"cab27e94c49f70f58ccec3721b3f8491d99d420c98bd6a074e70dba073150867",1480,55,{},0xe33bf58},
  {"inventory2x2","",255,0,{}},{"armor","",255,0,{}},{"offhand","",255,0,{}},{"recipebook","",255,0,{}}
 };
 const Spec* spec(std::string_view id){for(const auto& row:specs)if(row.id==id)return &row;return nullptr;}
@@ -196,7 +201,9 @@ struct Bridge {
   // Native Linux caller passes Player*, const BlockPos*, and ActorUniqueID
   // by value in rdi/rsi/rdx. BDS allocates and owns the complete model.
   reinterpret_cast<void(*)(void*,const Point*,int64_t)>(function)(reinterpret_cast<void*>(state.player),&position,-1);
-  auto result=inspect(p);require(result.manager&&!result.ready,VCF_UNAVAILABLE);return result.window;
+  auto result=inspect(p);require(result.manager&&!result.ready,VCF_UNAVAILABLE);
+  if(layout.model){Memory current;require(current.field<uintptr_t>(result.manager)==bedrock+layout.model,VCF_UNAVAILABLE);}
+  return result.window;
  }
 };
 void var(std::string& out,uint64_t value){do{auto b=static_cast<uint8_t>(value&127);value>>=7;out+=static_cast<char>(b|(value?128:0));}while(value);}
@@ -415,8 +422,17 @@ void NativeUi::receive(endstone::PacketReceiveEvent&e){
  for(auto&[_,v]:impl_->views)if(!v.closing&&v.player==e.getPlayer()->getUniqueId().str()){
   if(e.getPacketId()==115&&v.prepared&&reply(e.getPayload(),v.nonce))v.ack=true;
   if(e.getPacketId()==47&&e.getPayload().size()==3&&static_cast<uint8_t>(e.getPayload()[0])==v.window)v.close_seen=true;
-  if(e.getPacketId()==147&&v.window>=1&&!v.superseded&&!spec(v.kind)->block.empty()){
+  const bool crafter_control=e.getPacketId()==306&&v.kind=="crafter";
+  if((e.getPacketId()==147||crafter_control)&&v.window>=1&&!v.superseded&&!spec(v.kind)->block.empty()){
    try{
+    if(crafter_control){
+     // Exact admitted protocol: three little-endian int32 coordinates,
+     // slot byte and disabled byte. Never claim another block's control.
+     const auto& payload=e.getPayload();require(payload.size()==14,VCF_INVALID);
+     Point target;std::memcpy(&target,payload.data(),sizeof(target));
+     if(target!=v.position)return;
+     require(static_cast<uint8_t>(payload[12])<9&&static_cast<uint8_t>(payload[13])<2,VCF_INVALID);
+    }
     require(impl_->allowed(*e.getPlayer(),v)&&impl_->source_allowed(*e.getPlayer(),v),VCF_DENIED);
     if(spec(v.kind)->source_type)impl_->engine.authorize(v.owner,v.id,VCF_GUARD_ACTIVE);
    }catch(...){
