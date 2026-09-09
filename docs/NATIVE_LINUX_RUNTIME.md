@@ -250,3 +250,26 @@ in four normal closes and three expected denials (two active, one pre-open),
 zero tickets/provider sessions and clean shutdown. The [hopper SDK example](examples/linux-linked-hopper.md)
 includes five actual screenshots. Native world automation, custom routing and
 cross-save/crash recovery remain incomplete.
+
+
+## Experimental linked chests
+
+The [exact `b0ebf22` chest run](../research/native-evidence/linux-b0ebf22-chest-smoke.json)
+passed original chest/trapped-chest transfers and metadata across SDK closure,
+with permission-loss retention for the trapped source. Ordinary double chests
+preserved slots 0, 26, 27 and 53 when reopened through the other half. A guard
+denying only the partner closed an active view and refused a new opening; clearing
+it allowed full recovery. Removing the verified-empty partner also closed the
+session. Recreating it restored the native 54-slot view. Wrong-family and wrong
+single/paired-shape requests refused before opening.
+
+Empty hopper, beacon and crafter SDK-close regressions and a form callback passed.
+Twelve opens ended in nine normal closes, three active failures and four separate
+pre-open refusals. No tickets, sessions or queued inventory packets remained at
+clean shutdown. All three Linux CI binaries matched the loaded public artifacts;
+14 sanitizer tests and 300,000 fuzz inputs passed. The first sanitizer attempt
+failed downloading CMake before tests; its targeted retry passed. The
+[SDK example](examples/linux-linked-chests.md) includes ten reviewed screenshots.
+Exact Endstone dimension names are case-sensitive: this fixture uses `Overworld`.
+Paired trapped chests, automation, custom storage, adversarial source races and
+cross-save/crash recovery remain incomplete.

@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-selected-chest-smoke",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "b0ebf229065c5a6b7c5708bd95980d04a8319658",
+  "platform": "linux-x64",
+  "artifact_sha256": "1f1e9c96f2ce59c88e4c6442a1e59254ffa6379c70e676ec7fd575a802dad246",
+  "native_source_sha256": "147c91ec77246a59412f10170a8e50232f7823c123b8d1eeaf7e2b6af5f23714",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "clean_stop_utc": "2026-09-09T09:36:34Z",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "loaded_shadow_copies_match_exports": true,
+  "one_bundled_libcxx_family": true,
+  "private_probe_installed": false,
+  "observations": {
+    "single_chest": "Real unpaired chest1,91,3 rendered27slots. Ordinary clicks placed the named Efficiency I wooden pickaxe in slot26; Shift-click inserted six stone in slot0. SDK close and reopen retained both stacks. Shift withdrew stone; ordinary cursor transfer recovered the pickaxe to inventory with its name/enchantment. Read-only counts six stone/three total pickaxes. Empty native X close passed.",
+    "trapped_chest": "Real trapped chest1,91,5 rendered27slots. Shift inserted two ingots in slot0; ordinary clicks placed the named enchanted pickaxe in slot26. SDK close/reopen retained both. Intentional de-op closed with expected denial and no ticket leak. Restored operator permission; reopened with both stacks intact. Shift withdrew the pickaxe, ordinary clicks returned both ingots. Counts two ingots/three pickaxes; empty native Escape close passed.",
+    "double_chest": "Ordinary chests1,91,7 and2,91,7 paired natively. Opening through1,91,7 rendered54slots. Shift inserted six stone in slot0; ordinary clicks placed two ingots in26, four oak planks in27 and the named enchanted pickaxe in53. SDK close completed. Reopening through2,91,7 preserved all four stack positions and counts, including the26/27 boundary.",
+    "partner_guard": "While the request through2,91,7 was active, the compiled consumer guard denied only its partner1,91,7. The active session closed with expected denial. Another request through2,91,7 was refused before opening. Clearing the guard and reopening through1,91,7 retained every item. This uses only the public SDK consumer and its scoped protection callback.",
+    "double_recovery": "Shift withdrew stone and ingots; ordinary transfers returned planks and the pickaxe to empty inventory slots. Tooltip preserved VCF Enchanted Pickaxe and Efficiency I. Read-only counts six stone/two ingots/four planks/three pickaxes matched.",
+    "pair_removal": "After visually confirming all54slots empty and checking recovered counts, removed partner2,91,7. The session closed with the expected source-change failure and zero tickets. A doublechest request against the remaining unpaired source refused before opening. Recreated the empty partner with keep, then a chest request against the paired source refused before opening. A new doublechest request rendered54empty slots and native X close passed.",
+    "wrong_family": "A trappedchest request against the separate ordinary chest1,91,3 refused before opening.",
+    "regressions": "Empty linked hopper, beacon with retained Haste state, and crafter with all slots enabled opened and SDK-closed. The independent public SDK form callback completed. Final provider and both consumer ticket counts zero; packet observer one registry/one complete snapshot/no queued/no refused."
+  },
+  "sdk_counters": {
+    "opens": 12,
+    "closes": 9,
+    "failure_callbacks": 7,
+    "sdk_close_quarantines": 0,
+    "expected_failure_callbacks": 7,
+    "refusals_before_open": 4,
+    "guard_checks": 3642,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "counter_limit": "Two single-chest, three trapped-chest and four double-chest openings plus three empty linked regressions. Three active failures: trapped permission loss, paired-half guard denial, empty partner removal. Four pre-open refusals: denied partner, unpaired double request, paired single request, wrong trapped family. No quarantine or unexpected input rejection observed in this run.",
+  "setup_observations": "All four chest fixtures placed with keep in air after joining the isolated existing world. No items supplied or consumed. Only the visually verified-empty partner removed/recreated. Read-only clear always used maxCount0. Guard cleared and operator permission restored; all fixture types verified before clean stop.",
+  "guard_dimension_correction": "The first policy used lowercase overworld and did not match this runtime; it left the active session open and is not counted as a successful denial. Updating the exact dimension name to Overworld caused active denial. Documentation corrected to preserve case; production code uses the descriptor dimension value.",
+  "not_qualified": [
+    "Paired trapped chests",
+    "Chest/redstone/hopper automation and obstruction behavior",
+    "Custom virtual or persistent storage policies",
+    "Adversarial pairing races, same-address actor reuse and competing owners",
+    "Active dimension/unload and unrestricted remote access",
+    "Cross-save/crash and death/drop recovery",
+    "All metadata/input profiles",
+    "Windows stock-client qualification",
+    "Other devices and multiplayer",
+    "Exact Onistone runtime admission",
+    "Full catalog/custom framework"
+  ],
+  "earlier_anomalies": "This run does not resolve d6adf87 initially unaccepted crafter/beacon inputs, ca30255 grindstone rejection or171e0aa missing-plank observation.",
+  "screenshots": {
+    "chest-ready": {
+      "path": "docs/images/native-linux-chests/chest-ready.png",
+      "sha256": "b2131db9acb9610d1b970b69c112178967e33de01512eb6e2f6d0120605a66e7",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "chest-retained": {
+      "path": "docs/images/native-linux-chests/chest-retained.png",
+      "sha256": "f6bdd0b67921775bc80d3e5c3acc45b22ca0248e6e2f0f11f1adda80feda33d7",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "chest-returned-metadata": {
+      "path": "docs/images/native-linux-chests/chest-returned-metadata.png",
+      "sha256": "009ab147c8f33ff3c71ee68002e2482940c128e7c6c0ea72c7c4ec286595727c",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "trapped-ready": {
+      "path": "docs/images/native-linux-chests/trapped-ready.png",
+      "sha256": "567326170a22e501bd92e3919b43528199cdf22e4547afc84fea4ec1a9cefdaf",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "trapped-permission-retained": {
+      "path": "docs/images/native-linux-chests/trapped-permission-retained.png",
+      "sha256": "b54388b269493faec1448e90d18214598ca039fbdd439885593e8e75252609d8",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "double-ready": {
+      "path": "docs/images/native-linux-chests/double-ready.png",
+      "sha256": "b3ecd0f1fe652bf3cd4028ceb50adaff324b75ca117240fdd02dad08dea82737",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "double-other-half": {
+      "path": "docs/images/native-linux-chests/double-other-half.png",
+      "sha256": "261399fe7a55a76517e919ffe15b0ca92c26ca8c252be85af77c49dfc54a1786",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "double-guard-retained": {
+      "path": "docs/images/native-linux-chests/double-guard-retained.png",
+      "sha256": "bde63157f346a0303622cf5eb171ee60cf96fcb9b147f7388e4e8628ad0a3488",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "double-returned-metadata": {
+      "path": "docs/images/native-linux-chests/double-returned-metadata.png",
+      "sha256": "df541ac315c02b08ac54292d6f1702c48fd40d979e56d19490a69e44b4acc574",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "double-restored": {
+      "path": "docs/images/native-linux-chests/double-restored.png",
+      "sha256": "4c6f0b68638d289e12cf412c641fe12fb35aa59a0f903acd214de6c13deff6e0",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-b0ebf22-chest-counters.txt",
+    "sha256": "77454420a7721d5b1447a9145f48ecd07b4d784856ee2aa2b6ed3cf7f640f22e"
+  },
+  "abi_manifest": "research/native-evidence/linux-linked-chest-abi-126451.json",
+  "started_utc": "2026-09-09T09:16:59Z"
+}

@@ -1,6 +1,6 @@
 # Native implementation checkpoint â€” incomplete
 
-The native source checkpoint is `9a656e3311df2a7bc49d39b7ab347067b32f51ef` on
+The native source checkpoint is `b0ebf229065c5a6b7c5708bd95980d04a8319658` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
@@ -149,7 +149,7 @@ packaging checks do not upgrade native gameplay qualification.
 - Local Linux Docker build: **14/14 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `9a656e3`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `b0ebf22`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
@@ -161,13 +161,13 @@ packaging checks do not upgrade native gameplay qualification.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-9a656e3.json`](../research/native-evidence/checkpoint-9a656e3.json).
+[`checkpoint-b0ebf22.json`](../research/native-evidence/checkpoint-b0ebf22.json).
 Older checkpoints keep their original source and artifact identities.
 
-At `9a656e3`, [native CI run 34329568131](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34329568131)
+At `b0ebf22`, [native CI run 34333637463](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34333637463)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34329568221](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34329568221)
+refuses the incomplete catalog. [Legacy regression run 34333637557](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34333637557)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux workstation example](examples/linux-native-workstations.md).
 All three Linux CI plugin hashes match the locally tested exports. The Windows
@@ -239,3 +239,26 @@ Client tests use Windows PC keyboard/mouse. Additional devices and multiplayer
 are untested; no second client is required from the operator for this checkpoint.
 See [the per-entry matrix](CAPABILITY_MATRIX.md) and
 [all-UI migration](ALL_UI_MIGRATION.md) for the retained scope.
+
+
+## Experimental linked chests
+
+The [exact `b0ebf22` chest run](../research/native-evidence/linux-b0ebf22-chest-smoke.json)
+passed original chest/trapped-chest transfers and metadata across SDK closure,
+with permission-loss retention for the trapped source. Ordinary double chests
+preserved slots 0, 26, 27 and 53 when reopened through the other half. A guard
+denying only the partner closed an active view and refused a new opening; clearing
+it allowed full recovery. Removing the verified-empty partner also closed the
+session. Recreating it restored the native 54-slot view. Wrong-family and wrong
+single/paired-shape requests refused before opening.
+
+Empty hopper, beacon and crafter SDK-close regressions and a form callback passed.
+Twelve opens ended in nine normal closes, three active failures and four separate
+pre-open refusals. No tickets, sessions or queued inventory packets remained at
+clean shutdown. All three Linux CI binaries matched the loaded public artifacts;
+14 sanitizer tests and 300,000 fuzz inputs passed. The first sanitizer attempt
+failed downloading CMake before tests; its targeted retry passed. The
+[SDK example](examples/linux-linked-chests.md) includes ten reviewed screenshots.
+Exact Endstone dimension names are case-sensitive: this fixture uses `Overworld`.
+Paired trapped chests, automation, custom storage, adversarial source races and
+cross-save/crash recovery remain incomplete.

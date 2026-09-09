@@ -38,14 +38,15 @@ are experimental and do not demonstrate custom station gameplay.
    adds a separate five-slot source path with selected PC transfer, metadata,
    SDK/native closure and source-lifecycle evidence. Three new
    [linked chest paths](../../docs/examples/linux-linked-chests.md) add `chest`,
-   `trappedchest` and `doublechest`, with client testing pending. There are 26
+   `trappedchest` and `doublechest`, with selected PC transfer, metadata,
+   close/reopen and paired-source guard evidence. There are 26
    requests, each subject to exact-build admission and qualification.
 
-The operator-only `/vcf_native guard-deny "overworld|2,91,7"` demonstration
+The operator-only `/vcf_native guard-deny "Overworld|2,91,7"` demonstration
 denies that source position for this consumer's tickets, including a double
 chest requested through its other half. `/vcf_native guard-clear` resets this
 in-memory policy. The commands also work from the server console. Replace the
-dimension with its exact Endstone name. Production protection plugins should
+dimension with its exact case-sensitive Endstone name. Production protection plugins should
 register their own SDK guards for every source position they protect.
 
 Workstation requests explicitly choose `VCF_NATIVE_CONTEXT`, leaving original
