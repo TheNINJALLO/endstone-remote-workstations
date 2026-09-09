@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-smoke-not-qualification",
+  "source_revision": "ca3025524ff754f87a66df4dec4756c964855d82",
+  "platform": "linux-x64",
+  "artifact_sha256": "ccc60ce2cf6e837e2ab550fa70bc646a18cc7d23dff4da8a3b9091d53c9b8963",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "started_utc": "2026-09-09T02:34:51Z",
+  "clean_stop_utc": "2026-09-09T02:59:28Z",
+  "stock_client": true,
+  "public_sdk": true,
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "configuration": {
+    "schema_version": 1,
+    "experimental_original_windows": false,
+    "experimental_original_linux": true
+  },
+  "installed_plugins": {
+    "endstone_onistone_vcf.so": "ccc60ce2cf6e837e2ab550fa70bc646a18cc7d23dff4da8a3b9091d53c9b8963",
+    "endstone_vcf_catalog_showcase.so": "f2ed69e30d69b25d024e6caafcaef1298f764accac50b273e07716ef7b3070da",
+    "endstone_vcf_native_passthrough.so": "d491ffd16a0bb3af56e46b8c1a0288fce3bca747fe31f28c1b688fa2b459e9fd"
+  },
+  "loaded_shadow_copies_match_exports": true,
+  "one_bundled_libcxx_family": true,
+  "private_probe_installed": false,
+  "test_world": "Isolated disposable Linux world; Peaceful explicitly set before client join.",
+  "observations": {
+    "anvil": "Renamed one iron sword to VCF Linux Blade, delivered it, and displayed level 4 after starting at level 5; console count remained one sword.",
+    "smithing": "Consumed one upgrade template, one diamond sword and one netherite ingot; delivered exactly one netherite sword, verified by read-only console count queries.",
+    "stonecutter": "Selected stone bricks, consumed one of two stone and delivered one brick. SDK close returned the unused stone. A later compass-triggered session preserved one unfinished stone through disconnect/reconnect.",
+    "loom": "Consumed one white banner and one red dye; delivered one white banner with visible Red Saltire metadata. Console confirmed one banner and no dye.",
+    "cartography": "Created a map with the vanilla empty-map interaction, expanded it with one paper, and delivered Map 1 at level 1/4. Console confirmed one map and no paper.",
+    "grindstone": "Shift-click removed Sharpness I from the named iron sword and Unbreaking I from the netherite sword. Later ordinary clicks succeeded on both. Name persisted and XP bar visibly increased; exact XP was not measured. Initial ordinary-click rejection remains unresolved.",
+    "inventory2x2": "Opened the real shared inventory. SDK close returned zero tickets while the actual inventory remained open until client closure; no ingredient transfer performed through this entry in this exact run.",
+    "armor": "Equipped an iron helmet in the head slot; it persisted when the inventory reopened through another entry.",
+    "offhand": "Equipped one shield in the offhand; it persisted through subsequent inventory opening and disconnect.",
+    "recipebook": "Selected sticks using eight planks, delivered four sticks using two planks, then disconnected with six planks still in the grid. Reconnect count queries confirmed six planks and four sticks."
+  },
+  "sdk_counters": {
+    "opens": 15,
+    "closes": 15,
+    "failure_callbacks": 0,
+    "guard_checks": 3453,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "counter_limit": "Zero SDK failure callbacks does not certify native transaction success; the initial grindstone request did not complete despite this counter remaining zero.",
+  "unexpected_observations": [
+    {
+      "entry": "grindstone",
+      "result": "unresolved-initial-rejection",
+      "detail": "First ordinary-click extraction displayed an unenchanted preview but returned no output; input stayed enchanted and returned on close. Shift-click and later ordinary-click repetitions succeeded. Cause not established; no claim this is fixed.",
+      "screenshot": "docs/images/native-linux-workstations/grindstone-initial-rejection.png"
+    },
+    {
+      "entry": "grindstone",
+      "result": "excluded-invalid-setup",
+      "detail": "One repetition combined Escape and hotbar selection too quickly; the enchant targeted the other held sword. The unenchanted inserted sword correctly produced no output. Excluded from transformation evidence."
+    }
+  ],
+  "not_qualified": [
+    "Full catalog on either platform",
+    "Custom recipes, costs, item ownership or transactions",
+    "Durable held identity",
+    "BDS/player save and crash recovery",
+    "Exact grindstone XP, curses and repair combinations",
+    "Adversarial/replayed requests and competing-plugin openings",
+    "Provider hot-disable or code replacement",
+    "Multiplayer and other client devices",
+    "Arbitrary Pterodactyl images or Onistone runtime builds"
+  ],
+  "counters": {
+    "path": "research/native-evidence/linux-ca30255-workstation-counters.txt",
+    "sha256": "4d64732b58d01dc4b62291a744d3004ddc8e4affa67bb5853fbce1e191a915d5"
+  },
+  "screenshots": [
+    {
+      "path": "docs/images/native-linux-workstations/anvil.png",
+      "sha256": "40f94d8cda0de30b58fcd13c3ef5dbaaf90a103961dffb73c7450eb9977033de",
+      "review": "Original screenshot visually reviewed; no unrelated notifications or account identifiers."
+    },
+    {
+      "path": "docs/images/native-linux-workstations/smithing.png",
+      "sha256": "38d2ec8668acd5bee0528d1089b02016a7ef5adc0fc7ac8f9c336eb66bb95212",
+      "review": "Original screenshot visually reviewed; no unrelated notifications or account identifiers."
+    },
+    {
+      "path": "docs/images/native-linux-workstations/stonecutter.png",
+      "sha256": "68d3d0dd612f8c1e1ed053e3bbc824c2c40e3cd8e5c52ce9c277becb0c4a1be6",
+      "review": "Original screenshot visually reviewed; no unrelated notifications or account identifiers."
+    },
+    {
+      "path": "docs/images/native-linux-workstations/loom.png",
+      "sha256": "8e6ceaf7fb786438093446612cca780c61dbb251cab42dec76bc388ad6b700ff",
+      "review": "Original screenshot visually reviewed; no unrelated notifications or account identifiers."
+    },
+    {
+      "path": "docs/images/native-linux-workstations/cartography.png",
+      "sha256": "5551765902f59dd2d810975c528de1b2d5a6aa5724a70e9c587f3c69717b000d",
+      "review": "Original screenshot visually reviewed; no unrelated notifications or account identifiers."
+    },
+    {
+      "path": "docs/images/native-linux-workstations/grindstone.png",
+      "sha256": "81cc0454a8d00f558389a0be2b65fb35f74e0a7403129893a3fdc029f4493a23",
+      "review": "Original screenshot visually reviewed; no unrelated notifications or account identifiers."
+    },
+    {
+      "path": "docs/images/native-linux-workstations/compass-trigger.png",
+      "sha256": "957698dab2a402ee25144ae0256d4d4716c758115a2d1e673b74f5cbcc6e60b7",
+      "review": "Original screenshot visually reviewed; no unrelated notifications or account identifiers."
+    },
+    {
+      "path": "docs/images/native-linux-workstations/recipebook.png",
+      "sha256": "d796ed16e65133246c9a2111775758ea6daa42c49fd3dc945ce7db3a68142f52",
+      "review": "Original screenshot visually reviewed; no unrelated notifications or account identifiers."
+    },
+    {
+      "path": "docs/images/native-linux-workstations/grindstone-initial-rejection.png",
+      "sha256": "eb10ffaef4bea5917e030fd25f7b11aa1116bfe99915d61f839cb4f7022a4153",
+      "review": "Original screenshot visually reviewed; no unrelated notifications or account identifiers."
+    }
+  ],
+  "all_ui_acceptance": "not-qualified"
+}

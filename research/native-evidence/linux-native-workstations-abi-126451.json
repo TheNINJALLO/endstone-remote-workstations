@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "kind": "linux-native-workstation-abi-research-not-ui-qualification",
+  "source_revision": "ca3025524ff754f87a66df4dec4756c964855d82",
+  "architecture": "linux-x86_64-itanium-libc++",
+  "sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "compiler": "Clang 20.1.8",
+  "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "inventory_bridge_manifest": "research/native-evidence/linux-native-abi-126451.json",
+  "header": "src/bedrock/world/events/player_events.h",
+  "header_sha256": "57ba88daa951733740463179fbcea2e86c4472ecdde30d5f1a821bf7e542dcca",
+  "layout_probe_sha256": "2ff8f5dbe59a43ea2c7e7855739f570fbe58f41bf30ca48618205cb26afe64c4",
+  "layout_ir_sha256": "c7d0df9e9af474c57669c84f485523aa84453533c8e8685e92a227c75be656a4",
+  "layout": {
+    "PlayerOpenContainerEvent": 48,
+    "container_type_offset": 24,
+    "block_position_offset": 28,
+    "entity_unique_id_offset": 40,
+    "BlockPos": 12,
+    "BlockPos_alignment": 4,
+    "ActorUniqueID": 8
+  },
+  "layout_flags": [
+    "-std=c++20",
+    "-stdlib=libc++",
+    "-DNDEBUG",
+    "-DENTT_SPARSE_PAGE=2048",
+    "-DENTT_PACKED_PAGE=128",
+    "-DENTT_NO_MIXIN",
+    "-DRAKNET_SUPPORT_IPV6=1",
+    "-fms-extensions"
+  ],
+  "caller": {
+    "rva": "0x44fe540",
+    "function_size": 3071,
+    "arguments": "Player* in rdi, const BlockPos* in rsi, ActorUniqueID value in rdx"
+  },
+  "method": "ELF relative relocations and RTTI identify shared manager factories; unwind FDEs establish complete function bounds. Linux header compilation independently establishes event layout. Observed native opens and real-client original transactions corroborate the calls.",
+  "functions": {
+    "anvil": {
+      "rva": "0x44ff720",
+      "size": 1502,
+      "sha256": "697424f122bd3a97de419c970e16f6e85e99cc8125656f3723c0af6e3b6c98ad",
+      "callers": [
+        {
+          "call_rva": "0x44fe982",
+          "function_rva": "0x44fe540",
+          "function_size": 3071
+        }
+      ],
+      "admission": "Complete 1502-byte SHA256 checked before each call, plus exact runtime/player/context checks.",
+      "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
+    },
+    "smithing": {
+      "rva": "0x44ff140",
+      "size": 1502,
+      "sha256": "d835340c6cb1bf828b393071aa1ca7aead64cc51642a94eb7c32b738a45a35b9",
+      "callers": [
+        {
+          "call_rva": "0x44fe8d7",
+          "function_rva": "0x44fe540",
+          "function_size": 3071
+        }
+      ],
+      "admission": "Complete 1502-byte SHA256 checked before each call, plus exact runtime/player/context checks.",
+      "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
+    },
+    "cartography": {
+      "rva": "0x4500e20",
+      "size": 1502,
+      "sha256": "7adcc8b5ba6279c4dd57e84d2c7fdc1e4dbbd0f7ff567893b71db608db233853",
+      "callers": [
+        {
+          "call_rva": "0x44fe913",
+          "function_rva": "0x44fe540",
+          "function_size": 3071
+        }
+      ],
+      "admission": "Complete 1502-byte SHA256 checked before each call, plus exact runtime/player/context checks.",
+      "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
+    },
+    "grindstone": {
+      "rva": "0x4504870",
+      "size": 1502,
+      "sha256": "2290a6eb96441a2430a453a892f08991deff670a1a207786226e6fb7a2053886",
+      "callers": [
+        {
+          "call_rva": "0x44febb2",
+          "function_rva": "0x44fe540",
+          "function_size": 3071
+        }
+      ],
+      "admission": "Complete 1502-byte SHA256 checked before each call, plus exact runtime/player/context checks.",
+      "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
+    },
+    "loom": {
+      "rva": "0x45057d0",
+      "size": 1502,
+      "sha256": "c1a48f261804a4284d852e66d3b0c49bc09c435089acc52c41a4984c147ff21c",
+      "callers": [
+        {
+          "call_rva": "0x44fe8af",
+          "function_rva": "0x44fe540",
+          "function_size": 3071
+        }
+      ],
+      "admission": "Complete 1502-byte SHA256 checked before each call, plus exact runtime/player/context checks.",
+      "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
+    },
+    "stonecutter": {
+      "rva": "0x4506900",
+      "size": 1502,
+      "sha256": "50a4d7c092c689e223a84db196a999bd8e98194938b89bb64d9137fd61fda4df",
+      "callers": [
+        {
+          "call_rva": "0x44feb76",
+          "function_rva": "0x44fe540",
+          "function_size": 3071
+        }
+      ],
+      "admission": "Complete 1502-byte SHA256 checked before each call, plus exact runtime/player/context checks.",
+      "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
+    }
+  },
+  "limitations": [
+    "No Windows offsets copied to Linux. Shared control-block vtables are not treated as manager primary vtables.",
+    "Three-by-three crafting has a different ABI and is not admitted by these six functions.",
+    "Opening and selected vanilla transactions do not establish custom ownership, all interactions, adversarial safety or recovery."
+  ]
+}

@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
     "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
-    "artifact_sha256": "07434bbb77a9290eaaf67f66a3d2e9e9cc54fa8382e5a1cd393eba8fb9e65946"
+    "artifact_sha256": "ccc60ce2cf6e837e2ab550fa70bc646a18cc7d23dff4da8a3b9091d53c9b8963"
   },
   "build": "tested-in-local-linux-docker",
   "native_loader_smoke": "passed",
@@ -1274,7 +1274,7 @@
       "family": "workstation",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
@@ -1341,7 +1341,7 @@
           "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1349,17 +1349,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Selected original PC smoke only. Custom transactions, adversarial lifecycle and save/crash recovery remain incomplete. Renamed one iron sword to VCF Linux Blade, delivered it, and displayed level 4 after starting at level 5; console count remained one sword.",
+          "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1398,7 +1399,7 @@
       "family": "workstation",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
@@ -1465,7 +1466,7 @@
           "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1473,17 +1474,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "partial",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Selected original PC smoke only. Custom transactions, adversarial lifecycle and save/crash recovery remain incomplete. Shift-click removed Sharpness I from the named iron sword and Unbreaking I from the netherite sword. Later ordinary clicks succeeded on both. Name persisted and XP bar visibly increased; exact XP was not measured. Initial ordinary-click rejection remains unresolved.",
+          "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1522,7 +1524,7 @@
       "family": "workstation",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
@@ -1589,7 +1591,7 @@
           "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1597,17 +1599,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Selected original PC smoke only. Custom transactions, adversarial lifecycle and save/crash recovery remain incomplete. Consumed one upgrade template, one diamond sword and one netherite ingot; delivered exactly one netherite sword, verified by read-only console count queries.",
+          "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1646,7 +1649,7 @@
       "family": "workstation",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
@@ -1713,7 +1716,7 @@
           "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1721,17 +1724,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Selected original PC smoke only. Custom transactions, adversarial lifecycle and save/crash recovery remain incomplete. Selected stone bricks, consumed one of two stone and delivered one brick. SDK close returned the unused stone. A later compass-triggered session preserved one unfinished stone through disconnect/reconnect.",
+          "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1770,7 +1774,7 @@
       "family": "workstation",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
@@ -1837,7 +1841,7 @@
           "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1845,17 +1849,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Selected original PC smoke only. Custom transactions, adversarial lifecycle and save/crash recovery remain incomplete. Consumed one white banner and one red dye; delivered one white banner with visible Red Saltire metadata. Console confirmed one banner and no dye.",
+          "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -1894,7 +1899,7 @@
       "family": "workstation",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
@@ -1961,7 +1966,7 @@
           "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1969,17 +1974,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Selected original PC smoke only. Custom transactions, adversarial lifecycle and save/crash recovery remain incomplete. Created a map with the vanilla empty-map interaction, expanded it with one paper, and delivered Map 1 at level 1/4. Console confirmed one map and no paper.",
+          "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -6892,7 +6898,7 @@
           "checks": {
             "opening": "passed",
             "rendering": "passed",
-            "input": "passed",
+            "input": "untested",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
             "closing": "passed",
@@ -6900,8 +6906,8 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Original PC inventory smoke passed. Custom ownership, death/drop conservation, stale/forged request tests and recovery remain unqualified; see exact smoke record.",
-          "smoke_record": "research/native-evidence/linux-171e0aa-inventory-smoke.json"
+          "blocker": "Selected original PC smoke only. Custom transactions, adversarial lifecycle and save/crash recovery remain incomplete. Opened the real shared inventory. SDK close returned zero tickets while the actual inventory remained open until client closure; no ingredient transfer performed through this entry in this exact run.",
+          "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -7022,8 +7028,8 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Original PC inventory smoke passed. Custom ownership, death/drop conservation, stale/forged request tests and recovery remain unqualified; see exact smoke record.",
-          "smoke_record": "research/native-evidence/linux-171e0aa-inventory-smoke.json"
+          "blocker": "Selected original PC smoke only. Custom transactions, adversarial lifecycle and save/crash recovery remain incomplete. Equipped an iron helmet in the head slot; it persisted when the inventory reopened through another entry.",
+          "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -7144,8 +7150,8 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Original PC inventory smoke passed. Custom ownership, death/drop conservation, stale/forged request tests and recovery remain unqualified; see exact smoke record.",
-          "smoke_record": "research/native-evidence/linux-171e0aa-inventory-smoke.json"
+          "blocker": "Selected original PC smoke only. Custom transactions, adversarial lifecycle and save/crash recovery remain incomplete. Equipped one shield in the offhand; it persisted through subsequent inventory opening and disconnect.",
+          "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -7387,8 +7393,8 @@
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Original PC inventory smoke passed. Custom ownership, death/drop conservation, stale/forged request tests and recovery remain unqualified; see exact smoke record.",
-          "smoke_record": "research/native-evidence/linux-171e0aa-inventory-smoke.json"
+          "blocker": "Selected original PC smoke only. Custom transactions, adversarial lifecycle and save/crash recovery remain incomplete. Selected sticks using eight planks, delivered four sticks using two planks, then disconnected with six planks still in the grid. Reconnect count queries confirmed six planks and four sticks.",
+          "smoke_record": "research/native-evidence/linux-ca30255-workstation-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -8505,10 +8511,10 @@
     }
   },
   "build_evidence": {
-    "source_revision": "0a91902ef4f676b3ce2244f4344fec3c05d581ab",
+    "source_revision": "ca3025524ff754f87a66df4dec4756c964855d82",
     "host": "Windows Docker Desktop 4.90.0 / WSL 2, pinned linux/amd64 Clang 20.1.8 image",
-    "native_tests": "13/13 passed; ASan/UBSan and 300000 fuzz inputs passed",
-    "elf_report": "linux-0a91902-elf-report.txt",
+    "native_tests": "13/13 CTest locally and CI; current ASan/UBSan and 300000 fuzz inputs passed.",
+    "elf_report": "linux-ca30255-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.34",
     "direct_libraries": [
       "libcrypto.so.3",
@@ -8519,29 +8525,25 @@
       "libgcc_s.so.1",
       "libc.so.6"
     ],
-    "runtime_restriction": "Exact Linux files admitted for public SDK only; private UI adapters remain unavailable. Transitive library requirements apply."
+    "runtime_restriction": "Exact Linux files plus opt-in adapter admit six original workstations and four shared inventory roles on the pinned PC client. Full/custom qualification remains incomplete."
   },
   "sdk_version": "1.1; ABI 1.0 prefix retained",
   "sanitizers": {
-    "source_revision": "0a91902ef4f676b3ce2244f4344fec3c05d581ab",
+    "source_revision": "ca3025524ff754f87a66df4dec4756c964855d82",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
     "storage_fuzz_inputs": 100000,
     "items_fuzz_inputs": 100000,
-    "test_report": "linux-0a91902-sanitizer-tests.txt",
-    "nbt_report": "linux-0a91902-fuzz-nbt.txt",
-    "storage_report": "linux-0a91902-fuzz-storage.txt",
-    "items_report": "linux-0a91902-fuzz-items.txt"
+    "test_report": "linux-ca30255-sanitizer-tests.txt",
+    "nbt_report": "linux-ca30255-fuzz-nbt.txt",
+    "storage_report": "linux-ca30255-fuzz-storage.txt",
+    "items_report": "linux-ca30255-fuzz-items.txt"
   },
   "native_tests": {
-    "source_revision": "0a91902ef4f676b3ce2244f4344fec3c05d581ab",
+    "source_revision": "ca3025524ff754f87a66df4dec4756c964855d82",
     "ctest": "13/13 passed locally",
-    "core_checks": 50181,
-    "storage_checks": 10309,
-    "item_wire_checks": 21813,
-    "menu_cycles": 5000,
-    "sanitizers": "13/13 passed under Linux ASan/UBSan",
+    "sanitizers": "13/13 passed under Linux ASan/UBSan; private BDS execution not instrumented.",
     "fuzz_inputs": {
       "nbt": 100000,
       "storage": 100000,
@@ -8557,5 +8559,6 @@
     "fixture_sha256": "5376d1c38b47a8f8bc775c9cf7624c145500c2eea35c690ed21ec48d7bd5ae56",
     "live_empty_inventory_shape_sha256": "9eb16cf918c14fdd34c720d989e3279b59944af76f9a047b752ea403dfa2a0d6"
   },
-  "native_inventory_smoke": "research/native-evidence/linux-171e0aa-inventory-smoke.json"
+  "native_inventory_smoke": "research/native-evidence/linux-ca30255-workstation-smoke.json",
+  "native_workstation_smoke": "research/native-evidence/linux-ca30255-workstation-smoke.json"
 }

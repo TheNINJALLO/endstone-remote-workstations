@@ -16,8 +16,8 @@ fingerprints. The exact allowed files are:
 | Endstone 0.11.10, CPython 3.11 Linux wheel runtime | `ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc` | `ba6af2ee50effc20b461a2fbef80e145ad6f6a51` |
 
 Admission enables the public SDK integration. An opt-in experimental adapter
-also calls the verified native player-inventory opener; other Linux private
-workstation adapters remain unavailable. Onistone and other Endstone builds need separate
+also calls the verified player-inventory opener and six native workstation
+factories. Other Linux catalog adapters remain incomplete. Onistone and other Endstone builds need separate
 evidence and admission; a matching version label does not suffice.
 
 The provider promotes its existing loaded shadow copy with `RTLD_NOLOAD` and
@@ -118,3 +118,31 @@ tickets. `vcf_native status` reports outstanding tickets as well as open,
 close, failure and guard counters. Terminal tickets are forgotten on the
 consumer's scheduler. Neither command takes ownership of another consumer's
 handles.
+
+## Experimental original workstations
+
+The same Linux flag now admits `anvil`, `smithing`, `stonecutter`, `grindstone`,
+`loom` and `cartography` with `VCF_NATIVE_CONTEXT`. The
+[workstation SDK example](examples/linux-native-workstations.md) documents
+installation, dependency use, actual screenshots and exact smoke results.
+Three-by-three `craft` has a different ABI and remains unavailable on Linux.
+
+The [workstation ABI manifest](../research/native-evidence/linux-native-workstations-abi-126451.json)
+extends the earlier inventory research. Linux ELF RTTI, complete unwind ranges,
+caller arguments and independently compiled event layouts establish six
+factory identities. Each complete function is hashed before invocation.
+BDS allocates and owns the resulting native manager and its original gameplay.
+
+The adapter projects a client-side workstation onto a nearby real-air position,
+waits for the ordered client reply, and requires the matching native window,
+type and position before the SDK open event. Closure tracks native readiness,
+restores owned projections from current world state, and reserves retired window
+IDs. Stale-close filtering and competing-projection handling are implemented
+but still need adversarial and competing-plugin qualification.
+
+The exact `ca30255` client run exercised all six factories and the four inventory
+roles, finishing with 15 opens and 15 closes. Selected vanilla transformations,
+SDK close with unused input, compass opening, two controlled disconnect cases
+and a form callback passed. Grindstone's first plain-click output was rejected;
+later Shift-click and plain-click repeats succeeded, leaving the first cause
+unresolved. Custom logic and crash/save recovery remain unqualified.

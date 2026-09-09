@@ -1,0 +1,28 @@
+[02:34:51 INFO]: [OnistoneVcf] Enabling onistone_vcf v0.1.0-dev
+[02:34:51 INFO]: [VcfCatalogShowcase] Enabling vcf_catalog_showcase v0.1.0-dev
+[02:34:51 INFO]: [VcfNativePassthrough] Enabling vcf_native_passthrough v0.1.0-dev
+[02:35:21 INFO]: Set game difficulty to PEACEFUL
+[02:35:41 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[02:35:41 INFO]: Item packet observations: registries 0, complete snapshots 0, queued 0, refused 0. Observation is not inventory-write qualification.
+[02:36:12 INFO]: Original-mode SDK example: opens 1, closes 0, failures 0, guard checks 16, outstanding tickets 1
+[02:36:12 INFO]: Native VCF C ABI 1.1; sessions 1; 69 entries retained; all-UI NOT QUALIFIED.
+[02:37:47 INFO]: Original-mode SDK example: opens 1, closes 1, failures 0, guard checks 307, outstanding tickets 0
+[02:41:12 INFO]: Original-mode SDK example: opens 3, closes 3, failures 0, guard checks 996, outstanding tickets 0
+[02:43:00 INFO]: Original-mode SDK example: opens 5, closes 4, failures 0, guard checks 1308, outstanding tickets 1
+[02:46:16 INFO]: Original-mode SDK example: opens 6, closes 6, failures 0, guard checks 1876, outstanding tickets 0
+[02:50:11 INFO]: Original-mode SDK example: opens 9, closes 9, failures 0, guard checks 2594, outstanding tickets 0
+[02:52:14 INFO]: Original-mode SDK example: opens 11, closes 11, failures 0, guard checks 2918, outstanding tickets 0
+[02:54:42 INFO]: Original-mode SDK example: opens 14, closes 14, failures 0, guard checks 3362, outstanding tickets 0
+[02:57:36 INFO]: Original-mode SDK example: opens 15, closes 15, failures 0, guard checks 3453, outstanding tickets 0
+[02:58:31 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[02:58:31 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[02:59:27 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[02:59:27 INFO]: Original-mode SDK example: opens 15, closes 15, failures 0, guard checks 3453, outstanding tickets 0
+[02:59:27 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[02:59:27 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[02:59:27 INFO]: Server stop requested.
+[02:59:28 INFO]: Stopping server...
+[02:59:28 INFO]: [VcfNativePassthrough] Disabling vcf_native_passthrough v0.1.0-dev
+[02:59:28 INFO]: [VcfCatalogShowcase] Disabling vcf_catalog_showcase v0.1.0-dev
+[02:59:28 INFO]: [OnistoneVcf] Disabling onistone_vcf v0.1.0-dev
+Quit correctly

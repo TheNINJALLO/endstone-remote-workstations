@@ -109,9 +109,10 @@ navigation/closure. Other backing modes refuse instead of substituting a
 screen. This configuration flag does not certify client or custom behavior.
 
 Linux has a separate `experimental_original_linux: true` flag for the four
-shared player-inventory roles in `VCF_REAL_SOURCE` mode. It uses independently
-verified Linux ABI facts and does not enable the seven Windows workstation
-adapters. See [Linux runtime development](NATIVE_LINUX_RUNTIME.md).
+shared player-inventory roles in `VCF_REAL_SOURCE` mode, plus `anvil`, `smithing`,
+`stonecutter`, `grindstone`, `loom` and `cartography` in `VCF_NATIVE_CONTEXT`.
+It uses independently verified Linux ABI facts. Linux `craft` remains unavailable.
+See the [Linux workstation example](examples/linux-native-workstations.md).
 
 The original-mode adapter rejects preloaded items, changed slot policies,
 recipe definitions, replacement titles and unrelated source descriptors. It
@@ -119,7 +120,7 @@ never reports success while silently ignoring requested custom behavior.
 The provider reclaims its own completed command/catalog tickets; SDK consumers
 retain responsibility for forgetting their own terminal tickets.
 
-Native Windows close leases retain previously owned window IDs for 60 seconds
+Native Windows and Linux close leases retain previously owned window IDs for 60 seconds
 under this specific client profile. They reject a delayed old close only when
 the verified current native manager owns a different window. A legitimate close
 for the same window, another player or an unrelated ID passes through. Form
