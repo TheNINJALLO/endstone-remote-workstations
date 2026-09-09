@@ -8,7 +8,7 @@ are experimental and do not demonstrate custom station gameplay.
    `endstone_vcf_native_passthrough.dll` to an isolated Windows server's plugins
    directory. No project wheel is needed. Linux uses the corresponding `.so`
    files and admits eight workstation contexts, four shared inventory roles and
-   three nearby linked furnace-family sources;
+   three nearby linked furnace-family sources, plus linked Ender Chest and barrel;
    see [the Linux example](../../docs/examples/linux-native-workstations.md).
 2. After first startup, stop the server and set
    `experimental_original_windows` (or `experimental_original_linux`) to `true` in
@@ -29,7 +29,10 @@ are experimental and do not demonstrate custom station gameplay.
    `recipebook`, and `enchanting` (Linux only). Linux also accepts
    `/vcf_native furnace "2,81,5"`, `/vcf_native blastfurnace "2,81,4"` and
    `/vcf_native smoker "2,81,6"`. Replace those positions with your authorized
-   existing blocks and retain the literal quotes. Each of the 15 requests
+   existing blocks and retain the literal quotes. Linux also accepts
+   `/vcf_native enderchest "2,82,5"` and `/vcf_native barrel "2,82,4"` through
+   the [linked-storage adapter](../../docs/examples/linux-linked-storage.md).
+   Each of the 17 requests
    retains its own exact-build qualification record.
 
 Workstation requests explicitly choose `VCF_NATIVE_CONTEXT`, leaving original

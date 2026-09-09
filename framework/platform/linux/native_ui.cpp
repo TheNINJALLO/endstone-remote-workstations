@@ -51,6 +51,8 @@ constexpr Spec specs[]={
  {"furnace","minecraft:furnace",2,0x4504310,"0e383c03452396000e3b8172d842681a8a3ec306b801877e3547ac0b1bd2ea1f",1361,1,"minecraft:lit_furnace"},
  {"blastfurnace","minecraft:blast_furnace",27,0x45002b0,"d01db5face49184f9ccf8b1c743068972005c9ffbdc2e71a31f29a7b0356f8bd",1377,38,"minecraft:lit_blast_furnace"},
  {"smoker","minecraft:smoker",28,0x4506390,"2b4c79354fe036ebf52282642e1c1323fc4f1512e5182fc6304a012a57f394b5",1377,39,"minecraft:lit_smoker"},
+ {"enderchest","minecraft:ender_chest",0,0x4502000,"150a860837f231c587480396c7668e66c94294e66c9ecd67a98b867abae3d66a",1550,23},
+ {"barrel","minecraft:barrel",0,0x4502000,"150a860837f231c587480396c7668e66c94294e66c9ecd67a98b867abae3d66a",1550,42},
  {"inventory2x2","",255,0,{}},{"armor","",255,0,{}},{"offhand","",255,0,{}},{"recipebook","",255,0,{}}
 };
 const Spec* spec(std::string_view id){for(const auto& row:specs)if(row.id==id)return &row;return nullptr;}
@@ -171,6 +173,26 @@ struct Bridge {
   auto state=inspect(p);require(state.ready,VCF_CONFLICT);
   Memory memory;const auto function=bedrock+layout.factory;
   memory.function(function,bedrock,layout.factory,layout.factory_size,layout.hash);
+  if(layout.type==0){
+   require(layout.source_type==23||layout.source_type==42,VCF_UNAVAILABLE);
+   memory.function(bedrock+0xb2d4ac0,bedrock,0xb2d4ac0,334,"837b2d2a551de7712d9705e6606c9ae850133384065291293fe26667e9f349c9");
+   memory.function(bedrock+0x5392f10,bedrock,0x5392f10,2964,"16754566aca342bd1f9c7bc84a2c5c50de7bb56cdff5847628ad81d99845df71");
+   if(layout.source_type==23)require(p.getEnderChest().getSize()==27,VCF_UNAVAILABLE);
+   // The block-container branch is a distinct five-argument System V ABI:
+   // Player*, BlockPos*, ContainerType, ActorUniqueID, BlockActorType.
+   // The verified model resolves type 23 to this player's real Ender chest.
+   // Do not call the three-argument entity-container factory for a block.
+   require(proceed(),VCF_CLOSED);
+   reinterpret_cast<void(*)(void*,const Point*,int8_t,int64_t,uint8_t)>(function)(
+    reinterpret_cast<void*>(state.player),&position,0,-1,layout.source_type);
+   auto result=inspect(p);require(result.manager&&!result.ready,VCF_UNAVAILABLE);
+   Memory current;require(current.field<uintptr_t>(result.manager)==bedrock+0xe33bdc8,VCF_UNAVAILABLE);
+   require(current.field<uintptr_t>(result.manager,0x30)==state.player
+    &&current.field<Point>(result.manager,0x130)==position
+    &&current.field<int64_t>(result.manager,0x140)==-1
+    &&current.field<uint8_t>(result.manager,0x148)==layout.source_type,VCF_CONFLICT);
+   return result.window;
+  }
   // Native Linux caller passes Player*, const BlockPos*, and ActorUniqueID
   // by value in rdi/rsi/rdx. BDS allocates and owns the complete model.
   reinterpret_cast<void(*)(void*,const Point*,int64_t)>(function)(reinterpret_cast<void*>(state.player),&position,-1);

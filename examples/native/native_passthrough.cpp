@@ -14,10 +14,10 @@
 
 namespace sdk = oni::vcf::sdk;
 class NativePassthrough : public endstone::Plugin {
-    static constexpr std::array<std::string_view,15> screens = {
+    static constexpr std::array<std::string_view,17> screens = {
         "craft", "anvil", "grindstone", "smithing", "stonecutter", "loom",
         "cartography", "inventory2x2", "armor", "offhand", "recipebook", "enchanting",
-        "furnace", "blastfurnace", "smoker"
+        "furnace", "blastfurnace", "smoker", "enderchest", "barrel"
     };
     std::unique_ptr<sdk::Client> ui_;
     std::shared_ptr<endstone::Task> cleanup_;
@@ -51,7 +51,7 @@ class NativePassthrough : public endstone::Plugin {
     static bool known(std::string_view screen) {
         return std::find(screens.begin(),screens.end(),screen)!=screens.end();
     }
-    static bool linked(std::string_view screen){return screen=="furnace"||screen=="blastfurnace"||screen=="smoker";}
+    static bool linked(std::string_view screen){return screen=="furnace"||screen=="blastfurnace"||screen=="smoker"||screen=="enderchest"||screen=="barrel";}
     static std::array<int32_t,3> coordinates(std::string_view text){
         std::array<int32_t,3> result{};
         for(size_t i=0;i<3;++i){
@@ -64,7 +64,7 @@ class NativePassthrough : public endstone::Plugin {
         return result;
     }
     void open(endstone::Player& player,std::string_view screen,std::string_view source={}) {
-        if(!ui_||!known(screen))throw std::runtime_error("Choose one of the fifteen documented original entry points.");
+        if(!ui_||!known(screen))throw std::runtime_error("Choose one of the documented original entry points.");
         if(!player.hasPermission("vcf.examples.passthrough"))throw std::runtime_error("Permission denied.");
         if(tickets_.size()>=128)throw std::runtime_error("Example ticket limit reached.");
         auto capability=ui_->capability(ui_->resolve(screen));
@@ -99,7 +99,7 @@ public:
             },1,1);
             registerEvent(&NativePassthrough::interact,*this,endstone::EventPriority::Highest);
             registerEvent(&NativePassthrough::quit,*this);
-            getLogger().info("NativePassthrough connected through SDK 1.1; fifteen original-mode requests available subject to provider admission.");
+            getLogger().info("NativePassthrough connected through SDK 1.1; seventeen original-mode requests available subject to provider admission.");
         } catch(const std::exception& e) {getLogger().error("NativePassthrough unavailable: {}",e.what());ui_.reset();}
     }
     void onDisable() override {
@@ -150,7 +150,7 @@ public:
                 player->sendMessage("Sneak and right-click with a compass to request "+args[1]+". Use /vcf_native unbind to clear.");
             } else if(args.size()==2&&linked(args[0]))open(*player,args[0],args[1]);
             else if(args.size()==1)open(*player,args[0]);
-            else throw std::runtime_error("Use /vcf_native <screen>, /vcf_native <machine> <x,y,z>, or /vcf_native bind <screen>.");
+            else throw std::runtime_error("Use /vcf_native <screen>, /vcf_native <source-screen> <x,y,z>, or /vcf_native bind <screen>.");
         }catch(const std::exception& e){sender.sendErrorMessage(e.what());}
         return true;
     }

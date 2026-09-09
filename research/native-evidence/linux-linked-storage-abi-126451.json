@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "architecture": "linux-x86_64-itanium-libc++",
+  "sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "compiler": "Clang 20.1.8",
+  "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "inventory_bridge_manifest": "research/native-evidence/linux-native-abi-126451.json",
+  "source_layout": {
+    "header": "src/bedrock/world/level/block/actor/block_actor.h",
+    "header_sha256": "97a0e2e3d2b8e6fc78459a4891347d526c112922a844354f96ca86501b5d315b",
+    "probe_sha256": "2712d89dc45fef0dde3810da76a4ea903a2f69b26184cdc1417a64e660b54caa",
+    "llvm_ir_sha256": "c63006c838e0e2d9ad5b909f8853d99640146312a43f29a6530256cde0f6edfb",
+    "BlockActor_size": 40,
+    "position_offset": 8,
+    "type_offset": 20,
+    "getBlockEntity_vtable_byte_offset": 32,
+    "probe_flags": [
+      "-std=c++20",
+      "-stdlib=libc++",
+      "-DNDEBUG",
+      "-DENTT_SPARSE_PAGE=2048",
+      "-DENTT_PACKED_PAGE=128",
+      "-DENTT_NO_MIXIN",
+      "-DRAKNET_SUPPORT_IPV6=1",
+      "-fms-extensions"
+    ],
+    "probe_warning": "Clang accepts conditional offsetof for the polymorphic header layout with -Winvalid-offset warnings; the resulting offsets also match independent native caller/constructor accesses.",
+    "BlockSource_vtable_rva": "0xe725730",
+    "getBlockEntity_const_rva": "0xc0f7b70",
+    "nonvirtual_nonconst_comparison_rva": "0xc0f7b00",
+    "const_nonconst_distinction": "The virtual const accessor is a separate 107-byte implementation, not the non-const helper used by the type-0 caller."
+  },
+  "source_lookup": [
+    {
+      "rva": "0xabca640",
+      "size": 80,
+      "sha256": "6caf7e767cd5f86483dd3b2a5c2009c00150feea372680986d80aaf0827f0a54"
+    },
+    {
+      "rva": "0xc0f7b00",
+      "size": 107,
+      "sha256": "9498b5979d73d97111504ba1bb8fe0114fed7b9a88dac90198d57d748170f292"
+    },
+    {
+      "rva": "0xc0f7b70",
+      "size": 107,
+      "sha256": "36cab4406e21d0092a57c6ea4ae468d46357b31a19351eeaf4dce1ddcfa8abe5"
+    }
+  ],
+  "kind": "linux-linked-storage-abi-research-not-ui-qualification",
+  "caller": {
+    "rva": "0x44fe540",
+    "size": 3071,
+    "sha256": "c6ca07f81da451bc86dadf33035287ae560c4acb6c271f2f74e2470b6eb75585",
+    "block_branch": "0x44fed46",
+    "factory_call": "0x44fed8e",
+    "arguments": "Player* in rdi; const BlockPos* in rsi; signed ContainerType in edx; ActorUniqueID value in rcx; unsigned BlockActorType in r8d",
+    "accepted_native_actor_types": [
+      2,
+      23,
+      25,
+      42
+    ]
+  },
+  "factory": {
+    "rva": "0x4502000",
+    "size": 1550,
+    "sha256": "150a860837f231c587480396c7668e66c94294e66c9ecd67a98b867abae3d66a",
+    "model_rtti": "26ChestContainerManagerModel",
+    "model_vtable_rva": "0xe33bdc8",
+    "observed_fields": {
+      "player": 48,
+      "position": 304,
+      "actor_unique_id": 320,
+      "block_actor_type": 328
+    },
+    "ownership": "BDS allocates and owns the model, storage and transactions."
+  },
+  "enabled_sources": [
+    {
+      "id": "enderchest",
+      "block": "minecraft:ender_chest",
+      "container_type": 0,
+      "block_actor_type": 23
+    },
+    {
+      "id": "barrel",
+      "block": "minecraft:barrel",
+      "container_type": 0,
+      "block_actor_type": 42
+    }
+  ],
+  "entity_factory_rejected": {
+    "rva": "0x4501a10",
+    "size": 1518,
+    "sha256": "778b999494b51d19e9022aa9f175aec91a5801bf504395a6f1f78183e357cecc",
+    "reason": "Distinct three-argument entity overload; never used for these block sources."
+  },
+  "source_resolver": {
+    "rva": "0xb2d4ac0",
+    "size": 334,
+    "sha256": "837b2d2a551de7712d9705e6606c9ae850133384065291293fe26667e9f349c9",
+    "ender_branch": "0xb2d4b01 compares actor type23; 0xb2d4b07 returns the player-owned pointer at offset0x7b8. Other block types use the verified source/component lookup. No provider item replacement or source actor fabrication."
+  },
+  "model_initialization": {
+    "rva": "0x5392f10",
+    "size": 2964,
+    "sha256": "16754566aca342bd1f9c7bc84a2c5c50de7bb56cdff5847628ad81d99845df71"
+  },
+  "compiled_signature": {
+    "probe_sha256": "b84fd5b4bf9c750ee5e0ccf73f5948780724b529eb0460fe6001a3a318334df4",
+    "llvm_ir_sha256": "52458ff73f6cbaa2341e93b52b075814d7de5005c78c781b6bf9ff1444da74eb",
+    "flags": [
+      "-std=c++20",
+      "-stdlib=libc++",
+      "-DNDEBUG",
+      "-DENTT_SPARSE_PAGE=2048",
+      "-DENTT_PACKED_PAGE=128",
+      "-DENTT_NO_MIXIN",
+      "-DRAKNET_SUPPORT_IPV6=1",
+      "-fms-extensions"
+    ],
+    "argument_sizes": [
+      1,
+      8,
+      1
+    ],
+    "llvm_calls": "(ptr Player, ptr BlockPos, i8 signext0, i64 -1, i8 zeroext23 or42)",
+    "header_sha256": {
+      "src/bedrock/world/events/player_events.h": "57ba88daa951733740463179fbcea2e86c4472ecdde30d5f1a821bf7e542dcca",
+      "src/bedrock/world/container.h": "ef8ccbd038c011b59923eb03d06b5be9080802cf418b60dcff6a40b51b0b36c4",
+      "src/bedrock/world/level/block/actor/block_actor_type.h": "55d74b2cf5f2d131ddee38b167db3a18839ce5962c5d6f4a476d6c229a3b0c9f"
+    }
+  },
+  "admission": "Exact Linux fixture only; opt-in original mode; explicit source dimension/position/permission; nearby loaded matching real block actor; captured actor address and guards rechecked. Ender inventory size27 checked through the public API before opening. Model pointer, position, actor sentinel and type verified after factory. No Windows admission or stock-client qualification implied by this record.",
+  "incomplete": [
+    "Unrestricted remote or source-free Ender access",
+    "Virtual vaults and custom/persistent storage writes",
+    "Source configuration migration for aliases",
+    "Other storage layouts including double chest",
+    "Adversarial source replacement and save/crash recovery",
+    "Full catalog qualification"
+  ]
+}
