@@ -102,9 +102,16 @@ with no open sessions, tickets or packet-observer refusals.
 
 ![Restored empty bundle has its original saved digest](images/native-saved-items/restored-read-command.png)
 
-The planned chest/form regressions on this artifact remain unrun because
-Windows refused to foreground Minecraft. Earlier UI evidence remains linked
-to its own source revision. This checkpoint does not qualify native editors,
+The [follow-up regression](../research/native-evidence/linux-a3fbf78-resumed-regression.json)
+on the same public artifact completed the previously blocked checks: reading
+six stones returned 120 saved bytes; the original 54-slot double chest opened
+and closed through the SDK; and a rendered form delivered one button callback.
+All tickets were released, with no failures or packet-observer refusals.
+The server stopped cleanly with unchanged item counts.
+
+![Original double chest opened through SDK1.3](images/native-saved-items/regression-double-chest.png)
+
+This checkpoint does not qualify native editors,
 writeback, reconstruction, recovery or the Windows saved-item adapter.
 See the [build and CI checkpoint](../research/native-evidence/checkpoint-a3fbf78.json)
 for the 16-test sanitizer run, 300,000 fuzz inputs and exact artifact hashes.
@@ -133,6 +140,20 @@ The public metadata roundtrip preserved unrelated saved bytes for the 62
 retained fixtures, but lost the declared empty-list types in both added controls.
 The direct native path preserved all 64. A future generic writer must preserve
 the native saved representation rather than rely on `getNbt()`/`setNbt()`.
+
+The [Linux inventory hook diagnostic](../research/linux-inventory-hooks.json)
+then exercised native save, container-change and force-balance setter hooks.
+Identical stone replacement kept the saved inventory bytes unchanged and
+advanced the setter counter, although BDS skipped its change notification.
+Vanilla quick-move advanced counters for both affected slots; restoration
+returned the complete inventory to its original digest. Disconnect cleared
+the watch and subsequent native saves continued through the original path.
+
+The bundle control exposed a remaining gap: vanilla extraction changed saved
+contents without advancing that bundle slot's counter. These three hooks
+alone cannot authorize an exclusive held-item edit. The source and exact
+fingerprints are retained with the diagnostic, while native mutation-path
+coverage, save barriers and crash recovery remain incomplete.
 
 ## C caller storage
 

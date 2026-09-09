@@ -8541,7 +8541,7 @@
       "libgcc_s.so.1",
       "libc.so.6"
     ],
-    "runtime_restriction": "SDK1.3 native saved-item reads passed selected Linux PC fixtures including filled bundle and byte-identical restoration. Legacy1.2 held observation remains unchanged and refuses bundles. Current chest/form regressions blocked by Windows foreground guard. Twenty-six original paths retain historical evidence. Native editors, writeback, recovery, Windows saved-item adapter and full migration remain incomplete."
+    "runtime_restriction": "SDK1.3 native saved-item reads passed selected Linux PC fixtures including filled bundle and byte-identical restoration. Legacy1.2 held observation remains unchanged and refuses bundles. Same-artifact stone/chest/form regressions passed in the supplemental run. Twenty-six original paths retain historical evidence. Native editors, writeback, recovery, Windows saved-item adapter and full migration remain incomplete."
   },
   "sdk_version": "1.2; ABI 1.0 and 1.1 prefixes retained",
   "sanitizers": {
@@ -8588,5 +8588,7 @@
   "native_held_inspection_smoke": "research/native-evidence/linux-f1bbfbd-held-smoke.json",
   "native_held_initial_smoke": "research/native-evidence/linux-ea7c6cf-held-smoke.json",
   "native_dynamic_observation_smoke": "research/native-evidence/linux-170c27b-dynamic-smoke.json",
-  "native_saved_item_read_smoke": "research/native-evidence/linux-a3fbf78-saved-item-smoke.json"
+  "native_saved_item_read_smoke": "research/native-evidence/linux-a3fbf78-saved-item-smoke.json",
+  "native_saved_item_regression": "research/native-evidence/linux-a3fbf78-resumed-regression.json",
+  "native_inventory_hook_diagnostic": "research/linux-inventory-hooks.json"
 }

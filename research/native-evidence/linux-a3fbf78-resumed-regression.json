@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "kind": "public-native-sdk-regression",
+  "source_revision": "a3fbf78f77640ac29757986bfa7532bde3789376",
+  "all_ui_acceptance": "not-qualified",
+  "server_started_utc": "2026-09-09T21:10:21Z",
+  "clean_stop_utc": "2026-09-09T21:22:16Z",
+  "installed_and_mapped_plugins": {
+    "endstone_onistone_vcf.so": "2b46202b649a59e566b23538c48e44d9745ce4b9c20c71de3ca47ddf90d7efd4",
+    "endstone_vcf_catalog_showcase.so": "9534072633c8b61d83af92ed861e4b916d402b0b0eb6f5a9a44bdd02b6cd16f4",
+    "endstone_vcf_native_passthrough.so": "614d125090f0724120123bf57d16a76b56137ed09321ae2dd5abbe0237fa844e"
+  },
+  "private_probe_installed": false,
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "checks": {
+    "saved_read": {
+      "slot": 7,
+      "type": "minecraft:stone",
+      "amount": 6,
+      "native_bytes": 120,
+      "successes": 1,
+      "refusals": 0
+    },
+    "original_double_chest": {
+      "source": [
+        1,
+        91,
+        7
+      ],
+      "rendered_slots": 54,
+      "opens": 1,
+      "sdk_closes": 1,
+      "failures": 0,
+      "guard_checks": 326,
+      "outstanding_tickets": 0
+    },
+    "form": {
+      "rendered": true,
+      "button_callbacks": 1,
+      "outstanding_tickets": 0
+    },
+    "provider_sessions": 0,
+    "packet_observer": {
+      "registries": 1,
+      "complete_snapshots": 1,
+      "queued": 0,
+      "refused": 0
+    },
+    "zero_removal_item_counts": {
+      "stone": 6,
+      "bundle": 1,
+      "undyed_shulker_box": 1
+    },
+    "inventory_mutations": false
+  },
+  "screenshots": [
+    {
+      "path": "docs/images/native-saved-items/regression-stone-read.png",
+      "sha256": "0e700f9f9987b76dc5ac12767572a0d500f9f21c820e50b7dc45d4ce6022f5fc"
+    },
+    {
+      "path": "docs/images/native-saved-items/regression-double-chest.png",
+      "sha256": "d471d0b43334b5e8d9948e579f837c29466213fb1bf407b4800cce57c7adaf5a"
+    },
+    {
+      "path": "docs/images/native-saved-items/regression-form.png",
+      "sha256": "539ce4e6072c18ca6d3b97653ee8decc308e15b35947eef7e6c6f84f28490f08"
+    }
+  ],
+  "scope": "Completes the stone/chest/form regressions blocked by foreground focus in the earlier SDK1.3 run. No new catalog mode, held writer, crash recovery or Windows qualification."
+}

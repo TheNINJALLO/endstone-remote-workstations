@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "kind": "private-native-inventory-hook-diagnostic",
+  "all_ui_acceptance": "not-qualified",
+  "platform": "linux-x64",
+  "source_checkpoint": "a3fbf78f77640ac29757986bfa7532bde3789376",
+  "execution": {
+    "server_started_utc": "2026-09-09T21:24:40Z",
+    "clean_stop_utc": "2026-09-09T21:35:40Z",
+    "private_probe_sha256": "18cdb117c7d798d70552ead709dfbf5a44db311639e4cfa2de2cd4dcb2b671ea",
+    "installed_and_mapped_hashes_verified": true,
+    "private_probe_removed": true,
+    "remaining_public_plugins": {
+      "endstone_onistone_vcf.so": "2b46202b649a59e566b23538c48e44d9745ce4b9c20c71de3ca47ddf90d7efd4",
+      "endstone_vcf_catalog_showcase.so": "9534072633c8b61d83af92ed861e4b916d402b0b0eb6f5a9a44bdd02b6cd16f4",
+      "endstone_vcf_native_passthrough.so": "614d125090f0724120123bf57d16a76b56137ed09321ae2dd5abbe0237fa844e"
+    },
+    "world_backup_taken": true,
+    "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+    "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc"
+  },
+  "hook_machinery": {
+    "source": "https://github.com/kubo/funchook/blob/v1.1.3/include/funchook.h",
+    "runtime_dependency": "Pinned Endstone0.11.10 bundles funchook1.1.3. Its functions are local ELF symbols, resolved only after full runtime and function SHA256 admission. No separate funchook library installed.",
+    "targets": {
+      "inventory_save": "0xbcfdea0",
+      "container_changed": "0xade2e00",
+      "force_balance_setter": "0xb3cb4e0"
+    },
+    "abi": "Actual pinned Linux headers independently compiled: save hidden return first, virtual slot51/408; changed slot35/280; setter slot14/112. Runtime SDK setter caller independently disassembled.",
+    "lifetime": "Plugin pinned with RTLD_NODELETE before installation. Callback state and trampolines intentionally survive until process exit. Disable clears watched pointer; callbacks only compare pointer values and forward originals. No production unload/thread-safety qualification."
+  },
+  "results": {
+    "identical_stone_replacement": {
+      "native_inventory_bytes_unchanged": true,
+      "setter_calls": 1,
+      "change_notifications": 0,
+      "slot7_epoch": 1
+    },
+    "vanilla_quick_move": {
+      "affected_slots": [
+        7,
+        18
+      ],
+      "forward_and_return_observed": true,
+      "restored_inventory_digest": "54a465c497db058188c9f21f86ba0ba27b5ef7d0e15027f0e09908c4c967373c"
+    },
+    "bundle_negative_control": {
+      "slot": 19,
+      "filled_inventory_digest": "c52445c7f0d5aaec9c759c177243ae5cd7df3528db865a1b544a438a67ce1b55",
+      "restored_inventory_digest": "54a465c497db058188c9f21f86ba0ba27b5ef7d0e15027f0e09908c4c967373c",
+      "epoch_before_extraction": 6,
+      "epoch_after_extraction": 6,
+      "finding": "Vanilla extraction changed bundle saved contents in place without a watched slot19 setter/change increment. Three-hook epochs alone are insufficient to detect all held-content mutations."
+    },
+    "native_saves": {
+      "watched_calls": 32,
+      "all_calls": 65,
+      "off_owner_thread_watched_callbacks_observed": 0,
+      "snapshot_pairs": 7,
+      "each_pair_byte_identical": true,
+      "restored_original_inventory_bytes": 6793,
+      "raw_snapshot_during_cursor_gestures": "Intermediate snapshots intentionally contain only native inventory state; they are not full cursor-plus-inventory transaction snapshots."
+    },
+    "cleanup": {
+      "watch_cleared_on_quit": true,
+      "additional_native_saves_after_quit": 2,
+      "watch_cleared_on_disable": true,
+      "clean_stop": true,
+      "provider_sessions": 0,
+      "packet_observer_refused": 0
+    }
+  },
+  "probe_source": [
+    {
+      "path": "research/native-probes/linux-inventory-hooks/probe.cpp",
+      "sha256": "b446616f2ad31689d6613e6e6704369b34a69607a6664039d3c5be8146d89385"
+    },
+    {
+      "path": "research/native-probes/linux-inventory-hooks/bridge.hpp",
+      "sha256": "9839a3d221106e62c9cf8819df326f6ba68f49a9797a7038b759cf56162a9b1a"
+    },
+    {
+      "path": "research/native-probes/linux-inventory-hooks/layout.cpp",
+      "sha256": "673166965c2857089a10200e135e77968794383349a511fc6d098a33dd2b7acd"
+    },
+    {
+      "path": "research/native-probes/linux-inventory-hooks/fingerprints.json",
+      "sha256": "a4b5688522b3213c92ef996e6aa655a3b7b185ac43ac06615f2d3fc013b30b85"
+    },
+    {
+      "path": "research/native-probes/linux-inventory-hooks/build.sh",
+      "sha256": "53bdf6ef63466a2e53f9407ba23d7e007c9686f48d2b2fac62f5db0df1ed2ce2"
+    }
+  ],
+  "limitations": [
+    "No complete mutation/ABA or exclusive held-item identity qualification: observed bundle extraction bypasses the watched slot hooks.",
+    "No save suppression, partial-write barrier, rollback, durable journal integration or crash recovery tests.",
+    "Only an identical pre-existing six-stone SDK replacement was performed by the probe; no live reconstruction writer or item editor.",
+    "No unknown native signature, guessed Windows offset, second client or Windows execution used.",
+    "Raw item/book NBT, account identifiers, server binaries and disassembly remain private."
+  ]
+}

@@ -73,5 +73,6 @@
       "sha256": "5b56f3ded647c547380823b1ae1ba052becd2da6d4394285c530ecd61e0fda2e"
     },
     "limit": "Core/model/parser/runtime identity tests; no instrumented proprietary BDS UI. Standalone package consumers compile without inherited sanitizer flags."
-  }
+  },
+  "supplemental_runtime_evidence": "research/native-evidence/linux-a3fbf78-resumed-regression.json"
 }
