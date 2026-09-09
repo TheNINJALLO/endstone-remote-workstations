@@ -16,8 +16,10 @@
 #include <cstring>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <random>
 #include <typeinfo>
+#include <type_traits>
 
 namespace oni::vcf::platform::linux_native {
 namespace {
@@ -26,10 +28,19 @@ uint64_t milliseconds(){return static_cast<uint64_t>(std::chrono::duration_cast<
 uint8_t next_window(uint8_t value){return value<99?value+1:1;}
 struct Point {int32_t x=0,y=0,z=0;bool operator==(const Point&)const=default;};
 static_assert(sizeof(Point)==12&&alignof(Point)==4);
+// Independently compiled against the pinned Linux headers: the trivial
+// variant<BlockPos, ActorUniqueID> occupies 24 bytes and is passed by value
+// on the System V stack. It is not the Windows pointer argument.
+struct alignas(8) CraftOwner {Point position;uint32_t padding=0,index=0,tail=0;};
+struct alignas(8) CraftContext {uintptr_t player;uint8_t type=1;std::array<uint8_t,7> padding{};Point position;uint32_t padding2=0,index=2,tail=0;};
+static_assert(sizeof(CraftOwner)==24&&alignof(CraftOwner)==8&&offsetof(CraftOwner,index)==16&&std::is_trivially_copyable_v<CraftOwner>);
+static_assert(sizeof(CraftContext)==40&&alignof(CraftContext)==8&&offsetof(CraftContext,type)==8&&offsetof(CraftContext,position)==16&&offsetof(CraftContext,index)==32);
+std::string container_open(uint8_t window,uint8_t type,Point position);
 struct Spec {std::string_view id,block;uint8_t type;uintptr_t factory;std::string_view hash;};
 // Linux ELF RTTI, complete FDE extents and the independently compiled
 // PlayerOpenContainerEvent layout establish these System V caller arguments.
 constexpr Spec specs[]={
+ {"craft","minecraft:crafting_table",1,0x98ed100,"d69475a5f07ecae44aa9126d1b68cb41c0cd39d93a5d9fff750b357bc45b331e"},
  {"anvil","minecraft:anvil",5,0x44ff720,"697424f122bd3a97de419c970e16f6e85e99cc8125656f3723c0af6e3b6c98ad"},
  {"smithing","minecraft:smithing_table",33,0x44ff140,"d835340c6cb1bf828b393071aa1ca7aead64cc51642a94eb7c32b738a45a35b9"},
  {"cartography","minecraft:cartography_table",30,0x4500e20,"7adcc8b5ba6279c4dd57e84d2c7fdc1e4dbbd0f7ff567893b71db608db233853"},
@@ -107,8 +118,36 @@ struct Bridge {
   reinterpret_cast<void(*)(void*)>(bedrock+inventory_open_rva)(reinterpret_cast<void*>(state.player));
   return inspect(p).window;
  }
- uint8_t station(endstone::Player& p,const Spec& layout,const Point& position)const{
+ uint8_t craft(endstone::Player& p,const Spec& layout,const Point& position,const std::function<bool()>& proceed)const{
+  auto state=inspect(p);require(state.ready,VCF_CONFLICT);
+  Memory memory;
+  memory.function(bedrock+layout.factory,bedrock,layout.factory,322,layout.hash);
+  memory.function(bedrock+0x98ecab0,bedrock,0x98ecab0,361,"d76dcd0f69e26638885049865ea4c5fd8c965dbe11eb64d7e59e0cf9ebef5ce5");
+  memory.function(bedrock+0xbcd0510,bedrock,0xbcd0510,3477,"109958d21ff8b4b85fd0fa40d3e46a340c6debce82ee4e2b2cf820f3c2d69e6d");
+  auto stack=memory.field<uintptr_t>(state.player,2560);
+  auto callback=memory.field<uintptr_t>(memory.field<uintptr_t>(stack),6*8);
+  memory.function(callback,bedrock,0xbcd25a0,39,"4cfb5f6fc659853e72b02a33617414a751bff8f49b7c787ed71ae98fcafad255");
+  memory.readable(memory.field<uintptr_t>(state.player,1384),sizeof(uintptr_t));
+  auto window=reinterpret_cast<uint8_t(*)(void*,int8_t,CraftOwner)>(bedrock+layout.factory)(reinterpret_cast<void*>(state.player),1,CraftOwner{position});
+  // The creator notifies other plugins. Do not overwrite a context they
+  // opened or continue after the requesting consumer withdrew its request.
+  auto created=inspect(p);
+  require(created.player==state.player&&created.ready&&created.window==window&&window==next_window(state.window),VCF_CONFLICT);
+  require(proceed(),VCF_CLOSED);
+  Memory current;
+  require(current.field<uintptr_t>(state.player,2560)==stack&&current.field<uintptr_t>(current.field<uintptr_t>(stack),6*8)==callback,VCF_CONFLICT);
+  CraftContext context{state.player,1,{},position};
+  reinterpret_cast<void(*)(void*,const CraftContext*)>(callback)(reinterpret_cast<void*>(stack),&context);
+  auto activated=inspect(p);
+  // Crafting has no ContainerManagerModel; BDS owns its stack context.
+  require(activated.player==state.player&&!activated.ready&&!activated.manager&&activated.window==window,VCF_UNAVAILABLE);
+  require(proceed(),VCF_CLOSED);
+  p.sendPacket(46,container_open(window,1,position));
+  return window;
+ }
+ uint8_t station(endstone::Player& p,const Spec& layout,const Point& position,const std::function<bool()>& proceed)const{
   if(layout.block.empty())return open(p);
+  if(layout.type==1)return craft(p,layout,position,proceed);
   auto state=inspect(p);require(state.ready,VCF_CONFLICT);
   Memory memory;const auto function=bedrock+layout.factory;
   memory.function(function,bedrock,layout.factory,1502,layout.hash);
@@ -121,6 +160,7 @@ struct Bridge {
 void var(std::string& out,uint64_t value){do{auto b=static_cast<uint8_t>(value&127);value>>=7;out+=static_cast<char>(b|(value?128:0));}while(value);}
 void signed_var(std::string& out,int32_t value){var(out,(uint32_t(value)<<1)^(value<0?UINT32_MAX:0));}
 std::string block_update(Point point,uint32_t runtime){std::string out;signed_var(out,point.x);signed_var(out,point.y);signed_var(out,point.z);var(out,runtime);var(out,2);var(out,0);return out;}
+std::string container_open(uint8_t window,uint8_t type,Point position){std::string out{static_cast<char>(window),static_cast<char>(type)};signed_var(out,position.x);signed_var(out,position.y);signed_var(out,position.z);var(out,1);return out;}
 Point projection(endstone::Player& p){
  const auto location=p.getLocation();
  require(std::isfinite(location.getX())&&std::isfinite(location.getY())&&std::isfinite(location.getZ()));
@@ -226,7 +266,10 @@ struct NativeUi::Impl {
    if(!spec(v.kind)->block.empty())require(p->getDimension().getBlockAt(v.position.x,v.position.y,v.position.z)->getType()=="minecraft:air",VCF_CONFLICT);
    v.activating=true;v.attempted=true;
    uint8_t window;
-   try{window=bridge.station(*p,*spec(v.kind),v.position);}catch(...){v.activating=false;throw;}
+   try{window=bridge.station(*p,*spec(v.kind),v.position,[&]{
+    return !v.closing&&!v.superseded&&!v.close_seen&&allowed(*p,v)
+     &&p->getDimension().getBlockAt(v.position.x,v.position.y,v.position.z)->getType()=="minecraft:air";
+   });}catch(...){v.activating=false;throw;}
    v.activating=false;
    // Native sends can synchronously disable the requesting consumer. Its
    // close marks this borrowed view; tick owns the eventual erasure.

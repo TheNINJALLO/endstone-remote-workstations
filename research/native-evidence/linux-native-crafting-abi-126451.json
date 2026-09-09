@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "kind": "linux-native-crafting-abi-research-not-ui-qualification",
+  "architecture": "linux-x86_64-itanium-libc++",
+  "sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "compiler": "Clang 20.1.8",
+  "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "inventory_bridge_manifest": "research/native-evidence/linux-native-abi-126451.json",
+  "header": "src/bedrock/world/events/player_events.h",
+  "header_sha256": "57ba88daa951733740463179fbcea2e86c4472ecdde30d5f1a821bf7e542dcca",
+  "layout_probe_sha256": "185f05347a44371637a310f018c1bfe5718619274d775e2d801c362edb4bd62a",
+  "layout_ir_sha256": "12c177625cef5637e5c1fbf66dcf0e8f4632c0939d6a1df12905cb104f9a014c",
+  "layout_flags": [
+    "-std=c++20",
+    "-stdlib=libc++",
+    "-DNDEBUG",
+    "-DENTT_SPARSE_PAGE=2048",
+    "-DENTT_PACKED_PAGE=128",
+    "-DENTT_NO_MIXIN",
+    "-DRAKNET_SUPPORT_IPV6=1",
+    "-fms-extensions"
+  ],
+  "layout": {
+    "PlayerOpenedContainerEvent": 56,
+    "Owner_variant_size": 24,
+    "Owner_variant_alignment": 8,
+    "Owner_variant_trivially_copyable": true,
+    "Owner_variant_discriminator_offset": 16,
+    "Owner_BlockPos_index": 0,
+    "CraftContext_size": 40,
+    "CraftContext_alignment": 8,
+    "CraftContext_player_offset": 0,
+    "CraftContext_type_offset": 8,
+    "CraftContext_position_offset": 16,
+    "CraftContext_discriminator_offset": 32,
+    "CraftContext_BlockPos_index": 2,
+    "Player_subscribers_offset": 1384
+  },
+  "caller": {
+    "rva": "0x44fe540",
+    "function_size": 3071,
+    "craft_branch_rva": "0x44fe9be",
+    "creator_arguments": "Player* in rdi, signed ContainerType byte in esi, 24-byte trivial Owner aggregate by value on the System V stack",
+    "context_arguments": "stack manager in rdi, pointer to 40-byte context in rsi; live vtable slot 6"
+  },
+  "functions": [
+    {
+      "rva": "0x98ecab0",
+      "size": 361,
+      "sha256": "d76dcd0f69e26638885049865ea4c5fd8c965dbe11eb64d7e59e0cf9ebef5ce5"
+    },
+    {
+      "rva": "0x98ed100",
+      "size": 322,
+      "sha256": "d69475a5f07ecae44aa9126d1b68cb41c0cd39d93a5d9fff750b357bc45b331e"
+    },
+    {
+      "rva": "0xbcd25a0",
+      "size": 39,
+      "sha256": "4cfb5f6fc659853e72b02a33617414a751bff8f49b7c787ed71ae98fcafad255"
+    },
+    {
+      "rva": "0xbcd0510",
+      "size": 3477,
+      "sha256": "109958d21ff8b4b85fd0fa40d3e46a340c6debce82ee4e2b2cf820f3c2d69e6d"
+    }
+  ],
+  "live_probe": {
+    "read_only": true,
+    "native_manager_present": false,
+    "native_context_depth": 1,
+    "native_window_counter": 1,
+    "context_callback_rva": "0xbcd25a0",
+    "context_vtable_slot": 6,
+    "probe_removed_before_client_smoke": true
+  },
+  "behavior": "The creator notifies PlayerOpenedContainerEvent and allocates a window ID. It does not allocate a ContainerManagerModel. The verified callback creates a BDS-owned stack context. The provider then sends ContainerOpen with the verified window and position.",
+  "admission": "Exact BDS/runtime admission plus complete function hashes, wrapper/vtable/context checks, non-null subscriber pointer, and reentrant ownership checks. Original gameplay only; no custom transaction qualification."
+}
