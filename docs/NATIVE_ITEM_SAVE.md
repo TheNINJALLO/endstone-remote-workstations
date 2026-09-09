@@ -155,6 +155,15 @@ alone cannot authorize an exclusive held-item edit. The source and exact
 fingerprints are retained with the diagnostic, while native mutation-path
 coverage, save barriers and crash recovery remain incomplete.
 
+A [fourth native request hook](../research/linux-inventory-request-hooks.json)
+now detects that tested extraction. It watches the player's verified native
+request manager and advances a separate revision around queued work. The
+bundle slot counter stayed unchanged during extraction, while the request
+revision advanced from6 to8. Empty-queue processing left the revision stable.
+Restoring the stones restored the entire saved inventory, and disconnect
+cleared both watches. This remains diagnostic code: lock admission, commit
+revalidation, writeback and recovery still need to consume these signals.
+
 ## C caller storage
 
 Use `read_inventory_item(owner, player, slot, &info, buffer, capacity,

@@ -1,0 +1,468 @@
+[
+  {
+    "rva": 73694464,
+    "size": 113,
+    "sha256": "2a6ae399ff7c753d791ebb5778c87448ffa32415ae1e56b692602efb4bdc0a15",
+    "runtime": false
+  },
+  {
+    "rva": 182332400,
+    "size": 3,
+    "sha256": "e18aacce29affcdddaa5f641ac1ec12552e0fe9d066e6408941b1792818b8619",
+    "runtime": false
+  },
+  {
+    "rva": 188527824,
+    "size": 11,
+    "sha256": "c89bed4cc80864b86ade7e67e1730f6c24ac7f47f53cc36575ce538d70daab6f",
+    "runtime": false
+  },
+  {
+    "rva": 196785696,
+    "size": 165,
+    "sha256": "dcd5c6cbcfbddebac8c6ae04ab495b1d562e52c3bb5c85f8affbfbb9aaa80189",
+    "runtime": false
+  },
+  {
+    "rva": 196809200,
+    "size": 770,
+    "sha256": "7b6403c99267bfa2082d1862ff24ba756c55781c6abc64e0f5dac193f0e04bc0",
+    "runtime": false
+  },
+  {
+    "rva": 196810400,
+    "size": 2921,
+    "sha256": "1fc45124fbc2c89b05d6dfcca3f3dcc73a09fa3c3631337759d6c5757751346d",
+    "runtime": false
+  },
+  {
+    "rva": 196933152,
+    "size": 23,
+    "sha256": "02e5c83f0316e13c3388e30163fdd27eeb80785bb3b1714fe035a91fa8a38d47",
+    "runtime": false
+  },
+  {
+    "rva": 198163056,
+    "size": 399,
+    "sha256": "fab9cb0b360507472e9748a10d99d906fd16695a864466f5c12c7dd9985f3985",
+    "runtime": false
+  },
+  {
+    "rva": 198171152,
+    "size": 11,
+    "sha256": "c89bed4cc80864b86ade7e67e1730f6c24ac7f47f53cc36575ce538d70daab6f",
+    "runtime": false
+  },
+  {
+    "rva": 198172320,
+    "size": 653,
+    "sha256": "4b7d37869be48dc71f48e6e4862e91ff818395e3edec553762202e441d4f66c0",
+    "runtime": false
+  },
+  {
+    "rva": 198172976,
+    "size": 818,
+    "sha256": "d4352e73f977a591ae248ce3ee3ebf7b3b5b700e3d658f94ef7f15ed8228481d",
+    "runtime": false
+  },
+  {
+    "rva": 198173824,
+    "size": 58,
+    "sha256": "d01f44d8ced8eb9c28a77dce95eb49e378a3a010022ae9cd9db95c7b264ecc19",
+    "runtime": false
+  },
+  {
+    "rva": 198173904,
+    "size": 25,
+    "sha256": "65513748ca370dd8ed6c201e9da617af53dfb2ff1c14b174e8537de4fb8ee4f9",
+    "runtime": false
+  },
+  {
+    "rva": 214437104,
+    "size": 23,
+    "sha256": "e5bee978ac6e25423b885b247b49dfb4a65a6eb2218ff7dc3b3be05445eea992",
+    "runtime": false
+  },
+  {
+    "rva": 214437136,
+    "size": 41,
+    "sha256": "fdf893165ae75742edbcaba1c541922011f4e2af3e2492cfffd4468ede1237b7",
+    "runtime": false
+  },
+  {
+    "rva": 214442672,
+    "size": 3,
+    "sha256": "3d46121154a8bc5c4ea2a5938d5db0a675d3fc61780d1385c9b65383d37689e8",
+    "runtime": false
+  },
+  {
+    "rva": 214450048,
+    "size": 168,
+    "sha256": "8270f7013548b983ba7d5e3939292d85be705945a90df6776ee218caeeb17185",
+    "runtime": false
+  },
+  {
+    "rva": 214450720,
+    "size": 427,
+    "sha256": "1c8b10b541c9a14c7afa7573146eed091741edd78985e02563499ba474cb97f0",
+    "runtime": false
+  },
+  {
+    "rva": 214469904,
+    "size": 3,
+    "sha256": "6115a78401aba78d95dc83b8c1c69737a32c44f5bc8919ee9c47af261e3643af",
+    "runtime": false
+  },
+  {
+    "rva": 214472320,
+    "size": 14,
+    "sha256": "6dee5deae26ad1c42a05b33a5860ed300a48981823482724c481a9cf0290bcae",
+    "runtime": false
+  },
+  {
+    "rva": 214473152,
+    "size": 144,
+    "sha256": "a18e663c92047655dd47d8eaa4f07c7df32f5a1680483040c3c37e103002d8f1",
+    "runtime": false
+  },
+  {
+    "rva": 214497040,
+    "size": 120,
+    "sha256": "7e95cc9feec617b52e2db9802f7b7afba578d7fff2a4f83bf0d8cbc6bb774ef9",
+    "runtime": false
+  },
+  {
+    "rva": 196835344,
+    "size": 2367,
+    "sha256": "c144aa9fa63f229e691912937cac78bd9cb505ecf0cec94c8e60d6efa925d781",
+    "runtime": false
+  },
+  {
+    "rva": 188527840,
+    "size": 1823,
+    "sha256": "5741cfc4ffbd1e89cb8d52af7c229e9ce775ad841cf8d1e674b467a09663df2a",
+    "runtime": false
+  },
+  {
+    "rva": 182332928,
+    "size": 66,
+    "sha256": "005182631bf9abfb28760293e9d6518101808396a229074ebaf0df1d0f5262e6",
+    "runtime": false
+  },
+  {
+    "rva": 2179024,
+    "size": 1061,
+    "sha256": "eec6e8ff9d3982c031a04e82533804f7fdad05b9d49419d95bd7e5490744ac1c",
+    "runtime": true
+  },
+  {
+    "rva": 2180096,
+    "size": 1747,
+    "sha256": "13e30b317fd2df008964da5260e907d89cd61a028cde1871a3546a1733d44ab0",
+    "runtime": true
+  },
+  {
+    "rva": 1906064,
+    "size": 71,
+    "sha256": "3095b4a1041f68a76329df764c77b493503910691580c3ec6b429c54507d7f27",
+    "runtime": true
+  },
+  {
+    "rva": 1860752,
+    "size": 13,
+    "sha256": "7cb1268d9be4e7b1120745be8cccfc4113298850210c467bebdf8d6f78dc812d",
+    "runtime": true
+  },
+  {
+    "rva": 1860784,
+    "size": 75,
+    "sha256": "09c590b7cad69996cfdd711903bf7245b2c68af96c14da8c07acdd395ca39416",
+    "runtime": true
+  },
+  {
+    "rva": 196805328,
+    "size": 639,
+    "sha256": "ba11246949e9c0d6f2bf2402ccb58cab25bbeea0e1e0ce71a601a61804073cc3",
+    "runtime": false
+  },
+  {
+    "rva": 214437184,
+    "size": 7,
+    "sha256": "c0aaa941b4b78a3377f57e1761480054a12af422e6930a97444acbea8c2661b7",
+    "runtime": false
+  },
+  {
+    "rva": 214463424,
+    "size": 7,
+    "sha256": "c0aaa941b4b78a3377f57e1761480054a12af422e6930a97444acbea8c2661b7",
+    "runtime": false
+  },
+  {
+    "rva": 192608688,
+    "size": 1319,
+    "sha256": "02ac6a6a60d3e13bec57fdd4a4a0f6cd534bcada1967cdaef9aff1bc4dd9470c",
+    "runtime": false
+  },
+  {
+    "name": "funchook_log_end",
+    "rva": 8530128,
+    "size": 329,
+    "sha256": "29c5b1734bd6389eef62e84c7e704971794350e4118dc36d4aaf5d7a058e38b9",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_disasm_init",
+    "rva": 8536480,
+    "size": 99,
+    "sha256": "8faa110f773841836ab9c629fceeeebca5e04a5b558d743b5eb4afddd098d4a4",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_page_alloc",
+    "rva": 8534032,
+    "size": 1048,
+    "sha256": "535c7c0cc009a18e8797b0c5d5cf4eb8ee18143846f8b6c5b39a1b04a970d874",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_disasm_cleanup",
+    "rva": 8536592,
+    "size": 1,
+    "sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_install",
+    "rva": 8531568,
+    "size": 262,
+    "sha256": "e04b0d75b8ff08b5b04b31082b1d9a9ae35eaa0fa0e005b949585b38c4b0508d",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_page_avail",
+    "rva": 8533744,
+    "size": 162,
+    "sha256": "471c13dea1e2db66b8ed6a6701d7135dd993e674d0dc5faef15412b2bf24bdb3",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_log",
+    "rva": 8529824,
+    "size": 297,
+    "sha256": "ab00dc4328145bef075c71a6eb47e2a98d6bf6b251b618e64a1a19899bf911ad",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_make_trampoline",
+    "rva": 8532704,
+    "size": 805,
+    "sha256": "bbb42af8b937a72c6a50397943455952d62874802bb83f99b6b8fd2544aa55e0",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_disasm_next",
+    "rva": 8536608,
+    "size": 37,
+    "sha256": "086ef16a40d2263e8d6614a3db27e295748eb71d6a0cfcfbfca49843653999b6",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_fix_code",
+    "rva": 8533520,
+    "size": 209,
+    "sha256": "554986f5c027e595696ab3430332e39c31c7dba6efa3dff94111cde5f477e48f",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "_ZN8endstone4core17EndstoneInventory7setItemEiNSt3__18optionalINS_9ItemStackEEE",
+    "rva": 1860864,
+    "size": 327,
+    "sha256": "f786bbfc01ec48e2032ff996514a47e745e8a0533334de1316053c5cd478dd6a",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_set_debug_file",
+    "rva": 8532272,
+    "size": 50,
+    "sha256": "f94264b527bfe1969fe7f9e56b68a1f1697b0f3757a47630fb5a11d388eec7fd",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_uninstall",
+    "rva": 8531840,
+    "size": 241,
+    "sha256": "5d782e8c49dedd24e97d3d41c6ec698c24ce35ddad298c1e6211a3d1f2ffbf5b",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_create",
+    "rva": 8529696,
+    "size": 126,
+    "sha256": "8fa58e8ed6b13f8659e449c72b5b2da27aad07c468516abc9ad56f7943b76f7e",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_prepare",
+    "rva": 8530464,
+    "size": 1098,
+    "sha256": "fb0f63162e992162332a8161e56e93dc55b648093b960c032b8b607855fad980",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_disasm_x86_rip_relative",
+    "rva": 8536768,
+    "size": 1617,
+    "sha256": "46683854124d079a04809fdc83a6e1a4aa49b8f71aadf7573e5f442010717839",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_alloc",
+    "rva": 8533936,
+    "size": 61,
+    "sha256": "626585762b0d5c7a116ec38c2985592b5ae870bca4e8dadf1adcf5be3313f365",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_page_free",
+    "rva": 8535088,
+    "size": 130,
+    "sha256": "5b3f8dd24fd092b51fb970eb8dee5329de50aaa3bebc24f917341086d120c6b5",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_resolve_func",
+    "rva": 8536048,
+    "size": 429,
+    "sha256": "50baeca77737d2c53753c8bb482b3a8c64bdcac9b837e2d920d4df01151e0aa7",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_destroy",
+    "rva": 8532096,
+    "size": 152,
+    "sha256": "423631edddb9b8ce9ba8c3ca59523d987369319a6dcbda0f6bb66294e0fe59ec",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_strerror",
+    "rva": 8533920,
+    "size": 5,
+    "sha256": "518a051b54f725d7a2de023f997e350c59d4afaf3a69db8a498fac1790c387fd",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_unprotect_begin",
+    "rva": 8535520,
+    "size": 382,
+    "sha256": "cf89f4f9020f1c42da853a8c3b021c28ed7b1428655797d347ae9ae41d3c4c6a",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_page_protect",
+    "rva": 8535232,
+    "size": 135,
+    "sha256": "b249e6b54c05a0f97cb68536e5d7d872a114ae5a015e55de28924b5956703402",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_error_message",
+    "rva": 8532256,
+    "size": 5,
+    "sha256": "fe5d0803355430c1264111b6534266cc4ee3a28ac617487a8aa094b3f344c0e9",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_disasm_log_instruction",
+    "rva": 8536656,
+    "size": 105,
+    "sha256": "4e1e064b52a93e774ac8e438a748d6fa2679e04968fcb620d568234778959e07",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_set_error_message",
+    "rva": 8532336,
+    "size": 354,
+    "sha256": "091ebfab5316308757a59ed7de4014805bff4bc4df8c3b1345d0e79fdb4ae8e0",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_unprotect_end",
+    "rva": 8535904,
+    "size": 141,
+    "sha256": "10f37c395cd83c0a1c58c9044ae835a72d02441795754be488714001d4f278c6",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_page_unprotect",
+    "rva": 8535376,
+    "size": 135,
+    "sha256": "06f45d4de1820380c4a7a7d6b72f2dc3eb0bb24fc83a7e4ae81f7956bf28b016",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "name": "funchook_free",
+    "rva": 8534000,
+    "size": 32,
+    "sha256": "5b4d6f481dea789792be4610bd114fcf96affe2ae149aec660f32369aa1f5848",
+    "runtime": true,
+    "section": ".symtab"
+  },
+  {
+    "rva": 197994240,
+    "size": 273,
+    "sha256": "ee3df4349e01d7b3dd76f6f4cfc10cdb0a00566bff5d28ba65cbf32739700659",
+    "runtime": false
+  },
+  {
+    "rva": 197994992,
+    "size": 8934,
+    "sha256": "5c8e7279a00e10993d28469058fe2b3b62b3f4a1a6214dba6d9e44e5462c0962",
+    "runtime": false
+  },
+  {
+    "rva": 198003936,
+    "size": 319,
+    "sha256": "1bc0e782c43ea4a3117f734d14897be38682eb9047a53a4fcf5d13014f9421a8",
+    "runtime": false
+  },
+  {
+    "rva": 198004256,
+    "size": 2875,
+    "sha256": "30e3f0df9885d35f3de1627d28f122501d104756bda69297f99bd8a57fc4e53b",
+    "runtime": false
+  },
+  {
+    "rva": 198007136,
+    "size": 279,
+    "sha256": "557cb5a98ade7fabd52309442d04a9e8c5d7a303cb0ac7a3fa56249102d604d9",
+    "runtime": false
+  }
+]

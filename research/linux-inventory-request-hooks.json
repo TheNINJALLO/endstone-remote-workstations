@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "kind": "private-native-inventory-request-revision-diagnostic",
+  "platform": "linux-x64",
+  "all_ui_acceptance": "not-qualified",
+  "source_checkpoint": "a3fbf78f77640ac29757986bfa7532bde3789376",
+  "prior_negative_control": "research/linux-inventory-hooks.json",
+  "execution": {
+    "server_started_utc": "2026-09-09T21:57:57Z",
+    "clean_stop_utc": "2026-09-09T22:03:36Z",
+    "private_probe_sha256": "e5db5c9bad784cf0b6cbb662fd16074c612f47658a3a990ed4047638358dc627",
+    "installed_and_mapped_hashes_verified": true,
+    "private_probe_removed": true,
+    "remaining_public_plugins": {
+      "endstone_onistone_vcf.so": "2b46202b649a59e566b23538c48e44d9745ce4b9c20c71de3ca47ddf90d7efd4",
+      "endstone_vcf_catalog_showcase.so": "9534072633c8b61d83af92ed861e4b916d402b0b0eb6f5a9a44bdd02b6cd16f4",
+      "endstone_vcf_native_passthrough.so": "614d125090f0724120123bf57d16a76b56137ed09321ae2dd5abbe0237fa844e"
+    },
+    "world_backup_taken": true,
+    "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+    "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+    "load_rejected_preflight": {
+      "sha256": "c35eef32f4542854fcaa0da81ec7631fb9eadcb144ba57bd41ab937956c0f48f",
+      "reason": "Including native Player header in executable probe emitted an unresolved RakNet SystemAddress constructor. Loader rejected the plugin before enable. No fourth-hook test or player connection occurred in that startup. Corrected executable uses independently compiled field ABI; full Player header is confined to LLVM layout fixture.",
+      "preflight_clean_stop_utc": "2026-09-09T21:55:17Z"
+    }
+  },
+  "native_abi": {
+    "queued_request_process": "0xbcd29f0",
+    "function_extent_and_callers": [
+      {
+        "rva": "0xbcd2700",
+        "size": 273,
+        "sha256": "ee3df4349e01d7b3dd76f6f4cfc10cdb0a00566bff5d28ba65cbf32739700659"
+      },
+      {
+        "rva": "0xbcd29f0",
+        "size": 8934,
+        "sha256": "5c8e7279a00e10993d28469058fe2b3b62b3f4a1a6214dba6d9e44e5462c0962"
+      },
+      {
+        "rva": "0xbcd4ce0",
+        "size": 319,
+        "sha256": "1bc0e782c43ea4a3117f734d14897be38682eb9047a53a4fcf5d13014f9421a8"
+      },
+      {
+        "rva": "0xbcd5960",
+        "size": 279,
+        "sha256": "557cb5a98ade7fabd52309442d04a9e8c5d7a303cb0ac7a3fa56249102d604d9"
+      }
+    ],
+    "evidence": "Four embedded request-processing diagnostic string references converge on the same ELF FDE. Three disassembled native callers tail-jump with this in RDI. The callee consumes no other live input register and returns void. This is binary-derived ABI; no declaration for this manager exists in the pinned public SDK.",
+    "manager_vtable": "0xe6c65f8",
+    "player_manager_field_offset": 2560,
+    "field_verification": "Actual pinned Player header independently compiled to LLVM, then live field dereference admitted only after readable range and exact native manager vtable checks.",
+    "queue_count_offset": 144,
+    "queue_layout": "Native callee reads size at144 and start at136. Independent libc++ deque fixture gives48-byte deque and size at40, consistent with native queue base104.",
+    "operation": "For the watched native manager with a nonempty queue, increment request revision on entry and exit, maintain active depth through RAII, and forward the original function. Empty queues do not invalidate. Previous save/change/set hooks retained."
+  },
+  "results": {
+    "identical_stone_replacement": {
+      "unchanged_saved_inventory": true,
+      "setter_calls": 1,
+      "change_notifications": 0,
+      "request_revision": 0
+    },
+    "filled_bundle_before_extraction": {
+      "slot19_epoch": 4,
+      "request_batches": 3,
+      "request_revision": 6,
+      "inventory_bytes": 6793,
+      "inventory_digest": "c52445c7f0d5aaec9c759c177243ae5cd7df3528db865a1b544a438a67ce1b55"
+    },
+    "after_vanilla_extraction_before_cursor_return": {
+      "slot19_epoch": 4,
+      "request_batches": 4,
+      "request_revision": 8,
+      "request_depth": 0,
+      "inventory_bytes": 6721,
+      "inventory_digest": "48caa17199e2bbcbcd26672675a15af15ed2dbc2b8f5da14ab79ee0dc8e79897",
+      "cursor": "Six extracted stones on the native client cursor, excluded from the36-slot native inventory snapshot."
+    },
+    "restored_inventory": {
+      "native_bytes": 6793,
+      "digest": "54a465c497db058188c9f21f86ba0ba27b5ef7d0e15027f0e09908c4c967373c",
+      "equals_initial": true,
+      "stone_count": 6,
+      "bundle_count": 1,
+      "request_revision": 10
+    },
+    "idle_control": {
+      "additional_processing_calls": 961,
+      "request_revision_unchanged": true
+    },
+    "cleanup": {
+      "inventory_and_manager_watches_cleared_on_quit": true,
+      "additional_saves_after_quit": 3,
+      "both_watches_clear_on_disable": true,
+      "request_depth": 0,
+      "off_thread_callbacks_observed": 0,
+      "provider_sessions": 0,
+      "packet_observer_refused": 0,
+      "clean_stop": true
+    }
+  },
+  "source": [
+    {
+      "path": "research/native-probes/linux-inventory-requests/probe.cpp",
+      "sha256": "ec0de6ecb62cacfd6aa28f2075295887823c7f054e1623028f66780837f9533a"
+    },
+    {
+      "path": "research/native-probes/linux-inventory-requests/bridge.hpp",
+      "sha256": "9839a3d221106e62c9cf8819df326f6ba68f49a9797a7038b759cf56162a9b1a"
+    },
+    {
+      "path": "research/native-probes/linux-inventory-requests/layout.cpp",
+      "sha256": "abf1a1145d6ec85546511139bf7cfbc491e71f6453f2462116ba3aa20339b096"
+    },
+    {
+      "path": "research/native-probes/linux-inventory-requests/fingerprints.json",
+      "sha256": "f8d67bc13606363fecbebe5c38d5dd8f599452f88ac94e41a2492a19d319bdee"
+    },
+    {
+      "path": "research/native-probes/linux-inventory-requests/build.sh",
+      "sha256": "db1d903352085e4366fe1dfaffa6289adfdb6b16a30482e370dc2d61a999cd83"
+    }
+  ],
+  "limitations": [
+    "Private native diagnostic, not a new public SDK lock or editor API.",
+    "Detects the tested queued client bundle edit; does not qualify every direct component mutator, native plugin edit or multiplayer interleaving.",
+    "No request cancellation, item reservation, save suppression, partial-write barrier, rollback or crash recovery.",
+    "An in-flight revision/depth observation must become part of admission and commit revalidation before it can authorize writes.",
+    "No Windows ABI or runtime inference; all catalog acceptance flags remain unqualified.",
+    "Raw account data, worlds, item/book NBT and disassembly stay private."
+  ]
+}

@@ -8590,5 +8590,6 @@
   "native_dynamic_observation_smoke": "research/native-evidence/linux-170c27b-dynamic-smoke.json",
   "native_saved_item_read_smoke": "research/native-evidence/linux-a3fbf78-saved-item-smoke.json",
   "native_saved_item_regression": "research/native-evidence/linux-a3fbf78-resumed-regression.json",
-  "native_inventory_hook_diagnostic": "research/linux-inventory-hooks.json"
+  "native_inventory_hook_diagnostic": "research/linux-inventory-hooks.json",
+  "native_inventory_request_hook_diagnostic": "research/linux-inventory-request-hooks.json"
 }
