@@ -16,8 +16,8 @@ fingerprints. The exact allowed files are:
 | Endstone 0.11.10, CPython 3.11 Linux wheel runtime | `ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc` | `ba6af2ee50effc20b461a2fbef80e145ad6f6a51` |
 
 Admission enables the public SDK integration. An opt-in experimental adapter
-also calls the verified player-inventory opener and six native workstation
-factories. Other Linux catalog adapters remain incomplete. Onistone and other Endstone builds need separate
+also calls the verified player-inventory opener, six native workstation
+factories and the separate crafting context path. Other Linux catalog adapters remain incomplete. Onistone and other Endstone builds need separate
 evidence and admission; a matching version label does not suffice.
 
 The provider promotes its existing loaded shadow copy with `RTLD_NOLOAD` and
@@ -121,17 +121,31 @@ handles.
 
 ## Experimental original workstations
 
-The same Linux flag now admits `anvil`, `smithing`, `stonecutter`, `grindstone`,
+The same Linux flag now admits `craft`, `anvil`, `smithing`, `stonecutter`, `grindstone`,
 `loom` and `cartography` with `VCF_NATIVE_CONTEXT`. The
 [workstation SDK example](examples/linux-native-workstations.md) documents
 installation, dependency use, actual screenshots and exact smoke results.
-Three-by-three `craft` has a different ABI and remains unavailable on Linux.
+Three-by-three `craft` uses a separate verified Linux ABI path, added in `7aacb36`.
 
 The [workstation ABI manifest](../research/native-evidence/linux-native-workstations-abi-126451.json)
 extends the earlier inventory research. Linux ELF RTTI, complete unwind ranges,
 caller arguments and independently compiled event layouts establish six
 factory identities. Each complete function is hashed before invocation.
 BDS allocates and owns the resulting native manager and its original gameplay.
+
+The [crafting ABI manifest](../research/native-evidence/linux-native-crafting-abi-126451.json)
+records a 24-byte owner passed by value on the System V stack and a live-verified
+context callback receiving a 40-byte descriptor. Crafting uses a BDS-owned
+stack context with no container manager. After verifying activation, the
+provider sends the matching ContainerOpen packet. Its complete native function
+hashes and reentrant ownership checks are separate from the six factories.
+
+The [exact `7aacb36` crafting run](../research/native-evidence/linux-7aacb36-crafting-smoke.json)
+passed ordinary and Shift-click recipe output, SDK closure with unused inputs,
+compass-triggered opening, ingredient disconnect/reconnect, and `/workbench`.
+Stonecutter, shared-inventory closure and the SDK form also passed regression
+checks. Four example opens/closes and the separate alias ticket returned to
+zero provider sessions. Clean shutdown completed; crash recovery was not tested.
 
 The adapter projects a client-side workstation onto a nearby real-air position,
 waits for the ordered client reply, and requires the matching native window,

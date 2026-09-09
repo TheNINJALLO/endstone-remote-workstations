@@ -1,7 +1,7 @@
 # Native workstation SDK example on Linux
 
-The experimental Linux adapter opens **anvil, smithing, stonecutter, grindstone,
-loom and cartography** through the native C++ SDK. The screenshots below come
+The experimental Linux adapter opens **crafting, anvil, smithing, stonecutter,
+grindstone, loom and cartography** through the native C++ SDK. The screenshots below come
 from a stock Windows Bedrock 1.26.45 client connected to the isolated Linux
 Endstone 0.11.10 / BDS 1.26.45.1 server.
 
@@ -24,8 +24,9 @@ remain incomplete. The full-catalog release gate remains **NOT QUALIFIED**.
    `vcf.examples.passthrough`. The example's permission defaults to operator.
 4. Run `/vcf_native anvil`, or choose another entry below.
 
-| Command | Original operation observed in this build |
+| Command | Original operation observed in the linked smoke records |
 |---|---|
+| `/vcf_native craft` | 3×3 pickaxe recipe, ordinary/Shift-click output, unused-input return and ingredient reconnect |
 | `/vcf_native anvil` | Rename, one-level cost and sword delivery |
 | `/vcf_native smithing` | Netherite upgrade with template and ingredient consumption |
 | `/vcf_native stonecutter` | Stone-brick selection, output and unused-input return |
@@ -33,9 +34,31 @@ remain incomplete. The full-catalog release gate remains **NOT QUALIFIED**.
 | `/vcf_native loom` | Red saltire selection and patterned-banner delivery |
 | `/vcf_native cartography` | Map expansion to level 1/4 and paper consumption |
 
-`craft` still requires a separate Linux ABI implementation. The four shared
-inventory roles use the [real-inventory example](linux-native-inventory.md).
+The four shared inventory roles use the [real-inventory example](linux-native-inventory.md).
 Other catalog entries retain their individual [matrix results](../CAPABILITY_MATRIX.md).
+
+## Three-by-three crafting
+
+Source `7aacb36` adds the independently verified Linux crafting context.
+Run `/vcf_native craft`, or use the preserved `/workbench` alias. For a player
+interaction, run `/vcf_native bind craft`, hold a compass, then sneak and
+right-click. The dependency request is the same as the example below with
+canonical ID `craft` and `VCF_NATIVE_CONTEXT`.
+
+![Two wooden-pickaxe recipes placed in the native 3×3 grid](../images/native-linux-crafting/recipe.png)
+
+An ordinary click delivered one pickaxe. SDK closure returned the remaining
+three planks and two sticks. Those ingredients also survived a controlled
+disconnect with the recipe still in the grid. Reopening through `/workbench`
+and Shift-clicking delivered the second pickaxe and consumed the ingredients.
+
+![Crafted pickaxe delivered into inventory, with unused ingredients still in the grid](../images/native-linux-crafting/delivered.png)
+
+The [exact crafting smoke record](../../research/native-evidence/linux-7aacb36-crafting-smoke.json)
+identifies the provider, client, counters and five screenshots. It also records
+stonecutter, shared-inventory and form regressions. The six workstation
+screenshots below retain their separate `ca30255` evidence. Neither run
+qualifies custom recipes, custom inventory writes or crash/save recovery.
 
 ## Use the provider as a dependency
 

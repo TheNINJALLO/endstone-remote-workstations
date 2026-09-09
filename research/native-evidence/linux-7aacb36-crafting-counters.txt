@@ -1,0 +1,21 @@
+[03:41:19 INFO]: <test-player> has 3 items that match the criteria
+[03:41:20 INFO]: <test-player> has 2 items that match the criteria
+[03:42:41 INFO]: <test-player> has 3 items that match the criteria
+[03:42:42 INFO]: <test-player> has 2 items that match the criteria
+[03:42:42 INFO]: <test-player> has 2 items that match the criteria
+[03:43:44 INFO]: Original-mode SDK example: opens 2, closes 2, failures 0, guard checks 358, outstanding tickets 0
+[03:45:06 INFO]: <test-player> has 3 items that match the criteria
+[03:45:07 INFO]: <test-player> has 2 items that match the criteria
+[03:45:07 INFO]: <test-player> has 2 items that match the criteria
+[03:45:54 ERROR]: Could not clear the inventory of <test-player>, no items to remove
+[03:45:54 ERROR]: Could not clear the inventory of <test-player>, no items to remove
+[03:45:55 INFO]: <test-player> has 3 items that match the criteria
+[03:47:11 INFO]: <test-player> has 2 items that match the criteria
+[03:47:11 ERROR]: Could not clear the inventory of <test-player>, no items to remove
+[03:47:44 INFO]: Original-mode SDK example: opens 4, closes 4, failures 0, guard checks 613, outstanding tickets 0
+[03:49:31 INFO]: Original-mode SDK example: opens 4, closes 4, failures 0, guard checks 613, outstanding tickets 0
+[03:49:31 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[03:49:31 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[03:49:31 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[03:49:32 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+Quit correctly

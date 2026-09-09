@@ -7,7 +7,7 @@ are experimental and do not demonstrate custom station gameplay.
 1. Build the native artifacts and copy `endstone_onistone_vcf.dll` and
    `endstone_vcf_native_passthrough.dll` to an isolated Windows server's plugins
    directory. No project wheel is needed. Linux uses the corresponding `.so`
-   files and admits six workstations plus the four shared inventory roles;
+   files and admits seven workstations plus the four shared inventory roles;
    see [the Linux example](../../docs/examples/linux-native-workstations.md).
 2. After first startup, stop the server and set
    `experimental_original_windows` (or `experimental_original_linux`) to `true` in
@@ -25,7 +25,7 @@ are experimental and do not demonstrate custom station gameplay.
 6. Inspect `/vcf_native status` for open, close, refusal and guard callback counts.
    Test each screen separately: `craft`, `anvil`, `grindstone`, `smithing`,
    `stonecutter`, `loom`, `cartography`, `inventory2x2`, `armor`, `offhand`,
-   `recipebook`. The Linux `craft` adapter remains unavailable.
+   `recipebook`. Each entry retains its own exact-build qualification record.
 
 The seven workstations explicitly choose `VCF_NATIVE_CONTEXT`, leaving original
 recipes and items owned by BDS. The four player roles explicitly choose

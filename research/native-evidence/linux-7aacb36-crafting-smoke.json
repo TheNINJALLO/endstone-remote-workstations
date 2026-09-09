@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-smoke-not-qualification",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "7aacb361a66eb5b927b692899fe3eccd8da43049",
+  "platform": "linux-x64",
+  "artifact_sha256": "ccba81331609e9ae98f451840136d3c22ce6334987c4e7a0afd7a75476fc13d7",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "started_utc": "2026-09-09T03:40:40Z",
+  "clean_stop_utc": "2026-09-09T03:49:58Z",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "loaded_shadow_copies_match_exports": true,
+  "one_bundled_libcxx_family": true,
+  "private_probe_installed": false,
+  "test_world": "Marked disposable Linux world; difficulty persisted as Peaceful.",
+  "observations": {
+    "craft_sdk": "Six planks/four sticks filled the five ingredient positions for two wooden pickaxes in the actual 3x3 grid. Ordinary click delivered one pickaxe. SDK close returned three planks/two sticks; read-only counts confirmed these and two total pickaxes (one existed before this exact run).",
+    "craft_compass_disconnect": "Bound craft to sneak/right-click with a compass. Opened through the interaction, selected the recipe, disconnected with three planks/two sticks in the grid. Reconnect counts confirmed all three planks, two sticks and two existing pickaxes.",
+    "craft_alias_shift": "/workbench opened the native 3x3 screen. Shift-click consumed the remaining three planks/two sticks and delivered one pickaxe. Counts: zero planks, zero sticks, three total pickaxes. Client Escape closed the provider-owned alias ticket.",
+    "stonecutter_regression": "One stone became one stone brick using selection and Shift-click. Counts: no stone, two stone bricks including one that existed before the run.",
+    "inventory2x2_regression": "Opened real inventory with previously equipped helmet/shield visible. SDK closure returned zero tickets while real inventory remained open until Escape. No item transfer through this entry in this run.",
+    "form_regression": "SDK form button dispatched exactly one consumer callback and returned to zero outstanding tickets."
+  },
+  "sdk_counters": {
+    "opens": 4,
+    "closes": 4,
+    "failure_callbacks": 0,
+    "guard_checks": 613,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "counter_limit": "The workbench alias is a separate provider-owned ticket and is not counted by the NativePassthrough example. Zero SDK failures is not a native transaction certificate.",
+  "harness_notes": [
+    "Two setup give commands succeeded once each; the harness initially expected Given instead of the actual Gave text and timed out. Neither command was replayed. The six-plank/four-stick setup was visually verified before crafting.",
+    "Read-only clear queries use maxCount=0. A no-items-to-remove response denotes zero matching items; no inventory deletion was requested."
+  ],
+  "not_qualified": [
+    "Custom recipes and plugin-owned crafting contents",
+    "Transaction callbacks and native custom inventory writes",
+    "Cross-save/crash recovery",
+    "Adversarial competing-plugin and permission lifecycle",
+    "Remaining full catalog on either platform",
+    "Other clients, multiplayer and devices",
+    "Onistone runtime admission"
+  ],
+  "earlier_anomalies": "The ca30255 grindstone initial extraction rejection and 171e0aa missing-plank/death observation remain in their original records; this crafting run does not resolve them.",
+  "screenshots": {
+    "recipe": {
+      "path": "docs/images/native-linux-crafting/recipe.png",
+      "sha256": "2c902df8c00b8656b3e2803836b701a54b5e100005b9bc3cb42c55c3f70d7e03",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "delivered": {
+      "path": "docs/images/native-linux-crafting/delivered.png",
+      "sha256": "bdec9c2bb0816b6ed4cfa5a937fa93e86a6f8ccda6e8c555daa15cfc601f5244",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "shift-click": {
+      "path": "docs/images/native-linux-crafting/shift-click.png",
+      "sha256": "ffbbf3a39e020e87f6ea338548e5ebfc108f8314bd7516044609674aaa08e0ea",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "compass-trigger": {
+      "path": "docs/images/native-linux-crafting/compass-trigger.png",
+      "sha256": "5df1409427ebd3b679e860ac6ebfbb2567750a6484a27a347170d614a36affab",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "before-disconnect": {
+      "path": "docs/images/native-linux-crafting/before-disconnect.png",
+      "sha256": "53ff1caf1181337763f800e0058cdd8bf11599d5aeae80a6b978c5e4d158a7a5",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-7aacb36-crafting-counters.txt",
+    "sha256": "79d77404d69587d8ebccf01276673c586cb0f7d6bbde7ae12914d998f6c59e0a"
+  },
+  "abi_manifest": "research/native-evidence/linux-native-crafting-abi-126451.json"
+}

@@ -5,7 +5,7 @@ Native C++20 container framework development for Linux x86-64 and Windows x64.
 
 Native builds produce a Windows DLL and a Linux ELF `.so`, a C ABI/C++ SDK and independent native consumers. Windows release/debug and the pinned Linux Docker build pass in CI. The isolated Windows Endstone 0.11.10 server has loaded the current provider and both consumer DLLs and verified the Windows function manifest. The project plugin has no Python runtime dependency.
 
-All 69 original catalog entries, aliases, permissions and source contracts are preserved in an immutable migration baseline. Catalog retention is distinct from native/custom gameplay implementation; the full-scope acceptance gate currently fails. Local Docker Desktop builds and runs the exact Linux Endstone/BDS fixture. A stock Windows client has tested SDK forms, four shared inventory roles and six opt-in native workstations: anvil, smithing, stonecutter, grindstone, loom and cartography. Selected vanilla transformations, equipment, recipe selection, a compass trigger and controlled disconnect cleanup have smoke evidence. An initial grindstone output rejection remains unresolved. Custom inventory writes, remaining catalog adapters and recovery remain incomplete. Exact Onistone runtime inputs remain unavailable.
+All 69 original catalog entries, aliases, permissions and source contracts are preserved in an immutable migration baseline. Catalog retention is distinct from native/custom gameplay implementation; the full-scope acceptance gate currently fails. Local Docker Desktop builds and runs the exact Linux Endstone/BDS fixture. A stock Windows client has tested SDK forms, four shared inventory roles and seven opt-in native workstations: crafting, anvil, smithing, stonecutter, grindstone, loom and cartography. Selected vanilla transformations, equipment, recipe selection, a compass trigger and controlled disconnect cleanup have smoke evidence. An initial grindstone output rejection remains unresolved. Custom inventory writes, remaining catalog adapters and recovery remain incomplete. Exact Onistone runtime inputs remain unavailable.
 
 - [Migration audit and remaining work](docs/MIGRATION_AUDIT.md)
 - [Current implementation report, tested artifacts and exact remaining scope](docs/NATIVE_IMPLEMENTATION_REPORT.md)
@@ -14,7 +14,7 @@ All 69 original catalog entries, aliases, permissions and source contracts are p
 - [Linux loaded-runtime identities and client evidence](docs/NATIVE_LINUX_RUNTIME.md)
 - [Run the Linux SDK form example, with actual client screenshots](docs/examples/linux-native-sdk.md)
 - [Open the real inventory and bind a held-item trigger on Linux](docs/examples/linux-native-inventory.md)
-- [Use six Linux native workstations through the SDK, with actual screenshots](docs/examples/linux-native-workstations.md)
+- [Use seven Linux native workstations through the SDK, with actual screenshots](docs/examples/linux-native-workstations.md)
 - [Native SDK and compiled consumer](docs/NATIVE_SDK.md)
 - [Native storage transactions and current integration boundary](docs/NATIVE_STORAGE.md)
 - [NativePassthrough SDK and player-interaction example](examples/native/NativePassthrough.md)

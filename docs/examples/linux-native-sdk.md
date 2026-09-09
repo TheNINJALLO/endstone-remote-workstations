@@ -10,7 +10,8 @@ Build with `tools/native/build-linux.ps1` on Windows Docker Desktop, or
 - `plugins/endstone_onistone_vcf.so`: provider.
 - `examples/endstone_vcf_catalog_showcase.so`: independent C++ SDK consumer.
 - `examples/endstone_vcf_native_passthrough.so`: original-mode request example;
-  Linux private workstation adapters currently refuse these requests.
+  selected original modes are available behind the Linux opt-in flag. See the
+  [workstation example](linux-native-workstations.md) for exact coverage.
 - `sdk/include/oni/vcf/`: C ABI, C++ wrapper and provider discovery headers.
 
 Use the exact admitted runtime and library environment documented in

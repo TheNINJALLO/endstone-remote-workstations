@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
     "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
-    "artifact_sha256": "ccc60ce2cf6e837e2ab550fa70bc646a18cc7d23dff4da8a3b9091d53c9b8963"
+    "artifact_sha256": "ccba81331609e9ae98f451840136d3c22ce6334987c4e7a0afd7a75476fc13d7"
   },
   "build": "tested-in-local-linux-docker",
   "native_loader_smoke": "passed",
@@ -1150,7 +1150,7 @@
       "family": "workstation",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
@@ -1217,7 +1217,7 @@
           "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
         },
         "native-context": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -1225,17 +1225,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Selected original PC crafting, compass, alias, output and controlled disconnect smoke passed. Custom transactions, adversarial lifecycle and crash/save recovery remain incomplete.",
+          "smoke_record": "research/native-evidence/linux-7aacb36-crafting-smoke.json"
         },
         "custom-replacement": {
           "adapter": "not-implemented",
@@ -8511,10 +8512,10 @@
     }
   },
   "build_evidence": {
-    "source_revision": "ca3025524ff754f87a66df4dec4756c964855d82",
+    "source_revision": "7aacb361a66eb5b927b692899fe3eccd8da43049",
     "host": "Windows Docker Desktop 4.90.0 / WSL 2, pinned linux/amd64 Clang 20.1.8 image",
     "native_tests": "13/13 CTest locally and CI; current ASan/UBSan and 300000 fuzz inputs passed.",
-    "elf_report": "linux-ca30255-elf-report.txt",
+    "elf_report": "linux-7aacb36-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.34",
     "direct_libraries": [
       "libcrypto.so.3",
@@ -8525,23 +8526,23 @@
       "libgcc_s.so.1",
       "libc.so.6"
     ],
-    "runtime_restriction": "Exact Linux files plus opt-in adapter admit six original workstations and four shared inventory roles on the pinned PC client. Full/custom qualification remains incomplete."
+    "runtime_restriction": "Exact Linux files and opt-in adapter admit seven original workstations and four shared inventory roles on the pinned PC client. Each smoke record identifies its own source and artifact; full/custom qualification remains incomplete."
   },
   "sdk_version": "1.1; ABI 1.0 prefix retained",
   "sanitizers": {
-    "source_revision": "ca3025524ff754f87a66df4dec4756c964855d82",
+    "source_revision": "7aacb361a66eb5b927b692899fe3eccd8da43049",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
     "storage_fuzz_inputs": 100000,
     "items_fuzz_inputs": 100000,
-    "test_report": "linux-ca30255-sanitizer-tests.txt",
-    "nbt_report": "linux-ca30255-fuzz-nbt.txt",
-    "storage_report": "linux-ca30255-fuzz-storage.txt",
-    "items_report": "linux-ca30255-fuzz-items.txt"
+    "test_report": "linux-7aacb36-sanitizer-tests.txt",
+    "nbt_report": "linux-7aacb36-fuzz-nbt.txt",
+    "storage_report": "linux-7aacb36-fuzz-storage.txt",
+    "items_report": "linux-7aacb36-fuzz-items.txt"
   },
   "native_tests": {
-    "source_revision": "ca3025524ff754f87a66df4dec4756c964855d82",
+    "source_revision": "7aacb361a66eb5b927b692899fe3eccd8da43049",
     "ctest": "13/13 passed locally",
     "sanitizers": "13/13 passed under Linux ASan/UBSan; private BDS execution not instrumented.",
     "fuzz_inputs": {
@@ -8560,5 +8561,6 @@
     "live_empty_inventory_shape_sha256": "9eb16cf918c14fdd34c720d989e3279b59944af76f9a047b752ea403dfa2a0d6"
   },
   "native_inventory_smoke": "research/native-evidence/linux-ca30255-workstation-smoke.json",
-  "native_workstation_smoke": "research/native-evidence/linux-ca30255-workstation-smoke.json"
+  "native_workstation_smoke": "research/native-evidence/linux-ca30255-workstation-smoke.json",
+  "native_crafting_smoke": "research/native-evidence/linux-7aacb36-crafting-smoke.json"
 }
