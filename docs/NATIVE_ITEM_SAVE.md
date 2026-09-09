@@ -109,6 +109,31 @@ writeback, reconstruction, recovery or the Windows saved-item adapter.
 See the [build and CI checkpoint](../research/native-evidence/checkpoint-a3fbf78.json)
 for the 16-test sanitizer run, 300,000 fuzz inputs and exact artifact hashes.
 
+## Detached reconstruction investigation
+
+A later [isolated Linux diagnostic](../research/linux-item-reconstruction-abi.json)
+parsed 62 saved fixture snapshots through Endstone's native-tag parser, then
+constructed native BDS items from those tags. Across two passes, all 124
+constructions reproduced the input bytes. Public SDK copies still reproduced
+those bytes after each native temporary was destroyed. Two typed empty-list
+cases also roundtripped exactly. The set includes empty and filled bundles.
+
+This diagnostic ran with no players connected, after backing up the disposable
+world. It accessed no player inventory and installed no write hooks. Its private
+plugin was removed after the results were preserved. These results establish
+the tested detached parsing, construction and cleanup path; live reassignment,
+mutation isolation, identity locks and save/crash recovery still need work.
+Reconstruction is not yet exposed as a public SDK operation.
+
+A separate [copy-isolation diagnostic](../research/linux-item-copy-isolation.json)
+then added two saved items with typed empty lists. Across two passes over 64
+fixtures, every native reconstruction and independent copy stayed byte-identical
+when a sibling copy's metadata/count was changed and that sibling was destroyed.
+The public metadata roundtrip preserved unrelated saved bytes for the 62
+retained fixtures, but lost the declared empty-list types in both added controls.
+The direct native path preserved all 64. A future generic writer must preserve
+the native saved representation rather than rely on `getNbt()`/`setNbt()`.
+
 ## C caller storage
 
 Use `read_inventory_item(owner, player, slot, &info, buffer, capacity,

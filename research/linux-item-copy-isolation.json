@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kind": "private-detached-native-item-copy-isolation-diagnostic",
+  "all_ui_acceptance": "not-qualified",
+  "platform": "linux-x64",
+  "source_checkpoint": "a3fbf78f77640ac29757986bfa7532bde3789376",
+  "native_reconstruction_abi": "research/linux-item-reconstruction-abi.json",
+  "execution": {
+    "started_utc": "2026-09-09T15:14:04Z",
+    "clean_stop_utc": "2026-09-09T15:16:35Z",
+    "private_probe_sha256": "a688587f4b07fc477cdfc21394703cafeb30ad1956be10e7d8c903161ad2671f",
+    "private_probe_installed_during_run": true,
+    "installed_and_loaded_shadow_hashes_verified": true,
+    "private_probe_removed_after_verified_capture": true,
+    "remaining_public_plugins": {
+      "endstone_onistone_vcf.so": "2b46202b649a59e566b23538c48e44d9745ce4b9c20c71de3ca47ddf90d7efd4",
+      "endstone_vcf_catalog_showcase.so": "9534072633c8b61d83af92ed861e4b916d402b0b0eb6f5a9a44bdd02b6cd16f4",
+      "endstone_vcf_native_passthrough.so": "614d125090f0724120123bf57d16a76b56137ed09321ae2dd5abbe0237fa844e"
+    },
+    "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+    "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+    "disposable_world_backup_taken": true,
+    "online_players": 0,
+    "live_inventory_access": false,
+    "live_inventory_writes": false,
+    "hooks": false,
+    "public_artifact_client_qualification": false
+  },
+  "fixtures": {
+    "retained_saved_snapshots": 62,
+    "synthetic_saved_items": 2,
+    "synthetic_description": "Derived from a saved stone stack by adding tag.x as an empty Byte list or empty Compound list. Native parsing, reconstruction and copied-item save preserved both declared types.",
+    "passes": 2
+  },
+  "results": {
+    "native_reconstruction_and_copy_lifetime_exact": 128,
+    "independent_copy_after_sibling_metadata_edit_exact": 128,
+    "independent_copy_after_sibling_count_change_and_destruction_exact": 128,
+    "public_metadata_roundtrip_other_bytes_exact": 124,
+    "expected_public_metadata_roundtrip_type_loss": 4,
+    "typed_empty_list_native_parser_controls_passed": 4,
+    "operations": "Constructed native ItemStack from native parsed saved NBT, copied to public SDK ItemStack, destroyed native temporary and parsed source tag. Made a second public SDK copy. Added an Int marker to the first copy user metadata through getNbt/setNbt. Compared its native save after public conversion and removal of the marker against original saved bytes. The untouched sibling remained byte-identical. Changed the edited copy amount to1 (a supported value) and destroyed it; the sibling save still matched.",
+    "count_limit": "Amount1 is unchanged for unstackable fixtures; multi-count fixtures changed. Endstone rejects setAmount0. That invalid call was found in preflight before diagnostic execution and was replaced; this run makes no zero-count clearing claim.",
+    "metadata_limit": "The two typed-empty-list items also failed the baseline native-to-public NBT comparison before editing. Public conversion cannot retain their declared element types. The complete public getNbt/setNbt/conversion path therefore remains unsuitable for unrestricted metadata-preserving writeback. All64 items passed the direct native parser/save comparisons.",
+    "repeatability": "Both64-row result sets were identical. Fixture files remained unchanged and all diagnostic objects were detached from player inventories."
+  },
+  "limitations": [
+    "Private diagnostic only; no public reconstruction/write operation exported",
+    "No live inventory reassignment or authoritative dynamic-container mapping",
+    "No held UI or editor submission",
+    "No durable identity, save barrier, crash injection or recovery qualification",
+    "No claim of safe arbitrary public-NBT edits",
+    "No Windows inference; raw NBT and worlds remain private"
+  ]
+}

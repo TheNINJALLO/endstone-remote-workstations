@@ -13,6 +13,12 @@ chest/form regressions remain unrun because Windows blocked Minecraft focus.
 The Windows saved-item adapter, held editors, writeback and recovery remain
 incomplete. See the [runtime record](../research/native-evidence/linux-a3fbf78-saved-item-smoke.json).
 
+Subsequent [detached Linux reconstruction research](../research/linux-item-reconstruction-abi.json)
+passed 124 native item constructions and copy-after-destruction comparisons
+across two passes over 62 saved snapshots, including bundle contents. This used
+a private diagnostic with no connected players; it does not qualify a public
+write operation, native held editor or recovery path.
+
 SDK 1.2 adds [read-only held inspection](NATIVE_HELD_ITEMS.md), with selected
 shulker and book PC evidence. The initial bundle test exposed unchanged metadata
 despite stored contents; the corrected code refuses bundle snapshots pending

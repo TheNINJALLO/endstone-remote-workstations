@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "kind": "private-detached-native-item-reconstruction-diagnostic",
+  "all_ui_acceptance": "not-qualified",
+  "platform": "linux-x64",
+  "source_checkpoint": "a3fbf78f77640ac29757986bfa7532bde3789376",
+  "runtime": {
+    "bds": "1.26.45.1",
+    "endstone": "0.11.10",
+    "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+    "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc"
+  },
+  "execution": {
+    "started_utc": "2026-09-09T14:56:59Z",
+    "clean_stop_utc": "2026-09-09T14:58:26Z",
+    "private_probe_sha256": "672d7ea9e43feb86696ea85771dde6fabfef418fac664d5566355a224e0f7419",
+    "private_probe_installed_during_run": true,
+    "private_probe_removed_after_verified_capture": true,
+    "remaining_public_plugins": {
+      "endstone_onistone_vcf.so": "2b46202b649a59e566b23538c48e44d9745ce4b9c20c71de3ca47ddf90d7efd4",
+      "endstone_vcf_catalog_showcase.so": "9534072633c8b61d83af92ed861e4b916d402b0b0eb6f5a9a44bdd02b6cd16f4",
+      "endstone_vcf_native_passthrough.so": "614d125090f0724120123bf57d16a76b56137ed09321ae2dd5abbe0237fa844e"
+    },
+    "disposable_world_backup_taken": true,
+    "online_players": 0,
+    "player_inventory_access": false,
+    "inventory_setters": false,
+    "hooks": false,
+    "public_artifact_client_qualification": false
+  },
+  "results": {
+    "passes": 2,
+    "saved_fixture_snapshots_per_pass": 62,
+    "distinct_saved_byte_sequences": 19,
+    "exact_native_reconstructions_total": 124,
+    "exact_public_copies_after_native_destruction_total": 124,
+    "typed_empty_list_cases_per_pass": 2,
+    "typed_empty_list_types": [
+      "Byte",
+      "Compound"
+    ],
+    "fixture_types_per_pass": {
+      "minecraft:banner": 3,
+      "minecraft:beef": 3,
+      "minecraft:bundle": 3,
+      "minecraft:compass": 3,
+      "minecraft:cooked_beef": 3,
+      "minecraft:filled_map": 3,
+      "minecraft:iron_ingot": 3,
+      "minecraft:iron_sword": 3,
+      "minecraft:lapis_lazuli": 3,
+      "minecraft:netherite_sword": 3,
+      "minecraft:oak_planks": 3,
+      "minecraft:potion": 9,
+      "minecraft:stone": 2,
+      "minecraft:stone_bricks": 3,
+      "minecraft:undyed_shulker_box": 3,
+      "minecraft:wooden_pickaxe": 9,
+      "minecraft:written_book": 3
+    },
+    "parser_roundtrip": "All fixtures passed core NBT bounds, exact native-tag parse/write comparison and complete-input consumption before reconstruction. Two additional typed empty-list compounds also roundtripped exactly.",
+    "item_roundtrip": "BDS fromTag constructed a detached152-byte ItemStack from the parsed native CompoundTag. Native SaveToDisk bytes matched every input. An independent public Endstone ItemStack copy still produced identical native saved bytes after the temporary native ItemStack was destroyed.",
+    "bundle": "The fixture set includes empty and six-stone bundle saves. Full contents survived native reconstruction and public-copy lifetime for these snapshots. This is not proof of dynamic-container exclusivity, mutation isolation or inventory reassignment.",
+    "repeatability": "The entire62-row result set was identical across the two passes. No real items were granted, inserted, moved or written by the probe."
+  },
+  "abi": {
+    "pinned_sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+    "compiler": "Clang20.1.8/libc++20, System V x86-64",
+    "item_stack_bytes": 152,
+    "bedrock_result_bytes": 72,
+    "result_success_byte_offset": 64,
+    "native_tag_load_vtable_slot": 4,
+    "parser_arguments": "hidden result first, IDataInput second, std::string root-name third",
+    "from_tag_arguments": "hidden152-byte ItemStack result first, const CompoundTag second; verified actual BDS inventory-loader caller",
+    "native_item_destruction": "non-deleting destructor slot0, one this argument, no Windows flags",
+    "compiled_layout": {
+      "path": "research/linux-item-load-layout.cpp",
+      "sha256": "958ee32cddf423371e1f72b4fa96e28adf9442627fb32edd55c3afd17fcd20e2"
+    },
+    "functions": [
+      {
+        "role": "ItemStack from saved CompoundTag",
+        "module": "bds",
+        "rva": "0xbbb02d0",
+        "size": 639,
+        "sha256": "ba11246949e9c0d6f2bf2402ccb58cab25bbeea0e1e0ce71a601a61804073cc3"
+      },
+      {
+        "role": "ItemStackBase load called by fromTag",
+        "module": "bds",
+        "rva": "0xbbb8150",
+        "size": 4973,
+        "sha256": "c017b34a1fc37a0385bfbd6f7e7901bde494949c371eedfa2bbe064c6dbd11e6"
+      },
+      {
+        "role": "ItemStack non-deleting destructor",
+        "module": "bds",
+        "rva": "0x453b4b0",
+        "size": 88,
+        "sha256": "90502c2c3f10be8ed481673d3a950e2b88cb7f3fb45ac061693d277f91727884"
+      },
+      {
+        "role": "ItemStackBase SaveToDisk",
+        "module": "bds",
+        "rva": "0xbbb7810",
+        "size": 2367,
+        "sha256": "c144aa9fa63f229e691912937cac78bd9cb505ecf0cec94c8e60d6efa925d781"
+      },
+      {
+        "role": "Native CompoundTag write",
+        "module": "bds",
+        "rva": "0xcc80d40",
+        "size": 7,
+        "sha256": "c0aaa941b4b78a3377f57e1761480054a12af422e6930a97444acbea8c2661b7"
+      },
+      {
+        "role": "Native CompoundTag deleting destructor",
+        "module": "bds",
+        "rva": "0xcc80d10",
+        "size": 41,
+        "sha256": "fdf893165ae75742edbcaba1c541922011f4e2af3e2492cfffd4468ede1237b7"
+      },
+      {
+        "role": "Endstone runtime NbtIo readNamedCompoundTag",
+        "module": "endstone-runtime",
+        "rva": "0x2309a0",
+        "size": 2139,
+        "sha256": "b953a81a95bf7bb8e1dde8d3bee511943ccf4b78f45067efae690d638f7251c8"
+      },
+      {
+        "role": "Endstone public ItemStack from native copy",
+        "module": "endstone-runtime",
+        "rva": "0x1d1590",
+        "size": 71,
+        "sha256": "3095b4a1041f68a76329df764c77b493503910691580c3ec6b429c54507d7f27"
+      }
+    ]
+  },
+  "limitations": [
+    "Private diagnostic only; no new public SDK reconstruction or write API",
+    "No held UI force-open or editor submission",
+    "No live inventory replacement, dynamic-container reassignment, duplicate-identity or mutation-isolation tests",
+    "No unknown-item or native-error-path qualification",
+    "No database save boundary, crash injection, writeback or recovery qualification",
+    "No Windows ABI or runtime inference",
+    "Raw item/book NBT, worlds, runtime binaries and disassembly remain private"
+  ]
+}
