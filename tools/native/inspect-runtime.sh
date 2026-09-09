@@ -21,7 +21,7 @@ for kind in ('bds','runtime'):
     if digest!=manifest[kind+'_sha256']:
         raise SystemExit('Private runtime fingerprint changed')
     with Path('/lab',kind+'-elf.txt').open('w') as report:
-        for command in (['file',str(target)],['readelf','-h','-l','-d','-V',str(target)],['nm','-D','--defined-only',str(target)]):
+        for command in (['file',str(target)],['readelf','-h','-l','-d','-n','-V',str(target)],['nm','-D','--defined-only',str(target)]):
             result=subprocess.run(command,stdout=report,stderr=subprocess.STDOUT,check=False)
             if result.returncode:
                 raise SystemExit('ELF inspection failed; consult private /lab report')

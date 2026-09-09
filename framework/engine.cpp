@@ -202,6 +202,7 @@ void Engine::tick(uint32_t budget){
    require(consumers_.contains(s.owner)&&!consumers_.at(s.owner).revoked,VCF_CLOSED);
    require(host_.consumer_allowed(consumers_.at(s.owner).name),VCF_CLOSED);
    if(task.type==TaskType::invoke){
+    if(!s.buttons.empty())authorize(s.owner,s.id,VCF_GUARD_DISPATCH);
     auto a=actions_.find(task.action);require(a!=actions_.end(),VCF_NOT_FOUND);auto copy=a->second;
     require(copy.owner==s.owner||copy.exported,VCF_DENIED);
     require(consumers_.contains(copy.owner)&&!consumers_.at(copy.owner).revoked&&host_.consumer_allowed(consumers_.at(copy.owner).name),VCF_CLOSED);
@@ -223,9 +224,14 @@ void Engine::selected(vcf_handle id,std::string_view player,uint32_t index){
  check();auto it=sessions_.find(id);require(it!=sessions_.end(),VCF_STALE);auto&s=it->second;
  require(s.is_menu && s.state==VCF_ACTIVE && s.player==player,VCF_STALE);
  require(index<s.buttons.size());authorize(s.owner,s.id,VCF_GUARD_ACTIVE);
- // Invalidate before queueing action: double clicks cannot execute twice.
- auto owner=s.owner;auto action=s.buttons[index].action;auto player_copy=s.player;
- finish(s,VCF_OK);invoke(owner,std::move(player_copy),std::move(action));
+ auto key=qualify(s.owner,s.buttons[index].action);auto action=actions_.find(key);
+ require(action!=actions_.end(),VCF_NOT_FOUND);
+ require(action->second.owner==s.owner||action->second.exported,VCF_DENIED);
+ require(queue_.size()<4096,VCF_CAPACITY);
+ // The caller already owns this menu ticket. Execute the selected action on
+ // that same ticket so its result is observable and no hidden child leaks.
+ // Queue allocation must succeed before making the selection irrevocable.
+ queue_.push_back({TaskType::invoke,id,std::move(key)});s.state=VCF_OPENING;
 }
 void Engine::player_gone(std::string_view player){
  check();for(auto&[id,s]:sessions_)if(s.player==player&&s.state!=VCF_TERMINAL)close(s.owner,id);

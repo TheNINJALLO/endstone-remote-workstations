@@ -13,4 +13,6 @@ fi
 # disposable world, port 29169, and the exact separately admitted loader.
 mkdir -p /data/plugins
 cp /artifacts/plugins/endstone_onistone_vcf.so /data/plugins/
+cp /artifacts/examples/endstone_vcf_catalog_showcase.so /data/plugins/
+cp /artifacts/examples/endstone_vcf_native_passthrough.so /data/plugins/
 exec /bin/sh /inputs/launch.sh /data

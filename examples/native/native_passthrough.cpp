@@ -108,7 +108,7 @@ public:
             sender.sendMessage("Original-mode SDK example: opens "+std::to_string(opened_)+", closes "+std::to_string(closed_)
                 +", failures "+std::to_string(refused_)+", guard checks "+std::to_string(guard_checks_));return true;
         }
-        auto* player=dynamic_cast<endstone::Player*>(&sender);
+        auto* player=sender.asPlayer();
         if(!player){sender.sendErrorMessage("Request screens from a connected player.");return true;}
         try {
             if(args[0]=="unbind")bindings_.erase(player->getUniqueId().str());

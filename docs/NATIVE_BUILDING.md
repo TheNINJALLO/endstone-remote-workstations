@@ -32,15 +32,16 @@ unit-test, abi-lab, runtime-smoke and artifact-export targets.
 The final export goes to `dist/linux-x64-dev/`; ELF requirements are recorded
 by `tools/native/inspect-elf.sh`. GitHub Actions run 34273970612 successfully
 executed this Docker build on Linux and exported a real x86-64 ELF plugin.
-That artifact directly requires libc++, libc++abi, libunwind, libm, libgcc_s
-and libc; it does not link libstdc++. Its directly versioned glibc symbols top
-out at GLIBC_2.14, but transitive toolchain-library requirements also apply.
-Keep the pinned libc++20 ABI; this symbol report is not a certificate for an
-arbitrary Pterodactyl image. Local Docker Desktop and WSL are installed;
-the Linux engine awaits the required Windows restart. See the
-[Windows Docker setup](WINDOWS_DOCKER_SETUP.md) for build and private ELF
-inspection commands. Linux BDS/loader ABI admission and gameplay are still
-blocked, independently of this successful CI build.
+The current provider also directly links OpenSSL 3's `libcrypto.so.3` for
+loaded-file fingerprinting. Inspect the current export's `elf-report.txt` for
+its dependencies; older reports describe their own artifact only. Preserve
+the pinned libc++20 ABI and account for transitive library requirements.
+Local Docker Desktop now executes the build and the exact Linux BDS/Endstone
+fixture. Public SDK forms/actions have run with a connected stock client;
+private Linux workstation adapters remain incomplete. See the
+[Windows Docker setup](WINDOWS_DOCKER_SETUP.md) and
+[Linux runtime evidence](NATIVE_LINUX_RUNTIME.md). This does not certify an
+arbitrary Pterodactyl image.
 
 The additional `sanitizer-export` Docker target runs the core, asynchronous
 lifecycle and six journal crash-boundary tests under ASan/UBSan, then executes

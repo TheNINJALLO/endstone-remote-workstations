@@ -99,6 +99,12 @@ struct Writer {
     void container(const Container& c){byte(c.role);byte(c.dynamic_id.has_value());if(c.dynamic_id)fixed(*c.dynamic_id,4);}
 };
 void bounded(std::span<const uint8_t> bytes,size_t size){require(!bytes.empty()&&bytes.size()<=size,VCF_CAPACITY);}
+bool player_inventory_container(const Container& c){
+    // BDS 1.26.45.1 sends its full window-0 inventory with a zero-initialized
+    // FullContainerName. The explicit combined-inventory role is 12. Accept
+    // these only behind the window/slot bounds below, never a dynamic container.
+    return !c.dynamic_id&&(c.role==0||c.role==12);
+}
 }
 Content decode_content(std::span<const uint8_t> bytes){
     bounded(bytes,inventory_bound);Reader r{bytes};Content c;c.window=static_cast<uint32_t>(r.var());require(c.window<=255);
@@ -150,7 +156,7 @@ void Observation::registry(std::vector<RegistryEntry> entries){
 }
 void Observation::content(Content c){
     if(c.window!=0)return;
-    if(c.items.size()!=36||c.container.dynamic_id||c.container.role!=12){invalidate();throw Error{VCF_INVALID};}
+    if(c.items.size()!=36||!player_inventory_container(c.container)){invalidate();throw Error{VCF_INVALID};}
     if(!registry_ready()){invalidate();return;}
     std::array<Descriptor,36> next;
     for(size_t i=0;i<next.size();++i)next[i]=std::move(c.items[i]);
@@ -158,7 +164,7 @@ void Observation::content(Content c){
 }
 void Observation::slot(Slot s){
     if(s.window!=0)return;
-    if(s.slot>=36||(s.container&&(s.container->dynamic_id||s.container->role!=12))){invalidate();throw Error{VCF_INVALID};}
+    if(s.slot>=36||(s.container&&!player_inventory_container(*s.container))){invalidate();throw Error{VCF_INVALID};}
     if(inventory_ready_)inventory_[s.slot]=std::move(s.item);
 }
 void Observation::invalidate(){inventory_ready_=false;for(auto& d:inventory_)d=Descriptor{};}

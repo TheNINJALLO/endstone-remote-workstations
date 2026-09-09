@@ -116,6 +116,8 @@ class VirtualContainerFramework:public endstone::Plugin {
 public:
  void onEnable()override{
   try{
+   // Re-enabling the same plugin object must never revive old form callbacks.
+   *lifetime_=false;lifetime_=std::make_shared<bool>(false);
    admission_=platform::inspect_runtime();
    getLogger().info("BDS SHA256: {}",admission_.bds_sha256);
    getLogger().info("Loader runtime SHA256: {}",admission_.runtime_sha256);
@@ -253,13 +255,13 @@ public:
      for(const auto&row:catalog())sender.sendMessage(std::string(row.id)+": native/custom migration unqualified");return true;
     }
     if(args.size()==2&&args[0]=="open")name=args[1];
-    else {if(auto*p=dynamic_cast<endstone::Player*>(&sender))catalog_menu(*p);else sender.sendErrorMessage("Open the catalog from Minecraft.");return true;}
+    else {if(auto*p=sender.asPlayer())catalog_menu(*p);else sender.sendErrorMessage("Open the catalog from Minecraft.");return true;}
    }
    auto*row=resolve(name);if(!row){sender.sendErrorMessage("Unknown UI entry.");return true;}
    if(!sender.hasPermission(std::string(row->permission))){sender.sendErrorMessage("Permission denied.");return true;}
 #ifdef _WIN32
    if(original_native_enabled_&&platform::windows::NativeUi::supports(row->id)){
-    auto*p=dynamic_cast<endstone::Player*>(&sender);if(!p){sender.sendErrorMessage("Open native screens from Minecraft.");return true;}
+    auto*p=sender.asPlayer();if(!p){sender.sendErrorMessage("Open native screens from Minecraft.");return true;}
     auto mode=row->id=="inventory2x2"||row->id=="armor"||row->id=="offhand"||row->id=="recipebook"?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
     auto ticket=self_->prepare(p->getUniqueId().str(),row->id,mode);self_->open(ticket);return true;
    }

@@ -85,9 +85,37 @@ void synchronous_host_completion(){
     check(events==1&&e.session(owner,id).state==VCF_TERMINAL&&e.session(owner,id).result==VCF_CLOSED);
     e.close(owner,id);e.tick();check(events==1);
 }
+void menu_action_ticket_lifecycle(){
+    Host h;bool permitted=true;int calls=0;vcf_status action_result=VCF_OK;
+    h.consumer_allowed=[](auto){return true;};h.permission=[&](auto,auto){return permitted;};
+    h.open=[](auto&){return VCF_OK;};h.close=[](auto&){return VCF_OK;};
+    Engine e(h);auto caller=e.consumer("caller"),target=e.consumer("target");
+    struct State{int* calls;vcf_status* result;};State state{&calls,&action_result};
+    e.action(target,"selected","action.permission",true,[](void* p,const vcf_event*)->vcf_status{
+        auto&s=*static_cast<State*>(p);++*s.calls;return *s.result;
+    },&state);
+    auto menu=[&]{Session s;s.is_menu=true;s.player="player";s.mode=VCF_TRANSIENT;s.permission="menu.permission";
+        s.buttons.push_back({"Run","target:selected",""});auto id=e.prepare(caller,s);e.open(caller,id);e.tick();return id;};
+    for(int n=0;n<5000;++n){
+        auto id=menu();e.selected(id,"player",0);
+        refused(VCF_STALE,[&]{e.selected(id,"player",0);});
+        check(e.session_count()==1);e.tick();
+        check(calls==n+1&&e.session_count()==1&&e.session(caller,id).state==VCF_TERMINAL);
+        e.forget(caller,id);check(e.session_count()==0);
+    }
+    auto id=menu();e.selected(id,"player",0);permitted=false;e.tick();
+    check(calls==5000&&e.session(caller,id).result==VCF_DENIED);e.forget(caller,id);permitted=true;
+    id=menu();e.selected(id,"player",0);e.close(caller,id);e.tick();
+    check(calls==5000&&e.session(caller,id).state==VCF_TERMINAL);e.forget(caller,id);
+    action_result=VCF_INTERNAL;id=menu();e.selected(id,"player",0);e.tick();
+    check(calls==5001&&e.session(caller,id).result==VCF_INTERNAL);e.forget(caller,id);
+    id=e.invoke(caller,"player","target:selected");e.tick();
+    check(calls==5002&&e.session(caller,id).result==VCF_INTERNAL);e.forget(caller,id);
+    check(e.session_count()==0);
+}
 }
 int main() {
-    try { pending_and_cancel();permissions_and_release();disable_inside_callback();retired_window_closes();synchronous_host_completion();
+    try { pending_and_cancel();permissions_and_release();disable_inside_callback();retired_window_closes();synchronous_host_completion();menu_action_ticket_lifecycle();
         std::cout<<"Asynchronous opens, closes, revocation and ownership passed\n";
     }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
     catch(const Error& e){std::cerr<<"Unexpected status "<<e.status<<'\n';return 2;}

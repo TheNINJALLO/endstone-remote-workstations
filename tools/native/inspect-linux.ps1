@@ -10,6 +10,6 @@ try {
     New-Item -ItemType Directory -Path out/linux-abi -Force | Out-Null
     & $vcfDocker compose --profile research build abi-lab
     if ($LASTEXITCODE -ne 0) {throw 'Linux ABI lab build failed.'}
-    & $vcfDocker compose --profile research run --rm --no-deps --entrypoint /bin/sh abi-lab /workspace/tools/native/inspect-runtime.sh
+    & $vcfDocker compose --profile research run -T --rm --no-deps --entrypoint /bin/sh abi-lab /workspace/tools/native/inspect-runtime.sh
     if ($LASTEXITCODE -ne 0) {throw 'Linux runtime input inspection failed; inspect out/linux-abi.'}
 } finally {$env:VCF_LINUX_INPUTS=$vcfPreviousInputs;Pop-Location}

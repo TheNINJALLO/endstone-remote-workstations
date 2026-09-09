@@ -1,4 +1,4 @@
-# Docker execution has not been qualified on the Windows development host.
+# Linux builds and the private runtime fixture execute through Docker Desktop/WSL 2.
 FROM --platform=linux/amd64 docker.io/silkeh/clang:20-bookworm@sha256:ae2f3deffd84470fbb2904cfb990db208a5f9880b4bcf9d3eae080a50a8900b4 AS toolchain
 USER root
 # Pin the package universe; never use the host Docker socket or private inputs.
@@ -24,6 +24,9 @@ COPY tools/native tools/native
 COPY research/original-ui-catalog.json research/original-ui-catalog.json
 COPY research/original-ui-catalog.sha256 research/original-ui-catalog.sha256
 RUN clang++-20 --version && cmake --version && ninja --version && ldd --version
+RUN apt-get -o Acquire::Check-Valid-Until=false update \
+ && apt-get install -y --no-install-recommends libssl-dev python3-venv \
+ && rm -rf /var/lib/apt/lists/*
 
 FROM toolchain AS unit-test
 RUN cmake -S . -B out/linux-release -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -69,7 +72,7 @@ FROM scratch AS sanitizer-export
 COPY --from=sanitizer-test /sanitizer-results/ /
 
 FROM unit-test AS runtime-smoke
-RUN useradd --uid 10001 --create-home vcf
+RUN useradd --uid 10001 --create-home vcf && mkdir -p /data && chown 10001:10001 /data
 USER 10001:10001
 WORKDIR /data
 ENTRYPOINT ["/bin/sh", "/workspace/tools/native/runtime-smoke.sh"]

@@ -42,6 +42,14 @@ actions. Permission and registration are rechecked at dispatch, and callbacks
 execute on a later tick. Cancellation and double submission invalidate the
 session before another action can execute.
 
+A button selection completes the original menu ticket with the action's result;
+it does not allocate a second hidden ticket. Poll `session_info` and call
+`forget` after that ticket becomes terminal. The compiled consumer demonstrates
+this cleanup on its scheduler and reports outstanding tickets with
+`/vcf_catalog_showcase status`. Explicit `invoke_action` calls still return
+their own caller-owned tickets. Menu guards and action permissions are checked
+again on the dispatch tick, including when permission changed after selection.
+
 `ui.actions()` returns detached descriptions of the consumer's own actions
 and other consumers' explicit exports. Private actions remain hidden. The C
 functions `action_count` and `action_info` use a registry revision and copy
@@ -81,7 +89,7 @@ limits refuse further work instead of allowing unbounded growth.
 Call `dispose()` from `onDisable` and require `VCF_OK` before unloading.
 A call from an executing callback returns `VCF_REENTRANT`; schedule disposal
 after returning. Plugin-disable events additionally revoke the named owner.
-The Windows provider is pinned for process lifetime because Endstone may retain
+The Windows and Linux providers are pinned for process lifetime because Endstone may retain
 form callback objects. Its disabled callbacks hold only a revoked weak lifetime.
 **Hot replacement requires a server restart.**
 

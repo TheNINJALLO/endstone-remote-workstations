@@ -60,16 +60,18 @@ Endstone runtime SHA-256:
 At the initial audit, Docker CLI/Desktop and WSL were not installed. Following
 explicit installation authorization on September 8, Docker Desktop 4.90.0 and
 WSL 2.7.13 were installed and Virtual Machine Platform was enabled without
-restarting Windows. The Linux engine remains blocked pending that required
-restart and Docker's first-launch agreement. Authorized Linux BDS/Endstone
-inputs are staged privately with hashes; this does not admit their native ABI.
+restarting Windows. The operator subsequently restarted and completed setup.
+The Linux engine, local pinned builds, and private BDS/Endstone server now run.
+Exact loaded-file admission enables the public SDK; both native consumers load
+and a connected stock client has exercised its action form. Private Linux
+workstation adapters and inventory publication remain incomplete.
 See [the setup checkpoint](WINDOWS_DOCKER_SETUP.md).
 The Linux image digest and Clang 20 family are pinned.
 The Docker build previously passed on GitHub's Linux runner in
 run 34273970612, exporting a real `.so` and ELF dependency report; Windows
 release/debug jobs passed separately. The full-scope acceptance job correctly
-failed for unqualified per-entry gameplay. Local Linux execution and runtime/UI
-qualification remain blocked. An exact Onistone SDK/runtime was not supplied;
+failed for unqualified per-entry gameplay. Local Linux public SDK progress is
+recorded in [NATIVE_LINUX_RUNTIME.md](NATIVE_LINUX_RUNTIME.md). An exact Onistone SDK/runtime was not supplied;
 no compatibility is inferred from Endstone's provenance.
 
 Subsequent CI run 34279270106 passed both Windows configurations, the Linux

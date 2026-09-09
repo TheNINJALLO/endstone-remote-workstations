@@ -85,6 +85,30 @@ void properties(){
         bytes=w::encode(c);check(w::decode_content(bytes)==c);
     }
 }
+void linux_live_empty_inventory(){
+    // Exact empty-inventory wire shape observed from the private Linux BDS
+    // 1.26.45.1 fixture, stock PC 1.26.45 client, protocol 2169. 300 bytes,
+    // only byte 1 is nonzero (36 slots). Contains no player/item metadata.
+    // SHA256 9eb16cf918c14fdd34c720d989e3279b59944af76f9a047b752ea403dfa2a0d6.
+    std::vector<uint8_t> bytes(300,0);bytes[1]=36;
+    auto content=w::decode_content(bytes);
+    check(content.window==0&&content.items.size()==36&&content.container.role==0);
+    check(w::encode(content)==bytes);
+    w::Observation o;o.registry(registry());o.content(content);
+    check(o.inventory_ready());for(const auto& d:o.inventory())check(d==w::Descriptor{});
+    w::Slot delta;delta.container=w::Container{};delta.item={1,1,0,123,0,{}};
+    o.slot(delta);check(o.inventory_ready()&&o.inventory()[0]==delta.item);
+    for(uint16_t role=1;role<256;++role){
+        if(role==12)continue;
+        o.content(content);auto bad=content;bad.container.role=static_cast<uint8_t>(role);
+        refused([&]{o.content(bad);});check(!o.inventory_ready());
+        o.content(content);delta.container->role=static_cast<uint8_t>(role);
+        refused([&]{o.slot(delta);});check(!o.inventory_ready());
+    }
+    o.content(content);delta.container=w::Container{0,7};refused([&]{o.slot(delta);});check(!o.inventory_ready());
+    w::Inbox inbox;inbox.submit("player",162,w::encode_registry(registry()));inbox.submit("player",49,bytes);
+    inbox.poll(2);check(inbox.stats().registries==1&&inbox.stats().inventories==1&&inbox.stats().rejected==0);
+}
 void inbox(){
     w::Inbox inbox;auto entries=registry();auto bytes=w::encode_registry(entries);
     w::Content content;content.items.resize(36);content.container={12,{}};auto items=w::encode(content);
@@ -119,6 +143,6 @@ void inbox(){
     refused([&]{inbox.poll(0);});refused([&]{inbox.poll(33);});
 }
 }
-int main(){try{conformance();malformed();observation();properties();inbox();std::cout<<checks<<" item wire checks passed\n";return 0;}
+int main(){try{conformance();malformed();observation();properties();linux_live_empty_inventory();inbox();std::cout<<checks<<" item wire checks passed\n";return 0;}
     catch(const Error&e){std::cerr<<"unexpected status "<<e.status<<" after "<<checks<<" checks\n";return 1;}
     catch(const std::exception&e){std::cerr<<e.what()<<" after "<<checks<<" checks\n";return 1;}}

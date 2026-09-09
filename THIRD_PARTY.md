@@ -18,6 +18,7 @@ It calls verified private BDS entry points in the installed server. BDS binaries
 | bstream 1.0.1, rapidnbt 1.3.5 | MPL 2.0 | Pinned runtime codecs for the packet backend, installed as unmodified separate dependencies. |
 | pybind11 3.0.1 | BSD 3-Clause | Header-only Python bridge compiled into our Windows companion; license included. |
 | expected-lite 0.9.0 | Boost Software License 1.0 | Endstone public-header dependency; license included. |
+| OpenSSL 3 | Apache 2.0 | Native Linux provider dynamically links `libcrypto.so.3` for loaded-file SHA-256 verification. The Docker build pins the Debian package snapshot; no OpenSSL binary is bundled in plugin artifacts. |
 
 The Windows companion and disposable tracing probe compile MinHook 1.3.4
 (BSD 2-Clause) for scoped native hooks. Its license is included in
