@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "kind": "linux-linked-chest-abi-research-not-ui-qualification",
+  "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "compiler": "Clang20.1.8/libc++20 Linux x86_64 System V",
+  "shared_factory_manifest": "research/native-evidence/linux-linked-storage-abi-126451.json",
+  "factory": "4502000, five arguments: Player*, BlockPos*, signed container type 0, ActorUniqueID -1, unsigned BlockActorType 2. BDS owns model and sends native open/current contents.",
+  "sources": [
+    {
+      "id": "chest",
+      "block": "minecraft:chest",
+      "slots": 27
+    },
+    {
+      "id": "trappedchest",
+      "block": "minecraft:trapped_chest",
+      "slots": 27
+    },
+    {
+      "id": "doublechest",
+      "block": "minecraft:chest",
+      "slots": 54
+    }
+  ],
+  "actor": {
+    "rtti": "15ChestBlockActor",
+    "primary_vtable": "0xe7580f8",
+    "container_vtable": "0xe7585c0",
+    "container_offset": 240,
+    "position_offset": 8,
+    "source_type_offset": 20,
+    "pair_actor_offset": 640
+  },
+  "functions": [
+    {
+      "rva": "0xc63a9c0",
+      "size": 22,
+      "sha256": "e1709e73e712d78f6a5a3a2c0499507ab2bf1ba01d993257a9233b67776ef5ab"
+    },
+    {
+      "rva": "0xc63ad70",
+      "size": 172,
+      "sha256": "640b994e56515eec631724986ac736be7f65c0aafd469b34a5585fff0d82b432"
+    },
+    {
+      "rva": "0xc63e540",
+      "size": 8,
+      "sha256": "4d50ec6fd0dff4a46bf703f540cab634ad79cb5b85ce82727233f22760c4e86a"
+    }
+  ],
+  "header_probe": {
+    "source_sha256": "a6f10a266414b330827c5619722bf6042b8a34d6bcced37df960c70133802f2b",
+    "llvm_ir_sha256": "de1508faca010886f0d29a0115288126bbb5aa1f93bb2e3fce763866bdb23bc5",
+    "container_header_sha256": "ef8ccbd038c011b59923eb03d06b5be9080802cf418b60dcff6a40b51b0b36c4",
+    "result": "Header-declared Container::getContainerSize dispatches at vslot21/byte168 with const Container* in rdi, int return in eax. BlockPos size12/alignment4.",
+    "limit": "The private ChestBlockActor layout is derived from independent exact ELF RTTI and native getter/item-access bodies, not a claimed complete public header declaration."
+  },
+  "pair_evidence": "Primary vslot45 returns actor+240. Container size getter checks Container+400 (actor+640), returning27 without pair and54 with pair. Native getItem subtracts240, resolves the paired ChestBlockActor and ordering flag, then reads the two native item vectors. Adapter does not read or write those items.",
+  "admission": "Validate exact actor/container vtables, getter/item function fingerprints, native size and reciprocal adjacent pair. Both actors must resolve at captured positions in the player dimension; both blocks must have the admitted family, be within six blocks and already loaded. Single entries refuse paired actors. doublechest accepts ordinary paired chests. Compare captured actor/pair identities on active checks and incoming147. Run copied protection callbacks for both positions before factory, at readiness and during active checks. Recheck identities and permissions after callbacks. Matching outgoing49/50 also checks both sources before publishing;49 must contain the expected27/54 slots. Close is deferred out of borrowed native send frames. No custom replacement, paired trapped variant, entity storage or Windows admission.",
+  "runtime_tests": "Pending for this source revision; read-only ABI research and native unit tests are not stock-client qualification."
+}

@@ -81,6 +81,9 @@ public:
  vcf_handle add_guard(vcf_handle,std::string,std::string,vcf_guard_callback,void*);
  void remove_guard(vcf_handle,vcf_handle);
  void authorize(vcf_handle,vcf_handle,uint32_t);
+ // Provider-only authorization of another verified block in one source.
+ // The callback descriptor is copied; the session's original source is kept.
+ void authorize_block(vcf_handle,vcf_handle,uint32_t,int32_t,int32_t,int32_t);
  uint32_t collect_terminal(vcf_handle,uint32_t limit=32);
  vcf_handle invoke(vcf_handle,std::string,std::string);
  vcf_handle prepare(vcf_handle,Session);
@@ -115,6 +118,7 @@ private:
  std::deque<Task> queue_;
  std::set<vcf_handle> revoked_;
  void drain_revoked();
+ void authorize_at(vcf_handle,vcf_handle,uint32_t,const int32_t*);
  void check() const;
  std::string qualify(vcf_handle,std::string_view) const;
  void emit(Session&,uint32_t,std::string_view={});

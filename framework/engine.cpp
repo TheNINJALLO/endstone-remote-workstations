@@ -93,6 +93,16 @@ void Engine::remove_guard(vcf_handle owner,vcf_handle id){
  check();qualify(owner,"");auto it=guards_.find(id);require(it!=guards_.end(),VCF_NOT_FOUND);require(it->second.owner==owner,VCF_DENIED);guards_.erase(it);
 }
 void Engine::authorize(vcf_handle owner,vcf_handle id,uint32_t phase){
+ authorize_at(owner,id,phase,nullptr);
+}
+void Engine::authorize_block(vcf_handle owner,vcf_handle id,uint32_t phase,int32_t x,int32_t y,int32_t z){
+ const auto& s=session(owner,id);const auto* row=resolve(s.kind);
+ require(!s.is_menu&&row&&row->source_kind=="block"&&s.mode==VCF_REAL_SOURCE
+  &&!s.dimension.empty()&&s.entity_id.empty()&&s.held_id.empty(),VCF_INVALID);
+ require(x>=-30000000&&x<=30000000&&z>=-30000000&&z<=30000000&&y>=-64&&y<=319);
+ const int32_t position[]={x,y,z};authorize_at(owner,id,phase,position);
+}
+void Engine::authorize_at(vcf_handle owner,vcf_handle id,uint32_t phase,const int32_t* position){
  auto& s=session(owner,id);require(phase>=VCF_GUARD_DISPATCH&&phase<=VCF_GUARD_ACTIVE);
  require(host_.consumer_allowed(consumers_.at(owner).name),VCF_CLOSED);
  const auto* row=resolve(s.kind);
@@ -105,6 +115,7 @@ void Engine::authorize(vcf_handle owner,vcf_handle id,uint32_t phase){
  request.canonical_id=view(s.kind);request.player=view(s.player);request.title=view(s.title);
  request.source_permission=view(s.permission);request.mode=s.mode;request.dimension=view(s.dimension);
  request.x=s.x;request.y=s.y;request.z=s.z;request.entity_id=view(s.entity_id);request.held_id=view(s.held_id);
+ if(position){request.x=position[0];request.y=position[1];request.z=position[2];}
  // A callback may revoke another guard. Copy stable IDs, then re-resolve each
  // live registration before calling; no stale function/context survives unload.
  std::vector<vcf_handle> ids;for(const auto&[key,g]:guards_)ids.push_back(key);

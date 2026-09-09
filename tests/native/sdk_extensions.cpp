@@ -74,6 +74,53 @@ void copied_source_guards(){
  check(api.forget(caller.owner(),ticket)==VCF_OK);check(caller.dispose()==VCF_OK&&protector.dispose()==VCF_OK);
  engine.shutdown();attach_engine(nullptr);
 }
+struct PairedGuardState {Engine* engine;vcf_handle owner=0,ticket=0;int primary=0,partner=0;bool deny=false,revoke=false;};
+vcf_status VCF_CALL paired_guard(void* context,const vcf_guard_event* event){
+ auto& state=*static_cast<PairedGuardState*>(context);
+ const auto& request=event->request;
+ check(event->ticket==state.ticket&&event->requesting_consumer==state.owner);
+ check(request.mode==VCF_REAL_SOURCE&&request.y==91&&request.z==7);
+ check(std::string_view(request.dimension.data,request.dimension.length)=="overworld");
+ check(std::string_view(request.canonical_id.data,request.canonical_id.length)=="doublechest");
+ // A protection callback can inspect the original ticket while authorizing
+ // its partner. Authorizing an additional source must not rewrite it.
+ check(state.engine->session(state.owner,state.ticket).x==1);
+ if(request.x==1){++state.primary;return VCF_OK;}
+ check(request.x==2);++state.partner;
+ if(state.revoke)state.engine->release_named("paired_machine");
+ return state.deny?VCF_DENIED:VCF_OK;
 }
-int main(){try{exercise();copied_source_guards();std::cout<<"Detached actions, copied source descriptors, stale revisions, scoped guards and callback revocation passed\n";}
+void paired_source_guards(){
+ Host host;host.consumer_allowed=[](auto){return true;};bool permission=true;
+ host.permission=[&](auto,auto){return permission;};host.open=[](auto&){return VCF_PENDING;};host.close=[](auto&){return VCF_PENDING;};
+ Engine engine(host);const auto owner=engine.consumer("paired_machine"),protector=engine.consumer("paired_protection");
+ Session source;source.player="player";source.kind="doublechest";source.dimension="overworld";
+ source.permission="paired.owner";source.x=1;source.y=91;source.z=7;
+ const auto ticket=engine.prepare(owner,source);PairedGuardState state{&engine,owner,ticket};
+ engine.add_guard(protector,"both_halves","doublechest",paired_guard,&state);
+ engine.open(owner,ticket);engine.tick();check(state.primary==1&&state.partner==0);
+ engine.authorize_block(owner,ticket,VCF_GUARD_READY,2,91,7);engine.opened(owner,ticket,VCF_OK);
+ check(state.primary==2&&state.partner==1&&engine.session(owner,ticket).state==VCF_ACTIVE);
+ state.deny=true;
+ refused(VCF_DENIED,[&]{engine.authorize_block(owner,ticket,VCF_GUARD_ACTIVE,2,91,7);});
+ check(state.partner==2&&engine.session(owner,ticket).x==1);
+ permission=false;
+ refused(VCF_DENIED,[&]{engine.authorize_block(owner,ticket,VCF_GUARD_ACTIVE,2,91,7);});
+ check(state.partner==2);permission=true;
+ refused(VCF_INVALID,[&]{engine.authorize_block(owner,ticket,0,2,91,7);});
+ refused(VCF_INVALID,[&]{engine.authorize_block(owner,ticket,VCF_GUARD_ACTIVE,30000001,91,7);});
+ for(auto mode:{VCF_NATIVE_CONTEXT,VCF_TRANSIENT}){
+  source.mode=mode;auto wrong=engine.prepare(owner,source);
+  refused(VCF_INVALID,[&]{engine.authorize_block(owner,wrong,VCF_GUARD_ACTIVE,2,91,7);});
+ }
+ source.mode=VCF_REAL_SOURCE;source.held_id="held";auto held=engine.prepare(owner,source);
+ refused(VCF_INVALID,[&]{engine.authorize_block(owner,held,VCF_GUARD_ACTIVE,2,91,7);});
+ source.held_id.clear();source.kind="enderchest";auto personal=engine.prepare(owner,source);
+ refused(VCF_INVALID,[&]{engine.authorize_block(owner,personal,VCF_GUARD_ACTIVE,2,91,7);});
+ state.deny=false;state.revoke=true;
+ refused(VCF_CLOSED,[&]{engine.authorize_block(owner,ticket,VCF_GUARD_ACTIVE,2,91,7);});
+ check(state.partner==3);engine.tick();engine.release(protector);engine.shutdown();
+}
+}
+int main(){try{exercise();copied_source_guards();paired_source_guards();std::cout<<"Detached actions, copied and paired sources, stale revisions, scoped guards and callback revocation passed\n";}
  catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(const Error& e){std::cerr<<"Unexpected status "<<e.status<<'\n';return 2;}}

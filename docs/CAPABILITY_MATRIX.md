@@ -8,13 +8,13 @@ The Linux Docker build passes locally and in CI and produces a real ELF `.so`. E
 
 | Entry | Family | Windows original/custom | Linux original/custom |
 |---|---|---|---|
-| `chest` | storage | Not qualified / not implemented | Blocked / not implemented |
-| `doublechest` | storage | Not qualified / not implemented | Blocked / not implemented |
+| `chest` | storage | Not qualified / not implemented | Experimental nearby unpaired source, client tests pending / not implemented |
+| `doublechest` | storage | Not qualified / not implemented | Experimental nearby paired source with both-half guards, client tests pending / not implemented |
 | `hopper` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/metadata and SDK/native/source cleanup passed / not implemented |
 | `dispenser` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/metadata/closure smoke passed / not implemented |
 | `barrel` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/metadata/cleanup smoke passed / not implemented |
 | `dropper` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/closure smoke passed / not implemented |
-| `trappedchest` | storage | Not qualified / not implemented | Blocked / not implemented |
+| `trappedchest` | storage | Not qualified / not implemented | Experimental nearby unpaired source, client tests pending / not implemented |
 | `enderchest` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/metadata/cleanup smoke passed / not implemented |
 | `shulker` | storage | Not qualified / not implemented | Blocked / not implemented |
 | `craft` | workstation | Experimental original adapter, client untested / not implemented | Experimental original, PC 3Ãƒâ€”3 output/closure/reconnect smoke passed / not implemented |

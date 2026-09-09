@@ -36,8 +36,17 @@ are experimental and do not demonstrate custom station gameplay.
    add Linux `dispenser`, `dropper`, `brewing`, `beacon` and `crafter`, each
    requiring its own explicit source. The [linked hopper adapter](../../docs/examples/linux-linked-hopper.md)
    adds a separate five-slot source path with selected PC transfer, metadata,
-   SDK/native closure and source-lifecycle evidence. Each of the 23 requests
-   retains its own exact-build qualification record.
+   SDK/native closure and source-lifecycle evidence. Three new
+   [linked chest paths](../../docs/examples/linux-linked-chests.md) add `chest`,
+   `trappedchest` and `doublechest`, with client testing pending. There are 26
+   requests, each subject to exact-build admission and qualification.
+
+The operator-only `/vcf_native guard-deny "overworld|2,91,7"` demonstration
+denies that source position for this consumer's tickets, including a double
+chest requested through its other half. `/vcf_native guard-clear` resets this
+in-memory policy. The commands also work from the server console. Replace the
+dimension with its exact Endstone name. Production protection plugins should
+register their own SDK guards for every source position they protect.
 
 Workstation requests explicitly choose `VCF_NATIVE_CONTEXT`, leaving original
 recipes and items owned by BDS. The four player roles explicitly choose

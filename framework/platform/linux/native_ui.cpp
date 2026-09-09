@@ -53,6 +53,9 @@ constexpr Spec specs[]={
  {"smoker","minecraft:smoker",28,0x4506390,"2b4c79354fe036ebf52282642e1c1323fc4f1512e5182fc6304a012a57f394b5",1377,39,"minecraft:lit_smoker"},
  {"enderchest","minecraft:ender_chest",0,0x4502000,"150a860837f231c587480396c7668e66c94294e66c9ecd67a98b867abae3d66a",1550,23},
  {"barrel","minecraft:barrel",0,0x4502000,"150a860837f231c587480396c7668e66c94294e66c9ecd67a98b867abae3d66a",1550,42},
+ {"chest","minecraft:chest",0,0x4502000,"150a860837f231c587480396c7668e66c94294e66c9ecd67a98b867abae3d66a",1550,2},
+ {"trappedchest","minecraft:trapped_chest",0,0x4502000,"150a860837f231c587480396c7668e66c94294e66c9ecd67a98b867abae3d66a",1550,2},
+ {"doublechest","minecraft:chest",0,0x4502000,"150a860837f231c587480396c7668e66c94294e66c9ecd67a98b867abae3d66a",1550,2},
  {"dispenser","minecraft:dispenser",6,0x4502610,"730b22f750dd927afca4bc14222ee5badb1259995c2cdbcc2f3d5325182edde8",1531,13,{},0xe33c020},
  {"dropper","minecraft:dropper",7,0x4502c10,"c3c0ffd24083d5b37be149fb914cd301284b9543acaa6f2db696ebbb825adecb",1531,14,{},0xe2aa818},
  {"brewing","minecraft:brewing_stand",4,0x4500820,"f01b8db1fce0dcdaec2345f8fd3486d67d38e1bc5c9437a7f751fd2095cf47c4",1534,8,{},0xe33bc38},
@@ -139,6 +142,40 @@ struct Bridge {
   require(actor,VCF_NOT_FOUND);memory.readable(actor,40);
   require(memory.field<Point>(actor,8)==position&&memory.field<uint8_t>(actor,20)==layout.source_type,VCF_CONFLICT);
   if(region_out)*region_out=region;return actor;
+ }
+ struct Source {uintptr_t actor=0,pair=0;Point paired{};bool operator==(const Source&)const=default;};
+ Source chest(endstone::Player& p,const Spec& layout,const Point& position)const{
+  require(layout.source_type==2,VCF_INVALID);Memory memory;
+  Source result;result.actor=source(p,layout,position);
+  auto verify=[&](uintptr_t actor){
+   memory.readable(actor,648);
+   require(memory.field<uintptr_t>(actor)==bedrock+0xe7580f8
+    &&memory.field<uintptr_t>(actor,240)==bedrock+0xe7585c0,VCF_UNAVAILABLE);
+  };
+  verify(result.actor);
+  // The native getContainer virtual returns actor + 240. Independently
+  // compiled Container::getContainerSize dispatches at slot 21 on Linux.
+  memory.function(memory.field<uintptr_t>(bedrock+0xe7580f8,45*8),bedrock,0xc63e540,8,
+   "4d50ec6fd0dff4a46bf703f540cab634ad79cb5b85ce82727233f22760c4e86a");
+  const auto size=memory.field<uintptr_t>(bedrock+0xe7585c0,21*8);
+  memory.function(size,bedrock,0xc63a9c0,22,"e1709e73e712d78f6a5a3a2c0499507ab2bf1ba01d993257a9233b67776ef5ab");
+  // The matched native getItem body resolves this same pointer as another
+  // ChestBlockActor; its two native vectors supply slots 0..26 and 27..53.
+  memory.function(memory.field<uintptr_t>(bedrock+0xe7585c0,8*8),bedrock,0xc63ad70,172,
+   "640b994e56515eec631724986ac736be7f65c0aafd469b34a5585fff0d82b432");
+  result.pair=memory.field<uintptr_t>(result.actor,640);
+  const bool paired=layout.id=="doublechest";
+  require(bool(result.pair)==paired,VCF_CONFLICT);
+  require(reinterpret_cast<int32_t(*)(const void*)>(size)(reinterpret_cast<const void*>(result.actor+240))==(paired?54:27),VCF_CONFLICT);
+  if(paired){
+   require(result.pair!=result.actor,VCF_CONFLICT);verify(result.pair);
+   result.paired=memory.field<Point>(result.pair,8);
+   require(result.paired.y==position.y
+    &&std::abs(int64_t(result.paired.x)-position.x)+std::abs(int64_t(result.paired.z)-position.z)==1,VCF_CONFLICT);
+   require(memory.field<uintptr_t>(result.pair,640)==result.actor,VCF_CONFLICT);
+   require(memory.field<uint8_t>(result.pair,20)==layout.source_type,VCF_CONFLICT);
+  }
+  return result;
  }
  void sync_actor(endstone::Player& p,const Spec& layout,const Point& position)const{
   const bool beacon=layout.id=="beacon";require(beacon||layout.id=="crafter",VCF_UNAVAILABLE);
@@ -234,7 +271,7 @@ struct Bridge {
    return window;
   }
   if(layout.type==0){
-   require(layout.source_type==23||layout.source_type==42,VCF_UNAVAILABLE);
+   require(layout.source_type==2||layout.source_type==23||layout.source_type==42,VCF_UNAVAILABLE);
    memory.function(bedrock+0xb2d4ac0,bedrock,0xb2d4ac0,334,"837b2d2a551de7712d9705e6606c9ae850133384065291293fe26667e9f349c9");
    memory.function(bedrock+0x5392f10,bedrock,0x5392f10,2964,"16754566aca342bd1f9c7bc84a2c5c50de7bb56cdff5847628ad81d99845df71");
    if(layout.source_type==23)require(p.getEnderChest().getSize()==27,VCF_UNAVAILABLE);
@@ -298,7 +335,7 @@ struct NativeUi::Impl {
  struct View{vcf_handle owner,id;std::string player,kind,dimension,permission;uint32_t nonce;int window=-1;
   bool prepared=false,ack=false,activating=false,observed=false,contents_seen=false,active=false,closing=false,close_seen=false,superseded=false;
   bool projected=false,projecting=false,restored=false,attempted=false,close_sent=false,close_projection=false,syncing_actor=false,actor_seen=false;
-  uintptr_t source_actor=0;
+  Bridge::Source source{};bool authorizing=false;
   Point position{};
   Clock::time_point queued=Clock::now(),next_check{},closed{};};
  endstone::Server& server;Engine& engine;Bridge bridge;std::map<vcf_handle,View> views;
@@ -310,21 +347,41 @@ struct NativeUi::Impl {
   return row&&p.isValid()&&!p.isDead()&&p.getGameVersion()=="1.26.45"&&p.getDeviceOS()=="Windows"&&p.getDimension().getName()==v.dimension
    &&p.hasPermission("remoteworkstations.use")&&p.hasPermission(std::string(row->permission))&&(v.permission.empty()||p.hasPermission(v.permission));
  }
- bool source_allowed(endstone::Player&p,const View&v){
-  const auto& layout=*spec(v.kind);if(!layout.source_type)return true;
+ bool block_allowed(endstone::Player&p,const View&v,const Point& position){
+  const auto& layout=*spec(v.kind);
+  if(position.x < -30000000||position.x>30000000||position.z < -30000000||position.z>30000000||position.y < -64||position.y>319)return false;
   if(p.getDimension().getName()!=v.dimension)return false;
-  auto location=p.getLocation();const double dx=double(location.getX())-(double(v.position.x)+0.5);
-  const double dy=double(location.getY())-(double(v.position.y)+0.5),dz=double(location.getZ())-(double(v.position.z)+0.5);
+  auto location=p.getLocation();const double dx=double(location.getX())-(double(position.x)+0.5);
+  const double dy=double(location.getY())-(double(position.y)+0.5),dz=double(location.getZ())-(double(position.z)+0.5);
   if(!std::isfinite(dx)||!std::isfinite(dy)||!std::isfinite(dz)||dx*dx+dy*dy+dz*dz>36)return false;
   // Require the source chunk already loaded; never generate or load a
   // remote chunk as a side effect of a developer request.
   auto chunks=p.getDimension().getLoadedChunks();bool loaded=false;
-  const auto cx=static_cast<int32_t>(std::floor(double(v.position.x)/16)),cz=static_cast<int32_t>(std::floor(double(v.position.z)/16));
+  const auto cx=static_cast<int32_t>(std::floor(double(position.x)/16)),cz=static_cast<int32_t>(std::floor(double(position.z)/16));
   for(const auto& chunk:chunks)if(chunk&&chunk->getX()==cx&&chunk->getZ()==cz){loaded=true;break;}
   if(!loaded)return false;
-  const auto block=p.getDimension().getBlockAt(v.position.x,v.position.y,v.position.z)->getType();
-  if(block!=layout.block&&block!=layout.lit_block)return false;
-  const auto actor=bridge.source(p,layout,v.position);return !v.source_actor||actor==v.source_actor;
+  const auto block=p.getDimension().getBlockAt(position.x,position.y,position.z)->getType();
+  return block==layout.block||block==layout.lit_block;
+ }
+ bool source_allowed(endstone::Player&p,const View&v,Bridge::Source* captured=nullptr){
+  const auto& layout=*spec(v.kind);if(!layout.source_type)return true;
+  if(!block_allowed(p,v,v.position))return false;
+  const auto source=layout.source_type==2?bridge.chest(p,layout,v.position):Bridge::Source{bridge.source(p,layout,v.position)};
+  if(source.pair&&(!block_allowed(p,v,source.paired)||bridge.source(p,layout,source.paired)!=source.pair))return false;
+  if(v.source.actor&&source!=v.source)return false;
+  if(captured)*captured=source;return true;
+ }
+ void authorize(endstone::Player&p,View&v,uint32_t phase){
+  require(!v.authorizing&&!v.closing&&!v.superseded&&allowed(p,v)&&source_allowed(p,v),VCF_DENIED);
+  v.authorizing=true;
+  try{
+   engine.authorize(v.owner,v.id,phase);
+   if(v.source.pair)engine.authorize_block(v.owner,v.id,phase,v.source.paired.x,v.source.paired.y,v.source.paired.z);
+   // Protection callbacks can revoke a consumer, change a block or replace
+   // the player's window. Recheck both captured identities after callbacks.
+   require(!v.closing&&!v.superseded&&allowed(p,v)&&source_allowed(p,v),VCF_DENIED);
+  }catch(...){v.authorizing=false;throw;}
+  v.authorizing=false;
  }
  void retire(View&v,vcf_status result){
   if(v.window>=1&&v.window<=99){auto now=milliseconds();close_leases.retire(v.player,static_cast<uint8_t>(v.window),now+60000,now);}
@@ -411,7 +468,7 @@ struct NativeUi::Impl {
   if(!v.active){
    require(now-v.queued<std::chrono::seconds(10),VCF_UNAVAILABLE);
    if(!v.ack||now-v.queued<std::chrono::milliseconds(500))return false;
-   engine.authorize(v.owner,v.id,VCF_GUARD_DISPATCH);
+   authorize(*p,v,VCF_GUARD_DISPATCH);
    auto native=bridge.inspect(*p);require(native.ready,VCF_CONFLICT);
    require(!close_leases.reserved(v.player,next_window(native.window),milliseconds()),VCF_CONFLICT);
    if(spec(v.kind)->source_type)require(source_allowed(*p,v),VCF_CONFLICT);
@@ -427,14 +484,15 @@ struct NativeUi::Impl {
    // close marks this borrowed view; tick owns the eventual erasure.
    if(v.closing)return false;
    require(v.observed&&v.window==window&&!v.superseded,VCF_UNAVAILABLE);
-   if(v.kind=="hopper")require(v.contents_seen,VCF_UNAVAILABLE);
+   if(v.kind=="hopper"||spec(v.kind)->source_type==2)require(v.contents_seen,VCF_UNAVAILABLE);
+   if(v.source.pair)authorize(*p,v,VCF_GUARD_READY);
    v.active=true;engine.opened(v.owner,v.id,VCF_OK);
    if(engine.session(v.owner,v.id).state!=VCF_ACTIVE){close(p,v);return false;}
   }
   if(v.close_seen||now>=v.next_check){
    v.next_check=now+std::chrono::milliseconds(250);
    if(bridge.inspect(*p).ready){restore(*p,v);retire(v,VCF_OK);return true;}
-   engine.authorize(v.owner,v.id,VCF_GUARD_ACTIVE);
+   authorize(*p,v,VCF_GUARD_ACTIVE);
   }
   if(v.close_seen||now-v.queued>std::chrono::minutes(20))close(p,v);
   return false;
@@ -457,7 +515,7 @@ vcf_status NativeUi::open(const Session&s){
  Impl::View v{s.owner,s.id,s.player,s.kind,p->getDimension().getName(),s.permission,++impl_->nonce};
  if(layout->source_type){
   require(s.dimension==v.dimension,VCF_DENIED);v.position={s.x,s.y,s.z};
-  require(impl_->source_allowed(*p,v),VCF_DENIED);v.source_actor=impl_->bridge.source(*p,*layout,v.position);
+  require(impl_->source_allowed(*p,v,&v.source),VCF_DENIED);
  }
  require(impl_->allowed(*p,v),VCF_DENIED);require(impl_->bridge.inspect(*p).ready,VCF_CONFLICT);
  impl_->views.emplace(s.id,std::move(v));return VCF_PENDING;
@@ -517,7 +575,7 @@ void NativeUi::receive(endstone::PacketReceiveEvent&e){
      require(static_cast<uint8_t>(payload[12])<9&&static_cast<uint8_t>(payload[13])<2,VCF_INVALID);
     }
     require(impl_->allowed(*e.getPlayer(),v)&&impl_->source_allowed(*e.getPlayer(),v),VCF_DENIED);
-    if(spec(v.kind)->source_type)impl_->engine.authorize(v.owner,v.id,VCF_GUARD_ACTIVE);
+    if(spec(v.kind)->source_type)impl_->authorize(*e.getPlayer(),v,VCF_GUARD_ACTIVE);
    }catch(...){
     e.setCancelled(true);
     try{impl_->engine.session(v.owner,v.id).result=VCF_DENIED;impl_->close(e.getPlayer(),v);}catch(...){}
@@ -534,6 +592,22 @@ void NativeUi::sent(endstone::PacketSendEvent&e){
   try{
    if(e.getPacketId()==46){Reader r{e.getPayload()};auto window=r.byte(),type=r.byte();auto position=r.point();r.var(64);require(r.offset==r.data.size());
     if(v.activating&&!v.observed&&type==spec(v.kind)->type&&window>=1&&window<=99&&(spec(v.kind)->block.empty()||position==v.position)){v.window=window;v.observed=true;}else v.superseded=true;
+   }else if((e.getPacketId()==49||e.getPacketId()==50)&&spec(v.kind)->source_type==2&&v.observed&&!v.superseded){
+    Reader r{e.getPayload()};if(r.var()==static_cast<uint32_t>(v.window)){
+     try{
+      impl_->authorize(*e.getPlayer(),v,v.activating?VCF_GUARD_DISPATCH:VCF_GUARD_ACTIVE);
+      if(e.getPacketId()==49){
+       require(r.var()==resolve(v.kind)->capacity&&r.offset<r.data.size(),VCF_CONFLICT);
+       if(v.activating)v.contents_seen=true;
+      }
+     }catch(...){
+      e.setCancelled(true);
+      // Never destroy a borrowed native model while it is publishing items.
+      // Mark this view; the ordinary tick performs close and final erasure.
+      if(!v.closing){v.closing=true;v.closed=Clock::now();}
+      try{impl_->engine.session(v.owner,v.id).result=VCF_DENIED;impl_->engine.close(v.owner,v.id);}catch(...){}
+     }
+    }
    }else if(e.getPacketId()==49&&v.kind=="hopper"&&v.activating&&v.observed){
     Reader r{e.getPayload()};if(r.var()==static_cast<uint32_t>(v.window))v.contents_seen=r.var()==5&&r.offset<r.data.size();
    }else if(e.getPacketId()==56&&v.syncing_actor){

@@ -95,6 +95,14 @@ at asynchronous readiness, and during active native adapter checks (at most
 its owner revokes it before any later callback dispatch. These checks do not
 claim an atomic interception of BDS's unchanged vanilla transaction path.
 
+For paired block sources, the adapter invokes guards with each verified source
+position under the same ticket, mode, dimension and canonical ID. Treat every
+position as independently protected and keep callbacks safe for repeated calls.
+The stored session keeps the originally requested position. A denial for either
+half refuses or closes the double chest; matching native content and slot sends
+recheck both positions before publication. See the
+[paired chest example](examples/linux-linked-chests.md).
+
 `prepare`, `set_item` and `define_rule` configure provider-owned state.
 Real-source sessions reject preloading. Native/client-owned state cannot be
 silently replaced by changing a backing-mode flag.

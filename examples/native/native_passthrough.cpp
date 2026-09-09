@@ -11,26 +11,35 @@
 #include <endstone/level/dimension.h>
 #include <map>
 #include <memory>
+#include <optional>
 
 namespace sdk = oni::vcf::sdk;
 class NativePassthrough : public endstone::Plugin {
-    static constexpr std::array<std::string_view,23> screens = {
+    static constexpr std::array<std::string_view,26> screens = {
         "craft", "anvil", "grindstone", "smithing", "stonecutter", "loom",
         "cartography", "inventory2x2", "armor", "offhand", "recipebook", "enchanting",
         "furnace", "blastfurnace", "smoker", "enderchest", "barrel",
-        "dispenser", "dropper", "brewing", "beacon", "crafter", "hopper"
+        "dispenser", "dropper", "brewing", "beacon", "crafter", "hopper",
+        "chest", "trappedchest", "doublechest"
     };
     std::unique_ptr<sdk::Client> ui_;
     std::shared_ptr<endstone::Task> cleanup_;
     std::map<std::string,std::string> bindings_;
     std::map<vcf_handle,std::string> tickets_;
     uint64_t opened_=0,closed_=0,refused_=0,guard_checks_=0;
+    struct DeniedSource {std::string dimension;std::array<int32_t,3> position;};
+    std::optional<DeniedSource> denied_source_;
 
     static vcf_status VCF_CALL guarded(void* context,const vcf_guard_event* event) {
         auto& self=*static_cast<NativePassthrough*>(context);
         if(self.ui_&&event->requesting_consumer==self.ui_->owner())++self.guard_checks_;
-        // Protection plugins can inspect the copied source descriptor here.
-        // This example imposes its permission through source_permission below.
+        // Both halves of a paired chest are checked using the same ticket.
+        // The example policy applies only to this consumer's own requests.
+        if(self.ui_&&event->requesting_consumer==self.ui_->owner()&&self.denied_source_){
+            const auto& r=event->request;const auto& denied=*self.denied_source_;
+            if(r.mode==VCF_REAL_SOURCE&&std::string_view(r.dimension.data,r.dimension.length)==denied.dimension
+                &&std::array<int32_t,3>{r.x,r.y,r.z}==denied.position)return VCF_DENIED;
+        }
         return VCF_OK;
     }
     static vcf_status VCF_CALL completed(void* context,const vcf_event* event) {
@@ -54,7 +63,8 @@ class NativePassthrough : public endstone::Plugin {
     }
     static bool linked(std::string_view screen){
         return screen=="furnace"||screen=="blastfurnace"||screen=="smoker"||screen=="enderchest"||screen=="barrel"
-            ||screen=="dispenser"||screen=="dropper"||screen=="brewing"||screen=="beacon"||screen=="crafter"||screen=="hopper";
+            ||screen=="dispenser"||screen=="dropper"||screen=="brewing"||screen=="beacon"||screen=="crafter"||screen=="hopper"
+            ||screen=="chest"||screen=="trappedchest"||screen=="doublechest";
     }
     static std::array<int32_t,3> coordinates(std::string_view text){
         std::array<int32_t,3> result{};
@@ -103,7 +113,7 @@ public:
             },1,1);
             registerEvent(&NativePassthrough::interact,*this,endstone::EventPriority::Highest);
             registerEvent(&NativePassthrough::quit,*this);
-            getLogger().info("NativePassthrough connected through SDK 1.1; twenty-three original-mode requests available subject to provider admission.");
+            getLogger().info("NativePassthrough connected through SDK 1.1; twenty-six original-mode requests available subject to provider admission.");
         } catch(const std::exception& e) {getLogger().error("NativePassthrough unavailable: {}",e.what());ui_.reset();}
     }
     void onDisable() override {
@@ -131,6 +141,19 @@ public:
             sender.sendMessage("Original-mode SDK example: opens "+std::to_string(opened_)+", closes "+std::to_string(closed_)
                 +", failures "+std::to_string(refused_)+", guard checks "+std::to_string(guard_checks_)
                 +", outstanding tickets "+std::to_string(tickets_.size()));return true;
+        }
+        if(args[0]=="guard-clear"&&args.size()==1){
+            denied_source_.reset();sender.sendMessage("Cleared the example source guard.");return true;
+        }
+        if(args[0]=="guard-deny"&&args.size()==2){
+            try{
+                const auto split=args[1].find('|');
+                if(split==std::string::npos||split==0||split>128)throw std::runtime_error("Use dimension|x,y,z.");
+                auto xyz=coordinates(std::string_view(args[1]).substr(split+1));
+                denied_source_=DeniedSource{args[1].substr(0,split),xyz};
+                sender.sendMessage("Example source guard denies "+args[1]+" for this consumer's tickets.");
+            }catch(const std::exception& e){sender.sendErrorMessage(e.what());}
+            return true;
         }
         auto* player=sender.asPlayer();
         if(args.size()==1&&args[0]=="close") {

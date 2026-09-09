@@ -19,6 +19,7 @@ All 69 original catalog entries, aliases, permissions and source contracts are p
 - [Access the real Ender inventory and linked barrel through the SDK](docs/examples/linux-linked-storage.md)
 - [Use linked utilities, with actual screenshots and close/restore test history](docs/examples/linux-linked-utilities.md)
 - [Use the native linked hopper with retained items and metadata](docs/examples/linux-linked-hopper.md)
+- [Open linked chests with protection checks for both halves](docs/examples/linux-linked-chests.md)
 - [Native SDK and compiled consumer](docs/NATIVE_SDK.md)
 - [Native storage transactions and current integration boundary](docs/NATIVE_STORAGE.md)
 - [NativePassthrough SDK and player-interaction example](examples/native/NativePassthrough.md)
