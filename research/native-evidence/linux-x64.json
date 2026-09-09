@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
     "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
-    "artifact_sha256": "455b00e950b817f2ea0fee1092545ef1a6d3544af386e396c8a4e8760268c12c"
+    "artifact_sha256": "d94c988c4447a4f3e64293e9059c171d6b2854db99fc5578252c0a9ee75838ac"
   },
   "build": "tested-in-local-linux-docker",
   "native_loader_smoke": "passed",
@@ -526,11 +526,11 @@
       "family": "storage",
       "historical_status": "implemented-unverified",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -538,17 +538,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Nearby original storage transfers, selected metadata, closure and cleanup have PC smoke evidence. Source-free Ender access, custom/virtual storage, alias source configuration, adversarial lifecycle and crash/save recovery remain incomplete.",
+          "smoke_record": "research/native-evidence/linux-1d88dfa-storage-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -900,11 +901,11 @@
       "family": "storage",
       "historical_status": "implemented-tested",
       "acceptance": "not-qualified",
-      "native_available": false,
+      "native_available": true,
       "custom_available": false,
       "modes": {
         "real-source": {
-          "adapter": "not-implemented",
+          "adapter": "experimental-original-adapter",
           "presentation": "original-native",
           "client": {
             "device": "Windows PC",
@@ -912,17 +913,18 @@
             "input": "Classic keyboard/mouse"
           },
           "checks": {
-            "opening": "untested",
-            "rendering": "untested",
-            "input": "untested",
+            "opening": "passed",
+            "rendering": "passed",
+            "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "untested",
+            "closing": "passed",
             "restoration": "untested",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Native C++ session adapter and custom executor integration pending; private Linux UI adapter remains unavailable."
+          "blocker": "Nearby original storage transfers, selected metadata, closure and cleanup have PC smoke evidence. Source-free Ender access, custom/virtual storage, alias source configuration, adversarial lifecycle and crash/save recovery remain incomplete.",
+          "smoke_record": "research/native-evidence/linux-1d88dfa-storage-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -8516,10 +8518,10 @@
     }
   },
   "build_evidence": {
-    "source_revision": "7a938e542a7ea9f1101ee6b2af3a92f9a2b31ac1",
+    "source_revision": "1d88dfabe22a998e5da56287d8e35c23ffc1bc4f",
     "host": "Windows Docker Desktop 4.90.0 / WSL 2, pinned linux/amd64 Clang 20.1.8 image",
     "native_tests": "14/14 CTest locally/CI including copied source descriptors and SDK relocation; ASan/UBSan and300000 fuzz inputs passed.",
-    "elf_report": "linux-7a938e5-elf-report.txt",
+    "elf_report": "linux-1d88dfa-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.34",
     "direct_libraries": [
       "libcrypto.so.3",
@@ -8530,23 +8532,23 @@
       "libgcc_s.so.1",
       "libc.so.6"
     ],
-    "runtime_restriction": "Exact Linux files and opt-in adapter admit eight original workstation contexts, four shared inventory roles and three nearby linked machines. Each smoke identifies its own artifacts; custom/full qualification remains incomplete."
+    "runtime_restriction": "Exact Linux files and opt-in adapter admit eight original workstation contexts, four shared inventory roles, three nearby linked machines and two nearby linked storage entries. Each smoke identifies its own artifacts; custom/full qualification remains incomplete."
   },
   "sdk_version": "1.1; ABI 1.0 prefix retained",
   "sanitizers": {
-    "source_revision": "7a938e542a7ea9f1101ee6b2af3a92f9a2b31ac1",
+    "source_revision": "1d88dfabe22a998e5da56287d8e35c23ffc1bc4f",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
     "storage_fuzz_inputs": 100000,
     "items_fuzz_inputs": 100000,
-    "test_report": "linux-7a938e5-sanitizer-tests.txt",
-    "nbt_report": "linux-7a938e5-fuzz-nbt.txt",
-    "storage_report": "linux-7a938e5-fuzz-storage.txt",
-    "items_report": "linux-7a938e5-fuzz-items.txt"
+    "test_report": "linux-1d88dfa-sanitizer-tests.txt",
+    "nbt_report": "linux-1d88dfa-fuzz-nbt.txt",
+    "storage_report": "linux-1d88dfa-fuzz-storage.txt",
+    "items_report": "linux-1d88dfa-fuzz-items.txt"
   },
   "native_tests": {
-    "source_revision": "7a938e542a7ea9f1101ee6b2af3a92f9a2b31ac1",
+    "source_revision": "1d88dfabe22a998e5da56287d8e35c23ffc1bc4f",
     "ctest": "14/14 passed locally and CI",
     "sanitizers": "14/14 passed; proprietary BDS UI execution not instrumented.",
     "fuzz_inputs": {
@@ -8568,5 +8570,6 @@
   "native_workstation_smoke": "research/native-evidence/linux-ca30255-workstation-smoke.json",
   "native_crafting_smoke": "research/native-evidence/linux-7aacb36-crafting-smoke.json",
   "native_enchanting_smoke": "research/native-evidence/linux-e0dbb78-enchanting-smoke.json",
-  "native_linked_furnace_smoke": "research/native-evidence/linux-7a938e5-furnace-smoke.json"
+  "native_linked_furnace_smoke": "research/native-evidence/linux-7a938e5-furnace-smoke.json",
+  "native_linked_storage_smoke": "research/native-evidence/linux-1d88dfa-storage-smoke.json"
 }

@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-smoke-not-qualification",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "1d88dfabe22a998e5da56287d8e35c23ffc1bc4f",
+  "platform": "linux-x64",
+  "artifact_sha256": "d94c988c4447a4f3e64293e9059c171d6b2854db99fc5578252c0a9ee75838ac",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "started_utc": "2026-09-09T05:48:50Z",
+  "clean_stop_utc": "2026-09-09T06:04:29Z",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "loaded_shadow_copies_match_exports": true,
+  "one_bundled_libcxx_family": true,
+  "private_probe_installed": false,
+  "observations": {
+    "enderchest": "Observed empty 27-slot Ender Chest and SDK-closed. Reopened; ordinary-click deposited the named Efficiency I wooden pickaxe in slot0 and two lapis in slot26. SDK closure retained contents: player counts two pickaxes, zero lapis. Opened a second nearby Ender Chest source; Shift-click recovered the named pickaxe and ordinary-click recovered both lapis. Tooltip retained name and Efficiency I, and player counts returned to three total pickaxes/two lapis.",
+    "ender_permission": "Deposited one raw beef in slot26. Revoked the example source permission by temporarily de-opping the tester. One expected denial closed the view and retired its ticket. Player beef count zero. Restored the previous operator status and reopened the first source; the one raw beef remained.",
+    "ender_source_removal": "While viewing the retained beef, removed only the first test Ender Chest block. One expected denial closed the view. Reopening the second Ender Chest still showed the beef; Shift-click recovered it and read-only player count was one. Native X closed and the first test block was recreated with keep.",
+    "barrel": "Observed native Barrel title and 27 slots. Shift-click deposited three iron ingots in slot0, ordinary-click deposited six stone in slot26. SDK-closed, read-only player counts zero for both. Reopening retained both stacks. Shift-click withdrew six stone, ordinary-click withdrew three ingots; exact player counts six and three.",
+    "barrel_disconnect": "Deposited the named Efficiency I pickaxe in the barrel. A deliberate server kick disconnected the sole tester while the view was active; zero SDK tickets remained. Rejoined with two pickaxes in player inventory, reopened the barrel and observed the stored name/enchantment. Shift-click recovered the pickaxe, count returned to three, and native Escape closed normally.",
+    "wrong_source": "Requested barrel against a nearby Ender Chest source. Refused before opening with one expected denial and no ticket leak.",
+    "furnace_regression": "Opened the existing empty furnace and SDK-closed successfully. No item processing or transfer in this exact regression.",
+    "form_regression": "One SDK form action callback; zero outstanding form tickets."
+  },
+  "sdk_counters": {
+    "opens": 9,
+    "closes": 7,
+    "failure_callbacks": 3,
+    "expected_denial_failures": 3,
+    "refusals_before_open": 1,
+    "guard_checks": 1852,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "counter_limit": "Five Ender opens ended in three normal closes and two active denials. Three barrel opens and one furnace open closed normally. The wrong-family barrel refusal occurred before opening. SDK events do not certify every native transaction.",
+  "setup_observations": "Two initial setblock keep commands refused while the chunk was unloaded before player join; no block was placed. After join, Ender test sources were created only in air. A barrel keep command refused an occupied location; another air location was used. No unrelated block was overwritten. Read-only clear commands always specified maxCount0; zero counts log no items to remove. One capture showed an unrelated notification and was excluded from public evidence.",
+  "not_qualified": [
+    "Source-free or unrestricted remote Ender access",
+    "Custom storage policies or plugin-owned inventory writes",
+    "Virtual vaults and persistence policy",
+    "Source configuration migration for short aliases",
+    "All metadata combinations or stock client input profiles",
+    "Active distance/dimension transitions and source unload",
+    "Same-address source replacement by competing native code",
+    "Cross-save/crash and death/drop recovery",
+    "Other storage layouts and full catalog on either platform",
+    "Other devices and multiplayer",
+    "Exact Onistone runtime admission"
+  ],
+  "earlier_anomalies": "This run does not resolve the earlier ca30255 grindstone initial extraction rejection or171e0aa missing-plank/death observation.",
+  "screenshots": {
+    "ender-named-input": {
+      "path": "docs/images/native-linux-storage/ender-named-input.png",
+      "sha256": "cd5393155220f8e4c0fd131dc1014beefedb36de5a991a9c125afbe30c98818e",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "ender-edge-slot": {
+      "path": "docs/images/native-linux-storage/ender-edge-slot.png",
+      "sha256": "f5149aeba58a1af360716d9dea0b184e789905fe172b749b2fae926d20f6599f",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "ender-returned-metadata": {
+      "path": "docs/images/native-linux-storage/ender-returned-metadata.png",
+      "sha256": "f5184829620d40daf8453086e4841255b9e9922552f15d31658cd0b4b4e66d57",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "ender-permission-retained": {
+      "path": "docs/images/native-linux-storage/ender-permission-retained.png",
+      "sha256": "e22ccb1995ad930eb6603f56c7b582b382b94096cbb7561e432e813169c94df5",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "ender-source-removed-retained": {
+      "path": "docs/images/native-linux-storage/ender-source-removed-retained.png",
+      "sha256": "aef10d04d9bc14f65f2e557066092f9ec6fea3c924163a3a98386e4c3b833cf3",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "barrel-inputs": {
+      "path": "docs/images/native-linux-storage/barrel-inputs.png",
+      "sha256": "4b2c82a97a4c021325be6c6a532ee9b198d8c08a919d5f2b948ee055f1142e3a",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "barrel-delivered": {
+      "path": "docs/images/native-linux-storage/barrel-delivered.png",
+      "sha256": "448a42a99854a31bbef09dab3b3bf098502574d45c9aad98288f144ceb63b3b7",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "barrel-rejoin-metadata": {
+      "path": "docs/images/native-linux-storage/barrel-rejoin-metadata.png",
+      "sha256": "a8b5d475964a8c0e1c80e0c5c5c7bf247be89d38dec9401622c629b23a8dd9bc",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "furnace-regression": {
+      "path": "docs/images/native-linux-storage/furnace-regression.png",
+      "sha256": "1e3e427539d07f40a8b38153a8c8b06975be09189cd19fdd5f6c483eb0436247",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-1d88dfa-storage-counters.txt",
+    "sha256": "449d9303bcedddb40ca43ffa9d9e4d3b686664650ce18186029624fb5315452a"
+  },
+  "abi_manifest": "research/native-evidence/linux-linked-storage-abi-126451.json"
+}

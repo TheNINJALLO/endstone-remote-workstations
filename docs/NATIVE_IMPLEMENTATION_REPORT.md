@@ -1,6 +1,6 @@
-# Native implementation checkpoint — incomplete
+# Native implementation checkpoint â€” incomplete
 
-The native source checkpoint is `7a938e542a7ea9f1101ee6b2af3a92f9a2b31ac1` on
+The native source checkpoint is `1d88dfabe22a998e5da56287d8e35c23ffc1bc4f` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
@@ -38,7 +38,7 @@ The older `171e0aa` [inventory example](examples/linux-native-inventory.md) reta
 its separate missing-plank observation followed by death and subsequent controlled
 passes. Neither checkpoint establishes complete death/drop or crash recovery.
 
-The exact `7aacb36` crafting build passed a 3×3 wooden-pickaxe recipe with
+The exact `7aacb36` crafting build passed a 3Ã—3 wooden-pickaxe recipe with
 ordinary-click and Shift-click output, unused ingredients returned on SDK
 closure, compass opening, ingredient disconnect/reconnect and `/workbench`.
 Stonecutter, shared inventory and the form action also passed regression checks.
@@ -73,6 +73,18 @@ The earlier `26528a7` SDK-close timeout exposed a ContainerClose type mismatch;
 this build sends the active type and passed the follow-up checks. Custom
 processing, source-configuration aliases and crash/save recovery remain incomplete.
 
+The exact `1d88dfa` linked-storage build passed Ender Chest and barrel
+first/last-slot transfers. The named Efficiency I pickaxe retained its metadata
+when recovered through a second Ender source and after a barrel disconnect.
+Ender permission loss and source removal closed their views while preserving
+the player's retained input. Wrong-family barrel access refused. Nine opens
+ended in seven normal closes and two active denials, plus one refusal before
+opening; zero tickets or sessions remained at clean shutdown. Empty-furnace
+closure and the SDK form passed regression checks. The [storage example](examples/linux-linked-storage.md)
+and [exact record](../research/native-evidence/linux-1d88dfa-storage-smoke.json)
+include nine actual screenshots. Source-free Ender access, custom storage,
+virtual vaults and save/crash recovery remain incomplete.
+
 Live testing exposed and fixed two SDK issues: Linux cross-module player
 conversion now uses Endstone's virtual `asPlayer()` method, and a selected menu
 action completes the caller's original ticket instead of leaking a hidden
@@ -105,7 +117,7 @@ packaging checks do not upgrade native gameplay qualification.
 - Local Linux Docker build: **14/14 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `7a938e5`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `1d88dfa`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
@@ -117,13 +129,13 @@ packaging checks do not upgrade native gameplay qualification.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-7a938e5.json`](../research/native-evidence/checkpoint-7a938e5.json).
+[`checkpoint-1d88dfa.json`](../research/native-evidence/checkpoint-1d88dfa.json).
 Older checkpoints keep their original source and artifact identities.
 
-At `7a938e5`, [native CI run 34313667983](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34313667983)
+At `1d88dfa`, [native CI run 34316204487](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34316204487)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34313667987](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34313667987)
+refuses the incomplete catalog. [Legacy regression run 34316204523](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34316204523)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux workstation example](examples/linux-native-workstations.md).
 All three Linux CI plugin hashes match the locally tested exports. The Windows
@@ -136,7 +148,7 @@ proprietary BDS UI process.
 
 | Target | Export | SHA-256 |
 |---|---|---|
-| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `455b00e950b817f2ea0fee1092545ef1a6d3544af386e396c8a4e8760268c12c` |
+| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `d94c988c4447a4f3e64293e9059c171d6b2854db99fc5578252c0a9ee75838ac` |
 | Windows x64 | `dist/windows-release/plugins/endstone_onistone_vcf.dll` | `07b037e42a832571448022fdea6385b2db08e0839a9e5b611965aeac500e3dfb` |
 
 Paths are relative to the native checkout. The loaded Linux shadow copy and
@@ -174,7 +186,8 @@ All 69 original entries, aliases, permissions and source contracts remain in
 the frozen baseline and platform reports. **No custom native catalog entry is
 fully qualified.** Eleven Windows original-mode paths have experimental
 orchestration behind an opt-in flag. Eight Linux workstation contexts, four shared
-inventory roles and three nearby linked machines have experimental original adapters; other Linux catalog
+inventory roles, three nearby linked machines and two nearby linked storage entries
+have experimental original adapters; other Linux catalog
 adapters remain incomplete.
 The current form is an SDK action demonstration; it is not a workstation.
 

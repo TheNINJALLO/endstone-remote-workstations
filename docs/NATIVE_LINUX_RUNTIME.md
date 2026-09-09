@@ -195,3 +195,22 @@ type None. The tested fix sends the active container type. The earlier failure
 and successful recovery of all three stones remain in the smoke record.
 Custom processing, source-configuration aliases, active source unload/transition
 checks and cross-save recovery remain incomplete.
+
+## Experimental linked Ender Chest and barrel
+
+The [storage ABI manifest](../research/native-evidence/linux-linked-storage-abi-126451.json)
+identifies a distinct five-argument block-container factory. Linux caller
+analysis and a compiled header probe establish its signed container type,
+64-bit entity sentinel and unsigned block-actor type. The verified native
+resolver selects the player's existing Ender inventory for type 23 and the
+real barrel source for type 42. BDS owns all items and transactions.
+
+The [exact `1d88dfa` record](../research/native-evidence/linux-1d88dfa-storage-smoke.json)
+passed selected first/last-slot deposits and withdrawals, Ender access through
+two source blocks, name/enchantment retention, permission loss, source removal
+and controlled barrel disconnect/reconnect. SDK/native closure, empty furnace
+regression and the form callback passed. Nine opens, seven normal closes and
+three expected denials ended in zero sessions and clean shutdown. See the
+[SDK example and screenshots](examples/linux-linked-storage.md). This nearby
+linked path does not qualify source-free Ender access, custom storage or
+cross-save/crash recovery.

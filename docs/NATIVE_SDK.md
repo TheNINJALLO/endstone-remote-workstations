@@ -153,6 +153,12 @@ must be loaded, nearby and of the exact matching block family. See the
 These views retain the real block's vanilla contents and processing. Windows
 does not yet admit these three source adapters.
 
+The same explicit-source contract also admits Linux `enderchest` and `barrel`.
+The Ender view uses that online player's real Ender inventory; the barrel uses
+its real block inventory. The [linked-storage example](examples/linux-linked-storage.md)
+documents actual transfers, metadata retention and cleanup. Source-free Ender
+access, virtual vaults, custom storage and Windows admission remain incomplete.
+
 The original-mode adapter rejects preloaded items, changed slot policies,
 recipe definitions, replacement titles and unrelated source descriptors. It
 never reports success while silently ignoring requested custom behavior.
