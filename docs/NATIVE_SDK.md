@@ -61,7 +61,7 @@ callback. An empty canonical ID applies to all openings, including forms;
 otherwise aliases resolve to the exact canonical entry. The callback receives
 the requesting consumer, ticket, phase and complete source descriptor. Only
 `VCF_OK` permits continuation. Guards run on the server thread before dispatch,
-at asynchronous readiness, and during active Windows native checks (at most
+at asynchronous readiness, and during active native adapter checks (at most
 250 ms apart). Form selection rechecks guards too. Removing a guard or disabling
 its owner revokes it before any later callback dispatch. These checks do not
 claim an atomic interception of BDS's unchanged vanilla transaction path.
@@ -107,6 +107,11 @@ ownership. For `inventory2x2`, `armor`, `offhand` and `recipebook`, request
 `VCF_REAL_SOURCE`. These four share the real inventory screen and client-owned
 navigation/closure. Other backing modes refuse instead of substituting a
 screen. This configuration flag does not certify client or custom behavior.
+
+Linux has a separate `experimental_original_linux: true` flag for the four
+shared player-inventory roles in `VCF_REAL_SOURCE` mode. It uses independently
+verified Linux ABI facts and does not enable the seven Windows workstation
+adapters. See [Linux runtime development](NATIVE_LINUX_RUNTIME.md).
 
 The original-mode adapter rejects preloaded items, changed slot policies,
 recipe definitions, replacement titles and unrelated source descriptors. It

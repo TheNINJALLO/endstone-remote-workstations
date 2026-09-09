@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "kind": "linux-native-abi-research-not-ui-qualification",
+  "architecture": "linux-x86_64-itanium-libc++",
+  "sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "compiler": "Clang 20.1.8",
+  "layout_flags": [
+    "-std=c++20",
+    "-stdlib=libc++",
+    "-DNDEBUG",
+    "-DENTT_SPARSE_PAGE=2048",
+    "-DENTT_PACKED_PAGE=128",
+    "-DENTT_NO_MIXIN",
+    "-DRAKNET_SUPPORT_IPV6=1",
+    "-fms-extensions"
+  ],
+  "layout_probe_sha256": "e07088065bed027663a1d6f8b3b9ec3c26a0f30c7430e47d2104c11730b20d78",
+  "layout_ir_sha256": "5aeaa77e66866b6e0f0bfdcde69a4f089b95f8788e4900de2caef3c936f251c0",
+  "layout": {
+    "native_player_size": 3024,
+    "native_server_player_size": 3344,
+    "inventory_wrapper_size": 32,
+    "public_inventory_base_offset": 16,
+    "public_inventory_vtable_offset_to_top": -16,
+    "native_holder_from_public_inventory": 8,
+    "public_held_slot_getter_vtable_index": 37,
+    "native_container_manager_offset": 1368,
+    "native_item_stack_manager_offset": 2560,
+    "native_window_counter_offset": 3232
+  },
+  "method": "Linux header layout IR, read-only live wrapper/vtable observation, exact ELF unwind FDE function ranges and full SHA256; no Windows offsets reused.",
+  "limitations": [
+    "Only the inventory opener is implemented as an experimental adapter.",
+    "Trading, sign and manager removal remain research candidates; no calls enabled.",
+    "No custom item ownership, transactions, held identity or crash recovery is qualified by this manifest."
+  ],
+  "functions": {
+    "delete_manager": {
+      "module": "bedrock_server",
+      "prefix_bytes": 96,
+      "prefix_sha256": "c2f14cd4f4ef433213574f5c722cf98f2b3a630d532ef327ad8d2fe72c0cd327",
+      "rva": 188184464,
+      "vtable_index": 222,
+      "size": 260,
+      "sha256": "8d02c9040dc54a0ace249fad1edf24210de98c587b0b25753d820517013931e3",
+      "file_offset": 188180368,
+      "unwind_fde_rva": 60939208,
+      "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+      "evidence": "live vtable pointer + pinned Linux headers + exact ELF unwind function extent; private call untested"
+    },
+    "open_inventory": {
+      "module": "bedrock_server",
+      "prefix_bytes": 96,
+      "prefix_sha256": "db99a14b7d02ed205d62416f9ab941e3f3ab50357ffb4580852c48977a7fd23f",
+      "rva": 160353344,
+      "vtable_index": 197,
+      "size": 434,
+      "sha256": "e00d775afbd065bd6355c5ae7242b785cd17865dc969ae991febe343505b3293",
+      "initial_smoke_artifact_sha256": "c59950caeb589ee7f076fc372e74c5a56713d18f42b31c0f63d06f6e2ba7222d",
+      "initial_smoke": "Stock PC client: six opens and six closes across the four shared-inventory roles, vanilla log-to-four-planks crafting, unfinished recipe return and disconnect cleanup; no custom behavior qualified.",
+      "file_offset": 160349248,
+      "unwind_fde_rva": 48870736,
+      "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+      "evidence": "live vtable pointer + pinned Linux headers + exact ELF unwind function extent; initial real-client inventory smoke passed, full qualification incomplete"
+    },
+    "open_sign": {
+      "module": "bedrock_server",
+      "prefix_bytes": 96,
+      "prefix_sha256": "d534dea87efbe9d11a9a67371d7cf472b37e6d663f7b701c3a9aba9421655f56",
+      "rva": 160354128,
+      "vtable_index": 207,
+      "size": 423,
+      "sha256": "e5e2e05ddb5f0a0005a58f328f05d0b96ef6788033b3bb07a77b0d98e8835a8f",
+      "file_offset": 160350032,
+      "unwind_fde_rva": 59421520,
+      "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+      "evidence": "live vtable pointer + pinned Linux headers + exact ELF unwind function extent; private call untested"
+    },
+    "open_trading": {
+      "module": "bedrock_server",
+      "prefix_bytes": 96,
+      "prefix_sha256": "c4ef95e1e23f2c392dd832fe69e07034aefd35e38966bfc4dbd3e1f50b5a36c9",
+      "rva": 160351952,
+      "vtable_index": 194,
+      "size": 959,
+      "sha256": "55c8db619b8843708f331ce3b3fb3f952d8478a363b3ce237eb3fc216f27d749",
+      "file_offset": 160347856,
+      "unwind_fde_rva": 59421352,
+      "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+      "evidence": "live vtable pointer + pinned Linux headers + exact ELF unwind function extent; private call untested"
+    },
+    "sdk_held_slot_getter": {
+      "module": "libendstone_runtime.so",
+      "prefix_bytes": 96,
+      "prefix_sha256": "891f6f10e9b7f243a0465b807d9eca08c34b59b3bee67c0e2df5583b15c90e18",
+      "rva": 1914752,
+      "size": 9,
+      "sha256": "12c2537a6b6524441b83a4ac35c961709bf5fe8e2e3c8b38a0c1bf38ef286888",
+      "file_offset": 1914752,
+      "unwind_fde_rva": 10075260,
+      "module_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+      "evidence": "live vtable pointer + pinned Linux headers + exact ELF unwind function extent; private call untested"
+    }
+  }
+}

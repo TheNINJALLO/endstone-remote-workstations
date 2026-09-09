@@ -9,7 +9,6 @@
 #include <array>
 #include <map>
 #include <memory>
-#include <set>
 
 namespace sdk = oni::vcf::sdk;
 class NativePassthrough : public endstone::Plugin {
@@ -20,7 +19,7 @@ class NativePassthrough : public endstone::Plugin {
     std::unique_ptr<sdk::Client> ui_;
     std::shared_ptr<endstone::Task> cleanup_;
     std::map<std::string,std::string> bindings_;
-    std::set<vcf_handle> tickets_;
+    std::map<vcf_handle,std::string> tickets_;
     uint64_t opened_=0,closed_=0,refused_=0,guard_checks_=0;
 
     static vcf_status VCF_CALL guarded(void* context,const vcf_guard_event* event) {
@@ -62,7 +61,7 @@ class NativePassthrough : public endstone::Plugin {
         request.mode=shared?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
         request.callback=completed;request.context=this;
         vcf_handle ticket=0;sdk::checked(ui_->api().prepare(ui_->owner(),&request,&ticket));
-        tickets_.insert(ticket);ui_->open(ticket);
+        tickets_.emplace(ticket,player_id);ui_->open(ticket);
     }
 public:
     void onEnable() override {
@@ -72,8 +71,8 @@ public:
             cleanup_=getServer().getScheduler().runTaskTimer(*this,[this]{
                 try {
                     for(auto it=tickets_.begin();it!=tickets_.end();) {
-                        if(ui_->info(*it).state==VCF_TERMINAL) {
-                            sdk::checked(ui_->api().forget(ui_->owner(),*it));it=tickets_.erase(it);
+                        if(ui_->info(it->first).state==VCF_TERMINAL) {
+                            sdk::checked(ui_->api().forget(ui_->owner(),it->first));it=tickets_.erase(it);
                         } else ++it;
                     }
                 } catch(const std::exception& e) { getLogger().error("Ticket cleanup refused: {}",e.what()); }
@@ -106,9 +105,22 @@ public:
         if(!ui_){sender.sendErrorMessage("Native VCF provider is unavailable.");return true;}
         if(args.empty()||args[0]=="status") {
             sender.sendMessage("Original-mode SDK example: opens "+std::to_string(opened_)+", closes "+std::to_string(closed_)
-                +", failures "+std::to_string(refused_)+", guard checks "+std::to_string(guard_checks_));return true;
+                +", failures "+std::to_string(refused_)+", guard checks "+std::to_string(guard_checks_)
+                +", outstanding tickets "+std::to_string(tickets_.size()));return true;
         }
         auto* player=sender.asPlayer();
+        if(args.size()==1&&args[0]=="close") {
+            try {
+                uint32_t count=0;
+                for(const auto&[ticket,owner]:tickets_) {
+                    if(player&&owner!=player->getUniqueId().str())continue;
+                    if(ui_->info(ticket).state==VCF_TERMINAL)continue;
+                    ui_->close(ticket);++count;
+                }
+                sender.sendMessage("Queued closure of "+std::to_string(count)+" owned SDK tickets.");
+            } catch(const std::exception& e) {sender.sendErrorMessage(e.what());}
+            return true;
+        }
         if(!player){sender.sendErrorMessage("Request screens from a connected player.");return true;}
         try {
             if(args[0]=="unbind")bindings_.erase(player->getUniqueId().str());

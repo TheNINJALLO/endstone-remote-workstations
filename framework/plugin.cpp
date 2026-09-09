@@ -5,6 +5,8 @@
 #ifdef _WIN32
 #include "platform/windows/bridge.hpp"
 #include "platform/windows/native_ui.hpp"
+#else
+#include "platform/linux/native_ui.hpp"
 #endif
 #include <nlohmann/json.hpp>
 #include <endstone/plugin/plugin.h>
@@ -21,14 +23,17 @@
 #include <endstone/event/server/packet_send_event.h>
 #include <fstream>
 using namespace oni::vcf;
+#ifdef _WIN32
+using NativeUi=platform::windows::NativeUi;
+#else
+using NativeUi=platform::linux_native::NativeUi;
+#endif
 class VirtualContainerFramework:public endstone::Plugin {
  std::unique_ptr<Engine> engine_;std::unique_ptr<sdk::Client> self_;vcf_api api_{};
  platform::Admission admission_;std::shared_ptr<endstone::Task> task_;
  bool original_native_enabled_=false;
  wire::Inbox item_observations_;
-#ifdef _WIN32
- std::unique_ptr<platform::windows::NativeUi> native_ui_;
-#endif
+ std::unique_ptr<NativeUi> native_ui_;
  std::shared_ptr<bool> lifetime_=std::make_shared<bool>(false);
  std::map<std::string,uint32_t> catalog_actions_;
  struct FormLease {vcf_handle owner,ticket;bool sending=true,observed=false,superseded=false;};
@@ -54,12 +59,10 @@ class VirtualContainerFramework:public endstone::Plugin {
    auto action=detail.substr(colon+1);auto it=self.catalog_actions_.find(action);if(it==self.catalog_actions_.end())return VCF_NOT_FOUND;
    const auto&row=catalog()[it->second];auto*p=self.player(std::string_view(event->player.data,event->player.length));if(!p)return VCF_CLOSED;
    if(!p->hasPermission(std::string(row.permission)))return VCF_DENIED;
-#ifdef _WIN32
-   if(self.original_native_enabled_&&platform::windows::NativeUi::supports(row.id)){
+   if(self.original_native_enabled_&&NativeUi::supports(row.id)){
     auto mode=row.id=="inventory2x2"||row.id=="armor"||row.id=="offhand"||row.id=="recipebook"?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
     auto ticket=self.self_->prepare(p->getUniqueId().str(),row.id,mode);self.self_->open(ticket);return VCF_OK;
    }
-#endif
    p->sendMessage(std::string(row.id)+": C++ native/custom screen adapter is not yet qualified. This form is the catalog, not that screen.");
    return VCF_OK;
   }catch(...){return VCF_INTERNAL;}
@@ -67,11 +70,7 @@ class VirtualContainerFramework:public endstone::Plugin {
  vcf_status show(const Session&s){
   auto*p=player(s.player);if(!p)return VCF_CLOSED;
   if(!s.is_menu){
-#ifdef _WIN32
    return original_native_enabled_&&native_ui_?native_ui_->open(s):VCF_UNAVAILABLE;
-#else
-   return VCF_UNAVAILABLE;
-#endif
   }
   if(p->getGameVersion()!="1.26.45")return VCF_UNAVAILABLE;
   endstone::ActionForm form;form.setTitle(s.title).setContent(s.content);
@@ -135,22 +134,23 @@ public:
    std::filesystem::create_directories(getDataFolder());
    auto config_path=getDataFolder()/"config.json";
    if(!std::filesystem::exists(config_path)){
-    std::ofstream config(config_path);config<<"{\n  \"schema_version\": 1,\n  \"experimental_original_windows\": false\n}\n";
+    std::ofstream config(config_path);config<<"{\n  \"schema_version\": 1,\n  \"experimental_original_windows\": false,\n  \"experimental_original_linux\": false\n}\n";
    }
    require(std::filesystem::file_size(config_path)<=4096,VCF_CAPACITY);
    std::ifstream config_file(config_path);auto config=nlohmann::json::parse(config_file);
-   require(config.is_object()&&config.size()==2&&config.value("schema_version",0)==1&&config.contains("experimental_original_windows")&&config["experimental_original_windows"].is_boolean());
+   require(config.is_object()&&(config.size()==2||config.size()==3)&&config.value("schema_version",0)==1&&config.contains("experimental_original_windows")&&config["experimental_original_windows"].is_boolean());
+   if(config.size()==3)require(config.contains("experimental_original_linux")&&config["experimental_original_linux"].is_boolean());
+#ifdef _WIN32
    original_native_enabled_=config["experimental_original_windows"].get<bool>();
+#else
+   original_native_enabled_=config.value("experimental_original_linux",false);
+#endif
    Host host;
    host.consumer_allowed=[this](std::string_view name){auto*p=getServer().getPluginManager().getPlugin(std::string(name));return p&&p->isEnabled();};
    host.permission=[this](std::string_view id,std::string_view permission){auto*p=player(id);return p&&(permission.empty()||p->hasPermission(std::string(permission)));};
    host.item_limit=[this](std::string_view name){auto*type=getServer().getRegistry<endstone::ItemType>().get(endstone::ItemTypeId(name));return type?static_cast<uint32_t>(type->getMaxStackSize()):0;};
    host.native_available=[this](std::string_view id){
-#ifdef _WIN32
-    return original_native_enabled_&&native_ui_&&platform::windows::NativeUi::supports(id);
-#else
-    return false;
-#endif
+    return original_native_enabled_&&native_ui_&&NativeUi::supports(id);
    };
    host.open=[this](const Session&s){return show(s);};
    host.close=[this](const Session&s)->vcf_status{
@@ -160,15 +160,11 @@ public:
      if(owned)if(auto*p=player(s.player))p->closeForm();
      return VCF_OK;
     }
-#ifdef _WIN32
     if(native_ui_)return native_ui_->close(s);
-#endif
     return VCF_OK;
    };
    engine_=std::make_unique<Engine>(std::move(host));attach_engine(engine_.get());
-#ifdef _WIN32
-   native_ui_=std::make_unique<platform::windows::NativeUi>(getServer(),*engine_);
-#endif
+   native_ui_=std::make_unique<NativeUi>(getServer(),*engine_);
    sdk::checked(oni_vcf_get_api(VCF_ABI_VERSION,sizeof(api_),&api_));
    self_=std::make_unique<sdk::Client>(api_,"onistone_vcf");
    for(uint32_t i=0;i<catalog().size();++i){auto name="catalog."+std::string(catalog()[i].id);catalog_actions_.emplace(name,i);self_->action(name,choose,this,std::string(catalog()[i].permission));}
@@ -176,9 +172,7 @@ public:
    task_=getServer().getScheduler().runTaskTimer(*this,[this]{try{
     item_observations_.poll();
     poll_forms();
-#ifdef _WIN32
     if(native_ui_)native_ui_->tick();
-#endif
     engine_->tick();engine_->collect_terminal(self_->owner());
    }catch(...){getLogger().error("VCF scheduler stopped by invariant failure.");task_->cancel();}},0,1);
    registerEvent(&VirtualContainerFramework::quit,*this);
@@ -197,14 +191,12 @@ public:
  void onDisable()override{
   *lifetime_=false;
   if(task_)task_->cancel();
-#ifdef _WIN32
   if(native_ui_)native_ui_->shutdown();
-#endif
   if(engine_){try{engine_->shutdown();}catch(...){}}
   forms_.clear();
   item_observations_.clear();
-#ifdef _WIN32
   native_ui_.reset();
+#ifdef _WIN32
   try{platform::windows::shutdown_editors();}catch(...){}
 #endif
   self_.reset();attach_engine(nullptr);engine_.reset();
@@ -215,9 +207,7 @@ public:
  void dimension(endstone::PlayerDimensionChangeEvent&e){if(engine_)engine_->player_gone(e.getPlayer().getUniqueId().str());}
  void consumer_disabled(endstone::PluginDisableEvent&e){if(engine_)engine_->release_named(e.getPlugin().getName());}
  void received(endstone::PacketReceiveEvent&e){
-#ifdef _WIN32
   if(native_ui_)native_ui_->receive(e);
-#endif
  }
  void sent(endstone::PacketSendEvent&e){
   if(e.getPlayer()&&!e.isCancelled()){
@@ -234,9 +224,7 @@ public:
     }else if(e.getPacketId()==46)it->second.superseded=true;
    }
   }
-#ifdef _WIN32
   if(native_ui_)native_ui_->sent(e);
-#endif
  }
  bool onCommand(endstone::CommandSender&sender,const endstone::Command&command,const std::vector<std::string>&args)override{
   try{
@@ -259,13 +247,11 @@ public:
    }
    auto*row=resolve(name);if(!row){sender.sendErrorMessage("Unknown UI entry.");return true;}
    if(!sender.hasPermission(std::string(row->permission))){sender.sendErrorMessage("Permission denied.");return true;}
-#ifdef _WIN32
-   if(original_native_enabled_&&platform::windows::NativeUi::supports(row->id)){
+   if(original_native_enabled_&&NativeUi::supports(row->id)){
     auto*p=sender.asPlayer();if(!p){sender.sendErrorMessage("Open native screens from Minecraft.");return true;}
     auto mode=row->id=="inventory2x2"||row->id=="armor"||row->id=="offhand"||row->id=="recipebook"?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
     auto ticket=self_->prepare(p->getUniqueId().str(),row->id,mode);self_->open(ticket);return true;
    }
-#endif
    sender.sendErrorMessage(std::string(row->id)+": the native C++ adapter is not yet qualified; the legacy source contract is retained in the migration audit.");return true;
   }catch(...){sender.sendErrorMessage("VCF request refused; inspect diagnostics.");return true;}
  }

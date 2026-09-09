@@ -15,8 +15,9 @@ fingerprints. The exact allowed files are:
 | BDS 1.26.45.1 | `8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2` | `0b40c886132941f2cd98d45e73062bc75e66726e` |
 | Endstone 0.11.10, CPython 3.11 Linux wheel runtime | `ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc` | `ba6af2ee50effc20b461a2fbef80e145ad6f6a51` |
 
-Admission enables the public SDK integration only. Linux private workstation
-adapters remain unavailable. Onistone and other Endstone builds need separate
+Admission enables the public SDK integration. An opt-in experimental adapter
+also calls the verified native player-inventory opener; other Linux private
+workstation adapters remain unavailable. Onistone and other Endstone builds need separate
 evidence and admission; a matching version label does not suffice.
 
 The provider promotes its existing loaded shadow copy with `RTLD_NOLOAD` and
@@ -74,3 +75,39 @@ No private BDS/runtime files, dependency wheelhouse, world volume, or raw runtim
 captures belong in the public build context, source repository or release.
 The smoke command requires separate confirmation of the supplied server's
 license and an authorized private launcher; no script accepts a license.
+
+## Experimental original inventory
+
+Set `experimental_original_linux` to `true` in
+`plugins/onistone_vcf/config.json` and restart the server to enable this adapter.
+It defaults to false, including when reading an older two-key configuration.
+The independent `vcf_native_passthrough` consumer requests `inventory2x2`,
+`armor`, `offhand` or `recipebook` with `VCF_REAL_SOURCE`. These are four roles
+of the same stock player-inventory screen. The adapter does not select a tab
+or replace the player's items, recipes, cursor or inventory ownership.
+
+The [Linux ABI research manifest](../research/native-evidence/linux-native-abi-126451.json)
+records the exact compiler/header inputs, independent Linux layouts and complete
+function hashes. The adapter verifies the loaded inventory wrapper, native
+player linkage, native context readiness, vtable targets and function bytes
+before calling BDS's inventory opener. It waits for an ordered client reply
+and a chat-close interval, then requires the matching native container-open
+packet before reporting an SDK open event. It rechecks permissions and guards
+while observing the screen. Only the pinned Windows Bedrock 1.26.45 client
+profile is currently admitted.
+
+Closing the SDK ticket relinquishes its observation lease. The stock client
+and BDS retain the actual inventory and its closure; the adapter does not
+destroy the native manager or manufacture a close packet. Preloads, recipes,
+replacement titles, policy changes and unrelated source descriptors refuse.
+This original-behavior adapter does not qualify custom transactions, held-item
+identity, recovery, stale-close replay or the full catalog. Trading and sign
+function identities in the manifest are research candidates with no enabled
+calls.
+
+The example's `vcf_native close` console command queues closure of that
+consumer's tickets; when run by a player it addresses only that player's
+tickets. `vcf_native status` reports outstanding tickets as well as open,
+close, failure and guard counters. Terminal tickets are forgotten on the
+consumer's scheduler. Neither command takes ownership of another consumer's
+handles.
