@@ -60,6 +60,7 @@ struct Session {
  std::string content; std::vector<Button> buttons;
  bool is_menu=false, host_started=false;
 };
+struct InventoryItemSnapshot {vcf_inventory_item_info info{};std::vector<uint8_t> nbt;};
 struct Host {
  std::function<bool(std::string_view)> consumer_allowed;
  std::function<bool(std::string_view,std::string_view)> permission;
@@ -68,6 +69,7 @@ struct Host {
  std::function<vcf_status(const Session&)> open;
  std::function<vcf_status(const Session&)> close;
  std::function<vcf_held_info(std::string_view)> inspect_held;
+ std::function<InventoryItemSnapshot(std::string_view,uint32_t)> read_inventory_item;
 };
 class Engine {
 public:
@@ -87,6 +89,7 @@ public:
  // The callback descriptor is copied; the session's original source is kept.
  void authorize_block(vcf_handle,vcf_handle,uint32_t,int32_t,int32_t,int32_t);
  vcf_held_info inspect_held(vcf_handle,std::string_view);
+ InventoryItemSnapshot read_inventory_item(vcf_handle,std::string_view,uint32_t);
  uint32_t collect_terminal(vcf_handle,uint32_t limit=32);
  vcf_handle invoke(vcf_handle,std::string,std::string);
  vcf_handle prepare(vcf_handle,Session);

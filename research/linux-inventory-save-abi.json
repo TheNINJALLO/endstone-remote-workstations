@@ -1,0 +1,285 @@
+{
+  "schema": 1,
+  "server_platform": "linux-x64",
+  "bds_version": "1.26.45.1",
+  "endstone_version": "0.11.10",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "evidence_kind": "independent Linux ABI analysis and private read-only diagnostic; not public artifact qualification",
+  "compiler": "Clang 20.1.8 / libc++ 20 / x86-64 System V",
+  "independent_layout_source_sha256": "673166965c2857089a10200e135e77968794383349a511fc6d098a33dd2b7acd",
+  "independent_llvm_sha256": "13deb701a108257a99b0456db9f1cfda436b007694031419210b56f6fb8e7eb0",
+  "functions": [
+    {
+      "rva": "0x4647d00",
+      "size": 113,
+      "sha256": "2a6ae399ff7c753d791ebb5778c87448ffa32415ae1e56b692602efb4bdc0a15"
+    },
+    {
+      "rva": "0xade2bf0",
+      "size": 3,
+      "sha256": "e18aacce29affcdddaa5f641ac1ec12552e0fe9d066e6408941b1792818b8619"
+    },
+    {
+      "rva": "0xb3cb4d0",
+      "size": 11,
+      "sha256": "c89bed4cc80864b86ade7e67e1730f6c24ac7f47f53cc36575ce538d70daab6f"
+    },
+    {
+      "rva": "0xbbab620",
+      "size": 165,
+      "sha256": "dcd5c6cbcfbddebac8c6ae04ab495b1d562e52c3bb5c85f8affbfbb9aaa80189"
+    },
+    {
+      "rva": "0xbbb11f0",
+      "size": 770,
+      "sha256": "7b6403c99267bfa2082d1862ff24ba756c55781c6abc64e0f5dac193f0e04bc0"
+    },
+    {
+      "rva": "0xbbb16a0",
+      "size": 2921,
+      "sha256": "1fc45124fbc2c89b05d6dfcca3f3dcc73a09fa3c3631337759d6c5757751346d"
+    },
+    {
+      "rva": "0xbbcf620",
+      "size": 23,
+      "sha256": "02e5c83f0316e13c3388e30163fdd27eeb80785bb3b1714fe035a91fa8a38d47"
+    },
+    {
+      "rva": "0xbcfba70",
+      "size": 399,
+      "sha256": "fab9cb0b360507472e9748a10d99d906fd16695a864466f5c12c7dd9985f3985"
+    },
+    {
+      "rva": "0xbcfda10",
+      "size": 11,
+      "sha256": "c89bed4cc80864b86ade7e67e1730f6c24ac7f47f53cc36575ce538d70daab6f"
+    },
+    {
+      "rva": "0xbcfdea0",
+      "size": 653,
+      "sha256": "4b7d37869be48dc71f48e6e4862e91ff818395e3edec553762202e441d4f66c0"
+    },
+    {
+      "rva": "0xbcfe130",
+      "size": 818,
+      "sha256": "d4352e73f977a591ae248ce3ee3ebf7b3b5b700e3d658f94ef7f15ed8228481d"
+    },
+    {
+      "rva": "0xbcfe480",
+      "size": 58,
+      "sha256": "d01f44d8ced8eb9c28a77dce95eb49e378a3a010022ae9cd9db95c7b264ecc19"
+    },
+    {
+      "rva": "0xbcfe4d0",
+      "size": 25,
+      "sha256": "65513748ca370dd8ed6c201e9da617af53dfb2ff1c14b174e8537de4fb8ee4f9"
+    },
+    {
+      "rva": "0xcc80cf0",
+      "size": 23,
+      "sha256": "e5bee978ac6e25423b885b247b49dfb4a65a6eb2218ff7dc3b3be05445eea992"
+    },
+    {
+      "rva": "0xcc80d10",
+      "size": 41,
+      "sha256": "fdf893165ae75742edbcaba1c541922011f4e2af3e2492cfffd4468ede1237b7"
+    },
+    {
+      "rva": "0xcc822b0",
+      "size": 3,
+      "sha256": "3d46121154a8bc5c4ea2a5938d5db0a675d3fc61780d1385c9b65383d37689e8"
+    },
+    {
+      "rva": "0xcc83f80",
+      "size": 168,
+      "sha256": "8270f7013548b983ba7d5e3939292d85be705945a90df6776ee218caeeb17185"
+    },
+    {
+      "rva": "0xcc84220",
+      "size": 427,
+      "sha256": "1c8b10b541c9a14c7afa7573146eed091741edd78985e02563499ba474cb97f0"
+    },
+    {
+      "rva": "0xcc88d10",
+      "size": 3,
+      "sha256": "6115a78401aba78d95dc83b8c1c69737a32c44f5bc8919ee9c47af261e3643af"
+    },
+    {
+      "rva": "0xcc89680",
+      "size": 14,
+      "sha256": "6dee5deae26ad1c42a05b33a5860ed300a48981823482724c481a9cf0290bcae"
+    },
+    {
+      "rva": "0xcc899c0",
+      "size": 144,
+      "sha256": "a18e663c92047655dd47d8eaa4f07c7df32f5a1680483040c3c37e103002d8f1"
+    },
+    {
+      "rva": "0xcc8f710",
+      "size": 120,
+      "sha256": "7e95cc9feec617b52e2db9802f7b7afba578d7fff2a4f83bf0d8cbc6bb774ef9"
+    },
+    {
+      "rva": "0xbbb7810",
+      "size": 2367,
+      "sha256": "c144aa9fa63f229e691912937cac78bd9cb505ecf0cec94c8e60d6efa925d781"
+    },
+    {
+      "rva": "0xb3cb4e0",
+      "size": 1823,
+      "sha256": "5741cfc4ffbd1e89cb8d52af7c229e9ce775ad841cf8d1e674b467a09663df2a"
+    },
+    {
+      "rva": "0xade2e00",
+      "size": 66,
+      "sha256": "005182631bf9abfb28760293e9d6518101808396a229074ebaf0df1d0f5262e6"
+    },
+    {
+      "module": "runtime",
+      "rva": "0x213fd0",
+      "size": 1061,
+      "sha256": "eec6e8ff9d3982c031a04e82533804f7fdad05b9d49419d95bd7e5490744ac1c"
+    },
+    {
+      "module": "runtime",
+      "rva": "0x214400",
+      "size": 1747,
+      "sha256": "13e30b317fd2df008964da5260e907d89cd61a028cde1871a3546a1733d44ab0"
+    },
+    {
+      "module": "runtime",
+      "rva": "0x1d1590",
+      "size": 71,
+      "sha256": "3095b4a1041f68a76329df764c77b493503910691580c3ec6b429c54507d7f27"
+    },
+    {
+      "module": "runtime",
+      "rva": "0x1c6490",
+      "size": 13,
+      "sha256": "7cb1268d9be4e7b1120745be8cccfc4113298850210c467bebdf8d6f78dc812d"
+    },
+    {
+      "module": "runtime",
+      "rva": "0x1c64b0",
+      "size": 75,
+      "sha256": "09c590b7cad69996cfdd711903bf7245b2c68af96c14da8c07acdd395ca39416"
+    },
+    {
+      "rva": "0xbbb02d0",
+      "size": 639,
+      "sha256": "ba11246949e9c0d6f2bf2402ccb58cab25bbeea0e1e0ce71a601a61804073cc3"
+    },
+    {
+      "rva": "0xcc80d40",
+      "size": 7,
+      "sha256": "c0aaa941b4b78a3377f57e1761480054a12af422e6930a97444acbea8c2661b7"
+    },
+    {
+      "rva": "0xcc873c0",
+      "size": 7,
+      "sha256": "c0aaa941b4b78a3377f57e1761480054a12af422e6930a97444acbea8c2661b7"
+    },
+    {
+      "rva": "0xb7af9b0",
+      "size": 1319,
+      "sha256": "02ac6a6a60d3e13bec57fdd4a4a0f6cd534bcada1967cdaef9aff1bc4dd9470c"
+    },
+    {
+      "rva": "0x453b4b0",
+      "size": 88,
+      "sha256": "90502c2c3f10be8ed481673d3a950e2b88cb7f3fb45ac061693d277f91727884"
+    },
+    {
+      "rva": "0xcc80d50",
+      "size": 368,
+      "sha256": "e5693d2fb42e1f8571f65edc8bf188c9ff0af0c21b5adec9b0967707df98dec4"
+    },
+    {
+      "rva": "0xcc873d0",
+      "size": 184,
+      "sha256": "5358309eb5b0a885e8633af1f8352cf2fb17d4babbf457f706652ae644a7515b"
+    },
+    {
+      "module": "runtime",
+      "rva": "0x1d0640",
+      "size": 23,
+      "sha256": "c85a764d6d04dd4e07c1197b8559008e00291cb6a5a6c4b2082a7de7eddfd4b3"
+    }
+  ],
+  "layout": {
+    "inventory_vtable": "0xe64d2e0",
+    "inventory_size": 352,
+    "inventory_owner_offset": 344,
+    "public_inventory_to_complete": -16,
+    "complete_inventory_native_container_offset": 8,
+    "inventory_save_vslot": 51,
+    "inventory_get_vslot": 8,
+    "inventory_size_vslot": 21,
+    "inventory_changed_vslot": 35,
+    "inventory_set_force_balance_vslot": 14,
+    "tag_write_vslot": 3,
+    "tag_copy_vslot": 10,
+    "tag_deleting_destructor_vslot": 1,
+    "item_instance_size": 128,
+    "item_stack_size": 152,
+    "public_item_impl_native_offset": 8,
+    "save_arguments": [
+      "hidden output pointer",
+      "native object",
+      "SaveContext pointer"
+    ],
+    "tag_write_arguments": [
+      "native tag",
+      "IDataOutput pointer"
+    ],
+    "native_deleting_destructor_arguments": [
+      "native tag"
+    ]
+  },
+  "probe": {
+    "sha256": "4feb07d017d35969ef4e2e93a358d78cded81f288a4ea38d6aaed79ef2e26141",
+    "start_utc": "2026-09-09T13:45:09Z",
+    "stop_utc": "2026-09-09T13:50:25Z",
+    "plugins": 4,
+    "private_probe_present": true,
+    "native_hooks_installed": false,
+    "probe_inventory_writes": false,
+    "passes": [
+      {
+        "occupied_slots": 21,
+        "inventory_unchanged": true
+      },
+      {
+        "occupied_slots": 20,
+        "inventory_unchanged": true
+      },
+      {
+        "occupied_slots": 21,
+        "inventory_unchanged": true
+      }
+    ],
+    "all_occupied_public_clones_native_save_exact": true,
+    "all_tested_public_nbt_conversions_exact": true,
+    "restored_all_slot_bytes_and_full_inventory_digest": true,
+    "bundle_empty_bytes": 3521,
+    "bundle_filled_bytes": 3593,
+    "bundle_contents_path": "tag/storage_item_component_content/0",
+    "bundle_contents_identifier": "minecraft:stone",
+    "bundle_contents_count": 6,
+    "other_items_unchanged": true,
+    "probe_removed_exact_hash_after_capture_verification": true,
+    "raw_nbt_and_player_data_published": false
+  },
+  "not_qualified": [
+    "Windows serializer",
+    "native reconstruction",
+    "inventory mutation",
+    "dynamic-container reassignment",
+    "held editor",
+    "item identity or ABA prevention",
+    "durable writeback",
+    "BDS save/crash reconciliation",
+    "full catalog"
+  ]
+}

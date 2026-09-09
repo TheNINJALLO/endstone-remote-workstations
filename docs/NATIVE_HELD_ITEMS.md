@@ -188,3 +188,10 @@ snapshot and zero refusals at login, with the bundle empty, with six stones
 stored, after extracting all six stones, and across double-chest/form
 regressions. Empty and filled bundle inspection both still returned unavailable.
 The [storage notes](NATIVE_STORAGE.md) include the actual final counter screenshot.
+
+## Native saved-item reads
+
+SDK 1.3 adds the separate [native saved-item API](NATIVE_ITEM_SAVE.md), which
+uses the Linux BDS save routine and can observe the tested bundle contents.
+The SDK 1.2 held inspection above keeps its existing behavior and digest format.
+Neither operation opens held editors or grants writeback authority.

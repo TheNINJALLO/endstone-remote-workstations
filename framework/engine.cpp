@@ -22,7 +22,7 @@ vcf_handle Engine::consumer(std::string name,uint32_t version) {
  check();require(name_ok(name));require(host_.consumer_allowed && host_.consumer_allowed(name),VCF_DENIED);
  require(consumers_.size()<128,VCF_CAPACITY);
  for(const auto&[id,c]:consumers_)require(c.name!=name,VCF_CONFLICT);
- require(version==VCF_ABI_VERSION||version==VCF_ABI_VERSION_1_1||version==VCF_ABI_VERSION_1_0,VCF_VERSION);
+ require(version==VCF_ABI_VERSION||version==VCF_ABI_VERSION_1_2||version==VCF_ABI_VERSION_1_1||version==VCF_ABI_VERSION_1_0,VCF_VERSION);
  auto id=next_++;consumers_.emplace(id,Consumer{std::move(name),version});return id;
 }
 std::string Engine::qualify(vcf_handle owner,std::string_view action)const {
@@ -147,6 +147,21 @@ vcf_held_info Engine::inspect_held(vcf_handle owner,std::string_view player){
  // Inspection cannot qualify or unlock a native held-item editor.
  result.native_open_available=0;return result;
 }
+InventoryItemSnapshot Engine::read_inventory_item(vcf_handle owner,std::string_view player,uint32_t slot){
+ check();qualify(owner,"");require(!player.empty()&&player.size()<=128&&player.find('\0')==std::string_view::npos&&slot<36);
+ auto authorize=[&]{
+  qualify(owner,"");require(host_.consumer_allowed(consumers_.at(owner).name),VCF_CLOSED);
+  require(host_.permission&&host_.permission(player,"remoteworkstations.use")
+   &&host_.permission(player,"remoteworkstations.inventory.read"),VCF_DENIED);
+ };
+ authorize();require(bool(host_.read_inventory_item),VCF_UNAVAILABLE);auto result=host_.read_inventory_item(player,slot);
+ authorize();require(result.info.slot==slot&&result.info.amount>0&&result.info.amount<=255
+  &&result.info.nbt_format==VCF_BDS_ITEM_SAVE_NBT,VCF_INTERNAL);
+ require(!result.nbt.empty()&&result.nbt.size()<=VCF_ITEM_SAVE_MAX_BYTES&&result.info.nbt_bytes==result.nbt.size(),VCF_INTERNAL);
+ const auto end=std::find(std::begin(result.info.identifier),std::end(result.info.identifier),'\0');
+ require(end!=std::begin(result.info.identifier)&&end!=std::end(result.info.identifier),VCF_INTERNAL);
+ validate_nbt(result.nbt);return result;
+}
 uint32_t Engine::collect_terminal(vcf_handle owner,uint32_t limit){
  check();require(!callbacks_&&!dispatching_,VCF_REENTRANT);qualify(owner,"");uint32_t n=0;
  for(auto it=sessions_.begin();it!=sessions_.end()&&n<std::min(limit,256u);){
@@ -165,7 +180,7 @@ vcf_handle Engine::prepare(vcf_handle owner,Session s){
  s.owner=owner;s.id=next_++;s.generation=s.id;sessions_.emplace(s.id,s);return s.id;
 }
 Item Engine::item(const vcf_item& in)const{
- check();require(in.size>=sizeof(vcf_item)&&(in.version==VCF_ABI_VERSION||in.version==VCF_ABI_VERSION_1_1||in.version==VCF_ABI_VERSION_1_0));
+ check();require(in.size>=sizeof(vcf_item)&&(in.version==VCF_ABI_VERSION||in.version==VCF_ABI_VERSION_1_2||in.version==VCF_ABI_VERSION_1_1||in.version==VCF_ABI_VERSION_1_0));
  Item i;i.id=str(in.identifier);i.count=in.count;
  if(!i.count){require(i.id.empty() && !in.nbt.length);return i;}
  require(host_.item_limit!=nullptr,VCF_UNAVAILABLE);i.limit=host_.item_limit(i.id);

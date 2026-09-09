@@ -21,6 +21,7 @@ All 69 original catalog entries, aliases, permissions and source contracts are p
 - [Use the native linked hopper with retained items and metadata](docs/examples/linux-linked-hopper.md)
 - [Open linked chests with protection checks for both halves](docs/examples/linux-linked-chests.md)
 - [Inspect held shulkers and books through SDK 1.2, with the bundle limitation recorded](docs/NATIVE_HELD_ITEMS.md)
+- [Read native saved-item data through SDK 1.3, including bundle contents on Linux](docs/NATIVE_ITEM_SAVE.md)
 - [Native SDK and compiled consumer](docs/NATIVE_SDK.md)
 - [Native storage transactions and current integration boundary](docs/NATIVE_STORAGE.md)
 - [NativePassthrough SDK and player-interaction example](examples/native/NativePassthrough.md)

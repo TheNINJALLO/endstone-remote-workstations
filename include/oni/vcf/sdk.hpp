@@ -10,11 +10,12 @@ inline vcf_string view(std::string_view value){return {value.data(),static_cast<
 inline void checked(vcf_status s){if(s!=VCF_OK)throw std::runtime_error("VCF status "+std::to_string(s));}
 template<class T>T descriptor(){T t{};t.size=sizeof(T);t.version=VCF_ABI_VERSION;return t;}
 struct Action { std::string name,consumer,permission; bool exported; uint64_t revision; };
+struct SavedInventoryItem {vcf_inventory_item_info info{};std::vector<uint8_t> nbt;};
 class Client {
  vcf_api table_;const vcf_api* api_;vcf_handle owner_=0;
 public:
  Client(const vcf_api&api,std::string_view name):table_(api),api_(&table_){
-  if(api.version!=VCF_ABI_VERSION||api.size<sizeof(vcf_api))throw std::runtime_error("This SDK requires VCF ABI 1.2");
+  if(api.version!=VCF_ABI_VERSION||api.size<sizeof(vcf_api))throw std::runtime_error("This SDK requires VCF ABI 1.3");
   auto d=descriptor<vcf_consumer_desc>();d.name=view(name);checked(api_->register_consumer(&d,&owner_));
  }
  Client(const Client&)=delete;Client&operator=(const Client&)=delete;
@@ -26,6 +27,12 @@ public:
  const vcf_api& api()const{return *api_;}
  vcf_held_info inspect_held(std::string_view player)const{
   auto result=descriptor<vcf_held_info>();checked(api_->inspect_held(owner_,view(player),&result));return result;
+ }
+ SavedInventoryItem read_inventory_item(std::string_view player,uint32_t slot)const{
+  SavedInventoryItem result;result.info=descriptor<vcf_inventory_item_info>();result.nbt.resize(VCF_ITEM_SAVE_MAX_BYTES);
+  uint32_t written=0;checked(api_->read_inventory_item(owner_,view(player),slot,&result.info,result.nbt.data(),static_cast<uint32_t>(result.nbt.size()),&written));
+  if(written>result.nbt.size()||written!=result.info.nbt_bytes)throw std::runtime_error("Invalid VCF saved-item length");
+  result.nbt.resize(written);return result;
  }
  uint32_t resolve(std::string_view id)const{uint32_t n=0;checked(api_->resolve(view(id),&n));return n;}
  vcf_capability capability(uint32_t n)const{auto c=descriptor<vcf_capability>();checked(api_->capability(n,&c));return c;}

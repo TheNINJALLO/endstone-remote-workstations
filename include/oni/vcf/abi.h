@@ -18,7 +18,8 @@ extern "C" {
 #endif
 #define VCF_ABI_VERSION_1_0 0x00010000u
 #define VCF_ABI_VERSION_1_1 0x00010001u
-#define VCF_ABI_VERSION 0x00010002u
+#define VCF_ABI_VERSION_1_2 0x00010002u
+#define VCF_ABI_VERSION 0x00010003u
 typedef uint64_t vcf_handle;
 typedef int32_t vcf_status;
 enum { VCF_OK=0, VCF_INVALID=1, VCF_VERSION=2, VCF_NOT_FOUND=3, VCF_DENIED=4,
@@ -88,6 +89,15 @@ typedef struct {
  uint32_t metadata_bytes, native_open_available;
  char canonical_id[32], identifier[128], durable_id[37]; uint8_t digest[32];
 } vcf_held_info;
+/* ABI 1.3 native saved-item observation. NBT is the complete item compound
+   returned by the admitted BDS SaveToDisk serializer, not getNbt() user data
+   and not a vcf_item metadata argument. Format is build-specific. The digest
+   is SHA-256 of exactly those bytes. No ownership or persistence is granted. */
+enum { VCF_BDS_ITEM_SAVE_NBT=1, VCF_ITEM_SAVE_MAX_BYTES=65536 };
+typedef struct {
+ uint32_t size, version, slot, amount; int32_t auxiliary;
+ uint32_t nbt_format, nbt_bytes; char identifier[128]; uint8_t digest[32];
+} vcf_inventory_item_info;
 /* C ABI allocations never cross ownership domains. Caller supplies output
    structures. Capability strings remain valid until provider shutdown.
    All calls except get_api require the provider's server thread.
@@ -121,9 +131,16 @@ typedef struct vcf_api {
  /* ABI 1.2 tail. The player and enabled consumer need the held entry's
     permission. Caller supplies output storage; failures do not publish it. */
  vcf_status (VCF_CALL *inspect_held)(vcf_handle,vcf_string,vcf_held_info *);
+ /* ABI 1.3 tail. Slots 0..35 of a connected player's main inventory. Empty
+    slots return NOT_FOUND. On BUFFER only required_bytes changes; every
+    other failure leaves all outputs unchanged. Success copies into caller
+    storage. A size query is an observation, not a reservation for a retry. */
+ vcf_status (VCF_CALL *read_inventory_item)(vcf_handle,vcf_string,uint32_t,
+   vcf_inventory_item_info *,uint8_t *,uint32_t,uint32_t *);
 } vcf_api;
 #define VCF_API_1_0_SIZE ((uint32_t)offsetof(vcf_api,action_count))
 #define VCF_API_1_1_SIZE ((uint32_t)offsetof(vcf_api,inspect_held))
+#define VCF_API_1_2_SIZE ((uint32_t)offsetof(vcf_api,read_inventory_item))
 VCF_EXPORT vcf_status VCF_CALL oni_vcf_get_api(uint32_t version, uint32_t size, vcf_api *output);
 #ifdef __cplusplus
 }

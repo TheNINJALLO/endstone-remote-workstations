@@ -1,4 +1,4 @@
-# Native SDK 1.2 development contract
+# Native SDK 1.3 development contract
 
 This ABI is provisional. It is separate from Endstone's public C++ ABI and from
 private BDS hooks. Compile consumers with an appropriate Endstone SDK/toolchain
@@ -11,7 +11,7 @@ renamed and moved independently of the provider. Set `CMAKE_PREFIX_PATH` to
 that directory, then add this to your existing native plugin project:
 
 ```cmake
-find_package(OnistoneVCF 1.2 CONFIG REQUIRED)
+find_package(OnistoneVCF 1.3 CONFIG REQUIRED)
 target_link_libraries(MyUiPlugin PRIVATE OnistoneVCF::sdk)
 ```
 
@@ -21,7 +21,7 @@ for the C function-table headers. Neither target links the provider, its core
 archive or the Endstone runtime. Keep your plugin's compatible Endstone SDK
 and compiler configuration; this package does not certify a native ABI.
 
-The CMake package version `1.2.0` tracks SDK ABI 1.2, separately from the
+The CMake package version `1.3.0` tracks SDK ABI 1.3, separately from the
 development provider's release version. To export just the SDK and its MIT
 license, run `cmake --install <build-directory> --component sdk --prefix <export>`;
 the standalone package is written under `<export>/sdk/`.
@@ -30,6 +30,9 @@ The `installed_sdk_package` test relocates and renames that directory into a
 path containing spaces, then configures, builds and runs independent C/C++
 consumers using only the installed package. The discovery test verifies that
 an absent provider is refused without loading another module.
+
+See [native saved-item reads](NATIVE_ITEM_SAVE.md) for the new 36-slot read API,
+its caller-owned NBT format, permissions and platform availability.
 
 ## Discover and call the provider
 
@@ -46,10 +49,10 @@ The caller supplies output structures and never frees provider memory.
 Capability string views last until provider shutdown.
 
 ABI 1.1 appends action discovery and protection guards; ABI 1.2 appends
-read-only held-item inspection. The provider accepts ABI 1.0 and 1.1
-negotiation and descriptors, copies only the requested table prefix, and emits
+read-only held-item inspection; ABI 1.3 appends native saved-item reads. The
+provider accepts ABI 1.0, 1.1 and 1.2 negotiation and descriptors, copies only the requested table prefix, and emits
 the callback version registered by that consumer, including protection callbacks.
-The current C++ SDK requires 1.2 and owns its function-table copy, so constructing
+The current C++ SDK requires 1.3 and owns its function-table copy, so constructing
 `sdk::Client(sdk::discover(), "my_plugin")` is safe. C tests check the old
 table's boundary with sentinel bytes. This is compatibility with this project's
 development ABI, not with legacy Python imports.

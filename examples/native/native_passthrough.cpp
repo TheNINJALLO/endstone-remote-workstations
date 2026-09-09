@@ -28,6 +28,7 @@ class NativePassthrough : public endstone::Plugin {
     std::map<vcf_handle,std::string> tickets_;
     uint64_t opened_=0,closed_=0,refused_=0,guard_checks_=0;
     uint64_t held_reads_=0,held_refused_=0;
+    uint64_t item_reads_=0,item_refused_=0;
     struct DeniedSource {std::string dimension;std::array<int32_t,3> position;};
     std::optional<DeniedSource> denied_source_;
 
@@ -114,7 +115,7 @@ public:
             },1,1);
             registerEvent(&NativePassthrough::interact,*this,endstone::EventPriority::Highest);
             registerEvent(&NativePassthrough::quit,*this);
-            getLogger().info("NativePassthrough connected through SDK 1.2; twenty-six original-mode requests available subject to provider admission; read-only held inspection available.");
+            getLogger().info("NativePassthrough connected through SDK 1.3; twenty-six original-mode requests available subject to provider admission; read-only held inspection available.");
         } catch(const std::exception& e) {getLogger().error("NativePassthrough unavailable: {}",e.what());ui_.reset();}
     }
     void onDisable() override {
@@ -142,7 +143,8 @@ public:
             sender.sendMessage("Original-mode SDK example: opens "+std::to_string(opened_)+", closes "+std::to_string(closed_)
                 +", failures "+std::to_string(refused_)+", guard checks "+std::to_string(guard_checks_)
                 +", outstanding tickets "+std::to_string(tickets_.size()));
-            sender.sendMessage("Held inspections: successes "+std::to_string(held_reads_)+", refusals "+std::to_string(held_refused_));return true;
+            sender.sendMessage("Held inspections: successes "+std::to_string(held_reads_)+", refusals "+std::to_string(held_refused_));
+            sender.sendMessage("Saved item reads: successes "+std::to_string(item_reads_)+", refusals "+std::to_string(item_refused_));return true;
         }
         if(args[0]=="guard-clear"&&args.size()==1){
             denied_source_.reset();sender.sendMessage("Cleared the example source guard.");return true;
@@ -172,7 +174,17 @@ public:
         }
         if(!player){sender.sendErrorMessage("Request screens from a connected player.");return true;}
         try {
-            if(args[0]=="inspect-held"&&args.size()==1){
+            if(args[0]=="read-item"&&args.size()==2){
+                uint32_t slot=0;auto parsed=std::from_chars(args[1].data(),args[1].data()+args[1].size(),slot);
+                if(parsed.ec!=std::errc{}||parsed.ptr!=args[1].data()+args[1].size()||slot>=36)throw std::runtime_error("Choose inventory slot 0 through 35.");
+                sdk::SavedInventoryItem saved;
+                try{saved=ui_->read_inventory_item(player->getUniqueId().str(),slot);++item_reads_;}
+                catch(...){++item_refused_;throw;}
+                std::string hash;constexpr char hex[]="0123456789abcdef";
+                for(auto byte:saved.info.digest){hash+=hex[byte>>4];hash+=hex[byte&15];}
+                player->sendMessage(std::string("Saved item ")+saved.info.identifier+", slot "+std::to_string(slot)
+                    +", amount "+std::to_string(saved.info.amount)+", native save bytes "+std::to_string(saved.nbt.size())+". Digest "+hash);
+            }else if(args[0]=="inspect-held"&&args.size()==1){
                 vcf_held_info held{};
                 try{held=ui_->inspect_held(player->getUniqueId().str());++held_reads_;}
                 catch(...){++held_refused_;throw;}
