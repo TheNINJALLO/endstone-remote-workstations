@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "kind": "private-probe-close-protocol-investigation-not-production-qualification",
+  "public_source_revision": "961e9ec1c12175703e7865a31926c406f813c30a",
+  "public_provider_sha256": "08acb14aaa315378e3089edaed0a2824d708b30f2c829e5fb882db76c78075d4",
+  "runtime_manifest": "research/native-evidence/linux-linked-utility-abi-126451.json",
+  "client": {
+    "version": "1.26.45",
+    "protocol": 2169,
+    "device": "Windows PC",
+    "input": "Classic keyboard/mouse"
+  },
+  "packet_only_probe_sha256": "a635033cbc752e9459aed3bc433fa439838158b7ec299af6d7558ab0aa0b1068",
+  "visual_probe_sha256": "830366bc5dfdd0dad29f5837fdbdce382bbcd430181e15421e2c2461863bb858",
+  "packet_only_trace": [
+    "1788937329621 send 46 bytes=7 cancelled=0 hex=020d04b6010a01",
+    "1788937349815 receive 47 bytes=3 cancelled=0 hex=02f700",
+    "1788937349815 send 47 bytes=3 cancelled=0 hex=02f700",
+    "1788937370216 send 46 bytes=7 cancelled=0 hex=030d04b6010a01",
+    "1788937387864 send 47 bytes=3 cancelled=0 hex=03f701",
+    "1788937387911 send 47 bytes=3 cancelled=0 hex=030d01",
+    "1788937681698 send 46 bytes=7 cancelled=0 hex=020d04b6010a01",
+    "1788937696173 send 47 bytes=3 cancelled=0 hex=02f700",
+    "1788937696193 send 47 bytes=3 cancelled=0 hex=020d01"
+  ],
+  "visual_trace": [
+    "1788937989307 send 46 bytes=7 cancelled=0 hex=020d04b6010a01",
+    "1788938006070 send 21 bytes=11 cancelled=0 hex=04b6010aa082d1df0d0200",
+    "1788938006555 receive 47 bytes=3 cancelled=0 hex=02f700",
+    "1788938006555 send 47 bytes=3 cancelled=0 hex=02f700",
+    "1788938007049 send 21 bytes=11 cancelled=0 hex=04b6010adfc6f88b020200",
+    "1788938029204 send 46 bytes=7 cancelled=0 hex=032408b6010c01",
+    "1788938074383 receive 306 bytes=14 cancelled=0 hex=040000005b000000060000000800",
+    "1788938076337 send 21 bytes=11 cancelled=0 hex=08b6010ca082d1df0d0200",
+    "1788938076900 receive 47 bytes=3 cancelled=0 hex=03f700",
+    "1788938076900 send 47 bytes=3 cancelled=0 hex=03f700",
+    "1788938077296 send 21 bytes=11 cancelled=0 hex=08b6010ccf9beddd0e0200"
+  ],
+  "interpretation": {
+    "normal_beacon_close": "Client emitted window/247/0; BDS echoed the same bytes.",
+    "packet_only_failure": "Probe247/1 and247/0 produced no client close. The existing provider followed each with actual-type13/1; both runs quarantined the tester. One native close passed, two experiments failed.",
+    "visual_beacon_close": "Client-only UpdateBlock to air at the owned test source caused native ContainerClose after485ms. Current world appearance restored after20 ticks.",
+    "visual_crafter_close": "Client-only UpdateBlock to air caused native ContainerClose after563ms. Current world appearance restored after20 ticks.",
+    "crafter_control": "The actual accepted306 payload040000005b000000060000000800 matches position4,91,6,slot8,disabled0:14 bytes.",
+    "limits": "No private BDS functions or inventory writes were called by the probe. Server block assertions passed for both sources. These diagnostic runs do not qualify public provider SDK closure; the separate implementation must pass stock-client tests with the probe removed."
+  },
+  "visual_run": {
+    "started_utc": "2026-09-09T07:11:16Z",
+    "stopped_utc": "2026-09-09T07:16:18Z",
+    "opens": 2,
+    "closes": 2,
+    "failures": 0,
+    "guard_checks": 241,
+    "outstanding_tickets": 0,
+    "probe_removed_before_public_retest": true
+  },
+  "privacy": "Only controlled window/block-control bytes, packet lengths and timestamps are included. No item147 contents or player/account identifiers are published."
+}

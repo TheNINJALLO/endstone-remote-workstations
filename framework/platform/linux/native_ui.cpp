@@ -242,7 +242,7 @@ struct Reader {
 struct NativeUi::Impl {
  struct View{vcf_handle owner,id;std::string player,kind,dimension,permission;uint32_t nonce;int window=-1;
   bool prepared=false,ack=false,activating=false,observed=false,active=false,closing=false,close_seen=false,superseded=false;
-  bool projected=false,projecting=false,restored=false,attempted=false,close_sent=false;
+  bool projected=false,projecting=false,restored=false,attempted=false,close_sent=false,close_projection=false;
   uintptr_t source_actor=0;
   Point position{};
   Clock::time_point queued=Clock::now(),next_check{},closed{};};
@@ -295,10 +295,27 @@ struct NativeUi::Impl {
     // ContainerClose carries the active container type. The old None value
     // did not close a linked furnace: unlike projections, its real block
     // stays present and cannot trigger client closure through restoration.
-    try{p->sendPacket(47,std::string{static_cast<char>(v.window),static_cast<char>(spec(v.kind)->type),1});}catch(...){v.close_sent=false;throw;}
+    try{
+     p->sendPacket(47,std::string{static_cast<char>(v.window),static_cast<char>(spec(v.kind)->type),1});
+     // This exact PC client ignores packet-only close for these two real
+     // sources. A client-only air update makes it send its native close;
+     // BDS then returns transient payment and retires its own manager.
+     // Retain the visual lease until native readiness, and restore from
+     // current world data. A foreign open/update relinquishes that lease.
+     if(!v.superseded&&!v.close_projection&&p->getDimension().getName()==v.dimension&&(v.kind=="beacon"||v.kind=="crafter")){
+      auto after=bridge.inspect(*p);
+      if(after.window!=v.window)v.superseded=true;
+      else if(!after.ready){
+       auto air=server.createBlockData("minecraft:air");
+       v.projected=true;v.restored=false;v.projecting=true;
+       p->sendPacket(21,block_update(v.position,air->getRuntimeId()));
+       v.projecting=false;v.close_projection=true;
+      }
+     }
+    }catch(...){v.projecting=false;v.close_sent=false;throw;}
    }
   }
-  if(p)restore(*p,v);
+  if(p&&p->isValid()&&(!v.close_projection||v.superseded||p->isDead()||bridge.inspect(*p).ready))restore(*p,v);
  }
  bool poll(View&v){
   auto*p=player(v.player);const auto now=Clock::now();
@@ -312,7 +329,7 @@ struct NativeUi::Impl {
    close(p,v);
    if(v.superseded){retire(v,VCF_CLOSED);return true;}
    if(spec(v.kind)->block.empty()||v.window<0||p->isDead()||bridge.inspect(*p).ready){retire(v,VCF_CLOSED);return true;}
-   if(now-v.closed>std::chrono::seconds(5)){p->kick("Native inventory close was not acknowledged; rejoin to continue.");retire(v,VCF_QUARANTINED);return true;}
+   if(now-v.closed>std::chrono::seconds(5)){restore(*p,v);p->kick("Native inventory close was not acknowledged; rejoin to continue.");retire(v,VCF_QUARANTINED);return true;}
    return false;
   }
   if(!v.prepared){
@@ -397,6 +414,7 @@ void NativeUi::tick(){
    try{auto& session=impl_->engine.session(v.owner,v.id);if(session.state!=VCF_TERMINAL){session.result=result;impl_->engine.close(v.owner,v.id);}}catch(const Error&){}
    auto*p=impl_->player(v.player);try{impl_->close(p,v);}catch(...){}
    if(p&&v.closing&&Clock::now()-v.closed>std::chrono::seconds(5)){
+    try{impl_->restore(*p,v);}catch(...){}
     try{p->kick("Native inventory state could not be verified; rejoin to continue.");}catch(...){}
     impl_->retire(v,VCF_QUARANTINED);done.push_back(it->first);continue;
    }
@@ -460,5 +478,5 @@ void NativeUi::sent(endstone::PacketSendEvent&e){
   return;
  }
 }
-void NativeUi::shutdown(){for(auto&[_,v]:impl_->views)try{impl_->close(impl_->player(v.player),v);}catch(...){}impl_->views.clear();}
+void NativeUi::shutdown(){for(auto&[_,v]:impl_->views)try{auto*p=impl_->player(v.player);impl_->close(p,v);if(p&&p->isValid())impl_->restore(*p,v);}catch(...){}impl_->views.clear();}
 }

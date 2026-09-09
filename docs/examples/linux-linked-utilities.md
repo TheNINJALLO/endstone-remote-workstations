@@ -54,7 +54,7 @@ The [exact run and artifact hashes](../../research/native-evidence/linux-961e9ec
 record ten opens, eight normal closes, two failed SDK closes and one expected
 wrong-family refusal. All tickets retired and shutdown completed cleanly.
 The [build checkpoint](../../research/native-evidence/checkpoint-961e9ec.json)
-records identical local/CI Linux binaries,14 sanitizer tests and300,000 fuzz
+records identical local/CI Linux binaries, 14 sanitizer tests and 300,000 fuzz
 iterations; those tests do not qualify native gameplay.
 
 Dispenser retained a named Efficiency I pickaxe and three cooked beef across
@@ -81,8 +81,8 @@ This recovery observation does not turn the failed close into a pass.
 ![Selected beacon choice and one-ingot payment](../images/native-linux-utilities/beacon-ready.png)
 ![Payment consumed by native confirmation](../images/native-linux-utilities/beacon-confirmed.png)
 
-Crafter toggles for slots0 and8 persisted across reconnect. SDK closure failed
-and quarantined the tester. After reconnect, re-enabling slot0 and supplying
+Crafter toggles for slots 0 and 8 persisted across reconnect. SDK closure failed
+and quarantined the tester. After reconnect, re-enabling slot 0 and supplying
 one oak log displayed four planks. An actual adjacent redstone trigger consumed
 the log and delivered four planks through native world output/pickup. Native
 Escape closure passed. The temporary trigger was removed after verification.
@@ -94,3 +94,14 @@ Escape closure passed. The temporary trigger was removed after verification.
 These captures are from the stock client; they are not generated mockups.
 No private probe was installed during this recorded run. A separate diagnostic
 session investigates the failed beacon/crafter close handshake.
+
+## Close-handshake correction under test
+
+The [separate protocol investigation](../../research/native-evidence/linux-beacon-crafter-close-diagnostic.json)
+confirmed that packet-only beacon closure was ignored with both tested server
+flags. A temporary client-only air update at the owned source caused beacon
+and crafter to emit native closure; both real server blocks remained intact.
+The adapter now uses that path for these two screens, waits for native readiness,
+then restores the current world appearance. Foreign opens or block updates
+relinquish its visual ownership. The private probe has been removed; tests of
+this correction with only the public plugins are still pending.
