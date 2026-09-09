@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "kind": "linux-linked-hopper-abi-research-not-ui-qualification",
+  "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "compiler": "Clang20.1.8/libc++20 Linux x86_64 System V",
+  "functions": [
+    {
+      "rva": "0x4567f00",
+      "size": 784,
+      "sha256": "9b54679d1ecd37a7393d4bcf7ff7b529871b0a5f3fe515897ba8b23524885f71"
+    },
+    {
+      "rva": "0x44fe540",
+      "size": 3071,
+      "sha256": "c6ca07f81da451bc86dadf33035287ae560c4acb6c271f2f74e2470b6eb75585"
+    },
+    {
+      "rva": "0x4567c00",
+      "size": 759,
+      "sha256": "73cbaa4b773003d914ea2f6eebae5dceec343419d534745b1347a8538f049c89"
+    },
+    {
+      "rva": "0x98edec0",
+      "size": 349,
+      "sha256": "d1d0558b77c316b10585c5515db02de33d16e6e12d0d4738cd61f0233ac3c447"
+    },
+    {
+      "rva": "0x80ec690",
+      "size": 2907,
+      "sha256": "4457af7af3d56fd50e858c04e91d340974fc145f259c6ad02aacf93cd36ac86a"
+    },
+    {
+      "rva": "0xb2f56f0",
+      "size": 586,
+      "sha256": "815180c372f93a004695ce33add744c11750ecdf105b4c6ab39bad1cb35aefee"
+    }
+  ],
+  "model": {
+    "vtable": "0xe2aab38",
+    "type": "27HopperContainerManagerModel",
+    "functions": [
+      "0x45ab560",
+      "0x45ab570",
+      "0xb2f6020",
+      "0xb2f6030",
+      "0xb2f6040",
+      "0xb2f6050",
+      "0xb2f6270",
+      "0xb2f68a0",
+      "0xb2d4140",
+      "0xb2d4210",
+      "0xb2d4420",
+      "0xb2d44f0",
+      "0xb2f59f0",
+      "0xb2f5f80",
+      "0xb2d4500",
+      "0x45d9dc0",
+      "0xb2f6420",
+      "0xb2f65a0",
+      "0xb2f6700",
+      "0xb2f6720",
+      "0xb2d4c10",
+      "0x45ab590",
+      "0xb2d4f10",
+      "0x0"
+    ]
+  },
+  "source": {
+    "canonical_id": "hopper",
+    "container_type": 8,
+    "block_actor_type": 15,
+    "block": "minecraft:hopper",
+    "slots": 5
+  },
+  "header_probe": {
+    "source_sha256": "2ffe0c59c7654c223ca262bbfd305f569d125b483d74e43a213aaeabfd59b5ba",
+    "llvm_ir_sha256": "02045cd93d2c617939fbc25cf9fa996f27946c8dcb8936180501f6f39b7928b2",
+    "headers": {
+      "src/bedrock/world/actor/player/player.h": "8dc88c1eadaaffd6ef433f66279fb1279eefaadc3156854350e9bde2529abac9",
+      "src/bedrock/world/events/player_events.h": "57ba88daa951733740463179fbcea2e86c4472ecdde30d5f1a821bf7e542dcca",
+      "src/bedrock/world/containers/managers/container_manager.h": "b333d3961bf29593fb4952c446b0a39f288f1897cc988a2532fae462ed397e22"
+    },
+    "result": "BlockPos size12/alignment4; PlayerOpenContainerEvent48; IContainerManager8. Factory model forwards two pointers rdi/rsi and returns al. Header-declared Player::refreshContainer(IContainerManager&) dispatches at byte1768/vslot221, Player*rdi/manager*rsi.",
+    "limit": "Factory target is a compile-only extern ABI model, not a claimed public header declaration. Its private function and argument use are independently identified in exact native caller and body."
+  },
+  "factory_evidence": "Native type8 caller44fe83b checks readiness, distinguishes ActorUniqueID -1 block path, passes Player*rdi and BlockPos*rsi to4567f00 at44fed9b. Distinct4567c00 handles entity sources. Block factory allocates360-byte native shared block; model at+24 has e2aab38 Hopper RTTI; stored player atmodel48, sourcePoint304, ActorUniqueID320=-1, sourceType328=15. Native player manager1368 owns model. Factory returns incremented/wrapped window in al. Caller emits ContainerOpen followed by current InventoryContent.",
+  "refresh_evidence": "Actual ServerPlayer vslot221 resolves98edec0. It obtains the model window ID, invokes the same80ec690 current-inventory constructor as native hopper caller, sends through vslot229 and destroys native packet/storage internally. Complete refresh and constructor bodies fingerprinted before dispatch.",
+  "admission": "Exact runtime and function fingerprints; nearby loaded source, source identity and permissions. Verify created native manager/player/window/source fields. Recheck ownership after callbacks and after ContainerOpen; invoke native refresh only while the same model remains current. Require observed uncancelled matching InventoryContent with five slots before opening completes. Retain BDS item and model ownership. Existing lifecycle guards apply; no entity, virtual storage, custom routing or Windows admission.",
+  "runtime_tests": "Pending for this source change; compile-only research does not establish stock-client qualification."
+}

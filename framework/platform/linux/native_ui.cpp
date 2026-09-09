@@ -58,6 +58,7 @@ constexpr Spec specs[]={
  {"brewing","minecraft:brewing_stand",4,0x4500820,"f01b8db1fce0dcdaec2345f8fd3486d67d38e1bc5c9437a7f751fd2095cf47c4",1534,8,{},0xe33bc38},
  {"beacon","minecraft:beacon",13,0x44ffd00,"3304172e4b07bf22114c36e9e2e6154ce11bc3b1ba4a6d61291d9abb73f2b5f4",1441,21,{},0xe33baa8},
  {"crafter","minecraft:crafter",36,0x4503210,"cab27e94c49f70f58ccec3721b3f8491d99d420c98bd6a074e70dba073150867",1480,55,{},0xe33bf58},
+ {"hopper","minecraft:hopper",8,0x4567f00,"9b54679d1ecd37a7393d4bcf7ff7b529871b0a5f3fe515897ba8b23524885f71",784,15,{},0xe2aab38},
  {"inventory2x2","",255,0,{}},{"armor","",255,0,{}},{"offhand","",255,0,{}},{"recipebook","",255,0,{}}
 };
 const Spec* spec(std::string_view id){for(const auto& row:specs)if(row.id==id)return &row;return nullptr;}
@@ -205,6 +206,33 @@ struct Bridge {
   auto state=inspect(p);require(state.ready,VCF_CONFLICT);
   Memory memory;const auto function=bedrock+layout.factory;
   memory.function(function,bedrock,layout.factory,layout.factory_size,layout.hash);
+  if(layout.type==8){
+   require(layout.id=="hopper"&&layout.source_type==15,VCF_UNAVAILABLE);
+   const auto refresh=memory.field<uintptr_t>(memory.field<uintptr_t>(state.player),221*8);
+   memory.function(refresh,bedrock,0x98edec0,349,"d1d0558b77c316b10585c5515db02de33d16e6e12d0d4738cd61f0233ac3c447");
+   memory.function(bedrock+0x80ec690,bedrock,0x80ec690,2907,"4457af7af3d56fd50e858c04e91d340974fc145f259c6ad02aacf93cd36ac86a");
+   memory.readable(memory.field<uintptr_t>(state.player,1384),sizeof(uintptr_t));
+   require(proceed(),VCF_CLOSED);
+   // Independent Linux caller: the block hopper factory takes exactly two
+   // pointers and returns its allocated window in al. The entity factory is
+   // distinct. BDS owns the model, shared control block and inventory items.
+   auto window=reinterpret_cast<uint8_t(*)(void*,const Point*)>(function)(reinterpret_cast<void*>(state.player),&position);
+   auto created=inspect(p);require(created.player==state.player&&created.manager&&!created.ready
+    &&created.window==window&&window==next_window(state.window),VCF_UNAVAILABLE);
+   Memory current;require(current.field<uintptr_t>(created.manager)==bedrock+layout.model,VCF_UNAVAILABLE);
+   require(current.field<uintptr_t>(created.manager,48)==state.player
+    &&current.field<Point>(created.manager,304)==position
+    &&current.field<int64_t>(created.manager,320)==-1
+    &&current.field<uint8_t>(created.manager,328)==15,VCF_CONFLICT);
+   require(proceed(),VCF_CLOSED);
+   p.sendPacket(46,container_open(window,8,position));
+   auto opened=inspect(p);require(opened.player==state.player&&opened.manager==created.manager&&opened.window==window&&!opened.ready,VCF_CONFLICT);
+   require(proceed(),VCF_CLOSED);
+   // Header-declared Player::refreshContainer dispatches at byte 1768 on
+   // Linux. It creates, sends and destroys the native current contents.
+   reinterpret_cast<void(*)(void*,void*)>(refresh)(reinterpret_cast<void*>(state.player),reinterpret_cast<void*>(created.manager));
+   return window;
+  }
   if(layout.type==0){
    require(layout.source_type==23||layout.source_type==42,VCF_UNAVAILABLE);
    memory.function(bedrock+0xb2d4ac0,bedrock,0xb2d4ac0,334,"837b2d2a551de7712d9705e6606c9ae850133384065291293fe26667e9f349c9");
@@ -268,7 +296,7 @@ struct Reader {
 }
 struct NativeUi::Impl {
  struct View{vcf_handle owner,id;std::string player,kind,dimension,permission;uint32_t nonce;int window=-1;
-  bool prepared=false,ack=false,activating=false,observed=false,active=false,closing=false,close_seen=false,superseded=false;
+  bool prepared=false,ack=false,activating=false,observed=false,contents_seen=false,active=false,closing=false,close_seen=false,superseded=false;
   bool projected=false,projecting=false,restored=false,attempted=false,close_sent=false,close_projection=false,syncing_actor=false,actor_seen=false;
   uintptr_t source_actor=0;
   Point position{};
@@ -399,6 +427,7 @@ struct NativeUi::Impl {
    // close marks this borrowed view; tick owns the eventual erasure.
    if(v.closing)return false;
    require(v.observed&&v.window==window&&!v.superseded,VCF_UNAVAILABLE);
+   if(v.kind=="hopper")require(v.contents_seen,VCF_UNAVAILABLE);
    v.active=true;engine.opened(v.owner,v.id,VCF_OK);
    if(engine.session(v.owner,v.id).state!=VCF_ACTIVE){close(p,v);return false;}
   }
@@ -505,6 +534,8 @@ void NativeUi::sent(endstone::PacketSendEvent&e){
   try{
    if(e.getPacketId()==46){Reader r{e.getPayload()};auto window=r.byte(),type=r.byte();auto position=r.point();r.var(64);require(r.offset==r.data.size());
     if(v.activating&&!v.observed&&type==spec(v.kind)->type&&window>=1&&window<=99&&(spec(v.kind)->block.empty()||position==v.position)){v.window=window;v.observed=true;}else v.superseded=true;
+   }else if(e.getPacketId()==49&&v.kind=="hopper"&&v.activating&&v.observed){
+    Reader r{e.getPayload()};if(r.var()==static_cast<uint32_t>(v.window))v.contents_seen=r.var()==5&&r.offset<r.data.size();
    }else if(e.getPacketId()==56&&v.syncing_actor){
     Reader r{e.getPayload()};v.actor_seen=!e.isCancelled()&&r.point()==v.position&&r.offset<r.data.size();
    }else if(e.getPacketId()==100)v.superseded=true;

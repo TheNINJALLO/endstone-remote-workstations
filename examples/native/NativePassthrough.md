@@ -34,7 +34,8 @@ are experimental and do not demonstrate custom station gameplay.
    the [linked-storage adapter](../../docs/examples/linux-linked-storage.md).
    The [linked utility examples](../../docs/examples/linux-linked-utilities.md)
    add Linux `dispenser`, `dropper`, `brewing`, `beacon` and `crafter`, each
-   requiring its own explicit source. Each of the 22 requests
+   requiring its own explicit source. The [linked hopper adapter](../../docs/examples/linux-linked-hopper.md)
+   adds a separate five-slot source path whose client tests are pending. Each of the 23 requests
    retains its own exact-build qualification record.
 
 Workstation requests explicitly choose `VCF_NATIVE_CONTEXT`, leaving original
