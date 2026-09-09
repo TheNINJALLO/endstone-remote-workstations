@@ -14,7 +14,7 @@ class Client {
  vcf_api table_;const vcf_api* api_;vcf_handle owner_=0;
 public:
  Client(const vcf_api&api,std::string_view name):table_(api),api_(&table_){
-  if(api.version!=VCF_ABI_VERSION||api.size<sizeof(vcf_api))throw std::runtime_error("This SDK requires VCF ABI 1.1");
+  if(api.version!=VCF_ABI_VERSION||api.size<sizeof(vcf_api))throw std::runtime_error("This SDK requires VCF ABI 1.2");
   auto d=descriptor<vcf_consumer_desc>();d.name=view(name);checked(api_->register_consumer(&d,&owner_));
  }
  Client(const Client&)=delete;Client&operator=(const Client&)=delete;
@@ -24,6 +24,9 @@ public:
  vcf_status dispose(){auto s=owner_?api_->unregister_consumer(owner_):VCF_OK;if(s==VCF_NOT_FOUND)s=VCF_OK;if(s==VCF_OK)owner_=0;return s;}
  vcf_handle owner()const{return owner_;}
  const vcf_api& api()const{return *api_;}
+ vcf_held_info inspect_held(std::string_view player)const{
+  auto result=descriptor<vcf_held_info>();checked(api_->inspect_held(owner_,view(player),&result));return result;
+ }
  uint32_t resolve(std::string_view id)const{uint32_t n=0;checked(api_->resolve(view(id),&n));return n;}
  vcf_capability capability(uint32_t n)const{auto c=descriptor<vcf_capability>();checked(api_->capability(n,&c));return c;}
  vcf_handle prepare(std::string_view player,std::string_view kind,uint32_t mode,std::string_view title=""){
@@ -40,7 +43,7 @@ public:
  }
  vcf_handle invoke(std::string_view player,std::string_view action){vcf_handle s=0;checked(api_->invoke(owner_,view(player),view(action),&s));return s;}
  std::vector<Action> actions()const{
-  if(api_->version<VCF_ABI_VERSION||api_->size<sizeof(vcf_api))throw std::runtime_error("Action listing requires VCF ABI 1.1");
+  if(api_->version<VCF_ABI_VERSION_1_1||api_->size<VCF_API_1_1_SIZE)throw std::runtime_error("Action listing requires VCF ABI 1.1");
   uint32_t count=0;uint64_t revision=0;checked(api_->action_count(owner_,&count,&revision));
   std::vector<Action> result;result.reserve(count);
   for(uint32_t i=0;i<count;++i){
@@ -54,7 +57,7 @@ public:
   return result;
  }
  vcf_handle guard(std::string_view name,vcf_guard_callback callback,void*context=nullptr,std::string_view kind=""){
-  if(api_->version<VCF_ABI_VERSION||api_->size<sizeof(vcf_api))throw std::runtime_error("Protection guards require VCF ABI 1.1");
+  if(api_->version<VCF_ABI_VERSION_1_1||api_->size<VCF_API_1_1_SIZE)throw std::runtime_error("Protection guards require VCF ABI 1.1");
   auto d=descriptor<vcf_guard_desc>();d.name=view(name);d.canonical_id=view(kind);d.callback=callback;d.context=context;
   vcf_handle id=0;checked(api_->register_guard(owner_,&d,&id));return id;
  }

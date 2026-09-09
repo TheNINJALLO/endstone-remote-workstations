@@ -1,4 +1,5 @@
 #include <oni/vcf/core.hpp>
+#include "held_items.hpp"
 #include <oni/vcf/sdk.hpp>
 #include <oni/vcf/packet_items.hpp>
 #include "platform/runtime.hpp"
@@ -149,6 +150,7 @@ public:
    host.consumer_allowed=[this](std::string_view name){auto*p=getServer().getPluginManager().getPlugin(std::string(name));return p&&p->isEnabled();};
    host.permission=[this](std::string_view id,std::string_view permission){auto*p=player(id);return p&&(permission.empty()||p->hasPermission(std::string(permission)));};
    host.item_limit=[this](std::string_view name){auto*type=getServer().getRegistry<endstone::ItemType>().get(endstone::ItemTypeId(name));return type?static_cast<uint32_t>(type->getMaxStackSize()):0;};
+   host.inspect_held=[this](std::string_view id){auto*p=player(id);require(p,VCF_CLOSED);return held::inspect(*p);};
    host.native_available=[this](std::string_view id){
     return original_native_enabled_&&native_ui_&&NativeUi::supports(id);
    };
@@ -184,7 +186,7 @@ public:
    registerEvent(&VirtualContainerFramework::sent,*this,endstone::EventPriority::Monitor);
    std::filesystem::create_directories(getDataFolder());
    std::ofstream receipt(getDataFolder()/"native-startup.txt");receipt<<"native C++ plugin; no project Python runtime\nBDS "<<admission_.bds_sha256<<"\nEndstone "<<admission_.runtime_sha256<<"\n69 retained entries; all-UI acceptance NOT QUALIFIED\n";
-   getLogger().info("Native VCF enabled: C ABI 1.1 (1.0 compatible), 69 catalog entries retained, C++ forms/actions/guards active; all-UI acceptance NOT QUALIFIED.");
+   getLogger().info("Native VCF enabled: C ABI 1.2 (1.0/1.1 compatible), 69 catalog entries retained, C++ forms/actions/guards active; all-UI acceptance NOT QUALIFIED.");
   }catch(const std::exception&e){getLogger().error("VCF startup failed: {}",e.what());onDisable();}
    catch(const Error&e){getLogger().error("VCF startup failed with status {}",e.status);onDisable();}
  }
@@ -233,7 +235,7 @@ public:
    if(name=="vcf"||name=="workstations"){
     if(!args.empty()&&(args[0]=="status"||args[0]=="diagnose"||args[0]=="sessions")){
      if(!sender.hasPermission("remoteworkstations.status")){sender.sendErrorMessage("Permission denied.");return true;}
-     sender.sendMessage("Native VCF C ABI 1.1; sessions "+std::to_string(engine_->session_count())+"; 69 entries retained; all-UI NOT QUALIFIED.");
+     sender.sendMessage("Native VCF C ABI 1.2; sessions "+std::to_string(engine_->session_count())+"; 69 entries retained; all-UI NOT QUALIFIED.");
      if(args[0]=="diagnose"){
       auto stats=item_observations_.stats();sender.sendMessage("Item packet observations: registries "+std::to_string(stats.registries)+", complete snapshots "+std::to_string(stats.inventories)+", queued "+std::to_string(stats.pending)+", refused "+std::to_string(stats.rejected)+". Observation is not inventory-write qualification.");
      }

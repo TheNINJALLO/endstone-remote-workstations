@@ -4,6 +4,11 @@ This standalone native plugin uses only the installed public SDK and Endstone's
 public API. It compiles separately from the provider. Its original-mode requests
 are experimental and do not demonstrate custom station gameplay.
 
+SDK 1.2 also provides `/vcf_native inspect-held` for read-only inspection of the
+selected shulker, bundle or book. See the [held-item contract](../../docs/NATIVE_HELD_ITEMS.md)
+for permissions, metadata bounds and identity limitations. This does not open
+or qualify a held editor. `/vcf_native status` includes inspection counters.
+
 1. Build the native artifacts and copy `endstone_onistone_vcf.dll` and
    `endstone_vcf_native_passthrough.dll` to an isolated Windows server's plugins
    directory. No project wheel is needed. Linux uses the corresponding `.so`

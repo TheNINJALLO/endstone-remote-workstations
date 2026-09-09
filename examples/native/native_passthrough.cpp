@@ -27,6 +27,7 @@ class NativePassthrough : public endstone::Plugin {
     std::map<std::string,std::string> bindings_;
     std::map<vcf_handle,std::string> tickets_;
     uint64_t opened_=0,closed_=0,refused_=0,guard_checks_=0;
+    uint64_t held_reads_=0,held_refused_=0;
     struct DeniedSource {std::string dimension;std::array<int32_t,3> position;};
     std::optional<DeniedSource> denied_source_;
 
@@ -113,7 +114,7 @@ public:
             },1,1);
             registerEvent(&NativePassthrough::interact,*this,endstone::EventPriority::Highest);
             registerEvent(&NativePassthrough::quit,*this);
-            getLogger().info("NativePassthrough connected through SDK 1.1; twenty-six original-mode requests available subject to provider admission.");
+            getLogger().info("NativePassthrough connected through SDK 1.2; twenty-six original-mode requests available subject to provider admission; read-only held inspection available.");
         } catch(const std::exception& e) {getLogger().error("NativePassthrough unavailable: {}",e.what());ui_.reset();}
     }
     void onDisable() override {
@@ -140,7 +141,8 @@ public:
         if(args.empty()||args[0]=="status") {
             sender.sendMessage("Original-mode SDK example: opens "+std::to_string(opened_)+", closes "+std::to_string(closed_)
                 +", failures "+std::to_string(refused_)+", guard checks "+std::to_string(guard_checks_)
-                +", outstanding tickets "+std::to_string(tickets_.size()));return true;
+                +", outstanding tickets "+std::to_string(tickets_.size()));
+            sender.sendMessage("Held inspections: successes "+std::to_string(held_reads_)+", refusals "+std::to_string(held_refused_));return true;
         }
         if(args[0]=="guard-clear"&&args.size()==1){
             denied_source_.reset();sender.sendMessage("Cleared the example source guard.");return true;
@@ -170,7 +172,16 @@ public:
         }
         if(!player){sender.sendErrorMessage("Request screens from a connected player.");return true;}
         try {
-            if(args[0]=="unbind")bindings_.erase(player->getUniqueId().str());
+            if(args[0]=="inspect-held"&&args.size()==1){
+                vcf_held_info held{};
+                try{held=ui_->inspect_held(player->getUniqueId().str());++held_reads_;}
+                catch(...){++held_refused_;throw;}
+                std::string hash;constexpr char hex[]="0123456789abcdef";
+                for(auto byte:held.digest){hash+=hex[byte>>4];hash+=hex[byte&15];}
+                player->sendMessage(std::string("Held ")+held.canonical_id+": "+held.identifier+", slot "+std::to_string(held.slot)
+                    +", amount "+std::to_string(held.amount)+", metadata bytes "+std::to_string(held.metadata_bytes)
+                    +", durable ID "+(held.durable_id[0]?"present":"absent")+", native editor unavailable. Digest "+hash);
+            }else if(args[0]=="unbind")bindings_.erase(player->getUniqueId().str());
             else if(args[0]=="bind"&&args.size()==2&&known(args[1])&&!linked(args[1])) {
                 if(bindings_.size()>=100&&!bindings_.contains(player->getUniqueId().str()))throw std::runtime_error("Binding limit reached.");
                 bindings_[player->getUniqueId().str()]=args[1];

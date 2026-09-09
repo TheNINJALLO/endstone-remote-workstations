@@ -17,7 +17,8 @@
 extern "C" {
 #endif
 #define VCF_ABI_VERSION_1_0 0x00010000u
-#define VCF_ABI_VERSION 0x00010001u
+#define VCF_ABI_VERSION_1_1 0x00010001u
+#define VCF_ABI_VERSION 0x00010002u
 typedef uint64_t vcf_handle;
 typedef int32_t vcf_status;
 enum { VCF_OK=0, VCF_INVALID=1, VCF_VERSION=2, VCF_NOT_FOUND=3, VCF_DENIED=4,
@@ -79,6 +80,14 @@ typedef struct {
  uint32_t size, version; vcf_string name, canonical_id;
  vcf_guard_callback callback; void *context;
 } vcf_guard_desc;
+/* Read-only held-stack observation. Fixed arrays are NUL terminated. The
+   digest describes content, not exclusive physical identity. No NBT or book
+   text is returned. Inspection neither reserves nor modifies the item. */
+typedef struct {
+ uint32_t size, version, slot, amount; int32_t auxiliary;
+ uint32_t metadata_bytes, native_open_available;
+ char canonical_id[32], identifier[128], durable_id[37]; uint8_t digest[32];
+} vcf_held_info;
 /* C ABI allocations never cross ownership domains. Caller supplies output
    structures. Capability strings remain valid until provider shutdown.
    All calls except get_api require the provider's server thread.
@@ -109,8 +118,12 @@ typedef struct vcf_api {
  vcf_status (VCF_CALL *action_info)(vcf_handle,uint32_t,uint64_t,vcf_action_info *,char *,uint32_t,uint32_t *);
  vcf_status (VCF_CALL *register_guard)(vcf_handle,const vcf_guard_desc *,vcf_handle *);
  vcf_status (VCF_CALL *unregister_guard)(vcf_handle,vcf_handle);
+ /* ABI 1.2 tail. The player and enabled consumer need the held entry's
+    permission. Caller supplies output storage; failures do not publish it. */
+ vcf_status (VCF_CALL *inspect_held)(vcf_handle,vcf_string,vcf_held_info *);
 } vcf_api;
 #define VCF_API_1_0_SIZE ((uint32_t)offsetof(vcf_api,action_count))
+#define VCF_API_1_1_SIZE ((uint32_t)offsetof(vcf_api,inspect_held))
 VCF_EXPORT vcf_status VCF_CALL oni_vcf_get_api(uint32_t version, uint32_t size, vcf_api *output);
 #ifdef __cplusplus
 }

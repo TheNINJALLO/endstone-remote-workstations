@@ -1,6 +1,7 @@
 #pragma once
 #include "abi.h"
 #include <algorithm>
+#include <array>
 #include <cstdint>
 #include <deque>
 #include <functional>
@@ -66,6 +67,7 @@ struct Host {
  std::function<bool(std::string_view)> native_available;
  std::function<vcf_status(const Session&)> open;
  std::function<vcf_status(const Session&)> close;
+ std::function<vcf_held_info(std::string_view)> inspect_held;
 };
 class Engine {
 public:
@@ -84,6 +86,7 @@ public:
  // Provider-only authorization of another verified block in one source.
  // The callback descriptor is copied; the session's original source is kept.
  void authorize_block(vcf_handle,vcf_handle,uint32_t,int32_t,int32_t,int32_t);
+ vcf_held_info inspect_held(vcf_handle,std::string_view);
  uint32_t collect_terminal(vcf_handle,uint32_t limit=32);
  vcf_handle invoke(vcf_handle,std::string,std::string);
  vcf_handle prepare(vcf_handle,Session);

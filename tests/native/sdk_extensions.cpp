@@ -2,6 +2,7 @@
 #include <oni/vcf/sdk.hpp>
 #include <iostream>
 #include <stdexcept>
+#include <cstring>
 using namespace oni::vcf;
 namespace {
 void check(bool v){if(!v)throw std::runtime_error("SDK extension assertion failed");}
@@ -121,6 +122,35 @@ void paired_source_guards(){
  refused(VCF_CLOSED,[&]{engine.authorize_block(owner,ticket,VCF_GUARD_ACTIVE,2,91,7);});
  check(state.partner==3);engine.tick();engine.release(protector);engine.shutdown();
 }
+vcf_status VCF_CALL older_guard(void* calls,const vcf_guard_event* event){
+ check(event->version==VCF_ABI_VERSION_1_1&&event->request.version==VCF_ABI_VERSION_1_1);
+ ++*static_cast<int*>(calls);return VCF_OK;
 }
-int main(){try{exercise();copied_source_guards();paired_source_guards();std::cout<<"Detached actions, copied and paired sources, stale revisions, scoped guards and callback revocation passed\n";}
+void held_inspection_api(){
+ Host host;bool allowed=true,enabled=true;int reads=0;
+ host.consumer_allowed=[&](auto){return enabled;};host.permission=[&](auto,auto permission){return permission!="remoteworkstations.open.shulker"||allowed;};
+ host.inspect_held=[&](auto player){
+  check(player=="player");++reads;vcf_held_info result{};
+  std::strcpy(result.canonical_id,"shulker");std::strcpy(result.identifier,"minecraft:purple_shulker_box");
+  result.slot=6;result.amount=1;result.metadata_bytes=123;result.native_open_available=1;return result;
+ };
+ host.open=[](auto&){return VCF_PENDING;};Engine engine(host);attach_engine(&engine);
+ vcf_api api{};check(oni_vcf_get_api(VCF_ABI_VERSION,sizeof(api),&api)==VCF_OK);sdk::Client caller(api,"held_reader");
+ auto info=caller.inspect_held("player");check(info.slot==6&&info.amount==1&&info.metadata_bytes==123&&!info.native_open_available&&reads==1);
+ info=sdk::descriptor<vcf_held_info>();info.slot=77;auto before=info;allowed=false;
+ check(api.inspect_held(caller.owner(),sdk::view("player"),&info)==VCF_DENIED&&std::memcmp(&before,&info,sizeof(info))==0);allowed=true;
+ enabled=false;check(api.inspect_held(caller.owner(),sdk::view("player"),&info)==VCF_CLOSED);enabled=true;
+ vcf_status status=VCF_OK;std::thread thread([&]{auto out=sdk::descriptor<vcf_held_info>();status=api.inspect_held(caller.owner(),sdk::view("player"),&out);});thread.join();check(status==VCF_WRONG_THREAD);
+ auto owner=caller.owner();check(caller.dispose()==VCF_OK);check(api.inspect_held(owner,sdk::view("player"),&info)==VCF_NOT_FOUND);
+ // A binary using the old 1.1 table still sees 1.1 protection descriptors.
+ vcf_api old{};check(oni_vcf_get_api(VCF_ABI_VERSION_1_1,VCF_API_1_1_SIZE,&old)==VCF_OK);
+ auto consumer=sdk::descriptor<vcf_consumer_desc>();consumer.version=VCF_ABI_VERSION_1_1;consumer.name=sdk::view("old_reader");
+ vcf_handle old_owner=0;check(old.register_consumer(&consumer,&old_owner)==VCF_OK);
+ int calls=0;auto guard=sdk::descriptor<vcf_guard_desc>();guard.version=VCF_ABI_VERSION_1_1;guard.name=sdk::view("old_guard");guard.callback=older_guard;guard.context=&calls;
+ vcf_handle registration=0;check(old.register_guard(old_owner,&guard,&registration)==VCF_OK);
+ Session source;source.player="player";source.kind="chest";auto ticket=engine.prepare(old_owner,source);engine.authorize(old_owner,ticket,VCF_GUARD_DISPATCH);check(calls==1);
+ check(old.unregister_consumer(old_owner)==VCF_OK);engine.shutdown();attach_engine(nullptr);
+}
+}
+int main(){try{exercise();copied_source_guards();paired_source_guards();held_inspection_api();std::cout<<"Detached actions, copied and paired sources, held inspection, compatible guards and callback revocation passed\n";}
  catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(const Error& e){std::cerr<<"Unexpected status "<<e.status<<'\n';return 2;}}

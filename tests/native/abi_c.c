@@ -12,5 +12,11 @@ int main(void){
  { const unsigned char* bytes=(const unsigned char*)&api;size_t i;
    for(i=VCF_API_1_0_SIZE;i<sizeof(api);++i)if(bytes[i]!=0xa5)return 7;
  }
+ memset(&api,0xa5,sizeof(api));
+ if(oni_vcf_get_api(VCF_ABI_VERSION_1_1,VCF_API_1_1_SIZE,&api)!=VCF_OK)return 8;
+ if(api.size!=VCF_API_1_1_SIZE||api.version!=VCF_ABI_VERSION_1_1||!api.register_guard)return 9;
+ { const unsigned char* bytes=(const unsigned char*)&api;size_t i;
+   for(i=VCF_API_1_1_SIZE;i<sizeof(api);++i)if(bytes[i]!=0xa5)return 10;
+ }
  return 0;
 }

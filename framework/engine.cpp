@@ -22,7 +22,7 @@ vcf_handle Engine::consumer(std::string name,uint32_t version) {
  check();require(name_ok(name));require(host_.consumer_allowed && host_.consumer_allowed(name),VCF_DENIED);
  require(consumers_.size()<128,VCF_CAPACITY);
  for(const auto&[id,c]:consumers_)require(c.name!=name,VCF_CONFLICT);
- require(version==VCF_ABI_VERSION||version==VCF_ABI_VERSION_1_0,VCF_VERSION);
+ require(version==VCF_ABI_VERSION||version==VCF_ABI_VERSION_1_1||version==VCF_ABI_VERSION_1_0,VCF_VERSION);
  auto id=next_++;consumers_.emplace(id,Consumer{std::move(name),version});return id;
 }
 std::string Engine::qualify(vcf_handle owner,std::string_view action)const {
@@ -123,12 +123,28 @@ void Engine::authorize_at(vcf_handle owner,vcf_handle id,uint32_t phase,const in
   auto it=guards_.find(key);if(it==guards_.end())continue;auto guard=it->second;
   if(!guard.kind.empty()&&guard.kind!=s.kind)continue;
   if(!consumers_.contains(guard.owner)||consumers_.at(guard.owner).revoked||!host_.consumer_allowed(consumers_.at(guard.owner).name))continue;
+  event.version=request.version=consumers_.at(guard.owner).version;
   ++callbacks_;vcf_status result;
   try{result=guard.callback(guard.context,&event);}catch(...){result=VCF_DENIED;}
   --callbacks_;require(result==VCF_OK,VCF_DENIED);
   require(!consumers_.at(owner).revoked,VCF_CLOSED);
   require(s.state!=VCF_CLOSING&&s.state!=VCF_TERMINAL,VCF_CLOSED);
  }
+}
+vcf_held_info Engine::inspect_held(vcf_handle owner,std::string_view player){
+ check();qualify(owner,"");require(!player.empty()&&player.size()<=128&&player.find('\0')==std::string_view::npos);
+ require(host_.consumer_allowed(consumers_.at(owner).name),VCF_CLOSED);
+ require(host_.permission&&host_.permission(player,"remoteworkstations.use"),VCF_DENIED);
+ require(bool(host_.inspect_held),VCF_UNAVAILABLE);
+ auto result=host_.inspect_held(player);
+ const auto length=std::find(std::begin(result.canonical_id),std::end(result.canonical_id),'\0');
+ require(length!=std::end(result.canonical_id),VCF_INTERNAL);
+ const auto* row=resolve(std::string_view(result.canonical_id,static_cast<size_t>(length-std::begin(result.canonical_id))));
+ require(row&&row->source_kind=="held-item",VCF_UNAVAILABLE);
+ require(host_.permission(player,row->permission),VCF_DENIED);
+ qualify(owner,"");require(host_.consumer_allowed(consumers_.at(owner).name),VCF_CLOSED);
+ // Inspection cannot qualify or unlock a native held-item editor.
+ result.native_open_available=0;return result;
 }
 uint32_t Engine::collect_terminal(vcf_handle owner,uint32_t limit){
  check();require(!callbacks_&&!dispatching_,VCF_REENTRANT);qualify(owner,"");uint32_t n=0;
@@ -148,7 +164,7 @@ vcf_handle Engine::prepare(vcf_handle owner,Session s){
  s.owner=owner;s.id=next_++;s.generation=s.id;sessions_.emplace(s.id,s);return s.id;
 }
 Item Engine::item(const vcf_item& in)const{
- check();require(in.size>=sizeof(vcf_item)&&(in.version==VCF_ABI_VERSION||in.version==VCF_ABI_VERSION_1_0));
+ check();require(in.size>=sizeof(vcf_item)&&(in.version==VCF_ABI_VERSION||in.version==VCF_ABI_VERSION_1_1||in.version==VCF_ABI_VERSION_1_0));
  Item i;i.id=str(in.identifier);i.count=in.count;
  if(!i.count){require(i.id.empty() && !in.nbt.length);return i;}
  require(host_.item_limit!=nullptr,VCF_UNAVAILABLE);i.limit=host_.item_limit(i.id);

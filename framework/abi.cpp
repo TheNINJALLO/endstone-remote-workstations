@@ -3,7 +3,7 @@
 namespace oni::vcf {
 namespace {
 Engine* engine=nullptr;
-template<class T> void input(const T*p){require(p&&p->size>=sizeof(T));require(p->version==VCF_ABI_VERSION||p->version==VCF_ABI_VERSION_1_0,VCF_VERSION);}
+template<class T> void input(const T*p){require(p&&p->size>=sizeof(T));require(p->version==VCF_ABI_VERSION||p->version==VCF_ABI_VERSION_1_1||p->version==VCF_ABI_VERSION_1_0,VCF_VERSION);}
 std::string text(vcf_string s,uint32_t max=4096){
  require(s.length<=max && (s.data||!s.length));if(!s.length)return {};
  std::string r(s.data,s.length);require(r.find('\0')==std::string::npos);return r;
@@ -61,13 +61,17 @@ vcf_status VCF_CALL register_guard(vcf_handle h,const vcf_guard_desc*d,vcf_handl
  return call([&]{input(d);require(out);*out=engine->add_guard(h,text(d->name),text(d->canonical_id),d->callback,d->context);});
 }
 vcf_status VCF_CALL unregister_guard(vcf_handle h,vcf_handle id){return call([&]{engine->remove_guard(h,id);});}
-const vcf_api api{sizeof(vcf_api),VCF_ABI_VERSION,reg,unreg,count,capability,lookup,action,unaction,invoke,prepare,set,rule,open,close,info,menu,forget,action_count,action_info,register_guard,unregister_guard};
+vcf_status VCF_CALL inspect_held(vcf_handle h,vcf_string player,vcf_held_info*out){
+ return call([&]{input(out);require(out->version==VCF_ABI_VERSION,VCF_VERSION);
+ auto result=engine->inspect_held(h,text(player,128));result.size=sizeof(result);result.version=out->version;*out=result;});
+}
+const vcf_api api{sizeof(vcf_api),VCF_ABI_VERSION,reg,unreg,count,capability,lookup,action,unaction,invoke,prepare,set,rule,open,close,info,menu,forget,action_count,action_info,register_guard,unregister_guard,inspect_held};
 }
 void attach_engine(Engine* e){engine=e;}
 }
 extern "C" VCF_EXPORT vcf_status VCF_CALL oni_vcf_get_api(uint32_t version,uint32_t size,vcf_api*out) {
- if(version!=VCF_ABI_VERSION&&version!=VCF_ABI_VERSION_1_0)return VCF_VERSION;
- const auto required=version==VCF_ABI_VERSION?static_cast<uint32_t>(sizeof(vcf_api)):VCF_API_1_0_SIZE;
+ if(version!=VCF_ABI_VERSION&&version!=VCF_ABI_VERSION_1_1&&version!=VCF_ABI_VERSION_1_0)return VCF_VERSION;
+ const auto required=version==VCF_ABI_VERSION?static_cast<uint32_t>(sizeof(vcf_api)):version==VCF_ABI_VERSION_1_1?VCF_API_1_1_SIZE:VCF_API_1_0_SIZE;
  if(!out||size<required)return VCF_BUFFER;
  auto table=oni::vcf::api;table.size=required;table.version=version;
  std::memcpy(out,&table,required);return VCF_OK;
