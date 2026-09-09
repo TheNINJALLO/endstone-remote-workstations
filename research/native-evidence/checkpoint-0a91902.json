@@ -1,0 +1,116 @@
+{
+    "schema_version":  1,
+    "recorded":  "2026-09-08",
+    "kind":  "native-local-build-and-runtime-checkpoint",
+    "source_revision":  "0a91902ef4f676b3ce2244f4344fec3c05d581ab",
+    "all_ui_acceptance":  "not-qualified",
+    "runtime":  {
+                    "server":  "Endstone 0.11.10",
+                    "bds":  "1.26.45.1",
+                    "protocol":  2169,
+                    "bds_sha256":  "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+                    "loader_sha256":  "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+                    "artifact_sha256":  "65a22206e359e0aaf2565f20e7291408486051553e05e5525aa9e51b5eecac12"
+                },
+    "linux_plugins":  {
+                          "endstone_onistone_vcf.so":  "65a22206e359e0aaf2565f20e7291408486051553e05e5525aa9e51b5eecac12",
+                          "endstone_vcf_catalog_showcase.so":  "f2ed69e30d69b25d024e6caafcaef1298f764accac50b273e07716ef7b3070da",
+                          "endstone_vcf_native_passthrough.so":  "e3e9b1f384d437c3e6f2ace8f9d4604e69c40d64e35c3eee0e00d38e94045178"
+                      },
+    "windows_build":  {
+                          "artifact_sha256":  "45a641af2ffe85bb23854556cca606aa43f26ca2c33111af56f14bde546c2820",
+                          "ctest":  "12/12 passed",
+                          "current_artifact_runtime_test":  "not-run"
+                      },
+    "linux_build":  {
+                        "ctest":  "13/13 passed",
+                        "asan":  "passed",
+                        "ubsan":  "passed",
+                        "fuzz_inputs":  {
+                                            "nbt":  100000,
+                                            "storage":  100000,
+                                            "items":  100000
+                                        },
+                        "elf_report":  "linux-0a91902-elf-report.txt",
+                        "direct_glibc_symbol_maximum":  "GLIBC_2.34",
+                        "direct_libraries":  [
+                                                 "libcrypto.so.3",
+                                                 "libc++.so.1",
+                                                 "libc++abi.so.1",
+                                                 "libunwind.so.1",
+                                                 "libm.so.6",
+                                                 "libgcc_s.so.1",
+                                                 "libc.so.6"
+                                             ]
+                    },
+    "core_regressions":  {
+                             "menu_open_select_forget_cycles":  5000,
+                             "core_checks":  50181,
+                             "storage_checks":  10309,
+                             "item_wire_checks":  21813
+                         },
+    "actual_mapped_libraries":  [
+                                    {
+                                        "path":  "libc++-fd46d087.so.1.0",
+                                        "sha256":  "7e4d489a0fdd2ec47d9a6885e480c88d594b5ffd0ecd85d62ad5ac1413d6ada9"
+                                    },
+                                    {
+                                        "path":  "libc++abi-8b78e756.so.1.0",
+                                        "sha256":  "d4d59eb3a618adcb974cc3a507e451520b4e3acb0ff146940cd8d3dca0065f97"
+                                    },
+                                    {
+                                        "path":  "libunwind-94ea6103.so.1.0",
+                                        "sha256":  "1e057c26b216ef8f96be64ba6ffac7b82d336b592c9447b41be3beed9401f67c"
+                                    },
+                                    {
+                                        "path":  "libendstone_runtime.so",
+                                        "sha256":  "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc"
+                                    },
+                                    {
+                                        "path":  "endstone_onistone_vcf-ef8803c7c85016de.so",
+                                        "sha256":  "65a22206e359e0aaf2565f20e7291408486051553e05e5525aa9e51b5eecac12"
+                                    },
+                                    {
+                                        "path":  "endstone_vcf_catalog_showcase-b6be1ba24c97190b.so",
+                                        "sha256":  "f2ed69e30d69b25d024e6caafcaef1298f764accac50b273e07716ef7b3070da"
+                                    },
+                                    {
+                                        "path":  "endstone_vcf_native_passthrough-fef975d03802bcec.so",
+                                        "sha256":  "e3e9b1f384d437c3e6f2ace8f9d4604e69c40d64e35c3eee0e00d38e94045178"
+                                    },
+                                    {
+                                        "path":  "libcrypto.so.3",
+                                        "sha256":  "72db1b3de8b7dfbaba4c056135f408da555f9d5e137c82129478e07e769f8070"
+                                    },
+                                    {
+                                        "path":  "libstdc++.so.6.0.30",
+                                        "sha256":  "e7848e32af4932840ba775169041759a2a8dd5a008af360e5c55bce506eebcf4"
+                                    }
+                                ],
+    "loader_fixture":  {
+                           "project_python_companion":  false,
+                           "endstone_own_python_loader":  true,
+                           "libc":  "glibc 2.36",
+                           "test_probe_installed":  false,
+                           "test_probe_mapped":  false,
+                           "endpoint":  "127.0.0.1:29179",
+                           "disposable_world":  true
+                       },
+    "limitations":  [
+                        "Linux private UI adapters and native inventory publication remain incomplete.",
+                        "No arbitrary Pterodactyl image or Onistone runtime qualification.",
+                        "No multi-client, Android or controller qualification.",
+                        "Journal tests do not establish BDS/plugin cross-save recovery."
+                    ],
+    "ci":  {
+               "native_run":  "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34295813503",
+               "linux_docker":  "passed",
+               "windows_debug":  "passed",
+               "windows_release":  "passed",
+               "linux_sanitizers":  "passed",
+               "full_scope_acceptance":  "failed: 138 canonical/platform and 20 extra surface/platform outcomes unqualified",
+               "legacy_run":  "https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34295813531",
+               "legacy_windows":  "passed",
+               "legacy_linux":  "passed"
+           }
+}

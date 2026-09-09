@@ -32,9 +32,11 @@ Do not regenerate it from the C++ catalog.
 ## Build and runtime evidence
 
 The current [implementation checkpoint](NATIVE_IMPLEMENTATION_REPORT.md)
-records source `577edd7`, its exact installed Windows DLL and Linux CI ELF,
-12 passing native test jobs, three 100,000-input sanitizer fuzz targets and
-the remaining all-UI scope. Older runs below retain their original provenance.
+records source `0a91902`, the exact locally loaded Linux ELF, the newly built
+Windows DLL, 13 Linux and 12 Windows native test jobs, three 100,000-input
+sanitizer fuzz targets and the remaining all-UI scope. Linux client smoke now
+covers SDK form actions, close/disconnect cleanup and passive inventory
+observation. Older runs below retain their original provenance.
 The new item descriptor/registry observer is passive; it does not complete
 native inventory publication or qualify a new custom UI.
 

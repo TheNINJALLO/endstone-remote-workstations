@@ -12,6 +12,7 @@ All 69 original catalog entries, aliases, permissions and source contracts are p
 - [Native build and test instructions](docs/NATIVE_BUILDING.md)
 - [Windows Docker/WSL setup and private Linux inputs](docs/WINDOWS_DOCKER_SETUP.md)
 - [Linux loaded-runtime identities and client evidence](docs/NATIVE_LINUX_RUNTIME.md)
+- [Run the Linux SDK form example, with actual client screenshots](docs/examples/linux-native-sdk.md)
 - [Native SDK and compiled consumer](docs/NATIVE_SDK.md)
 - [Native storage transactions and current integration boundary](docs/NATIVE_STORAGE.md)
 - [NativePassthrough SDK and player-interaction example](examples/native/NativePassthrough.md)

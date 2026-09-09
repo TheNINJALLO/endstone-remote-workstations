@@ -44,6 +44,13 @@ exposed a Linux player-conversion failure: cross-module `dynamic_cast` returned
 null. Provider and consumers now use the pinned SDK's virtual `asPlayer()` API.
 Full catalog and transaction qualification remain separate from this form test.
 
+The [Linux SDK example](examples/linux-native-sdk.md) includes screenshots,
+commands and the final artifact's redacted client smoke record. The verified
+form action, close-with-X and disconnect paths return to zero outstanding
+tickets. The actual item registry and full inventory now decode with zero
+refusals. A zero-initialized container name is accepted only within the bounded
+player-inventory observation path; it grants no inventory-write authority.
+
 OpenSSL's `libcrypto.so.3` is now a direct plugin dependency for SHA-256.
 The Docker package snapshot supplies OpenSSL 3.0.20 and `libssl-dev` at build
 time. OpenSSL 3 uses the Apache-2.0 license; it is dynamically linked rather

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-client-smoke",
+  "source_revision": "0a91902ef4f676b3ce2244f4344fec3c05d581ab",
+  "platform": "linux-x64",
+  "runtime": {
+    "server": "Endstone 0.11.10",
+    "bds": "1.26.45.1",
+    "protocol": 2169,
+    "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+    "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+    "artifact_sha256": "65a22206e359e0aaf2565f20e7291408486051553e05e5525aa9e51b5eecac12"
+  },
+  "consumer_sha256": "f2ed69e30d69b25d024e6caafcaef1298f764accac50b273e07716ef7b3070da",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse",
+    "stock": true
+  },
+  "public_sdk": true,
+  "test_probe_installed": false,
+  "all_ui_acceptance": "not-qualified",
+  "procedure": [
+    "Install the provider and two independent C++ SDK consumers in the isolated server.",
+    "Join 127.0.0.1:29179 from the saved VCF Linux Native Test entry.",
+    "Run /vcf_catalog_showcase, inspect the rendered action form, and click its button once.",
+    "Check console vcf_catalog_showcase and vcf sessions.",
+    "Reopen the form and close with X; check the unchanged callback count and zero tickets.",
+    "Open /vcf, select chest and inspect the explicit unavailable-adapter result; check zero sessions.",
+    "Open the consumer form, verify one active ticket, then disconnect the test client using the server kick command.",
+    "Check zero outstanding tickets, zero sessions and cleared inventory observations.",
+    "Reconnect from the saved server, reopen the SDK form and click once; verify callback count 2, zero tickets, one registry and one complete snapshot with zero refusals."
+  ],
+  "observed": {
+    "form_rendering": "passed",
+    "button_callback_count": 1,
+    "outstanding_after_action": 0,
+    "sessions_after_action": 0,
+    "close_x_callback_count": 1,
+    "outstanding_after_close_x": 0,
+    "catalog_form_and_refusal": "passed",
+    "active_before_disconnect": 1,
+    "callback_count_after_disconnect": 1,
+    "outstanding_after_disconnect": 0,
+    "sessions_after_disconnect": 0,
+    "inventory_after_join": {
+      "registries": 1,
+      "complete_snapshots": 1,
+      "queued": 0,
+      "refused": 0
+    },
+    "inventory_after_disconnect": {
+      "registries": 0,
+      "complete_snapshots": 0,
+      "queued": 0,
+      "refused": 0
+    },
+    "reconnect_and_reopen": "passed",
+    "callback_count_after_reconnect": 2,
+    "outstanding_after_reconnect_action": 0,
+    "sessions_after_reconnect_action": 0
+  },
+  "qualification_gaps": [
+    "Interactive permission revocation, foreign-form coexistence and stale/replayed network submissions are not fully qualified.",
+    "No custom native workstation transaction was demonstrated.",
+    "No native inventory publication or cross-save recovery was tested.",
+    "Additional clients/devices are untested."
+  ],
+  "screenshots": [
+    {
+      "path": "docs/images/native-linux/sdk-action-form.png",
+      "sha256": "b992b45b1737cca9d4302cc8af2e5bd12aac0aed650cb8c732c65003af6f5756",
+      "caption": "Native SDK action form rendered by the stock client, hosted by the exact Linux provider."
+    },
+    {
+      "path": "docs/images/native-linux/development-catalog.png",
+      "sha256": "31f3e23f5c226986901c37977f431b063f714f5e4990e3148a7fccd29807476a",
+      "caption": "Catalog form retains all 69 entries and reports their incomplete native/custom migration."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+[00:36:46 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[00:36:46 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[00:39:57 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[00:39:58 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[00:40:18 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[00:40:19 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[00:40:39 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[00:40:57 INFO]: Native VCF C ABI 1.1; sessions 1; 69 entries retained; all-UI NOT QUALIFIED.
+[00:40:58 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[00:40:58 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[00:40:58 INFO]: Item packet observations: registries 0, complete snapshots 0, queued 0, refused 0. Observation is not inventory-write qualification.
+[00:46:21 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[00:46:21 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[00:46:47 INFO]: C ABI consumer active; callbacks 2; outstanding tickets 0
+[00:46:47 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[00:46:47 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.

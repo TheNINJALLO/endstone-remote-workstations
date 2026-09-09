@@ -1,0 +1,210 @@
+Start testing: Sep 09 00:33 UTC
+----------------------------------------------------------
+1/13 Testing: linux_loaded_identity
+1/13 Test: linux_loaded_identity
+Command: "/workspace/out/linux-sanitized/vcf_linux_identity_tests" "/workspace/out/linux-sanitized/libendstone_runtime.so"
+Directory: /workspace/out/linux-sanitized
+"linux_loaded_identity" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+Linux SHA256 vectors, streaming/bounds, fake runtime refusal, mapped inode replacement and callback code pinning passed.
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"linux_loaded_identity" end time: Sep 09 00:33 UTC
+"linux_loaded_identity" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/13 Testing: core
+2/13 Test: core
+Command: "/workspace/out/linux-sanitized/vcf_core_tests"
+Directory: /workspace/out/linux-sanitized
+"core" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+50181 checks passed
+<end of output>
+Test time =   0.24 sec
+----------------------------------------------------------
+Test Passed.
+"core" end time: Sep 09 00:33 UTC
+"core" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/13 Testing: asynchronous_lifecycle
+3/13 Test: asynchronous_lifecycle
+Command: "/workspace/out/linux-sanitized/vcf_lifecycle_tests"
+Directory: /workspace/out/linux-sanitized
+"asynchronous_lifecycle" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+Asynchronous opens, closes, revocation and ownership passed
+<end of output>
+Test time =   0.68 sec
+----------------------------------------------------------
+Test Passed.
+"asynchronous_lifecycle" end time: Sep 09 00:33 UTC
+"asynchronous_lifecycle" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/13 Testing: sdk_actions_and_guards
+4/13 Test: sdk_actions_and_guards
+Command: "/workspace/out/linux-sanitized/vcf_sdk_extensions"
+Directory: /workspace/out/linux-sanitized
+"sdk_actions_and_guards" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+Detached actions, stale revisions, scoped guards and callback revocation passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"sdk_actions_and_guards" end time: Sep 09 00:33 UTC
+"sdk_actions_and_guards" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/13 Testing: storage_captures_and_reservations
+5/13 Test: storage_captures_and_reservations
+Command: "/workspace/out/linux-sanitized/vcf_storage_tests"
+Directory: /workspace/out/linux-sanitized
+"storage_captures_and_reservations" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+10309 storage checks passed
+<end of output>
+Test time =   1.66 sec
+----------------------------------------------------------
+Test Passed.
+"storage_captures_and_reservations" end time: Sep 09 00:33 UTC
+"storage_captures_and_reservations" time elapsed: 00:00:01
+----------------------------------------------------------
+
+6/13 Testing: item_wire_registry_and_observation
+6/13 Test: item_wire_registry_and_observation
+Command: "/workspace/out/linux-sanitized/vcf_packet_items_tests"
+Directory: /workspace/out/linux-sanitized
+"item_wire_registry_and_observation" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+21813 item wire checks passed
+<end of output>
+Test time =   4.42 sec
+----------------------------------------------------------
+Test Passed.
+"item_wire_registry_and_observation" end time: Sep 09 00:33 UTC
+"item_wire_registry_and_observation" time elapsed: 00:00:04
+----------------------------------------------------------
+
+7/13 Testing: c_abi_layout
+7/13 Test: c_abi_layout
+Command: "/workspace/out/linux-sanitized/vcf_abi_c"
+Directory: /workspace/out/linux-sanitized
+"c_abi_layout" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"c_abi_layout" end time: Sep 09 00:33 UTC
+"c_abi_layout" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/13 Testing: journal_crash_boundary_1
+8/13 Test: journal_crash_boundary_1
+Command: "/opt/cmake-3.31.6-linux-x86_64/bin/cmake" "-DEXECUTABLE=/workspace/out/linux-sanitized/vcf_ledger_crash" "-DSTEP=1" "-DDIRECTORY=/workspace/out/linux-sanitized/journal-crash-1" "-P" "/workspace/tools/native/crash-ledger.cmake"
+Directory: /workspace/out/linux-sanitized
+"journal_crash_boundary_1" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+Fresh-process recovery: boundary 1 quarantined; no item issuance.
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"journal_crash_boundary_1" end time: Sep 09 00:33 UTC
+"journal_crash_boundary_1" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/13 Testing: journal_crash_boundary_2
+9/13 Test: journal_crash_boundary_2
+Command: "/opt/cmake-3.31.6-linux-x86_64/bin/cmake" "-DEXECUTABLE=/workspace/out/linux-sanitized/vcf_ledger_crash" "-DSTEP=2" "-DDIRECTORY=/workspace/out/linux-sanitized/journal-crash-2" "-P" "/workspace/tools/native/crash-ledger.cmake"
+Directory: /workspace/out/linux-sanitized
+"journal_crash_boundary_2" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+Fresh-process recovery: boundary 2 quarantined; no item issuance.
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"journal_crash_boundary_2" end time: Sep 09 00:33 UTC
+"journal_crash_boundary_2" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/13 Testing: journal_crash_boundary_3
+10/13 Test: journal_crash_boundary_3
+Command: "/opt/cmake-3.31.6-linux-x86_64/bin/cmake" "-DEXECUTABLE=/workspace/out/linux-sanitized/vcf_ledger_crash" "-DSTEP=3" "-DDIRECTORY=/workspace/out/linux-sanitized/journal-crash-3" "-P" "/workspace/tools/native/crash-ledger.cmake"
+Directory: /workspace/out/linux-sanitized
+"journal_crash_boundary_3" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+Fresh-process recovery: boundary 3 quarantined; no item issuance.
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"journal_crash_boundary_3" end time: Sep 09 00:33 UTC
+"journal_crash_boundary_3" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/13 Testing: journal_crash_boundary_4
+11/13 Test: journal_crash_boundary_4
+Command: "/opt/cmake-3.31.6-linux-x86_64/bin/cmake" "-DEXECUTABLE=/workspace/out/linux-sanitized/vcf_ledger_crash" "-DSTEP=4" "-DDIRECTORY=/workspace/out/linux-sanitized/journal-crash-4" "-P" "/workspace/tools/native/crash-ledger.cmake"
+Directory: /workspace/out/linux-sanitized
+"journal_crash_boundary_4" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+Fresh-process recovery: boundary 4 quarantined; no item issuance.
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"journal_crash_boundary_4" end time: Sep 09 00:33 UTC
+"journal_crash_boundary_4" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/13 Testing: journal_crash_boundary_5
+12/13 Test: journal_crash_boundary_5
+Command: "/opt/cmake-3.31.6-linux-x86_64/bin/cmake" "-DEXECUTABLE=/workspace/out/linux-sanitized/vcf_ledger_crash" "-DSTEP=5" "-DDIRECTORY=/workspace/out/linux-sanitized/journal-crash-5" "-P" "/workspace/tools/native/crash-ledger.cmake"
+Directory: /workspace/out/linux-sanitized
+"journal_crash_boundary_5" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+Fresh-process recovery: boundary 5 quarantined; no item issuance.
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"journal_crash_boundary_5" end time: Sep 09 00:33 UTC
+"journal_crash_boundary_5" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/13 Testing: journal_crash_boundary_6
+13/13 Test: journal_crash_boundary_6
+Command: "/opt/cmake-3.31.6-linux-x86_64/bin/cmake" "-DEXECUTABLE=/workspace/out/linux-sanitized/vcf_ledger_crash" "-DSTEP=6" "-DDIRECTORY=/workspace/out/linux-sanitized/journal-crash-6" "-P" "/workspace/tools/native/crash-ledger.cmake"
+Directory: /workspace/out/linux-sanitized
+"journal_crash_boundary_6" start time: Sep 09 00:33 UTC
+Output:
+----------------------------------------------------------
+Fresh-process recovery: boundary 6 quarantined; no item issuance.
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"journal_crash_boundary_6" end time: Sep 09 00:33 UTC
+"journal_crash_boundary_6" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Sep 09 00:33 UTC

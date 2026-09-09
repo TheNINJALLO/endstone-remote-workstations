@@ -1,132 +1,117 @@
 # Native implementation checkpoint — incomplete
 
-The all-UI migration is **not complete or release-ready**. The tested native
-source is `577edd781a112625dfb620d45972ba98d743b765` on
-`feature/native-virtual-container-framework`. The stable release and `main`
-remain unchanged. No new release, tag or production deployment was performed.
+The native source checkpoint is `0a91902ef4f676b3ce2244f4344fec3c05d581ab` on
+`feature/native-virtual-container-framework`. **The all-UI migration remains
+incomplete and is not a production-qualified release.** RemoteWorkstations
+0.4.0 and `main` remain separate from this development work.
 
-## Implemented and tested
+## What now runs locally
 
-The project builds a true C++20 plugin, independently producing a Windows DLL
-and Linux ELF `.so`, with no project Python/pybind runtime. Platform-neutral
-code owns sessions, deferred callbacks, scoped named/exported actions, action
-listing, guards, item policies, bounded transaction models and durable journal
-records. C ABI 1.1 preserves the 1.0 function-table prefix and caller buffers.
-Public C++ SDK headers and Windows import libraries are installed separately.
+Docker Desktop 4.90.0 and WSL 2.7.13 now provide a working Linux x86-64 engine
+on the Windows development PC. The pinned Clang 20.1.8 image builds the real
+native `.so`, runs its tests, inspects the supplied Linux ELF files, and runs
+the isolated Endstone 0.11.10 / BDS 1.26.45.1 server on `127.0.0.1:29179`.
+The operator explicitly confirmed the supplied server's license before startup.
 
-Windows binds fingerprinted original native primitives. Eleven original-mode
-requests have experimental orchestration: crafting, anvil, grindstone,
-smithing, stonecutter, loom, cartography, inventory2x2, armor, offhand and
-recipebook. The public default disables this opt-in. Their new native client
-behavior remains unqualified. No new custom screen is claimed complete.
+The exact Linux provider and both independent SDK consumers load and enable.
+A stock Windows Bedrock 1.26.45 client joins the server. The public SDK action
+form renders and dispatches the consumer's callback. All 69 catalog IDs resolve.
+The live inventory observer now reports one registry, one complete snapshot,
+zero queued packets and zero refusals. It does not write native inventories.
 
-Storage code now decodes request/response packets, checks identities and
-policies, reserves unfinished cursor gestures, and refuses replay/uncertain
-writes. Item wire code preserves complete descriptors and parses bounded
-registry/content/slot packets. The plugin observes these packets passively from
-the server scheduler and exposes counters through `/vcf diagnose`. This observer
-does not write native inventories or authorize transactions. See
-[storage implementation and limitations](NATIVE_STORAGE.md).
+Live testing exposed and fixed two SDK issues: Linux cross-module player
+conversion now uses Endstone's virtual `asPlayer()` method, and a selected menu
+action completes the caller's original ticket instead of leaking a hidden
+child ticket. The example consumer collects terminal tickets on its scheduler.
+Both platform providers retain their callback code for process lifetime; each
+enable operation gets a fresh revocable callback token.
 
-The isolated Windows server on `127.0.0.1:29169` loaded the current DLL plus two
-independent consumers: the original ABI 1.0 UICatalogShowcase binary and ABI 1.1
-NativePassthrough. All 69 canonical IDs resolve. The status and item-observation
-diagnostics commands ran successfully. There were no connected clients, so
-no current-artifact rendering, item interaction or observation of a real player
-registry is reported as passed.
+The actual Linux inventory packet uses a zero-initialized container name for
+window 0. A new exact empty-inventory regression preserves this observed shape
+while rejecting unrelated roles, dynamic containers and wrong slot counts.
+The bounded private packet probe used for diagnosis was removed before the
+final artifact's runtime test. Private packets and account identifiers are not
+published.
 
-## Builds and checks actually run
+## Builds and checks
 
-- `tools/native/build-windows.ps1`: local Windows release build, SDK/consumer
-  installation and all 12 CTest jobs passed.
-- Native CI [34285780448](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34285780448):
-  Windows release/debug, Linux Docker build and Linux sanitizers passed.
-- The Linux Docker sanitizer target passed all 12 CTest jobs and 100,000
-  libFuzzer inputs each for NBT, storage and item wire decoding: 300,000 total.
-- Test output records 50,181 core checks, 10,309 storage checks and 20,754 item
-  wire checks. Six CTest jobs restart a dedicated journal process after a forced
-  exit at separate durable boundaries.
-- Legacy regression CI [34285780454](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34285780454)
-  passed its 661-test Python suite and portable build checks. This does not
-  qualify the new native gameplay implementation.
-- The separate full-scope acceptance job failed as required: all 138
-  canonical/platform and 20 additional API-surface/platform outcomes remain
-  unqualified. The strengthened gate also tests forged green labels, dropped
-  aliases/commands and attempts to reuse old captures or build logs.
+- Local Windows build: **12/12 CTest jobs passed**, DLL, SDK, consumers and PDB
+  exported. This newest Windows DLL has not been loaded in the Windows server.
+- Local Linux Docker build: **13/13 CTest jobs passed**, ELF, SDK and consumers
+  exported. The extra Linux test covers loaded-file hashes, replaced inodes,
+  unknown runtimes and retained callback code after `dlclose`.
+- Linux ASan/UBSan: **13/13 jobs passed**; 100,000 libFuzzer inputs each for NBT,
+  storage and item-wire parsing, **300,000 total**.
+- Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
+  menu/select/forget cycles, duplicate selection, revoked permission, pending
+  cancellation, action failure, and explicit action-ticket collection.
+- Six standalone journal crash-boundary tests passed. These do not establish
+  recovery across BDS/player saves.
+- Immutable scope and five gate regression tests pass. All 138 canonical/platform
+  and 20 additional surface/platform full-qualification outcomes remain
+  unqualified; working SDK smoke tests cannot override this gate.
 
-Raw public CI logs and artifact identities are indexed by
-[`checkpoint-577edd7.json`](../research/native-evidence/checkpoint-577edd7.json).
-Historical snapshots retain their original revision and hashes.
+Build logs, module hashes and exact dependency evidence are indexed in
+[`checkpoint-0a91902.json`](../research/native-evidence/checkpoint-0a91902.json).
+Older checkpoints keep their original source and artifact identities.
+
+At this source revision, [native CI run 34295813503](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34295813503)
+passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
+result is **failure** because the separate full-scope acceptance gate correctly
+refuses the incomplete catalog. [Legacy regression run 34295813531](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34295813531)
+passed on both Windows and Linux. Current local client observations and
+screenshots are in the [Linux SDK example](examples/linux-native-sdk.md).
 
 ## Exact development artifacts
 
-| Target | Local artifact | SHA-256 |
+| Target | Export | SHA-256 |
 |---|---|---|
-| Windows x64 | `dist/windows-release/plugins/endstone_onistone_vcf.dll` | `ee0e5fe6155fea9470a4438d935ff5d7a02ea64962685fa7223dc90e978254b3` |
-| Linux x64 | `dist/linux-ci-577edd7/plugins/endstone_onistone_vcf.so` | `f79e40db42ed9e55afc44e7a962f3d53018ae06e3116b252c2c0e998db13b5a9` |
+| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `65a22206e359e0aaf2565f20e7291408486051553e05e5525aa9e51b5eecac12` |
+| Windows x64 | `dist/windows-release/plugins/endstone_onistone_vcf.dll` | `45a641af2ffe85bb23854556cca606aa43f26ca2c33111af56f14bde546c2820` |
 
-Paths are relative to the native feature checkout. The installed isolated
-Windows DLL was hash-checked against the first row. Windows PDBs are under
-`dist/windows-release/symbols`; SDK files and separately installed example
-binaries are in each artifact tree. The Linux ELF still includes its debug
-information. These are development outputs, not final release packages.
+Paths are relative to the native checkout. The loaded Linux shadow copy and
+installed provider match the Linux export byte-for-byte. Linux debug information
+is still embedded in this development ELF; Windows PDBs are under `symbols/`.
+These are development artifacts, not completed all-UI release packages.
 
-## Verified identities and practical limits
+## Compatibility boundaries
 
-The public SDK is Endstone 0.11.10 at
-`8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8`; public API family 0.11 is not a
-certificate for every runtime in that family. The Windows server loaded BDS
-1.26.45.1, protocol 2169, and Endstone 0.11.10. BDS SHA-256 is
-`92d09c7b74ac6a9805bafc166d8e0a13ac9e5db73dbbb0819e5a14093699d44f`;
-the Endstone runtime SHA-256 is
-`0c6f0861c5f9a677058b25776d975654a3586a80d2e4421b069b5e98f536f819`.
-The private primitive manifest was checked in loaded Windows memory.
+The pinned Endstone SDK is 0.11.10 at
+`8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8`. Public API family 0.11 does not
+admit other native runtimes. Exact Linux BDS/loader hashes and ELF Build IDs
+are in [NATIVE_LINUX_RUNTIME.md](NATIVE_LINUX_RUNTIME.md). No Onistone runtime
+has been supplied or qualified.
 
-Windows uses MSVC 19.44.35222, toolset 14.44.35207, CMake 3.31.6, the dynamic
-MSVC runtime and iterator ABI level 0. Linux CI uses the pinned Clang 20.1.8,
-libc++/libc++abi toolchain inside Linux Docker. ELF inspection finds libc++,
-libc++abi, libunwind, libm, libgcc_s and libc dependencies, with no libstdc++.
-Transitive library requirements still apply; arbitrary Pterodactyl images are
-not certified. No Linux BDS runtime or Onistone ABI has been qualified.
+The Linux provider directly needs `libcrypto.so.3`, libc++20, libc++abi,
+libunwind and ordinary C libraries. Its current direct glibc symbol requirement
+reaches **GLIBC_2.34**; older GLIBC_2.14 reports apply only to older artifacts.
+The tested fixture uses glibc 2.36 and the loader's bundled libc++ family.
+Process maps confirm one libc++ family. Endstone's own NumPy/frozenlist modules
+also load libstdc++; the provider and native consumers do not link against it.
+This is not certification of arbitrary Pterodactyl images.
 
-Windows Bedrock 1.26.45/keyboard-mouse is the retained experimental client
-profile. Foreground checks refused the latest capture/input attempt. Old Python
-screenshots and sanitized packet captures are not new DLL qualification. No
-Android/touch, controller or multiplayer result is marked passed.
+The project plugin and consumers are native C++, with no project Python wheel,
+pybind runtime or Python companion. Endstone's own loader remains outside that
+boundary. Test scripts are development tools only.
 
-## Remaining required work
+## Remaining required scope
 
-All 69 original entries, aliases, source contracts and permissions are retained
-in the immutable scope and separate Windows/Linux reports. **Retention is 69;
-completed custom native entries are zero.** Eleven Windows original-mode paths
-are experimental, with zero newly client-qualified entries. Linux UI adapters
-remain unavailable. The per-entry record is in
-[the capability matrix](CAPABILITY_MATRIX.md) and
-[the complete migration table](ALL_UI_MIGRATION.md).
+All 69 original entries, aliases, permissions and source contracts remain in
+the frozen baseline and platform reports. **No custom native catalog entry is
+fully qualified.** Eleven Windows original-mode paths have experimental
+orchestration behind an opt-in flag. Linux private UI adapters remain unavailable.
+The current form is an SDK action demonstration; it is not a workstation.
 
-Required implementation still includes the remaining original families and
-custom merchant, machine, map-printing, editable/persistent storage, workshop,
-equipment/cargo, editor/dialogue, chemistry, held-container and correct-role
-services. Protected inventory menus, pagination, native item publication,
-durable held identity and the remaining standalone SDK consumers are unfinished.
-Configuration migration, complete SDK/CMake package exports and final release
-packaging also need work.
+Required work still includes original and custom merchant, machine, map-printing,
+editable/persistent storage, workshop, equipment/cargo, editor/dialogue,
+chemistry, held-container and correct-role services. Protected inventory menus,
+pagination, native item publication, durable held identity, cross-save recovery,
+remaining SDK consumers, configuration migration, CMake SDK package exports
+and final release packaging remain incomplete. The native transaction model
+and journal must be connected to BDS writes and qualified at real save/crash
+boundaries before claiming durable delivery.
 
-The reservation and journal tests prove their isolated model contracts. They
-do **not** prove exactly-once delivery or crash recovery across BDS/plugin saves.
-Native writes, valuable-item reconciliation and the journal must be connected,
-then tested against actual server saves/crashes without overwriting uncertain
-items or issuing replacements.
-
-Following explicit installation authorization, Docker Desktop 4.90.0 and
-WSL 2.7.13 were installed locally on September 8. Virtual Machine Platform is
-enabled, but Windows requires a restart before the Linux engine can run.
-Docker's first-launch agreement was not accepted by the installer. Authorized
-Linux BDS 1.26.45.1 and Endstone 0.11.10 inputs are staged privately and hashed;
-local execution and ABI/runtime admission remain blocked. The
-[Docker setup instructions](WINDOWS_DOCKER_SETUP.md) include the build and
-inspection commands. Exact Onistone SDK/runtime inputs remain missing.
-Minecraft must be available in the foreground to finish joining the isolated
-server and run the current-artifact SDK/client procedures. These prerequisites
-block runtime qualification; they do not mean the remaining implementation is
-already finished.
+Client tests use Windows PC keyboard/mouse. Additional devices and multiplayer
+are untested; no second client is required from the operator for this checkpoint.
+See [the per-entry matrix](CAPABILITY_MATRIX.md) and
+[all-UI migration](ALL_UI_MIGRATION.md) for the retained scope.

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "recorded": "2026-09-08",
+  "supersedes_installation_status": "docker-host-setup.json",
+  "docker_desktop": "4.90.0",
+  "wsl": "2.7.13.0",
+  "kernel": "6.18.33.2-2",
+  "linux_engine": "29.7.2 x86_64 reachable",
+  "compose": "5.5.1",
+  "buildx": "0.36.1-desktop.1",
+  "local_build": "passed",
+  "private_elf_inspection": "passed",
+  "native_loader_and_two_sdk_consumers": "passed",
+  "server_license": "explicitly confirmed by operator before startup",
+  "runtime_checkpoint": "checkpoint-0a91902.json",
+  "full_scope": "not-qualified"
+}
