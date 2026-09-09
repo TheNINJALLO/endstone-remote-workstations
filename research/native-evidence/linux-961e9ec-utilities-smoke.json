@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-smoke-with-observed-failures",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "961e9ec1c12175703e7865a31926c406f813c30a",
+  "platform": "linux-x64",
+  "artifact_sha256": "08acb14aaa315378e3089edaed0a2824d708b30f2c829e5fb882db76c78075d4",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "started_utc": "2026-09-09T06:18:19Z",
+  "clean_stop_utc": "2026-09-09T06:53:10Z",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "loaded_shadow_copies_match_exports": true,
+  "one_bundled_libcxx_family": true,
+  "private_probe_installed": false,
+  "observations": {
+    "dispenser": "Ordinary-click deposited the named Efficiency I wooden pickaxe in slot8; Shift-click deposited three cooked beef in slot0. SDK-closed and reopened with both retained. Shift-click recovered the pickaxe and ordinary-click recovered three cooked beef. Tooltip preserved name and Efficiency I; read-only counts restored three total pickaxes and three cooked beef. Native X closed. Redstone dispensing was not tested.",
+    "dropper": "Ordinary-click deposited three ingots in slot8; Shift-click deposited six stone in slot0. SDK-closed and reopened with both retained. Shift-click withdrew six stone and ordinary-click withdrew three ingots. Read-only player counts six and three; native Escape closed. Redstone dropping was not tested.",
+    "brewing": "Shift-click routed three water bottles and one blaze powder into their native roles; ordinary-click inserted one nether wart. SDK closure completed while processing. Reopening showed three awkward potions and consumed wart. Shift-click withdrew the first/last bottles and ordinary-click withdrew the middle bottle. Player tooltip confirmed awkward potion and read-only wildcard potion count was three. Native Escape closed. The stand retained its remaining native fuel charge.",
+    "beacon_payment": "The real one-level iron pyramid enabled first-tier choices. Selected Haste, ordinary-click placed exactly one ingot and confirmed payment. Player ingot count decreased from three to two and the Haste icon appeared in the HUD. The screen stayed open after confirmation; native inventory key closed it. Reopening retained the selected Haste choice.",
+    "beacon_close_failure": "Placed one of the remaining two ingots as an unused payment and requested SDK closure at06:44:03. Closure did not complete; the five-second quarantine disconnected the tester at06:44:08. The immediate pre-disconnect player count was one. Rejoin recovered the unused payment, restoring exactly two ingots. This is a failed SDK-close test, not successful closure or crash qualification.",
+    "crafter_control": "Clicked empty slots0 and8 to disable them. SDK close at06:48:45 did not complete and triggered the five-second quarantine at06:48:50. Rejoin/reopen retained both disabled edge slots. Re-enabled slot0, ordinary-click deposited one oak log and observed a four-plank recipe preview with slot8 still disabled. No cancellation or immediate denial occurred during the normal toggle inputs.",
+    "crafter_output": "Read-only initial oak-plank count was zero. Placed a redstone block with keep in adjacent air. The log was consumed and four oak planks reached the nearby player through native world output/pickup; screenshot and read-only count confirmed four. Native Escape closed normally. Verified and removed only the temporary redstone trigger.",
+    "wrong_source": "Requested crafter against the nearby brewing stand. Refused before opening with one expected denial and no ticket leak.",
+    "form_regression": "One SDK form action callback; zero outstanding form tickets."
+  },
+  "sdk_counters": {
+    "opens": 10,
+    "closes": 8,
+    "failure_callbacks": 3,
+    "sdk_close_quarantines": 2,
+    "expected_denial_failures": 1,
+    "refusals_before_open": 1,
+    "guard_checks": 5025,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "counter_limit": "Two opens each for dispenser, dropper, brewing, beacon and crafter. Eight normal closes, two failed SDK closes ending in disconnect quarantine, and one wrong-family refusal before opening. Later diagnostic runs must retain their separate identities and private-probe status.",
+  "setup_observations": "All five block sources and 49 iron platform blocks were placed with keep in air in the disposable world. Exactly one blaze powder, one wart, three water bottles and one oak log were supplied for test recipes. A give command after the beacon disconnect failed with no matching player and was repeated only after confirmed reconnect. Read-only clear always specified maxCount0. A console wait used the wrong expected closure text once; the log confirms the close command executed once and completed normally for brewing. Server/world-list captures and unrelated notifications are excluded.",
+  "not_qualified": [
+    "Beacon and crafter SDK closure on this source revision",
+    "Active permission/source transitions for these five new entries",
+    "Adversarial crafter control packets and competing owners",
+    "Dispenser/dropper redstone world actions",
+    "Custom storage policies, brewing recipes, beacon effects and crafter routing",
+    "Source configuration aliases and unrestricted remote distance",
+    "Cross-save/crash and death/drop recovery",
+    "All metadata/input profiles",
+    "Windows stock-client qualification",
+    "Other devices and multiplayer",
+    "Exact Onistone runtime admission",
+    "Full catalog/custom framework"
+  ],
+  "earlier_anomalies": "This run does not resolve the ca30255 initial grindstone extraction rejection or171e0aa missing-plank/death observation.",
+  "screenshots": {
+    "dispenser-retained": {
+      "path": "docs/images/native-linux-utilities/dispenser-retained.png",
+      "sha256": "1279a0c751eb2015ed22f357767be837617081d03a7a85331c423b6f0e4306c1",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "dispenser-returned-metadata": {
+      "path": "docs/images/native-linux-utilities/dispenser-returned-metadata.png",
+      "sha256": "b33a647f54e1cf69d80cee0b9c2094d9dca3f060bda1104841ce02de074d70ad",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "dropper-retained": {
+      "path": "docs/images/native-linux-utilities/dropper-retained.png",
+      "sha256": "21f3d231682107b5df98c89bfcaef36fd7edc99cdbee1032366fdb392dcdfc1c",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "dropper-returned": {
+      "path": "docs/images/native-linux-utilities/dropper-returned.png",
+      "sha256": "6622c7d1f44f7a2e3f19bce198d7bf49150ea10513b39c5c590890e9db9164cd",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "brewing-awkward": {
+      "path": "docs/images/native-linux-utilities/brewing-awkward.png",
+      "sha256": "ae053dee34ddb811ffae1e9d6a0075487460ef99ff8e2b7156dfb794db48b40d",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "brewing-delivered-tooltip": {
+      "path": "docs/images/native-linux-utilities/brewing-delivered-tooltip.png",
+      "sha256": "fac6c271805e9317b6159aa2160a82eb67de1e6c64db9d423a088893d264d4fe",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "beacon-ready": {
+      "path": "docs/images/native-linux-utilities/beacon-ready.png",
+      "sha256": "21305f809557ced8c083e349edb7b52c4dfb029e244371935ff21d90c38958f9",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "beacon-confirmed": {
+      "path": "docs/images/native-linux-utilities/beacon-confirmed.png",
+      "sha256": "1f570a201b4fcd4cc0f02650a1ab3f1afea84462e7a0045878dc459ae543ef5a",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "beacon-unused-ready": {
+      "path": "docs/images/native-linux-utilities/beacon-unused-ready.png",
+      "sha256": "2596ee81a20c1b48fd053a1cae24db6865507f1a1dd67a29007304eb98b3e2b5",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "crafter-retained": {
+      "path": "docs/images/native-linux-utilities/crafter-retained.png",
+      "sha256": "d8a2ecab6511b1df2a9f791170da5f31c7688e41062ab3a6f550231eb7c4ebff",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "crafter-recipe": {
+      "path": "docs/images/native-linux-utilities/crafter-recipe.png",
+      "sha256": "6464ce5a7fe2f974368c90e891d6b66c9bc1f2b225b6642204c57c60178fe566",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "crafter-triggered": {
+      "path": "docs/images/native-linux-utilities/crafter-triggered.png",
+      "sha256": "00188df16cd03daf8a4f00c30cd454391bae2f248d3f9786dba096abeae1c3b6",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-961e9ec-utilities-counters.txt",
+    "sha256": "ab2797f3db286a8b013a9607cb4ae001d0848aa121be1b8badde01d2806ece2a"
+  },
+  "abi_manifest": "research/native-evidence/linux-linked-utility-abi-126451.json"
+}

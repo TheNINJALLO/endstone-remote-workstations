@@ -1,0 +1,35 @@
+[06:20:44 INFO]: Original-mode SDK example: opens 0, closes 0, failures 0, guard checks 0, outstanding tickets 0
+[06:21:59 INFO]: Queued closure of 1 owned SDK tickets.
+[06:21:59 INFO]: <test-player> has 2 items that match the criteria
+[06:21:59 ERROR]: Could not clear the inventory of <test-player>, no items to remove
+[06:23:04 INFO]: <test-player> has 3 items that match the criteria
+[06:23:04 INFO]: <test-player> has 3 items that match the criteria
+[06:24:33 INFO]: Queued closure of 1 owned SDK tickets.
+[06:24:33 ERROR]: Could not clear the inventory of <test-player>, no items to remove
+[06:24:34 ERROR]: Could not clear the inventory of <test-player>, no items to remove
+[06:36:48 INFO]: <test-player> has 6 items that match the criteria
+[06:36:49 INFO]: <test-player> has 3 items that match the criteria
+[06:36:50 INFO]: Original-mode SDK example: opens 4, closes 4, failures 0, guard checks 3324, outstanding tickets 0
+[06:38:37 INFO]: Queued closure of 1 owned SDK tickets.
+[06:38:57 ERROR]: Could not clear the inventory of <test-player>, no items to remove
+[06:39:14 INFO]: Original-mode SDK example: opens 5, closes 5, failures 0, guard checks 3629, outstanding tickets 0
+[06:40:52 INFO]: <test-player> has 3 items that match the criteria
+[06:42:13 INFO]: <test-player> has 2 items that match the criteria
+[06:42:13 INFO]: Original-mode SDK example: opens 7, closes 6, failures 0, guard checks 4242, outstanding tickets 1
+[06:42:29 INFO]: Original-mode SDK example: opens 7, closes 7, failures 0, guard checks 4250, outstanding tickets 0
+[06:44:03 INFO]: Queued closure of 1 owned SDK tickets.
+[06:44:03 INFO]: <test-player> has 1 items that match the criteria
+[06:44:15 ERROR]: No targets matched selector
+[06:44:46 ERROR]: No targets matched selector
+[06:45:07 INFO]: Original-mode SDK example: opens 8, closes 7, failures 1, guard checks 4425, outstanding tickets 0
+[06:47:14 INFO]: <test-player> has 2 items that match the criteria
+[06:48:45 INFO]: Queued closure of 1 owned SDK tickets.
+[06:49:07 INFO]: Original-mode SDK example: opens 9, closes 7, failures 2, guard checks 4666, outstanding tickets 0
+[06:51:30 ERROR]: Could not clear the inventory of <test-player>, no items to remove
+[06:51:52 INFO]: <test-player> has 4 items that match the criteria
+[06:51:56 INFO]: Original-mode SDK example: opens 10, closes 8, failures 2, guard checks 5024, outstanding tickets 0
+[06:53:09 INFO]: Original-mode SDK example: opens 10, closes 8, failures 3, guard checks 5025, outstanding tickets 0
+[06:53:09 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[06:53:10 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[06:53:10 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+Quit correctly

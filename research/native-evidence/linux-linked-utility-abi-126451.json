@@ -140,8 +140,70 @@
     "packet_id": 306,
     "id_header": "src/bedrock/network/packet.h",
     "id_header_sha256": "70d4f4febeb64c650aab3e7fc96c5ae087fc3c240ae037358061018c0f23e8d7",
-    "expected_wire": "14 bytes: three little-endian signed int32 coordinates, slot uint8, disabled uint8. Validate slot0..8/disabled0..1 and authorize matching owned source; foreign coordinates pass through. Current Linux stock-client tests pending.",
-    "prior_protocol_reference": "research/original-source/src/endstone_remote_workstations/native_backend.py (wire format reference, not Linux private-layout evidence)"
+    "expected_wire": "14 bytes: three little-endian signed int32 coordinates, slot uint8, disabled uint8. Independently confirmed against the exact Linux native decoder. Normal stock-client first/last-slot toggles persisted across reconnect in961e9ec; that revision failed SDK closure.",
+    "prior_protocol_reference": "research/original-source/src/endstone_remote_workstations/native_backend.py (wire format reference, not Linux private-layout evidence)",
+    "independent_linux_decoder": {
+      "packet_rtti": "36PlayerToggleCrafterSlotRequestPacket",
+      "vtable_rva": "0xe46a4c0",
+      "packet_virtual_functions": [
+        {
+          "slot": 2,
+          "rva": "0x7c79390",
+          "size": 6,
+          "sha256": "441de77b30cbe7ecf0facd2b3c6a4e1b7ec88cea232708d13aee46c8c19d159f"
+        },
+        {
+          "slot": 8,
+          "rva": "0x7c79a20",
+          "size": 606,
+          "sha256": "0323cb0858200a18411c8222efa778214dff10402272e28a897093f108d107df"
+        },
+        {
+          "slot": 17,
+          "rva": "0x7c79de0",
+          "size": 610,
+          "sha256": "2b9714faacb3c1c9093d304dd08d1d2efa5870939e1c40bc747f5faba335793b"
+        }
+      ],
+      "dispatch_and_reader": [
+        {
+          "slot": 7,
+          "rva": "0x7c794b0",
+          "size": 11,
+          "sha256": "0599fbc18d2d2cfc67fe4004f74b6dfefb0da29d0859bf3671907c4f42887cba"
+        },
+        {
+          "slot": 16,
+          "rva": "0x7c7a050",
+          "size": 4774,
+          "sha256": "68a4f55633cf8f616c4f7c402bdbf43b405c6992b30d7daf4e5d08d16a60f82e"
+        }
+      ],
+      "wire_functions": [
+        {
+          "rva": "0x7c793d0",
+          "size": 209,
+          "sha256": "ab9c2f9b00b16ec7f6fb53cf8482106850736fb9b302aacbbe1c8059c431ea47"
+        },
+        {
+          "rva": "0xe1628b0",
+          "size": 394,
+          "sha256": "8446169ad0ea5fd2a8a3a4e50e620651ddfbeffcde3867e77f1a885d0f7a8e90"
+        },
+        {
+          "rva": "0xe161ac0",
+          "size": 392,
+          "sha256": "52fbd203e05f8e533c43de098a49e8dc2b885c265e712b763c0f372e86a0e5f1"
+        },
+        {
+          "rva": "0xe161950",
+          "size": 368,
+          "sha256": "6322b4e2a348328af21335e4e13e3a9b44a1a1b7b6250be58e7b59187ee1662a"
+        }
+      ],
+      "normal_reader_sequence": "Reader7c7a050 calls e1628b0 three times at7c7a0bd/7c7a0e6/7c7a111 (each consumes4 raw bytes); e161ac0 at7c7a13c consumes1 raw byte; e161950 at7c7a16a calls that byte reader and normalizes a nonzero boolean. Total14 bytes. Guard limits normal bool encoding to0/1.",
+      "limit": "Serialization modes3/4/5 take a separate reflected path and are not admitted by this protocol observation. Adversarial control tests remain incomplete."
+    }
   },
   "rejected_hopper_candidate": "Container type8 branches to separate block/entity creators and manual ContainerOpen emission; do not call either as this three-argument factory. Hopper remains unavailable.",
   "incomplete": [

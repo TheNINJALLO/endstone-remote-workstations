@@ -4,16 +4,16 @@ This matrix describes the new C++ artifact only. **Full scope: NOT QUALIFIED.**
 
 The current Windows provider SHA-256 is `07b037e42a832571448022fdea6385b2db08e0839a9e5b611965aeac500e3dfb`. It and both SDK consumers passed [startup and clean shutdown](../research/native-evidence/windows-171e0aa-startup-smoke.json), including loaded-file identities and the native primitive manifest. Stock-client UI tests for this exact Windows build remain outstanding. No catalog screen has completed gameplay qualification under the native Windows plugin.
 
-The Linux Docker build passes locally and in CI and produces a real ELF `.so`. Exact local BDS/Endstone files are admitted for the public SDK. Stock-client forms, passive inventory observation, four shared inventory roles and eight opt-in original workstation contexts have [smoke evidence](examples/linux-native-workstations.md). Three nearby linked machines also have [processing, delivery and cleanup smoke evidence](examples/linux-linked-furnaces.md). Linked Ender Chest and barrel [transfers and cleanup](examples/linux-linked-storage.md) also passed selected PC checks. Controlled ingredient-disconnect checks passed. Grindstone's initial output rejection remains unresolved despite successful repeats; the older missing-plank/death observation remains in its original record. Other Linux catalog adapters remain incomplete. These results do not upgrade any catalog row to full qualification.
+The Linux Docker build passes locally and in CI and produces a real ELF `.so`. Exact local BDS/Endstone files are admitted for the public SDK. Stock-client forms, passive inventory observation, four shared inventory roles and eight opt-in original workstation contexts have [smoke evidence](examples/linux-native-workstations.md). Three nearby linked machines also have [processing, delivery and cleanup smoke evidence](examples/linux-linked-furnaces.md). Linked Ender Chest and barrel [transfers and cleanup](examples/linux-linked-storage.md) also passed selected PC checks. Controlled ingredient-disconnect checks passed. Grindstone's initial output rejection remains unresolved despite successful repeats; the older missing-plank/death observation remains in its original record. Five [linked utilities](examples/linux-linked-utilities.md) have selected gameplay evidence; beacon and crafter SDK closure failed. Other Linux catalog adapters remain incomplete. These results do not upgrade any catalog row to full qualification.
 
 | Entry | Family | Windows original/custom | Linux original/custom |
 |---|---|---|---|
 | `chest` | storage | Not qualified / not implemented | Blocked / not implemented |
 | `doublechest` | storage | Not qualified / not implemented | Blocked / not implemented |
 | `hopper` | storage | Not qualified / not implemented | Blocked / not implemented |
-| `dispenser` | storage | Not qualified / not implemented | Blocked / not implemented |
+| `dispenser` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/metadata/closure smoke passed / not implemented |
 | `barrel` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/metadata/cleanup smoke passed / not implemented |
-| `dropper` | storage | Not qualified / not implemented | Blocked / not implemented |
+| `dropper` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/closure smoke passed / not implemented |
 | `trappedchest` | storage | Not qualified / not implemented | Blocked / not implemented |
 | `enderchest` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/metadata/cleanup smoke passed / not implemented |
 | `shulker` | storage | Not qualified / not implemented | Blocked / not implemented |
@@ -28,9 +28,9 @@ The Linux Docker build passes locally and in CI and produces a real ELF `.so`. E
 | `furnace` | workstation | Not qualified / not implemented | Experimental nearby linked source, PC processing/delivery/closure smoke passed / not implemented |
 | `blastfurnace` | workstation | Not qualified / not implemented | Experimental nearby linked source, PC processing/delivery/closure smoke passed / not implemented |
 | `smoker` | workstation | Not qualified / not implemented | Experimental nearby linked source, PC processing/delivery/closure and permission-loss retention smoke passed / not implemented |
-| `brewing` | workstation | Not qualified / not implemented | Blocked / not implemented |
-| `beacon` | workstation | Not qualified / not implemented | Blocked / not implemented |
-| `crafter` | workstation | Not qualified / not implemented | Blocked / not implemented |
+| `brewing` | workstation | Not qualified / not implemented | Experimental nearby linked source, PC brewing/output/closure smoke passed / not implemented |
+| `beacon` | workstation | Not qualified / not implemented | Experimental nearby linked source, PC payment/effect smoke passed; SDK closure failed / not implemented |
+| `crafter` | workstation | Not qualified / not implemented | Experimental nearby linked source, PC toggles/redstone output smoke passed; SDK closure failed / not implemented |
 | `lectern` | contextual | Not qualified / not implemented | Blocked / not implemented |
 | `writtenbook` | contextual | Not qualified / not implemented | Blocked / not implemented |
 | `bookediting` | contextual | Not qualified / not implemented | Blocked / not implemented |

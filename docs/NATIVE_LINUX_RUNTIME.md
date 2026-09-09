@@ -214,3 +214,14 @@ three expected denials ended in zero sessions and clean shutdown. See the
 [SDK example and screenshots](examples/linux-linked-storage.md). This nearby
 linked path does not qualify source-free Ender access, custom storage or
 cross-save/crash recovery.
+
+## Experimental linked utilities
+
+The [utility ABI manifest](../research/native-evidence/linux-linked-utility-abi-126451.json)
+records five separate factory/model identities and the independently decoded
+Linux crafter control format. The [exact `961e9ec` run](../research/native-evidence/linux-961e9ec-utilities-smoke.json)
+passed selected dispenser/dropper transfers, brewing output, beacon payment
+and crafter toggles/redstone output. Beacon and crafter SDK closure failed and
+quarantined the tester; normal closure and reconnect recovery observations are
+recorded separately. See the [SDK example and screenshots](examples/linux-linked-utilities.md).
+No custom behavior or full-catalog qualification is implied.

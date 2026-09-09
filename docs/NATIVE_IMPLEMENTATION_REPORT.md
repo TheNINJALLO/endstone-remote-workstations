@@ -1,6 +1,6 @@
 # Native implementation checkpoint â€” incomplete
 
-The native source checkpoint is `1d88dfabe22a998e5da56287d8e35c23ffc1bc4f` on
+The native source checkpoint is `961e9ec1c12175703e7865a31926c406f813c30a` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
@@ -85,6 +85,15 @@ and [exact record](../research/native-evidence/linux-1d88dfa-storage-smoke.json)
 include nine actual screenshots. Source-free Ender access, custom storage,
 virtual vaults and save/crash recovery remain incomplete.
 
+The [exact `961e9ec` utility run](../research/native-evidence/linux-961e9ec-utilities-smoke.json)
+passed dispenser/dropper transfers, brewing three awkward potions, one-ingot
+beacon payment/Haste, persisted crafter edge toggles and a redstone-triggered
+one-log/four-plank recipe. **Beacon and crafter SDK closure failed**, triggering
+five-second disconnect quarantines. Reconnect returned the unused beacon ingot
+and retained crafter settings. Native closure passed. Ten opens ended in eight
+normal closes and two quarantines, plus one wrong-family refusal; zero sessions
+remained at clean shutdown. See the [screenshots and SDK example](examples/linux-linked-utilities.md).
+
 Live testing exposed and fixed two SDK issues: Linux cross-module player
 conversion now uses Endstone's virtual `asPlayer()` method, and a selected menu
 action completes the caller's original ticket instead of leaking a hidden
@@ -117,7 +126,7 @@ packaging checks do not upgrade native gameplay qualification.
 - Local Linux Docker build: **14/14 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `1d88dfa`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `961e9ec`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
@@ -129,13 +138,13 @@ packaging checks do not upgrade native gameplay qualification.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-1d88dfa.json`](../research/native-evidence/checkpoint-1d88dfa.json).
+[`checkpoint-961e9ec.json`](../research/native-evidence/checkpoint-961e9ec.json).
 Older checkpoints keep their original source and artifact identities.
 
-At `1d88dfa`, [native CI run 34316204487](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34316204487)
+At `961e9ec`, [native CI run 34318193943](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34318193943)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34316204523](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34316204523)
+refuses the incomplete catalog. [Legacy regression run 34318193972](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34318193972)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux workstation example](examples/linux-native-workstations.md).
 All three Linux CI plugin hashes match the locally tested exports. The Windows
@@ -148,7 +157,7 @@ proprietary BDS UI process.
 
 | Target | Export | SHA-256 |
 |---|---|---|
-| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `d94c988c4447a4f3e64293e9059c171d6b2854db99fc5578252c0a9ee75838ac` |
+| Linux x64 | `dist/linux-x64-dev/plugins/endstone_onistone_vcf.so` | `08acb14aaa315378e3089edaed0a2824d708b30f2c829e5fb882db76c78075d4` |
 | Windows x64 | `dist/windows-release/plugins/endstone_onistone_vcf.dll` | `07b037e42a832571448022fdea6385b2db08e0839a9e5b611965aeac500e3dfb` |
 
 Paths are relative to the native checkout. The loaded Linux shadow copy and
@@ -187,8 +196,9 @@ the frozen baseline and platform reports. **No custom native catalog entry is
 fully qualified.** Eleven Windows original-mode paths have experimental
 orchestration behind an opt-in flag. Eight Linux workstation contexts, four shared
 inventory roles, three nearby linked machines and two nearby linked storage entries
-have experimental original adapters; other Linux catalog
-adapters remain incomplete.
+have experimental original adapters. Five additional linked utilities have
+selected PC evidence, with beacon/crafter SDK-close failures unresolved. Other
+Linux catalog adapters remain incomplete.
 The current form is an SDK action demonstration; it is not a workstation.
 
 Required work still includes original and custom merchant, machine, map-printing,

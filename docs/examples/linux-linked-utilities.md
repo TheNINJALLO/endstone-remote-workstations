@@ -2,8 +2,11 @@
 
 The experimental Linux adapter accepts `dispenser`, `dropper`, `brewing`,
 `beacon` and `crafter` with `VCF_REAL_SOURCE`. Each has a separate fingerprinted
-factory and verified native model identity. Stock-client tests are pending.
-Windows admission and custom gameplay remain incomplete.
+factory and verified native model identity. The exact `961e9ec` PC run passed
+selected transfers, brewing, beacon payment and crafter output. **Beacon and
+crafter SDK closure failed**, causing the five-second disconnect quarantine;
+normal client closure passed. Windows admission and custom gameplay remain
+incomplete. This is experimental development evidence.
 
 Install the provider and native passthrough consumer with the
 [Linux setup](linux-native-workstations.md#install-and-open). Enable
@@ -12,11 +15,11 @@ BDS 1.26.45.1 fixture. Replace the following positions with your authorized
 existing blocks; retain the literal quotes:
 
 ```text
-/vcf_native dispenser "2,83,5"
-/vcf_native dropper "2,83,6"
-/vcf_native brewing "2,83,7"
-/vcf_native beacon "2,87,5"
-/vcf_native crafter "2,83,8"
+/vcf_native dispenser "4,91,3"
+/vcf_native dropper "4,91,4"
+/vcf_native brewing "4,91,5"
+/vcf_native beacon "2,91,5"
+/vcf_native crafter "4,91,6"
 /vcf_native close
 ```
 
@@ -44,3 +47,50 @@ records the five distinct factory hashes, caller branches and model RTTI.
 Hopper has a different context-creation path and is not admitted by these
 factories. An original view or successful packet send does not qualify custom
 transactions, recovery or the full catalog.
+
+## Actual PC observations
+
+The [exact run and artifact hashes](../../research/native-evidence/linux-961e9ec-utilities-smoke.json)
+record ten opens, eight normal closes, two failed SDK closes and one expected
+wrong-family refusal. All tickets retired and shutdown completed cleanly.
+The [build checkpoint](../../research/native-evidence/checkpoint-961e9ec.json)
+records identical local/CI Linux binaries,14 sanitizer tests and300,000 fuzz
+iterations; those tests do not qualify native gameplay.
+
+Dispenser retained a named Efficiency I pickaxe and three cooked beef across
+SDK closure. Dropper retained six stone and three ingots. Both supported
+ordinary and Shift-click withdrawals, exact player counts and native closure.
+Redstone dispensing/dropping was not tested.
+
+![Dispenser retained items](../images/native-linux-utilities/dispenser-retained.png)
+![Dropper retained first and last slots](../images/native-linux-utilities/dropper-retained.png)
+
+Brewing accepted three water bottles, one blaze powder and one nether wart.
+SDK closure during processing succeeded; reopening and withdrawing produced
+three awkward potions, including an ordinary-click output and Shift-click outputs.
+
+![Native awkward potion output](../images/native-linux-utilities/brewing-awkward.png)
+![Returned potion metadata](../images/native-linux-utilities/brewing-delivered-tooltip.png)
+
+The real beacon's one-level pyramid enabled Haste. Confirming consumed exactly
+one ingot and applied the corresponding HUD effect. Reopening retained the
+choice. SDK closure with an unused ingot failed; the quarantine disconnected
+the tester. Rejoin returned the unused ingot, restoring the expected two.
+This recovery observation does not turn the failed close into a pass.
+
+![Selected beacon choice and one-ingot payment](../images/native-linux-utilities/beacon-ready.png)
+![Payment consumed by native confirmation](../images/native-linux-utilities/beacon-confirmed.png)
+
+Crafter toggles for slots0 and8 persisted across reconnect. SDK closure failed
+and quarantined the tester. After reconnect, re-enabling slot0 and supplying
+one oak log displayed four planks. An actual adjacent redstone trigger consumed
+the log and delivered four planks through native world output/pickup. Native
+Escape closure passed. The temporary trigger was removed after verification.
+
+![Crafter settings retained after reconnect](../images/native-linux-utilities/crafter-retained.png)
+![One log previews four planks](../images/native-linux-utilities/crafter-recipe.png)
+![Actual trigger delivered four planks](../images/native-linux-utilities/crafter-triggered.png)
+
+These captures are from the stock client; they are not generated mockups.
+No private probe was installed during this recorded run. A separate diagnostic
+session investigates the failed beacon/crafter close handshake.

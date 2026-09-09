@@ -159,6 +159,12 @@ its real block inventory. The [linked-storage example](examples/linux-linked-sto
 documents actual transfers, metadata retention and cleanup. Source-free Ender
 access, virtual vaults, custom storage and Windows admission remain incomplete.
 
+Linux also admits explicit nearby `dispenser`, `dropper`, `brewing`, `beacon`
+and `crafter` sources. The [utility example](examples/linux-linked-utilities.md)
+records selected native behavior and two failed SDK-close tests. These original
+views do not implement custom processors or routing; Windows admission remains
+incomplete.
+
 The original-mode adapter rejects preloaded items, changed slot policies,
 recipe definitions, replacement titles and unrelated source descriptors. It
 never reports success while silently ignoring requested custom behavior.
