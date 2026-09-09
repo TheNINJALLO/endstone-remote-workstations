@@ -65,3 +65,10 @@ use the dependent-plugin descriptor or this example's explicit-source command.
 This example does not qualify custom processing, crash/save recovery, other
 devices or multiplayer. The [Linux ABI record](../../research/native-evidence/linux-linked-furnace-abi-126451.json)
 records the separate const source accessor and all three factory identities.
+
+The first `26528a7` PC run exposed an SDK-close failure: it sent container type
+None, the furnace stayed open and the five-second timeout quarantined the
+session. Rejoining retained all three smelted stones; ordinary-click extraction
+and native Escape closure passed. The close packet now carries the actual
+active container type. That fix requires its own PC cleanup and workstation
+regression checks before this path can be described as tested.

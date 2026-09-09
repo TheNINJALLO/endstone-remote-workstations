@@ -263,7 +263,10 @@ struct NativeUi::Impl {
    if(current.window!=v.window)v.superseded=true;
    else if(!current.ready){
     v.close_sent=true;
-    try{p->sendPacket(47,std::string{static_cast<char>(v.window),static_cast<char>(247),1});}catch(...){v.close_sent=false;throw;}
+    // ContainerClose carries the active container type. The old None value
+    // did not close a linked furnace: unlike projections, its real block
+    // stays present and cannot trigger client closure through restoration.
+    try{p->sendPacket(47,std::string{static_cast<char>(v.window),static_cast<char>(spec(v.kind)->type),1});}catch(...){v.close_sent=false;throw;}
    }
   }
   if(p)restore(*p,v);
