@@ -38,6 +38,15 @@ engine probe times out after 15 seconds with an explicit blocker. It does not
 enable a TCP daemon endpoint, install privileged services or change global
 virtualization settings. The build exports to `dist/linux-x64-dev`.
 
+Windows build/inspection/smoke helpers first materialize the closed native
+source list in an owned temporary directory. This avoids BuildKit's
+`invalid file request Dockerfile` error for OneDrive cloud reparse points.
+The staged files contain source bytes only, with no cloud link metadata;
+actual links and junctions are refused. Private runtime inputs, worlds,
+research captures and Git metadata are excluded. The temporary context is
+removed after use, and cleanup refuses paths outside its owned directory.
+Linux shell builds continue to use the repository's closed `.dockerignore`.
+
 The local authorized BDS 1.26.45.1 Linux archive and official Endstone 0.11.10
 Linux runtime wheel were staged outside the public checkout/build context.
 Archive paths were checked against traversal and symlinks; both ELF headers
