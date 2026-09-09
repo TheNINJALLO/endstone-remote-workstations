@@ -123,7 +123,7 @@ struct Bridge {
   const auto manager=memory.field<uintptr_t>(player,1368);
   return {player,manager==0&&depth<=1,window,manager};
  }
- uintptr_t source(endstone::Player& p,const Spec& layout,const Point& position)const{
+ uintptr_t source(endstone::Player& p,const Spec& layout,const Point& position,uintptr_t* region_out=nullptr)const{
   const auto native=inspect(p);Memory memory;
   memory.function(bedrock+0xabca640,bedrock,0xabca640,80,"6caf7e767cd5f86483dd3b2a5c2009c00150feea372680986d80aaf0827f0a54");
   // The independent Linux type-0 caller obtains the player's dimension
@@ -137,7 +137,34 @@ struct Bridge {
   auto actor=reinterpret_cast<uintptr_t(*)(const void*,const Point*)>(lookup)(reinterpret_cast<void*>(region),&position);
   require(actor,VCF_NOT_FOUND);memory.readable(actor,40);
   require(memory.field<Point>(actor,8)==position&&memory.field<uint8_t>(actor,20)==layout.source_type,VCF_CONFLICT);
-  return actor;
+  if(region_out)*region_out=region;return actor;
+ }
+ void sync_actor(endstone::Player& p,const Spec& layout,const Point& position)const{
+  const bool beacon=layout.id=="beacon";require(beacon||layout.id=="crafter",VCF_UNAVAILABLE);
+  const auto native=inspect(p);uintptr_t region=0;auto actor=source(p,layout,position,&region);Memory memory;
+  const auto table=memory.field<uintptr_t>(actor);
+  require(table==bedrock+(beacon?0xe754528:0xe759960),VCF_UNAVAILABLE);
+  const auto update=memory.field<uintptr_t>(table,19*8);
+  memory.function(update,bedrock,beacon?0xc61c2f0:0xc646d20,beacon?701:1016,
+   beacon?"939129607a0641dbb3d4c719a0bf0ad682676b7d083b83a146cc36e20df84e44":"ac0150b271bd1a60f2bc57fd1f7b83318d20a98b69eb9d7dbc2af9bd47b0e772");
+  const auto send=memory.field<uintptr_t>(memory.field<uintptr_t>(native.player),229*8);
+  memory.function(send,bedrock,0x98ec5e0,240,"03457063e4e4339a884125fc31203fad6ad9aa8fbc960c27b9b548e8823af16c");
+  const auto destroy=bedrock+0x8385400;
+  memory.function(destroy,bedrock,0x8385400,52,"64318a489c2f4d1c44e1fd81b185b8a1c9ef75122f782e9cacfea8aa3c7c2d7b");
+  // Independently compiled libc++ probe: unique_ptr<Packet> has an eight-byte
+  // hidden result in rdi, followed by actor in rsi and BlockSource in rdx.
+  uintptr_t packet=0;
+  reinterpret_cast<void(*)(uintptr_t*,void*,void*)>(update)(&packet,reinterpret_cast<void*>(actor),reinterpret_cast<void*>(region));
+  require(packet,VCF_UNAVAILABLE);Memory allocated;
+  const auto packet_table=allocated.field<uintptr_t>(packet);
+  // Do not destroy an unexpected native class with a guessed destructor.
+  require(packet_table==bedrock+0xe48f798&&allocated.field<uintptr_t>(packet_table,8)==destroy,VCF_UNAVAILABLE);
+  auto release=[&]{reinterpret_cast<void(*)(void*)>(destroy)(reinterpret_cast<void*>(packet));};
+  try{
+   allocated.readable(packet,104);require(allocated.field<Point>(packet,48)==position,VCF_CONFLICT);
+   reinterpret_cast<void(*)(const void*,void*)>(send)(reinterpret_cast<const void*>(native.player),reinterpret_cast<void*>(packet));
+  }catch(...){release();throw;}
+  release();
  }
  uint8_t open(endstone::Player& p)const{
   auto state=inspect(p);require(state.ready,VCF_CONFLICT);
@@ -242,7 +269,7 @@ struct Reader {
 struct NativeUi::Impl {
  struct View{vcf_handle owner,id;std::string player,kind,dimension,permission;uint32_t nonce;int window=-1;
   bool prepared=false,ack=false,activating=false,observed=false,active=false,closing=false,close_seen=false,superseded=false;
-  bool projected=false,projecting=false,restored=false,attempted=false,close_sent=false,close_projection=false;
+  bool projected=false,projecting=false,restored=false,attempted=false,close_sent=false,close_projection=false,syncing_actor=false,actor_seen=false;
   uintptr_t source_actor=0;
   Point position{};
   Clock::time_point queued=Clock::now(),next_check{},closed{};};
@@ -275,13 +302,22 @@ struct NativeUi::Impl {
   if(v.window>=1&&v.window<=99){auto now=milliseconds();close_leases.retire(v.player,static_cast<uint8_t>(v.window),now+60000,now);}
   try{engine.retired(v.owner,v.id,result);}catch(const Error&) {}
  }
+ void sync_actor(endstone::Player& p,View& v){
+  if(v.kind!="beacon"&&v.kind!="crafter")return;
+  v.syncing_actor=true;v.actor_seen=false;
+  try{bridge.sync_actor(p,*spec(v.kind),v.position);}catch(...){v.syncing_actor=false;throw;}
+  v.syncing_actor=false;require(v.actor_seen&&!v.superseded,VCF_UNAVAILABLE);
+ }
  void restore(endstone::Player& p,View& v){
   if(v.restored)return;
   if(v.projected&&p.getDimension().getName()==v.dimension){
-   auto data=p.getDimension().getBlockAt(v.position.x,v.position.y,v.position.z)->getData();
+   auto block=p.getDimension().getBlockAt(v.position.x,v.position.y,v.position.z);auto data=block->getData();
    v.projecting=true;
    try{p.sendPacket(21,block_update(v.position,data->getRuntimeId()));}catch(...){v.projecting=false;throw;}
    v.projecting=false;
+   // Air invalidation also removes the client's block entity. Restore the
+   // real native update, including beacon choices and crafter slot state.
+   if(v.close_projection&&!v.superseded&&block->getType()==spec(v.kind)->block)sync_actor(p,v);
   }
   v.restored=true;
  }
@@ -342,7 +378,7 @@ struct NativeUi::Impl {
     try{p->sendPacket(21,block_update(v.position,data->getRuntimeId()));}catch(...){v.projecting=false;throw;}
     v.projecting=false;
    }else v.restored=true;
-   v.prepared=true;p->sendPacket(115,ping(v.nonce));return false;
+   sync_actor(*p,v);v.prepared=true;p->sendPacket(115,ping(v.nonce));return false;
   }
   if(!v.active){
    require(now-v.queued<std::chrono::seconds(10),VCF_UNAVAILABLE);
@@ -469,6 +505,8 @@ void NativeUi::sent(endstone::PacketSendEvent&e){
   try{
    if(e.getPacketId()==46){Reader r{e.getPayload()};auto window=r.byte(),type=r.byte();auto position=r.point();r.var(64);require(r.offset==r.data.size());
     if(v.activating&&!v.observed&&type==spec(v.kind)->type&&window>=1&&window<=99&&(spec(v.kind)->block.empty()||position==v.position)){v.window=window;v.observed=true;}else v.superseded=true;
+   }else if(e.getPacketId()==56&&v.syncing_actor){
+    Reader r{e.getPayload()};v.actor_seen=!e.isCancelled()&&r.point()==v.position&&r.offset<r.data.size();
    }else if(e.getPacketId()==100)v.superseded=true;
    else if(e.getPacketId()==47&&e.getPayload().size()==3&&static_cast<uint8_t>(e.getPayload()[0])==v.window)v.close_seen=true;
    else if(e.getPacketId()==21&&v.projected&&!v.projecting&&v.prepared){

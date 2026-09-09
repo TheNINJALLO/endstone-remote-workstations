@@ -103,5 +103,15 @@ flags. A temporary client-only air update at the owned source caused beacon
 and crafter to emit native closure; both real server blocks remained intact.
 The adapter now uses that path for these two screens, waits for native readiness,
 then restores the current world appearance. Foreign opens or block updates
-relinquish its visual ownership. The private probe has been removed; tests of
-this correction with only the public plugins are still pending.
+relinquish its visual ownership. The private probe has been removed.
+
+The [public-plugin test of revision 2c9995e](../../research/native-evidence/linux-2c9995e-close-smoke.json)
+closed a beacon and returned one unused payment without disconnecting. Reopening
+exposed a regression: payment transfers became unresponsive. This does not
+qualify the complete close and restore lifecycle.
+
+The next correction restores native block-entity data as well as block type,
+and synchronizes it before opening. Its [independently derived Linux ABI record](../../research/native-evidence/linux-block-actor-update-abi-126451.json)
+identifies the beacon/crafter packet generators, native sender and deleting
+destructor. The 14 native build tests pass; stock-client repeat-open tests of
+this correction remain pending.

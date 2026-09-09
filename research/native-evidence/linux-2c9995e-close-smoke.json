@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-smoke-with-restoration-regression",
+  "source_revision": "2c9995e01003b2f229cd11ebc7358f0bff1bcf9e",
+  "platform": "linux-x64",
+  "artifact_sha256": "d184283b91d4da84c78a9068feb2c33fbf6932b2c9c7368068d5114424dd9458",
+  "private_probe_installed": false,
+  "all_ui_acceptance": "not-qualified",
+  "observations": {
+    "sdk_close": "First beacon view contained exactly one unused ingot. SDK closure completed without disconnect and returned the payment; player count restored two, opens1/closes1/failures0/tickets0.",
+    "repeat_open_regression": "Second beacon opened but the attempted ordinary-click payment deposit was not visibly populated. De-op closed it with one expected denial, player still had two ingots, and operator status was restored. A third open rejected observed ordinary pickup and Shift-click payment attempts; read-only count stayed two. Do not claim payment-return qualification for those repeat views. Native Escape closed the third view.",
+    "interpretation": "Working hypothesis: client-only air teardown removed block-entity data, making block-type-only restoration insufficient. Real native block-entity synchronization is the next investigated correction. This run does not qualify the complete close/restore lifecycle."
+  },
+  "counters": {
+    "opens": 3,
+    "closes": 2,
+    "failures": 1,
+    "expected_permission_denials": 1,
+    "guard_checks": 876,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0
+  },
+  "clean_stop_utc": "2026-09-09T07:27:42Z",
+  "ci": {
+    "run": 34323138991,
+    "linux_windows_debug_windows_release_sanitizers": "passed",
+    "full_scope_acceptance": "failed",
+    "legacy_run": 34323139025,
+    "legacy": "passed",
+    "local_linux_artifacts_identical_to_ci": true,
+    "sanitizer_tests": 14,
+    "fuzz_runs": 300000
+  },
+  "native_sync_abi": "research/native-evidence/linux-block-actor-update-abi-126451.json"
+}

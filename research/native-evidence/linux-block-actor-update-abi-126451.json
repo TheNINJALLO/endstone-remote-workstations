@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "kind": "linux-block-actor-update-abi-research-not-ui-qualification",
+  "module_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "compiler": "Clang20.1.8/libc++20, Linux x86_64 System V",
+  "sdk_commit": "8f84d6f5b556916597ed5b6b71329b2ed3ca8fc8",
+  "header_probe": {
+    "sha256": "e3444bfdc9b62c45b5116983c5fe47a2b7341a6bb4a216595d662a5de31c2b60",
+    "llvm_ir_sha256": "abe35db100bd3cd042d15f9b061ea20e0506399b36138f6cbac3d92453a9f06e",
+    "headers": {
+      "src/bedrock/world/actor/player/player.h": "8dc88c1eadaaffd6ef433f66279fb1279eefaadc3156854350e9bde2529abac9",
+      "src/bedrock/network/packet.h": "70d4f4febeb64c650aab3e7fc96c5ae087fc3c240ae037358061018c0f23e8d7",
+      "src/bedrock/world/level/block/actor/block_actor.h": "97a0e2e3d2b8e6fc78459a4891347d526c112922a844354f96ca86501b5d315b"
+    },
+    "result": "unique_ptr<Packet>8 bytes; Packet48 bytes; BlockActor40 bytes; hidden unique_ptr result in rdi, actor rsi and BlockSource rdx. Player::sendNetworkPacket(Packet&) const dispatch byte1832/slot229. delete Packet* uses Itanium deleting destructor slot1, no Windows deletion flag.",
+    "limit": "BlockActor header declares its prefix, not the complete private update virtual interface. Generator slot19 is independently identified from exact ELF RTTI and packet-construction code; the compile-only extern target probes return ABI, not a claimed header declaration."
+  },
+  "actor_generators": [
+    {
+      "type": "16BeaconBlockActor",
+      "vtable": "0xe754528",
+      "function": {
+        "slot": 19,
+        "rva": "0xc61c2f0",
+        "size": 701,
+        "sha256": "939129607a0641dbb3d4c719a0bf0ad682676b7d083b83a146cc36e20df84e44"
+      }
+    },
+    {
+      "type": "17CrafterBlockActor",
+      "vtable": "0xe759960",
+      "function": {
+        "slot": 19,
+        "rva": "0xc646d20",
+        "size": 1016,
+        "sha256": "ac0150b271bd1a60f2bc57fd1f7b83318d20a98b69eb9d7dbc2af9bd47b0e772"
+      }
+    }
+  ],
+  "packet": {
+    "rtti": "20BlockActorDataPacket",
+    "vtable_rva": "0xe48f798",
+    "native_allocation_size": 104,
+    "position_offset": 48,
+    "deleting_destructor": {
+      "slot": 1,
+      "rva": "0x8385400",
+      "size": 52,
+      "sha256": "64318a489c2f4d1c44e1fd81b185b8a1c9ef75122f782e9cacfea8aa3c7c2d7b"
+    },
+    "id_function": {
+      "slot": 2,
+      "rva": "0x833ef40",
+      "size": 6,
+      "sha256": "ec98abb27e45150addcd26549b7971b312b0098e9d9fc3131750bf704f4ab071"
+    }
+  },
+  "sender": {
+    "rva": "0x98ec5e0",
+    "size": 240,
+    "sha256": "03457063e4e4339a884125fc31203fad6ad9aa8fbc960c27b9b548e8823af16c",
+    "player_vtable_slot": 229,
+    "player_vtable_byte_offset": 1832
+  },
+  "native_evidence": "Beacon generator retains output address from rdi in rbx and actor from rsi in r12; constructs e48f798 packet, copies actor position+8 to packet+48, stores packet through output at c61c53f. Crafter retains output r14 and actor r15, constructs same packet, copies position and stores result at c647085. Both use native serializers for data. Their third region argument is unused in the observed bodies.",
+  "admission": "Fingerprint complete generator/sender/deleting-destructor functions and actual actor/packet vtables; validate resulting packet position. Borrow packet for native send, then invoke the verified native deleting destructor on success or exception. Never apply that destructor to an unexpected class. Observe uncancelled matching packet56 before continuing. No plugin-authored block NBT or server block mutation.",
+  "motivation": "2c9995e SDK air invalidation closed beacon but block-state-only restoration left repeat-open item interaction nonresponsive. Synchronize real block-entity state before opening and after visual cleanup. Runtime tests remain pending."
+}
