@@ -3,10 +3,11 @@
 The experimental Linux adapter accepts `dispenser`, `dropper`, `brewing`,
 `beacon` and `crafter` with `VCF_REAL_SOURCE`. Each has a separate fingerprinted
 factory and verified native model identity. The exact `961e9ec` PC run passed
-selected transfers, brewing, beacon payment and crafter output. **Beacon and
-crafter SDK closure failed**, causing the five-second disconnect quarantine;
-normal client closure passed. Windows admission and custom gameplay remain
-incomplete. This is experimental development evidence.
+selected transfers, brewing, beacon payment and crafter output. Its beacon and
+crafter SDK closes failed. The later `d6adf87` build passed repeated SDK close,
+selected payment return, retained slot settings and named/enchantment metadata.
+Initial unaccepted input attempts remain recorded below. Windows admission and
+custom gameplay remain incomplete. This is experimental development evidence.
 
 Install the provider and native passthrough consumer with the
 [Linux setup](linux-native-workstations.md#install-and-open). Enable
@@ -95,7 +96,7 @@ These captures are from the stock client; they are not generated mockups.
 No private probe was installed during this recorded run. A separate diagnostic
 session investigates the failed beacon/crafter close handshake.
 
-## Close-handshake correction under test
+## Close and restore test history
 
 The [separate protocol investigation](../../research/native-evidence/linux-beacon-crafter-close-diagnostic.json)
 confirmed that packet-only beacon closure was ignored with both tested server
@@ -110,8 +111,29 @@ closed a beacon and returned one unused payment without disconnecting. Reopening
 exposed a regression: payment transfers became unresponsive. This does not
 qualify the complete close and restore lifecycle.
 
-The next correction restores native block-entity data as well as block type,
+Revision `d6adf87` restores native block-entity data as well as block type,
 and synchronizes it before opening. Its [independently derived Linux ABI record](../../research/native-evidence/linux-block-actor-update-abi-126451.json)
 identifies the beacon/crafter packet generators, native sender and deleting
-destructor. The 14 native build tests pass; stock-client repeat-open tests of
-this correction remain pending.
+destructor. The [exact stock-client run](../../research/native-evidence/linux-d6adf87-close-smoke.json)
+passed two beacon SDK closes with unused payment return, permission-loss return,
+and repeat opening with Haste retained. It passed two crafter SDK closes,
+retained disabled first/last slots and a named Efficiency I pickaxe, ordinary
+withdrawal with metadata preserved, and repeat opening with re-enabled controls.
+Empty crafter source removal produced the expected denial. Three empty utility
+regressions and the SDK form callback passed. Nine opens ended in seven normal
+closes, two expected denials and zero sessions, followed by clean shutdown.
+
+![Unused payment in a reopened beacon](../images/native-linux-close/beacon-repeat-payment.png)
+![Shift-click payment on the third opening](../images/native-linux-close/beacon-third-shift.png)
+![Crafter retained its item and disabled edge slots](../images/native-linux-close/crafter-retained.png)
+![Withdrawn pickaxe retained its name and enchantment](../images/native-linux-close/crafter-returned-metadata.png)
+![Re-enabled controls retained on the third opening](../images/native-linux-close/crafter-restored-controls.png)
+
+The first beacon deposit sequence on repeat opening did not populate payment;
+visually confirming the cursor stack before the next deposit succeeded. One
+crafter Shift-click withdrawal had no effect; ordinary withdrawal succeeded.
+Their causes are not established. The selected successful transfers do not
+qualify every input path. No custom transaction or crash/save recovery is
+claimed. All three Linux CI binaries match the locally tested exports; 14 native
+and sanitizer tests and 300,000 fuzz inputs pass. Windows DLLs have build checks
+but no stock-client qualification for this change.

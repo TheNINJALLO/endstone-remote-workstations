@@ -1,6 +1,6 @@
 # Native implementation checkpoint â€” incomplete
 
-The native source checkpoint is `961e9ec1c12175703e7865a31926c406f813c30a` on
+The native source checkpoint is `d6adf8738e6a7156b5f6b41f6b2b60fe362ea277` on
 `feature/native-virtual-container-framework`. **The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
@@ -94,6 +94,19 @@ and retained crafter settings. Native closure passed. Ten opens ended in eight
 normal closes and two quarantines, plus one wrong-family refusal; zero sessions
 remained at clean shutdown. See the [screenshots and SDK example](examples/linux-linked-utilities.md).
 
+The later [exact `d6adf87` close/restore run](../research/native-evidence/linux-d6adf87-close-smoke.json)
+used only the three public plugins. Beacon returned unused payments on two SDK
+closes and on intentional permission loss; repeat opens retained Haste and
+accepted payment input. Crafter retained disabled edge slots and an enchanted,
+named pickaxe across SDK closure. Ordinary withdrawal returned its metadata;
+a second close and third opening retained re-enabled controls. Removing the
+verified-empty source closed with the expected denial. Empty dispenser, dropper
+and brewing close regressions and the form callback passed. Nine opens ended in
+seven normal closes and two expected denials, zero tickets and clean shutdown.
+One crafter Shift-click attempt had no effect, and an initial beacon sequence
+needed cursor-state inspection before successful deposit. These observations
+remain limitations; this run does not qualify every input path or custom mode.
+
 Live testing exposed and fixed two SDK issues: Linux cross-module player
 conversion now uses Endstone's virtual `asPlayer()` method, and a selected menu
 action completes the caller's original ticket instead of leaking a hidden
@@ -126,7 +139,7 @@ packaging checks do not upgrade native gameplay qualification.
 - Local Linux Docker build: **14/14 CTest jobs passed**, ELF, SDK and consumers
   exported. The extra Linux test covers loaded-file hashes, replaced inodes,
   unknown runtimes and retained callback code after `dlclose`.
-- Linux ASan/UBSan at `961e9ec`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
+- Linux ASan/UBSan at `d6adf87`: its CI job passed **14/14 tests** and 100,000 libFuzzer inputs each for NBT,
   storage and item-wire parsing, **300,000 total**.
 - Model checks: 50,181 core, 10,309 storage, 21,813 item-wire checks; 5,000
   menu/select/forget cycles, duplicate selection, revoked permission, pending
@@ -138,13 +151,13 @@ packaging checks do not upgrade native gameplay qualification.
   unqualified; working SDK smoke tests cannot override this gate.
 
 Build logs, module hashes and exact dependency evidence are indexed in
-[`checkpoint-961e9ec.json`](../research/native-evidence/checkpoint-961e9ec.json).
+[`checkpoint-d6adf87.json`](../research/native-evidence/checkpoint-d6adf87.json).
 Older checkpoints keep their original source and artifact identities.
 
-At `961e9ec`, [native CI run 34318193943](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34318193943)
+At `d6adf87`, [native CI run 34326591005](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34326591005)
 passed Linux Docker, Windows Debug/Release and Linux sanitizer jobs. Its overall
 result is **failure** because the separate full-scope acceptance gate correctly
-refuses the incomplete catalog. [Legacy regression run 34318193972](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34318193972)
+refuses the incomplete catalog. [Legacy regression run 34326591057](https://github.com/TheNINJALLO/endstone-remote-workstations/actions/runs/34326591057)
 passed on both Windows and Linux. Current local client observations and
 screenshots are in the [Linux workstation example](examples/linux-native-workstations.md).
 All three Linux CI plugin hashes match the locally tested exports. The Windows
@@ -197,7 +210,8 @@ fully qualified.** Eleven Windows original-mode paths have experimental
 orchestration behind an opt-in flag. Eight Linux workstation contexts, four shared
 inventory roles, three nearby linked machines and two nearby linked storage entries
 have experimental original adapters. Five additional linked utilities have
-selected PC evidence, with beacon/crafter SDK-close failures unresolved. Other
+selected PC evidence, including later repeated beacon/crafter SDK closure and
+item/control restoration. Initial unaccepted input attempts remain recorded. Other
 Linux catalog adapters remain incomplete.
 The current form is an SDK action demonstration; it is not a workstation.
 

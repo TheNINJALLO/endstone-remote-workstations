@@ -161,7 +161,9 @@ access, virtual vaults, custom storage and Windows admission remain incomplete.
 
 Linux also admits explicit nearby `dispenser`, `dropper`, `brewing`, `beacon`
 and `crafter` sources. The [utility example](examples/linux-linked-utilities.md)
-records selected native behavior and two failed SDK-close tests. These original
+records selected native behavior, the initial SDK-close failures, and later
+repeated close/item/control restoration passes in `d6adf87`. Initial unaccepted
+input attempts remain documented. These original
 views do not implement custom processors or routing; Windows admission remains
 incomplete.
 

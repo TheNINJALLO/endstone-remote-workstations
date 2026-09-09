@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "kind": "native-runtime-stock-client-selected-close-smoke",
+  "all_ui_acceptance": "not-qualified",
+  "source_revision": "d6adf8738e6a7156b5f6b41f6b2b60fe362ea277",
+  "platform": "linux-x64",
+  "artifact_sha256": "d9f832be1fc67e6b0cfc148f1382f656218d61fc78e8fb3ed26e0554792a8464",
+  "native_source_sha256": "97fc0e965dac346819b02aeb0ed68853126692b589c30b820669a78d7cbbfc3b",
+  "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+  "runtime_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+  "started_utc": "2026-09-09T08:00:05Z",
+  "clean_stop_utc": "2026-09-09T08:17:00Z",
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse"
+  },
+  "loaded_shadow_copies_match_exports": true,
+  "one_bundled_libcxx_family": true,
+  "private_probe_installed": false,
+  "observations": {
+    "beacon_sdk_close": "Three openings of the same real beacon retained the previously configured Haste choice. On the first opening, ordinary pickup/right-click deposited exactly one unused ingot, returning the remaining cursor ingot to inventory. SDK closure completed without disconnect, returning the payment; read-only player count two. On the third opening, Shift-click routed one ingot into payment; SDK closure again returned it, count two.",
+    "beacon_permission": "On the second opening, the initial pickup/deposit sequence did not populate the payment. Inspection later confirmed two ingots on the cursor. From that visually confirmed state, right-click deposited one and ordinary-click returned the remainder. Screenshot confirmed one payment and one inventory ingot, with no cursor item. Intentional de-op closed with one expected denial and returned the payment; read-only count two. Operator status was restored and the third opening succeeded.",
+    "crafter_retention": "Disabled empty slots0 and8, then ordinary-click deposited the named Efficiency I wooden pickaxe into slot4. SDK closure completed without disconnect. Player inventory contained the other two pickaxes. Reopening retained both disabled edge slots and the middle pickaxe.",
+    "crafter_withdrawal": "One Shift-click withdrawal attempt left the pickaxe in the crafter; cause not established. Ordinary-click pickup then showed the pickaxe on the cursor, and ordinary placement returned it to its original hotbar slot. Tooltip retained the name VCF Enchanted Pickaxe and Efficiency I; read-only total pickaxe count three. Re-enabled edge slots, SDK-closed a second time, then reopened empty with both settings retained.",
+    "crafter_source_loss": "After visually confirming the third crafter view was empty and both edge slots enabled, removed only the exact test source. The session closed with one expected denial and no outstanding ticket. Recreated the fixture with keep in the resulting air.",
+    "regressions": "One empty dispenser, one empty dropper and one empty brewing stand opened and SDK-closed. Brewing retained its prior native fuel charge. No processing or output was repeated in these three regression views. One independent SDK form callback completed with zero form tickets.",
+    "sync_contract": "The two admitted native generator functions, sender and deleting destructor executed without ABI refusal or process crash. The adapter requires observation of an uncancelled position-matching BlockActorData packet before continuing. Item and control observations establish selected PC behavior, not arbitrary block NBT or all input profiles."
+  },
+  "sdk_counters": {
+    "opens": 9,
+    "closes": 7,
+    "failure_callbacks": 2,
+    "sdk_close_quarantines": 0,
+    "expected_denial_failures": 2,
+    "guard_checks": 2669,
+    "outstanding_tickets": 0,
+    "provider_sessions": 0,
+    "form_callbacks": 1,
+    "form_outstanding_tickets": 0
+  },
+  "counter_limit": "Three beacon and three crafter opens plus one each dispenser/dropper/brewing. Seven normal SDK closes, one intentional permission-loss denial and one empty-source-removal denial. No disconnect quarantine occurred.",
+  "setup_observations": "No items were supplied or consumed during this run. The existing test crafter alone was removed after confirmed empty and recreated. All read-only clear commands specified maxCount0. One capture containing an unrelated notification was excluded. Cursor inspection, rather than repeated blind input, established successful transfers. Operator status was restored before subsequent tests and clean shutdown.",
+  "not_qualified": [
+    "The observed unaccepted crafter Shift-click and initially unpopulated beacon input sequence",
+    "All adversarial source/permission/window races and dimensions",
+    "Custom storage policies, brewing recipes, beacon effects and crafter routing",
+    "Source configuration aliases and unrestricted remote distance",
+    "Cross-save/crash and death/drop recovery",
+    "All metadata/input profiles",
+    "Windows stock-client qualification",
+    "Other devices and multiplayer",
+    "Exact Onistone runtime admission",
+    "Full catalog/custom framework"
+  ],
+  "earlier_anomalies": "The 961e9ec SDK quarantines and 2c9995e repeat-open observations retain separate records. This later selected pass does not establish the cause of every earlier rejected click or resolve ca30255 grindstone/171e0aa missing-plank observations.",
+  "screenshots": {
+    "beacon-unused": {
+      "path": "docs/images/native-linux-close/beacon-unused.png",
+      "sha256": "ae9e9086ce2270f4720e4de314ba33af098f41a08600f715dcb3e6ebadf89b19",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "beacon-repeat-payment": {
+      "path": "docs/images/native-linux-close/beacon-repeat-payment.png",
+      "sha256": "c3c6eac6757a11c67d8b09f1677672b96b642101ac924c552842ba83e8b1c689",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "beacon-third-shift": {
+      "path": "docs/images/native-linux-close/beacon-third-shift.png",
+      "sha256": "4460d0edf1dad3c8a5fe04ab1a71c6619e6b7c09fc962da041f5c54563840cd5",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "crafter-deposit-metadata": {
+      "path": "docs/images/native-linux-close/crafter-deposit-metadata.png",
+      "sha256": "37de9d259b24b8c5816e47ecfa6331f203bc0976a9464a542ab635cd6dbbf067",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "crafter-retained": {
+      "path": "docs/images/native-linux-close/crafter-retained.png",
+      "sha256": "3a4dc4d02be64da8d5a461ae9e15739a19f1205556744d5a4b4a757a344cd0a8",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "crafter-returned-metadata": {
+      "path": "docs/images/native-linux-close/crafter-returned-metadata.png",
+      "sha256": "7f31b1cad4f46a9e112a685397327e5504959921532e2e35cf60a839efb55ed5",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    },
+    "crafter-restored-controls": {
+      "path": "docs/images/native-linux-close/crafter-restored-controls.png",
+      "sha256": "ae99d8903b6537080cd0c627b2367c238fb2d830dfffa756c542c88ca1852551",
+      "reviewed_for_unrelated_notifications_and_account_data": true
+    }
+  },
+  "counter_report": {
+    "path": "research/native-evidence/linux-d6adf87-close-counters.txt",
+    "sha256": "a44b472a57534fb5a312751988c3cf0217d0272ed602552c22096137044f141a"
+  },
+  "abi_manifest": "research/native-evidence/linux-block-actor-update-abi-126451.json"
+}

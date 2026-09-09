@@ -9,7 +9,7 @@
     "protocol": 2169,
     "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
     "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
-    "artifact_sha256": "08acb14aaa315378e3089edaed0a2824d708b30f2c829e5fb882db76c78075d4"
+    "artifact_sha256": "d9f832be1fc67e6b0cfc148f1382f656218d61fc78e8fb3ed26e0554792a8464"
   },
   "build": "tested-in-local-linux-docker",
   "native_loader_smoke": "passed",
@@ -2673,13 +2673,13 @@
             "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "failed",
-            "restoration": "untested",
+            "closing": "passed",
+            "restoration": "passed",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Selected PC native behavior has evidence; custom policies, active-source adversarial lifecycle and crash/save recovery remain incomplete. SDK closure failed and quarantined the tester; native closure passed.",
-          "smoke_record": "research/native-evidence/linux-961e9ec-utilities-smoke.json"
+          "blocker": "Selected PC SDK close and control/item restoration passed; initial unaccepted input attempts, custom policies, adversarial lifecycle and crash/save recovery remain incomplete.",
+          "smoke_record": "research/native-evidence/linux-d6adf87-close-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -2798,13 +2798,13 @@
             "input": "passed",
             "custom_behavior": "untested",
             "transaction_callback": "untested",
-            "closing": "failed",
-            "restoration": "untested",
+            "closing": "passed",
+            "restoration": "passed",
             "persistence": "untested",
             "crash_recovery": "untested"
           },
-          "blocker": "Selected PC native behavior has evidence; custom policies, active-source adversarial lifecycle and crash/save recovery remain incomplete. SDK closure failed and quarantined the tester; native closure passed.",
-          "smoke_record": "research/native-evidence/linux-961e9ec-utilities-smoke.json"
+          "blocker": "Selected PC SDK close and control/item restoration passed; initial unaccepted input attempts, custom policies, adversarial lifecycle and crash/save recovery remain incomplete.",
+          "smoke_record": "research/native-evidence/linux-d6adf87-close-smoke.json"
         },
         "transient-virtual": {
           "adapter": "not-implemented",
@@ -8523,10 +8523,10 @@
     }
   },
   "build_evidence": {
-    "source_revision": "961e9ec1c12175703e7865a31926c406f813c30a",
+    "source_revision": "d6adf8738e6a7156b5f6b41f6b2b60fe362ea277",
     "host": "Windows Docker Desktop 4.90.0 / WSL 2, pinned linux/amd64 Clang 20.1.8 image",
     "native_tests": "14/14 CTest locally/CI including copied source descriptors and SDK relocation; ASan/UBSan and300000 fuzz inputs passed.",
-    "elf_report": "linux-961e9ec-elf-report.txt",
+    "elf_report": "linux-d6adf87-elf-report.txt",
     "direct_glibc_symbol_maximum": "GLIBC_2.34",
     "direct_libraries": [
       "libcrypto.so.3",
@@ -8537,23 +8537,23 @@
       "libgcc_s.so.1",
       "libc.so.6"
     ],
-    "runtime_restriction": "Exact opt-in Linux original adapter has22 entry paths. Utility PC tests passed selected transfers/processing/control; beacon and crafter SDK closure failed. Each smoke identifies its own artifacts; custom/full qualification remains incomplete."
+    "runtime_restriction": "Exact opt-in Linux original adapter has22 entry paths. Beacon/crafter repeated SDK-close, selected return/retention and control restoration passed. Initial unaccepted inputs remain recorded. Each smoke identifies its own artifacts; custom/full qualification remains incomplete."
   },
   "sdk_version": "1.1; ABI 1.0 prefix retained",
   "sanitizers": {
-    "source_revision": "961e9ec1c12175703e7865a31926c406f813c30a",
+    "source_revision": "d6adf8738e6a7156b5f6b41f6b2b60fe362ea277",
     "asan": "passed",
     "ubsan": "passed",
     "nbt_fuzz_inputs": 100000,
     "storage_fuzz_inputs": 100000,
     "items_fuzz_inputs": 100000,
-    "test_report": "linux-961e9ec-sanitizer-tests.txt",
-    "nbt_report": "linux-961e9ec-fuzz-nbt.txt",
-    "storage_report": "linux-961e9ec-fuzz-storage.txt",
-    "items_report": "linux-961e9ec-fuzz-items.txt"
+    "test_report": "linux-d6adf87-sanitizer-tests.txt",
+    "nbt_report": "linux-d6adf87-fuzz-nbt.txt",
+    "storage_report": "linux-d6adf87-fuzz-storage.txt",
+    "items_report": "linux-d6adf87-fuzz-items.txt"
   },
   "native_tests": {
-    "source_revision": "961e9ec1c12175703e7865a31926c406f813c30a",
+    "source_revision": "d6adf8738e6a7156b5f6b41f6b2b60fe362ea277",
     "ctest": "14/14 passed locally and CI",
     "sanitizers": "14/14 passed; proprietary BDS UI execution not instrumented.",
     "fuzz_inputs": {
@@ -8577,5 +8577,6 @@
   "native_enchanting_smoke": "research/native-evidence/linux-e0dbb78-enchanting-smoke.json",
   "native_linked_furnace_smoke": "research/native-evidence/linux-7a938e5-furnace-smoke.json",
   "native_linked_storage_smoke": "research/native-evidence/linux-1d88dfa-storage-smoke.json",
-  "native_linked_utility_smoke": "research/native-evidence/linux-961e9ec-utilities-smoke.json"
+  "native_linked_utility_smoke": "research/native-evidence/linux-961e9ec-utilities-smoke.json",
+  "native_block_actor_close_smoke": "research/native-evidence/linux-d6adf87-close-smoke.json"
 }

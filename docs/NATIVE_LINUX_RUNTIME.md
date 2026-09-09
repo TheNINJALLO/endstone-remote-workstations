@@ -225,3 +225,16 @@ and crafter toggles/redstone output. Beacon and crafter SDK closure failed and
 quarantined the tester; normal closure and reconnect recovery observations are
 recorded separately. See the [SDK example and screenshots](examples/linux-linked-utilities.md).
 No custom behavior or full-catalog qualification is implied.
+
+The later [exact `d6adf87` close/restore run](../research/native-evidence/linux-d6adf87-close-smoke.json)
+used only the three public plugins. Beacon returned unused payments on two SDK
+closes and on intentional permission loss; repeat opens retained Haste and
+accepted payment input. Crafter retained disabled edge slots and an enchanted,
+named pickaxe across SDK closure. Ordinary withdrawal returned its metadata;
+a second close and third opening retained re-enabled controls. Removing the
+verified-empty source closed with the expected denial. Empty dispenser, dropper
+and brewing close regressions and the form callback passed. Nine opens ended in
+seven normal closes and two expected denials, zero tickets and clean shutdown.
+One crafter Shift-click attempt had no effect, and an initial beacon sequence
+needed cursor-state inspection before successful deposit. These observations
+remain limitations; this run does not qualify every input path or custom mode.

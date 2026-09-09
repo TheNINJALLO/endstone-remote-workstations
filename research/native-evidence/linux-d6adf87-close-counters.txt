@@ -1,0 +1,25 @@
+[08:02:55 INFO]: Queued closure of 1 owned SDK tickets.
+[08:02:59 INFO]: <test-player> has 2 items that match the criteria
+[08:03:00 INFO]: Original-mode SDK example: opens 1, closes 1, failures 0, guard checks 256, outstanding tickets 0
+[08:04:26 INFO]: Original-mode SDK example: opens 2, closes 1, failures 0, guard checks 510, outstanding tickets 1
+[08:04:26 INFO]: <test-player> has 2 items that match the criteria
+[08:05:59 INFO]: <test-player> has 2 items that match the criteria
+[08:07:41 INFO]: Queued closure of 1 owned SDK tickets.
+[08:07:45 INFO]: <test-player> has 2 items that match the criteria
+[08:09:47 INFO]: Queued closure of 1 owned SDK tickets.
+[08:09:51 INFO]: Original-mode SDK example: opens 4, closes 3, failures 1, guard checks 1559, outstanding tickets 0
+[08:09:51 INFO]: <test-player> has 2 items that match the criteria
+[08:12:02 INFO]: <test-player> has 3 items that match the criteria
+[08:12:48 INFO]: Queued closure of 1 owned SDK tickets.
+[08:12:51 INFO]: Original-mode SDK example: opens 5, closes 4, failures 1, guard checks 2166, outstanding tickets 0
+[08:13:41 INFO]: Original-mode SDK example: opens 6, closes 4, failures 2, guard checks 2291, outstanding tickets 0
+[08:14:17 INFO]: Queued closure of 1 owned SDK tickets.
+[08:14:59 INFO]: Queued closure of 1 owned SDK tickets.
+[08:15:49 INFO]: Queued closure of 1 owned SDK tickets.
+[08:16:43 INFO]: C ABI consumer active; callbacks 1; outstanding tickets 0
+[08:16:43 INFO]: Original-mode SDK example: opens 9, closes 7, failures 2, guard checks 2669, outstanding tickets 0
+[08:16:44 INFO]: Native VCF C ABI 1.1; sessions 0; 69 entries retained; all-UI NOT QUALIFIED.
+[08:16:44 INFO]: Item packet observations: registries 1, complete snapshots 1, queued 0, refused 0. Observation is not inventory-write qualification.
+[08:16:44 INFO]: <test-player> has 2 items that match the criteria
+[08:16:44 INFO]: <test-player> has 3 items that match the criteria
+Quit correctly
