@@ -1,11 +1,23 @@
 # Native implementation checkpoint â€” incomplete
 
-The latest recorded native source checkpoint is `a3fbf78f77640ac29757986bfa7532bde3789376` on
-`feature/native-virtual-container-framework`. **The all-UI migration remains
+Development continues on `feature/native-virtual-container-framework`.
+**The all-UI migration remains
 incomplete and is not a production-qualified release.** RemoteWorkstations
 0.4.0 and `main` remain separate from this development work.
 
-SDK 1.3 adds [native saved-item reads](NATIVE_ITEM_SAVE.md). The exact public
+SDK 1.5 adds [guarded native inventory edits](NATIVE_INVENTORY_WRITES.md),
+complete Linux item reconstruction, five native mutation/save hooks and a
+durable inventory journal with explicit administrator review. The public Linux
+provider passed live stone transfers and a filled-bundle/named-shulker swap and
+return, preserving complete item bytes. Vanilla extraction recovered all six
+stored stones, and a subsequent BDS restart retained the original inventory.
+The [crash test record](NATIVE_INVENTORY_CRASH_TESTS.md) tracks actual forced
+BDS exits separately from portable journal tests. Windows Release and Debug
+each pass 20 native tests; the Linux public build and sanitizer build each pass
+22. Windows inventory writes, held editors and automatic recovery remain
+incomplete. Historical runs below describe their own artifacts and scope.
+
+The earlier SDK 1.3 checkpoint adds [native saved-item reads](NATIVE_ITEM_SAVE.md). The exact public
 Linux binaries passed nine client reads, including a bundle containing six
 stones, signed-book and shulker saves, two expected empty-slot refusals and
 byte-identical bundle restoration. The run stopped cleanly. Current-artifact

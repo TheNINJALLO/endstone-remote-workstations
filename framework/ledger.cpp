@@ -27,6 +27,7 @@ Ledger::Ledger(const std::filesystem::path&p):path_(p){
  try {
   std::ifstream stream(p,std::ios::binary);require(bool(stream),VCF_INTERNAL);
   auto length=std::filesystem::file_size(p);require(length<=64*1024*1024,VCF_CAPACITY);
+  bytes_=length;
   std::vector<uint8_t> data(static_cast<size_t>(length));stream.read(reinterpret_cast<char*>(data.data()),static_cast<std::streamsize>(length));require(bool(stream)||!length,VCF_INTERNAL);
   size_t pos=0;std::map<uint64_t,uint32_t> last;
   while(pos<data.size()){
@@ -83,9 +84,10 @@ void Ledger::append(uint64_t tx,Boundary boundary,std::span<const uint8_t>payloa
  Record record{sequence_+1,tx,boundary,{payload.begin(),payload.end()}};
  std::vector<uint8_t> body;put(body,record.sequence,8);put(body,tx,8);put(body,static_cast<uint32_t>(boundary),4);body.insert(body.end(),payload.begin(),payload.end());
  std::vector<uint8_t> bytes;put(bytes,0x31464356,4);put(bytes,body.size(),4);bytes.insert(bytes.end(),body.begin(),body.end());put(bytes,crc(body),4);
+ require(bytes.size()<=64*1024*1024-bytes_,VCF_CAPACITY);
  // Allocate before durability. Once writes begin an error poisons this owner.
  records_.reserve(records_.size()+1);
- try{write(bytes);records_.push_back(std::move(record));++sequence_;}catch(...){poisoned_=true;throw;}
+ try{write(bytes);bytes_+=bytes.size();records_.push_back(std::move(record));++sequence_;}catch(...){poisoned_=true;throw;}
 }
 std::vector<uint64_t> Ledger::quarantined()const {
  std::set<uint64_t> ids;for(const auto&r:records_)ids.insert(r.transaction);return {ids.begin(),ids.end()};

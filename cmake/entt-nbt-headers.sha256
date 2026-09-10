@@ -1,0 +1,5 @@
+c7227033c6b6740664ac6a30253bf45bdb025e2ead41b97e92019e0edd7d3295  src/entt/config/config.h
+20e3c4368034f1be2afc95de574551089aba48e1380049671d572feb42fc5d28  src/entt/config/macro.h
+cca5f51a23c1e4de20f6d176764554310af2429c5a5e4d41c0b8d64ca4434dd3  src/entt/config/version.h
+b6dd8a3bc27e351b2e6016ef326c4786b25f4eec7c0a9cdce23a9d79d37af1c6  src/entt/core/fwd.hpp
+4d4f6624031dd4c6b1ac7763fdfd55cf139d69b27f2f8c31fcaa42c1dcbcf2b9  src/entt/core/hashed_string.hpp

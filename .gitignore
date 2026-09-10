@@ -20,3 +20,5 @@ research/*
 !research/original-source/src/*.egg-info/
 !research/original-source/src/*.egg-info/**
 !research/native-evidence/
+!research/native-linux-inventory-writer-sdk15.json
+!research/native-linux-inventory-crashes-sdk15.json

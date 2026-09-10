@@ -7,7 +7,7 @@ struct Record {uint64_t sequence,transaction;Boundary boundary;std::vector<uint8
 // Durable append-only evidence. All surviving transactions are uncertain until
 // BDS and plugin state are reconciled. This class deliberately never grants items.
 class Ledger {
- std::filesystem::path path_;intptr_t file_=-1;uint64_t sequence_=0;
+ std::filesystem::path path_;intptr_t file_=-1;uint64_t sequence_=0,bytes_=0;
  std::vector<Record> records_;bool poisoned_=false;
  void write(std::span<const uint8_t>);
 public:

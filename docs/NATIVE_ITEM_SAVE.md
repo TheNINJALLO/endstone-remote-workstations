@@ -174,6 +174,7 @@ buffer behaves the same way. All other failures leave all outputs unchanged.
 Successful calls fill the description, exactly the returned number of bytes,
 and `required_bytes`. A query does not freeze the slot for the next call.
 
-ABI 1.0 through 1.3 binaries retain their negotiated prefixes and descriptor
+ABI 1.0 through 1.4 binaries retain their negotiated prefixes and descriptor
 versions. This operation was introduced in ABI 1.3. The current C++ SDK requires
-ABI 1.4 and also provides [inventory observations](NATIVE_ITEM_OBSERVATIONS.md).
+ABI 1.5 and also provides [inventory observations](NATIVE_ITEM_OBSERVATIONS.md)
+and [experimental guarded edits](NATIVE_INVENTORY_WRITES.md).

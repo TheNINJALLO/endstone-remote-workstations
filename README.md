@@ -23,6 +23,7 @@ All 69 original catalog entries, aliases, permissions and source contracts are p
 - [Inspect held shulkers and books through SDK 1.2, with the bundle limitation recorded](docs/NATIVE_HELD_ITEMS.md)
 - [Read native saved-item data through SDK 1.3, including bundle contents on Linux](docs/NATIVE_ITEM_SAVE.md)
 - [Detect changes across SDK calls with inventory observations in SDK 1.4](docs/NATIVE_ITEM_OBSERVATIONS.md)
+- [Develop guarded inventory edits with SDK 1.5 and explicit recovery review](docs/NATIVE_INVENTORY_WRITES.md)
 - [Native SDK and compiled consumer](docs/NATIVE_SDK.md)
 - [Native storage transactions and current integration boundary](docs/NATIVE_STORAGE.md)
 - [NativePassthrough SDK and player-interaction example](examples/native/NativePassthrough.md)
@@ -32,7 +33,7 @@ All 69 original catalog entries, aliases, permissions and source contracts are p
 - [Frozen original catalog](research/original-ui-catalog.json)
 - [Interactive qualification records and release gate](docs/NATIVE_QUALIFICATION_RECORDS.md)
 
-Implemented core work includes staged item transfers, exact metadata policies, recipe/stock revisions, bounded processing, deferred permission-checked actions, consumer-owned session lifetimes and a durable uncertainty journal. Native inventory publication, screen customization, full SDK parity, map integration and cross-save recovery qualification remain incomplete.
+Implemented core work includes staged item transfers, exact metadata policies, recipe/stock revisions, bounded processing, deferred permission-checked actions, consumer-owned session lifetimes and a durable uncertainty journal. SDK 1.5 adds an experimental Linux inventory writer with complete native item reconstruction, guarded batch publication and explicit restart review. Selected live tests preserve filled-bundle contents and named items. Full held editors, screen customization, Windows writer parity, map integration and automatic recovery across BDS and plugin saves remain incomplete. See the [inventory writer guide](docs/NATIVE_INVENTORY_WRITES.md) for the tested boundaries.
 
 An opt-in Windows adapter now orchestrates seven original workstations and the four shared player-inventory entry points in C++. Its asynchronous lifecycle waits for an ordered client handshake and restores client projections from current world state. It is disabled by default while this artifact's client tests proceed; it does not implement custom recipes or replace real inventory contents.
 

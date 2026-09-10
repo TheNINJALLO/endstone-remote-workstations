@@ -117,7 +117,7 @@ public:
             },1,1);
             registerEvent(&NativePassthrough::interact,*this,endstone::EventPriority::Highest);
             registerEvent(&NativePassthrough::quit,*this);
-            getLogger().info("NativePassthrough connected through SDK 1.4; twenty-six original-mode requests available subject to provider admission; saved-item observations available.");
+            getLogger().info("NativePassthrough connected through SDK {}.{}; twenty-six original-mode requests available subject to provider admission; saved-item observations and guarded edits available.",VCF_ABI_VERSION>>16,VCF_ABI_VERSION&0xffffu);
         } catch(const std::exception& e) {getLogger().error("NativePassthrough unavailable: {}",e.what());ui_.reset();}
     }
     void onDisable() override {
@@ -190,7 +190,23 @@ public:
         }
         if(!player){sender.sendErrorMessage("Request screens from a connected player.");return true;}
         try {
-            if(args[0]=="observe-item"&&args.size()==2){
+            if(args[0]=="swap-items"&&args.size()==2){
+                const auto comma=args[1].find(',');if(comma==std::string::npos)throw std::runtime_error("Use /vcf_native swap-items \"first,second\" with slots 0 through 35.");
+                auto slot=[](std::string_view text){uint32_t value=0;auto parsed=std::from_chars(text.data(),text.data()+text.size(),value);if(parsed.ec!=std::errc{}||parsed.ptr!=text.data()+text.size()||value>=36)throw std::runtime_error("Choose inventory slots 0 through 35.");return value;};
+                const auto first=slot(std::string_view(args[1]).substr(0,comma)),second=slot(std::string_view(args[1]).substr(comma+1));
+                if(first==second)throw std::runtime_error("Choose two different slots; the first must contain an item.");
+                const auto id=player->getUniqueId().str();const auto observation=ui_->observe_inventory_item(id,first);
+                struct Release{sdk::Client& ui;vcf_handle token;~Release(){ui.api().release_inventory_observation(ui.owner(),token);}} release{*ui_,observation};
+                auto before=ui_->read_inventory_item(id,first);sdk::SavedInventoryItem other;other.info=sdk::descriptor<vcf_inventory_item_info>();other.nbt.resize(VCF_ITEM_SAVE_MAX_BYTES);uint32_t written=0;
+                const auto result=ui_->api().read_inventory_item(ui_->owner(),sdk::view(id),second,&other.info,other.nbt.data(),static_cast<uint32_t>(other.nbt.size()),&written);
+                if(result==VCF_NOT_FOUND)other.nbt.clear();else{sdk::checked(result);other.nbt.resize(written);}
+                auto bytes=[](const auto& value){return vcf_bytes{value.data(),static_cast<uint32_t>(value.size())};};
+                std::array<vcf_inventory_edit,2> changes{sdk::descriptor<vcf_inventory_edit>(),sdk::descriptor<vcf_inventory_edit>()};
+                changes[0].slot=first;changes[0].expected=bytes(before.nbt);changes[0].replacement=bytes(other.nbt);
+                changes[1].slot=second;changes[1].expected=bytes(other.nbt);changes[1].replacement=bytes(before.nbt);
+                ui_->apply_inventory_edit(observation,changes);
+                player->sendMessage("Committed native inventory swap "+std::to_string(first)+" <-> "+std::to_string(second)+" with full saved item data.");
+            }else if(args[0]=="observe-item"&&args.size()==2){
                 uint32_t slot=0;auto parsed=std::from_chars(args[1].data(),args[1].data()+args[1].size(),slot);
                 if(parsed.ec!=std::errc{}||parsed.ptr!=args[1].data()+args[1].size()||slot>=36)throw std::runtime_error("Choose inventory slot 0 through 35.");
                 auto id=player->getUniqueId().str();

@@ -16,6 +16,16 @@ digest, including the tested bundle contents. It requires
 `remoteworkstations.inventory.read`. See the separate [saved-item API](../../docs/NATIVE_ITEM_SAVE.md);
 it does not change the older held-inspection behavior or enable writeback.
 
+SDK 1.5 adds `/vcf_native swap-items "7,18"` through the public inventory-edit
+API. Enable `experimental_inventory_writes` separately on an isolated Linux
+fixture and grant `remoteworkstations.inventory.write`, along with use/read
+permissions. The first slot must contain an item. The command observes that
+slot, reads both complete native saved stacks, and attempts a journaled swap.
+It does not open a held editor. A `VCF_QUARANTINED` result requires recovery
+review before another edit; never retry it as an unperformed transaction.
+See [inventory edits and recovery](../../docs/NATIVE_INVENTORY_WRITES.md) for
+the API contract, stock-client checks and administrator procedure.
+
 1. Build the native artifacts and copy `endstone_onistone_vcf.dll` and
    `endstone_vcf_native_passthrough.dll` to an isolated Windows server's plugins
    directory. No project wheel is needed. Linux uses the corresponding `.so`
@@ -33,8 +43,8 @@ it does not change the older held-inspection behavior or enable writeback.
    open/close/failure events only when the provider completes them.
 5. Run `/vcf_native bind anvil`. While holding an ordinary compass, sneak and
    right-click to request the same screen through a player interaction.
-   `/vcf_native unbind` removes that opt-in binding. The example never replaces
-   inventory contents or gives itself control of unrelated compass use.
+   `/vcf_native unbind` removes that opt-in binding. The binding only requests
+   the selected screen and leaves unrelated compass use alone.
 6. Inspect `/vcf_native status` for open, close, refusal and guard callback counts.
    Test each screen separately: `craft`, `anvil`, `grindstone`, `smithing`,
    `stonecutter`, `loom`, `cartography`, `inventory2x2`, `armor`, `offhand`,

@@ -3,6 +3,10 @@
 !CMakeLists.txt
 !CMakePresets.json
 !LICENSE
+!licenses/
+!licenses/Endstone-Apache-2.0.txt
+!licenses/expected-lite-BSL-1.0.txt
+!licenses/EnTT-MIT.txt
 !cmake/
 !cmake/**
 !include/

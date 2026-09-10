@@ -22,7 +22,7 @@ vcf_handle Engine::consumer(std::string name,uint32_t version) {
  check();require(name_ok(name));require(host_.consumer_allowed && host_.consumer_allowed(name),VCF_DENIED);
  require(consumers_.size()<128,VCF_CAPACITY);
  for(const auto&[id,c]:consumers_)require(c.name!=name,VCF_CONFLICT);
- require(version==VCF_ABI_VERSION||version==VCF_ABI_VERSION_1_3||version==VCF_ABI_VERSION_1_2||version==VCF_ABI_VERSION_1_1||version==VCF_ABI_VERSION_1_0,VCF_VERSION);
+ require(version==VCF_ABI_VERSION||version==VCF_ABI_VERSION_1_4||version==VCF_ABI_VERSION_1_3||version==VCF_ABI_VERSION_1_2||version==VCF_ABI_VERSION_1_1||version==VCF_ABI_VERSION_1_0,VCF_VERSION);
  auto id=next_++;consumers_.emplace(id,Consumer{std::move(name),version});return id;
 }
 std::string Engine::qualify(vcf_handle owner,std::string_view action)const {
@@ -198,6 +198,27 @@ void Engine::release_inventory_observation(vcf_handle owner,vcf_handle id){
  check();require(!callbacks_&&!dispatching_&&!observing_,VCF_REENTRANT);qualify(owner,"");auto it=observations_.find(id);
  require(it!=observations_.end(),VCF_NOT_FOUND);require(it->second.owner==owner,VCF_DENIED);observations_.erase(it);
 }
+void Engine::apply_inventory_edit(vcf_handle owner,vcf_handle id,std::span<const InventoryEdit> changes){
+ check();require(!callbacks_&&!dispatching_&&!observing_,VCF_REENTRANT);qualify(owner,"");
+ require(!changes.empty()&&changes.size()<=36);std::set<uint32_t> slots;size_t total=0;
+ for(const auto& change:changes){
+  require(change.slot<36&&slots.insert(change.slot).second&&change.expected!=change.replacement);
+  require(change.expected.size()<=VCF_ITEM_SAVE_MAX_BYTES&&change.replacement.size()<=VCF_ITEM_SAVE_MAX_BYTES,VCF_CAPACITY);
+  total+=change.expected.size()+change.replacement.size();require(total<=256*1024,VCF_CAPACITY);validate_nbt(change.expected);validate_nbt(change.replacement);
+ }
+ auto it=observations_.find(id);require(it!=observations_.end(),VCF_NOT_FOUND);require(it->second.owner==owner,VCF_DENIED);
+ require(it->second.failure==VCF_OK,it->second.failure);require(bool(host_.apply_inventory_edit),VCF_UNAVAILABLE);
+ auto player=it->second.player;auto validate=it->second.validate;auto writer=host_.apply_inventory_edit;
+ observing_=true;
+ struct End{Engine& self;vcf_handle id;~End(){self.observations_.erase(id);self.observing_=false;}} end{*this,id};
+ auto authorize=[this,owner,id,player]{
+  inventory_permission(owner,player);require(host_.permission(player,"remoteworkstations.inventory.write"),VCF_DENIED);
+  require(observations_.contains(id),VCF_CLOSED);
+ };
+ authorize();validate();authorize();writer(player,changes,authorize,std::move(validate));
+ // Once the host commits, a later revocation must not turn a known successful
+ // write into an apparent unperformed operation that a caller might retry.
+}
 uint32_t Engine::collect_terminal(vcf_handle owner,uint32_t limit){
  check();require(!callbacks_&&!dispatching_,VCF_REENTRANT);qualify(owner,"");uint32_t n=0;
  for(auto it=sessions_.begin();it!=sessions_.end()&&n<std::min(limit,256u);){
@@ -216,7 +237,7 @@ vcf_handle Engine::prepare(vcf_handle owner,Session s){
  s.owner=owner;s.id=next_++;s.generation=s.id;sessions_.emplace(s.id,s);return s.id;
 }
 Item Engine::item(const vcf_item& in)const{
- check();require(in.size>=sizeof(vcf_item)&&(in.version==VCF_ABI_VERSION||in.version==VCF_ABI_VERSION_1_3||in.version==VCF_ABI_VERSION_1_2||in.version==VCF_ABI_VERSION_1_1||in.version==VCF_ABI_VERSION_1_0));
+ check();require(in.size>=sizeof(vcf_item)&&(in.version==VCF_ABI_VERSION||in.version==VCF_ABI_VERSION_1_4||in.version==VCF_ABI_VERSION_1_3||in.version==VCF_ABI_VERSION_1_2||in.version==VCF_ABI_VERSION_1_1||in.version==VCF_ABI_VERSION_1_0));
  Item i;i.id=str(in.identifier);i.count=in.count;
  if(!i.count){require(i.id.empty() && !in.nbt.length);return i;}
  require(host_.item_limit!=nullptr,VCF_UNAVAILABLE);i.limit=host_.item_limit(i.id);

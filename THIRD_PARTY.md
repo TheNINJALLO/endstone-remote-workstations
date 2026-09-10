@@ -18,11 +18,19 @@ It calls verified private BDS entry points in the installed server. BDS binaries
 | bstream 1.0.1, rapidnbt 1.3.5 | MPL 2.0 | Pinned runtime codecs for the packet backend, installed as unmodified separate dependencies. |
 | pybind11 3.0.1 | BSD 3-Clause | Header-only Python bridge compiled into our Windows companion; license included. |
 | expected-lite 0.9.0 | Boost Software License 1.0 | Endstone public-header dependency; license included. |
+| skypjack/entt 3.16.0 | MIT | Five pinned headers used by the Linux native NBT `Result<T>` header closure. Fetched from the official tagged source and verified by SHA-256; license included in native artifacts. |
 | OpenSSL 3 | Apache 2.0 | Native Linux provider dynamically links `libcrypto.so.3` for loaded-file SHA-256 verification. The Docker build pins the Debian package snapshot; no OpenSSL binary is bundled in plugin artifacts. |
 
 The Windows companion and disposable tracing probe compile MinHook 1.3.4
 (BSD 2-Clause) for scoped native hooks. Its license is included in
 `licenses/MinHook-BSD.txt`; source/archive identities are pinned in research.
+The native C++ provider uses the pinned Endstone private `Tag`, `ListTag`,
+`IDataInput` and `Result<T>` declarations without building Endstone's runtime
+subprojects. Their exact minimal closure is verified by
+`cmake/VerifyBedrockNbtHeaders.cmake`. These are Apache 2.0 SDK headers, not
+redistributed Mojang server code. Native artifacts include the applicable
+Endstone, expected-lite, EnTT, MinHook and nlohmann notices in `licenses/`.
+
 Other header dependencies used only for the independent SDK layout audit are recorded in
 `research/native-header-dependencies.json`; those headers and probe binaries are excluded from release artifacts.
 

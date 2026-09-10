@@ -1,5 +1,6 @@
 # The SDK version tracks the public C ABI, separately from the provider release.
 include(CMakePackageConfigHelpers)
+set(VCF_SDK_ABI_VERSION "1.5")
 add_library(vcf_sdk_abi INTERFACE)
 add_library(OnistoneVCF::abi ALIAS vcf_sdk_abi)
 set_target_properties(vcf_sdk_abi PROPERTIES EXPORT_NAME abi)
@@ -15,7 +16,7 @@ target_compile_features(vcf_sdk INTERFACE cxx_std_20)
 configure_package_config_file("${CMAKE_CURRENT_LIST_DIR}/OnistoneVCFConfig.cmake.in"
  "${PROJECT_BINARY_DIR}/OnistoneVCFConfig.cmake" INSTALL_DESTINATION lib/cmake/OnistoneVCF)
 write_basic_package_version_file("${PROJECT_BINARY_DIR}/OnistoneVCFConfigVersion.cmake"
- VERSION 1.4.0 COMPATIBILITY SameMajorVersion ARCH_INDEPENDENT)
+ VERSION "${VCF_SDK_ABI_VERSION}.0" COMPATIBILITY SameMajorVersion ARCH_INDEPENDENT)
 install(TARGETS vcf_sdk_abi vcf_sdk EXPORT OnistoneVCFTargets COMPONENT sdk)
 install(EXPORT OnistoneVCFTargets NAMESPACE OnistoneVCF:: DESTINATION sdk/lib/cmake/OnistoneVCF COMPONENT sdk)
 install(FILES "${PROJECT_BINARY_DIR}/OnistoneVCFConfig.cmake" "${PROJECT_BINARY_DIR}/OnistoneVCFConfigVersion.cmake"

@@ -1,5 +1,6 @@
 #include <oni/vcf/core.hpp>
 #include "held_items.hpp"
+#include "inventory_journal.hpp"
 #include <oni/vcf/sdk.hpp>
 #include <oni/vcf/packet_items.hpp>
 #include "platform/runtime.hpp"
@@ -10,6 +11,7 @@
 #include "platform/linux/native_ui.hpp"
 #include "platform/linux/item_save.hpp"
 #include "platform/linux/inventory_watch.hpp"
+#include "platform/linux/inventory_writer.hpp"
 #endif
 #include <nlohmann/json.hpp>
 #include <endstone/plugin/plugin.h>
@@ -25,6 +27,8 @@
 #include <endstone/event/server/packet_receive_event.h>
 #include <endstone/event/server/packet_send_event.h>
 #include <fstream>
+#include <charconv>
+#include <chrono>
 using namespace oni::vcf;
 #ifdef _WIN32
 using NativeUi=platform::windows::NativeUi;
@@ -32,7 +36,44 @@ using NativeUi=platform::windows::NativeUi;
 using NativeUi=platform::linux_native::NativeUi;
 #endif
 class VirtualContainerFramework:public endstone::Plugin {
- std::unique_ptr<Engine> engine_;std::unique_ptr<sdk::Client> self_;vcf_api api_{};
+ using Clock=std::chrono::steady_clock;
+ std::shared_ptr<Engine> engine_;std::unique_ptr<sdk::Client> self_;vcf_api api_{};
+ std::shared_ptr<inventory::InventoryJournal> inventory_journal_;
+#ifndef _WIN32
+ struct InventoryReview {std::string player;uint64_t token;Clock::time_point expires;std::unique_ptr<platform::linux_native::InventoryWriter> snapshot;};
+ std::map<std::string,InventoryReview> inventory_reviews_;uint64_t next_review_=1;
+ bool recovery(endstone::CommandSender& sender,const std::vector<std::string>& args){
+  if(args.empty()||(args[0]!="recovery"&&args[0]!="accept-current"))return false;
+  require(sender.hasPermission("remoteworkstations.inventory.recovery"),VCF_DENIED);require(inventory_journal_!=nullptr,VCF_UNAVAILABLE);
+  const auto now=Clock::now();std::erase_if(inventory_reviews_,[&](const auto& value){return value.second.expires<now;});
+  auto* actor=sender.asPlayer();const std::string owner=actor?actor->getUniqueId().str():"console";
+  if(args[0]=="recovery"){
+   require(args.size()<=2);endstone::Player* target=nullptr;
+   if(args.size()==2){for(auto* p:getServer().getOnlinePlayers())if(p->getName()==args[1]||p->getUniqueId().str()==args[1])target=p;}
+   else if(actor)target=actor;
+   else{const auto online=getServer().getOnlinePlayers();if(online.size()==1)target=online.front();}
+   require(target,VCF_NOT_FOUND);const auto id=target->getUniqueId().str();auto* server=&getServer();
+   auto snapshot=std::make_unique<platform::linux_native::InventoryWriter>([server,id]()->endstone::Player*{for(auto*p:server->getOnlinePlayers())if(p->getUniqueId().str()==id)return p;return nullptr;});
+   const auto entries=inventory_journal_->review(id,snapshot->before());
+   if(entries.empty()){inventory_reviews_.erase(owner);sender.sendMessage("No inventory edits require recovery review for this player.");return true;}
+   require(inventory_reviews_.contains(owner)||inventory_reviews_.size()<100,VCF_CAPACITY);require(next_review_<UINT64_MAX,VCF_CAPACITY);const auto token=next_review_++;
+   inventory_reviews_.insert_or_assign(owner,InventoryReview{id,token,now+std::chrono::seconds(60),std::move(snapshot)});
+   constexpr std::string_view labels[]={"matches before","matches after","mixed before/after","contains unrelated changes"};
+   for(const auto& entry:entries){sender.sendMessage("Inventory edit "+std::to_string(entry.transaction)+", durable stage "+std::to_string(static_cast<unsigned>(entry.boundary))+": "+std::string(labels[static_cast<size_t>(entry.observed)])+". No items were changed.");
+    sender.sendMessage("After reviewing the player's inventory, accept its current contents with /vcf accept-current \""+std::to_string(entry.transaction)+","+std::to_string(token)+"\" within 60 seconds.");}
+   return true;
+  }
+  require(args.size()==2);const auto comma=args[1].find(',');require(comma!=std::string::npos);
+  auto number=[](std::string_view text){uint64_t value=0;auto parsed=std::from_chars(text.data(),text.data()+text.size(),value);require(parsed.ec==std::errc{}&&parsed.ptr==text.data()+text.size()&&value);return value;};
+  const auto transaction=number(std::string_view(args[1]).substr(0,comma)),token=number(std::string_view(args[1]).substr(comma+1));
+  auto found=inventory_reviews_.find(owner);require(found!=inventory_reviews_.end()&&found->second.token==token,VCF_STALE);
+  auto& review=found->second;review.snapshot->validate();
+  // The observation validates the exact reviewed inventory and its mutation
+  // epochs immediately before this journal-only acknowledgement.
+  inventory_journal_->accept_current(transaction,review.player,review.snapshot->before(),review.snapshot->before());
+  sender.sendMessage("Accepted current inventory for edit "+std::to_string(transaction)+". The review was recorded; no items were granted, restored or removed.");return true;
+ }
+#endif
  platform::Admission admission_;std::shared_ptr<endstone::Task> task_;
  bool original_native_enabled_=false;
  wire::Inbox item_observations_;
@@ -145,22 +186,36 @@ public:
    }
    require(std::filesystem::file_size(config_path)<=4096,VCF_CAPACITY);
    std::ifstream config_file(config_path);auto config=nlohmann::json::parse(config_file);
-   require(config.is_object()&&(config.size()==2||config.size()==3)&&config.value("schema_version",0)==1&&config.contains("experimental_original_windows")&&config["experimental_original_windows"].is_boolean());
-   if(config.size()==3)require(config.contains("experimental_original_linux")&&config["experimental_original_linux"].is_boolean());
+   require(config.is_object()&&config.size()>=2&&config.size()<=4&&config.value("schema_version",0)==1&&config.contains("experimental_original_windows")&&config["experimental_original_windows"].is_boolean());
+   for(auto it=config.begin();it!=config.end();++it){require(it.key()=="schema_version"||it.key()=="experimental_original_windows"||it.key()=="experimental_original_linux"||it.key()=="experimental_inventory_writes");if(it.key()!="schema_version")require(it.value().is_boolean());}
 #ifdef _WIN32
    original_native_enabled_=config["experimental_original_windows"].get<bool>();
 #else
    original_native_enabled_=config.value("experimental_original_linux",false);
 #endif
    Host host;
-   host.consumer_allowed=[this](std::string_view name){auto*p=getServer().getPluginManager().getPlugin(std::string(name));return p&&p->isEnabled();};
-   host.permission=[this](std::string_view id,std::string_view permission){auto*p=player(id);return p&&(permission.empty()||p->hasPermission(std::string(permission)));};
-   host.item_limit=[this](std::string_view name){auto*type=getServer().getRegistry<endstone::ItemType>().get(endstone::ItemTypeId(name));return type?static_cast<uint32_t>(type->getMaxStackSize()):0;};
+   auto* server=&getServer();auto lookup=[server](std::string_view id)->endstone::Player*{for(auto*p:server->getOnlinePlayers())if(p->getUniqueId().str()==id)return p;return nullptr;};
+   host.consumer_allowed=[server](std::string_view name){auto*p=server->getPluginManager().getPlugin(std::string(name));return p&&p->isEnabled();};
+   host.permission=[lookup](std::string_view id,std::string_view permission){auto*p=lookup(id);return p&&(permission.empty()||p->hasPermission(std::string(permission)));};
+   host.item_limit=[server](std::string_view name){auto*type=server->getRegistry<endstone::ItemType>().get(endstone::ItemTypeId(name));return type?static_cast<uint32_t>(type->getMaxStackSize()):0;};
    host.inspect_held=[this](std::string_view id){auto*p=player(id);require(p,VCF_CLOSED);return held::inspect(*p);};
 #ifndef _WIN32
-   host.read_inventory_item=[this](std::string_view id,uint32_t slot){auto*p=player(id);require(p,VCF_CLOSED);return platform::linux_native::read_inventory_item(*p,slot);};
-   host.observe_inventory_item=[this](std::string_view id,uint32_t slot){auto*p=player(id);require(p,VCF_CLOSED);
-    return platform::linux_native::observe_inventory_item(*p,slot,[this,id=std::string(id)]{return player(id);});};
+   host.read_inventory_item=[lookup](std::string_view id,uint32_t slot){auto*p=lookup(id);require(p,VCF_CLOSED);return platform::linux_native::read_inventory_item(*p,slot);};
+   host.observe_inventory_item=[lookup](std::string_view id,uint32_t slot){auto*p=lookup(id);require(p,VCF_CLOSED);
+    return platform::linux_native::observe_inventory_item(*p,slot,[lookup,id=std::string(id)]{return lookup(id);});};
+   if(config.value("experimental_inventory_writes",false)){
+    inventory_journal_=std::make_shared<inventory::InventoryJournal>(getDataFolder()/"inventory-edits.vcf");
+    host.apply_inventory_edit=[server,lookup,journal=inventory_journal_](std::string_view id,std::span<const InventoryEdit> changes,std::function<void()> authorize,std::function<void()> admission){
+     require(!journal->blocked(id),VCF_QUARANTINED);authorize();
+     platform::linux_native::InventoryWriter writer([lookup,id=std::string(id)]{return lookup(id);},std::move(admission));
+     auto after=writer.before();for(const auto& change:changes){require(after[change.slot]==change.expected,VCF_STALE);after[change.slot]=change.replacement;}
+     const auto transaction=journal->reserve({std::string(id),writer.before(),after});
+     const auto result=writer.commit(after,std::move(authorize),[journal,transaction](Boundary boundary){journal->record(transaction,boundary);});
+     journal->finish(transaction,result);
+     if(result.status!=VCF_OK)server->getLogger().warning("VCF inventory transaction {} failed while {}: status {}, restored {}, committed {}, uncertain {}.",transaction,result.operation,result.status,result.restored,result.committed,result.uncertain);
+     require(result.status==VCF_OK,result.status);
+    };
+   }
 #endif
    host.native_available=[this](std::string_view id){
     return original_native_enabled_&&native_ui_&&NativeUi::supports(id);
@@ -176,7 +231,7 @@ public:
     if(native_ui_)return native_ui_->close(s);
     return VCF_OK;
    };
-   engine_=std::make_unique<Engine>(std::move(host));attach_engine(engine_.get());
+   engine_=std::make_shared<Engine>(std::move(host));attach_engine(engine_.get());
    native_ui_=std::make_unique<NativeUi>(getServer(),*engine_);
    sdk::checked(oni_vcf_get_api(VCF_ABI_VERSION,sizeof(api_),&api_));
    self_=std::make_unique<sdk::Client>(api_,"onistone_vcf");
@@ -197,7 +252,7 @@ public:
    registerEvent(&VirtualContainerFramework::sent,*this,endstone::EventPriority::Monitor);
    std::filesystem::create_directories(getDataFolder());
    std::ofstream receipt(getDataFolder()/"native-startup.txt");receipt<<"native C++ plugin; no project Python runtime\nBDS "<<admission_.bds_sha256<<"\nEndstone "<<admission_.runtime_sha256<<"\n69 retained entries; all-UI acceptance NOT QUALIFIED\n";
-   getLogger().info("Native VCF enabled: C ABI 1.4 (1.0/1.1/1.2/1.3 compatible), 69 catalog entries retained, C++ forms/actions/guards active; all-UI acceptance NOT QUALIFIED.");
+   getLogger().info("Native VCF enabled: C ABI 1.5 (1.0/1.1/1.2/1.3/1.4 compatible), 69 catalog entries retained, C++ forms/actions/guards active; all-UI acceptance NOT QUALIFIED.");
   }catch(const std::exception&e){getLogger().error("VCF startup failed: {}",e.what());onDisable();}
    catch(const Error&e){getLogger().error("VCF startup failed with status {}",e.status);onDisable();}
  }
@@ -215,7 +270,10 @@ public:
 #ifdef _WIN32
   try{platform::windows::shutdown_editors();}catch(...){}
 #endif
-  self_.reset();attach_engine(nullptr);engine_.reset();
+  self_.reset();attach_engine(nullptr);engine_.reset();inventory_journal_.reset();
+#ifndef _WIN32
+  inventory_reviews_.clear();
+#endif
  }
  void retire_player(endstone::Player& player){
   const auto id=player.getUniqueId().str();
@@ -254,6 +312,9 @@ public:
    if(!engine_){sender.sendErrorMessage(admission_.reason.empty()?"Native VCF is not active; inspect startup diagnostics.":admission_.reason);return true;}
    auto name=command.getName();
    if(name=="vcf"||name=="workstations"){
+#ifndef _WIN32
+    if(recovery(sender,args))return true;
+#endif
     if(!args.empty()&&(args[0]=="status"||args[0]=="diagnose"||args[0]=="sessions")){
      if(!sender.hasPermission("remoteworkstations.status")){sender.sendErrorMessage("Permission denied.");return true;}
      sender.sendMessage("Native VCF C ABI "+std::to_string(VCF_ABI_VERSION>>16)+"."+std::to_string(VCF_ABI_VERSION&0xffffu)+"; sessions "+std::to_string(engine_->session_count())+"; 69 entries retained; all-UI NOT QUALIFIED.");
@@ -286,6 +347,8 @@ ENDSTONE_PLUGIN("onistone_vcf","0.1.0-dev",VirtualContainerFramework){
  command("workstations").description("Migrated original UI entry point").usages("/workstations [action: string] [type: string]").permissions("remoteworkstations.use");
  permission("remoteworkstations.use").default_(endstone::PermissionDefault::True);
  permission("remoteworkstations.inventory.read").default_(endstone::PermissionDefault::Operator);
+ permission("remoteworkstations.inventory.write").default_(endstone::PermissionDefault::Operator);
+ permission("remoteworkstations.inventory.recovery").default_(endstone::PermissionDefault::Operator);
  for(auto p:{"admin","status","diagnostics","contexts"})permission("remoteworkstations."+std::string(p)).default_(endstone::PermissionDefault::Operator);
  for(const auto&row:catalog()){
   permission(std::string(row.permission)).default_(row.privileged?endstone::PermissionDefault::Operator:endstone::PermissionDefault::True);

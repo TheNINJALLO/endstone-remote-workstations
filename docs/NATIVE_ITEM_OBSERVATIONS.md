@@ -13,7 +13,7 @@ in the [held-item work](NATIVE_HELD_ITEMS.md).
 
 ## Use from a consumer
 
-Compile against `find_package(OnistoneVCF 1.4 CONFIG REQUIRED)` and declare an
+Compile against `find_package(OnistoneVCF 1.5 CONFIG REQUIRED)` and declare an
 Endstone dependency on `onistone_vcf`. The player must have both
 `remoteworkstations.use` and `remoteworkstations.inventory.read`; these are checked
 again on validation. Calls run on the server thread outside framework callbacks.
@@ -83,7 +83,8 @@ only after a verified write. The storage planner still does not provide a live
 BDS writer, save barrier or crash reconciliation by itself.
 
 ABI 1.0 through 1.3 consumers keep their original table prefixes. The current C++
-headers and installed CMake package require SDK 1.4.
+headers and installed CMake package require SDK 1.5. The observation operations
+were introduced in ABI 1.4; existing 1.4 C consumers retain that table prefix.
 
 ## Compiled example
 

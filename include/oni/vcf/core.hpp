@@ -61,6 +61,7 @@ struct Session {
  bool is_menu=false, host_started=false;
 };
 struct InventoryItemSnapshot {vcf_inventory_item_info info{};std::vector<uint8_t> nbt;};
+struct InventoryEdit {uint32_t slot;std::vector<uint8_t> expected,replacement;};
 struct Host {
  std::function<bool(std::string_view)> consumer_allowed;
  std::function<bool(std::string_view,std::string_view)> permission;
@@ -71,8 +72,9 @@ struct Host {
  std::function<vcf_held_info(std::string_view)> inspect_held;
  std::function<InventoryItemSnapshot(std::string_view,uint32_t)> read_inventory_item;
  std::function<std::function<void()>(std::string_view,uint32_t)> observe_inventory_item;
+ std::function<void(std::string_view,std::span<const InventoryEdit>,std::function<void()>,std::function<void()>)> apply_inventory_edit;
 };
-class Engine {
+class Engine:public std::enable_shared_from_this<Engine> {
 public:
  explicit Engine(Host host);
  vcf_status guard() const;
@@ -94,6 +96,7 @@ public:
  vcf_handle observe_inventory_item(vcf_handle,std::string_view,uint32_t);
  void validate_inventory_observation(vcf_handle,vcf_handle);
  void release_inventory_observation(vcf_handle,vcf_handle);
+ void apply_inventory_edit(vcf_handle,vcf_handle,std::span<const InventoryEdit>);
  uint32_t collect_terminal(vcf_handle,uint32_t limit=32);
  vcf_handle invoke(vcf_handle,std::string,std::string);
  vcf_handle prepare(vcf_handle,Session);

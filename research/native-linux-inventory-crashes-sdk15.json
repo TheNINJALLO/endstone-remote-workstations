@@ -1,0 +1,166 @@
+{
+  "kind": "selected-native-inventory-process-crash-checks",
+  "recorded_utc": "2026-09-10",
+  "platform": "linux-x64",
+  "sdk": "1.5",
+  "artifacts_sha256": {
+    "endstone_onistone_vcf.so": "b585c2c72539aec3b2e5ecc97ff3df0cbfb2a51ad590d13aaed34f8b994026b9",
+    "endstone_vcf_native_passthrough.so": "442edd2c3f4c4ef44b2e3c4f8723b7206e637833f5577b1dcacaeca4d6fe4e9f",
+    "endstone_vcf_catalog_showcase.so": "935432ffdcdf741074be06585eb6d73c324459090e5d991182639b07c73a471b"
+  },
+  "runtime": {
+    "endstone": "0.11.10",
+    "bds": "1.26.45.1",
+    "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+    "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc"
+  },
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "keyboard and mouse",
+    "stock": true
+  },
+  "method": "Separate disposable volume per boundary; public SDK swaps six stones from main slot 7 to empty slot 18; private fsync interposer exits only after the real fsync of target transaction 13. Restart without injection, compare complete 36-slot inventory, test quarantine and explicitly review current contents.",
+  "cases": [
+    {
+      "boundary": 1,
+      "process_exit_code": 86,
+      "durable_stages": [
+        1
+      ],
+      "restarted_inventory": "complete-before-image",
+      "retry_status": 11,
+      "retry_journal_unchanged": true,
+      "review": "accepted-current-without-item-changes",
+      "crash_journal_sha256": "a5402aa7e9cee5a5dc06caefa7b0eaf9fc708317417dacc2e56283daffe26442",
+      "reviewed_journal_sha256": "dc4fb1a05cd02f934cc99b4cbcc4eb958a3920dbbecb73a933f57ab6d3e3deae",
+      "private_crash_log_sha256": "80d2511104d386b630e52b9f970a0488cce7a5b3ecafb7443dadd1d96666c92e"
+    },
+    {
+      "boundary": 2,
+      "process_exit_code": 86,
+      "durable_stages": [
+        1,
+        2
+      ],
+      "restarted_inventory": "complete-before-image",
+      "retry_status": 11,
+      "retry_journal_unchanged": true,
+      "review": "accepted-current-without-item-changes",
+      "crash_journal_sha256": "da25ce979131a148daefdb02f7392385e5d0dd81818c823cdac79ef242942801",
+      "reviewed_journal_sha256": "a0a295383d8bd0d73659a4f7a8c79fe396b492393edf55c15d05449ee7131466",
+      "private_crash_log_sha256": "e97adb76f97b5bb143c44a8012f2f79394159e8950afb9f6e7c43d164afc20aa"
+    },
+    {
+      "boundary": 3,
+      "process_exit_code": 86,
+      "durable_stages": [
+        1,
+        2,
+        3
+      ],
+      "restarted_inventory": "complete-before-image",
+      "retry_status": 11,
+      "retry_journal_unchanged": true,
+      "review": "accepted-current-without-item-changes",
+      "crash_journal_sha256": "7abe91b3f541fa23cdce3054a3a5f5ba2cd84b7234b4bd5ee72af4646e11ae82",
+      "reviewed_journal_sha256": "4dd62b90efcc23d81a64493ec0291f42587f29e990cf2a0eed72a5f744b73a4e",
+      "private_crash_log_sha256": "c8cc810a7a9a5c2997fe93646359790902b2d79c4ffaaed7ec25ab7b4170a23b"
+    },
+    {
+      "boundary": 4,
+      "process_exit_code": 86,
+      "durable_stages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "restarted_inventory": "complete-before-image",
+      "retry_status": 11,
+      "retry_journal_unchanged": true,
+      "review": "accepted-current-without-item-changes",
+      "crash_journal_sha256": "80d62d1478770dfd982d9ac6060305bf188d2d69709c88028b08ecafc1821e7d",
+      "reviewed_journal_sha256": "d0aa24aca0c3ce0151ecbf72f1a9f68a40606f15de63a8fe9dca971695e61e33",
+      "private_crash_log_sha256": "c1f50064e1cc5794839c2d53ebf54cd01ea1e6b07c5ef11e1c7682e4c3f5ff46"
+    },
+    {
+      "boundary": 5,
+      "process_exit_code": 86,
+      "durable_stages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "restarted_inventory": "complete-before-image",
+      "retry_status": 11,
+      "retry_journal_unchanged": true,
+      "review": "accepted-current-without-item-changes",
+      "crash_journal_sha256": "064fd675e27fe742e288b091f7d1096b5e7b14da8431db00e3b43819dac39988",
+      "reviewed_journal_sha256": "1efe0ffdf6d4d1b8b7698889e635003a915a4bc8336e62790e58acaaeafb64f4",
+      "private_crash_log_sha256": "a60e71c2c39124a8342202ea69a0287bab262731513fe6582f28d622c1ae2735"
+    },
+    {
+      "boundary": 6,
+      "process_exit_code": 86,
+      "durable_stages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "restarted_inventory": "complete-before-image",
+      "retry_status": 11,
+      "retry_journal_unchanged": true,
+      "review": "accepted-current-without-item-changes",
+      "crash_journal_sha256": "44adfb9f2f19578bbe951c6d08892894812aa1d8e6d92908a4ba32724c40134b",
+      "reviewed_journal_sha256": "06e1bdb403ee726d6740e49b077ea723fe89ebf822a72cc81ce20eb707c41602",
+      "private_crash_log_sha256": "606fde31d0c7a6f4a1141c762e500a44f6a3a861c52e55786009de1abfdf1ac7"
+    }
+  ],
+  "limits": [
+    "Process exit is not power-loss or filesystem-failure testing.",
+    "Journal delivery/acknowledgement is not proof that BDS persisted the new inventory.",
+    "No automatic cross-domain replay or held-editor qualification.",
+    "Windows native writer and additional clients remain unqualified.",
+    "Initial stage-4 command was rejected by the client before the SDK; a later unchanged-configuration attempt reached the correct crash point.",
+    "Two clean server stops left the client on a blank screen; normal client relaunch allowed testing to continue. Cause remains unisolated."
+  ],
+  "full_catalog_release_qualified": false,
+  "review_persistence_second_bds_restart": {
+    "tested": true,
+    "boundary": 6,
+    "captured_utc": "2026-09-10T03:54:05.143834+00:00",
+    "result": "No inventory edits require recovery review for this player.",
+    "journal_sha256": "06e1bdb403ee726d6740e49b077ea723fe89ebf822a72cc81ce20eb707c41602",
+    "journal_unchanged": true
+  },
+  "current_artifact_regressions": {
+    "tested": true,
+    "recorded_utc": "2026-09-10",
+    "double_chest": {
+      "rendered": true,
+      "sdk_close": true,
+      "opens": 1,
+      "closes": 1,
+      "failures": 0,
+      "outstanding_tickets": 0,
+      "item_transfers": 0
+    },
+    "independent_form": {
+      "rendered": true,
+      "action_callbacks": 1,
+      "outstanding_tickets": 0
+    },
+    "provider_sessions": 0,
+    "pending_inventory_recovery": 0,
+    "clean_server_exit": 0,
+    "client_disconnected_before_stop": true,
+    "private_log_sha256": "f8441c720252532ab4f60283979bc55915da713a1a0571cc5f31fb6d6058ff46"
+  }
+}

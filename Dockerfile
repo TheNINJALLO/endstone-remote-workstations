@@ -11,11 +11,13 @@ RUN curl -fsSL https://github.com/Kitware/CMake/releases/download/v3.31.6/cmake-
  && tar xzf /tmp/cmake.tgz -C /opt && rm /tmp/cmake.tgz
 ENV PATH="/opt/cmake-3.31.6-linux-x86_64/bin:${PATH}" CC=clang-20 CXX=clang++-20
 WORKDIR /workspace
-COPY cmake cmake
+COPY cmake/entt-nbt-headers.sha256 cmake/entt-nbt-headers.sha256
 COPY tools/native/fetch-sdk.sh tools/native/fetch-sdk.sh
 RUN sh tools/native/fetch-sdk.sh /opt/vcf-deps
+COPY cmake cmake
 COPY CMakeLists.txt CMakePresets.json ./
 COPY LICENSE ./
+COPY licenses/Endstone-Apache-2.0.txt licenses/expected-lite-BSL-1.0.txt licenses/EnTT-MIT.txt licenses/
 COPY include include
 COPY framework framework
 COPY third_party third_party

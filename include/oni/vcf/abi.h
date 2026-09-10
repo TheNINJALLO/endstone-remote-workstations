@@ -20,7 +20,8 @@ extern "C" {
 #define VCF_ABI_VERSION_1_1 0x00010001u
 #define VCF_ABI_VERSION_1_2 0x00010002u
 #define VCF_ABI_VERSION_1_3 0x00010003u
-#define VCF_ABI_VERSION 0x00010004u
+#define VCF_ABI_VERSION_1_4 0x00010004u
+#define VCF_ABI_VERSION 0x00010005u
 typedef uint64_t vcf_handle;
 typedef int32_t vcf_status;
 enum { VCF_OK=0, VCF_INVALID=1, VCF_VERSION=2, VCF_NOT_FOUND=3, VCF_DENIED=4,
@@ -99,6 +100,11 @@ typedef struct {
  uint32_t size, version, slot, amount; int32_t auxiliary;
  uint32_t nbt_format, nbt_bytes; char identifier[128]; uint8_t digest[32];
 } vcf_inventory_item_info;
+/* Complete native saved compounds. A zero-length view means an empty slot.
+   Neither view is user metadata or an ItemStackRequest network payload. */
+typedef struct {
+ uint32_t size,version,slot;vcf_bytes expected,replacement;
+} vcf_inventory_edit;
 /* C ABI allocations never cross ownership domains. Caller supplies output
    structures. Capability strings remain valid until provider shutdown.
    All calls except get_api require the provider's server thread.
@@ -148,11 +154,21 @@ typedef struct vcf_api {
  vcf_status (VCF_CALL *observe_inventory_item)(vcf_handle,vcf_string,uint32_t,vcf_handle *);
  vcf_status (VCF_CALL *validate_inventory_observation)(vcf_handle,vcf_handle);
  vcf_status (VCF_CALL *release_inventory_observation)(vcf_handle,vcf_handle);
+ /* ABI 1.5 tail. Atomically attempts a bounded main-inventory edit using an
+    existing observation owned by this consumer. Requires inventory.write in
+    addition to use/read. 1..36 unique slots, <=64 KiB per saved compound and
+    <=256 KiB combined input. All input is copied before calling the backend.
+    The observation is consumed once backend admission begins, on all outcomes.
+    Native reconstruction must retain complete bytes. QUARANTINED forbids retry
+    and requires administrator review; BDS and plugin saves are separate domains.
+    This operation does not grant authority to open a held-container editor. */
+ vcf_status (VCF_CALL *apply_inventory_edit)(vcf_handle,vcf_handle,const vcf_inventory_edit*,uint32_t);
 } vcf_api;
 #define VCF_API_1_0_SIZE ((uint32_t)offsetof(vcf_api,action_count))
 #define VCF_API_1_1_SIZE ((uint32_t)offsetof(vcf_api,inspect_held))
 #define VCF_API_1_2_SIZE ((uint32_t)offsetof(vcf_api,read_inventory_item))
 #define VCF_API_1_3_SIZE ((uint32_t)offsetof(vcf_api,observe_inventory_item))
+#define VCF_API_1_4_SIZE ((uint32_t)offsetof(vcf_api,apply_inventory_edit))
 VCF_EXPORT vcf_status VCF_CALL oni_vcf_get_api(uint32_t version, uint32_t size, vcf_api *output);
 #ifdef __cplusplus
 }
