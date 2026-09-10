@@ -22,3 +22,4 @@ research/*
 !research/native-evidence/
 !research/native-linux-inventory-writer-sdk15.json
 !research/native-linux-inventory-crashes-sdk15.json
+!research/native-release-0.5.0-native.1.json

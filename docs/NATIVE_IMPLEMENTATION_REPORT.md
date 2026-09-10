@@ -1,3 +1,9 @@
+# Native prerelease implementation report
+
+Version **0.5.0-native.1**, SDK 1.5. The [release report](RELEASE_NATIVE_0_5_0.md) and [held-storage guide](NATIVE_HELD_STORAGE.md) describe the current deliverable. The all-UI framework remains not qualified. Linux has 23 passing portable/native-header tests; Windows Release and Debug each have 21. The release sanitizer target additionally runs three 100,000-input fuzz campaigns. Actual loaded artifact hashes are recorded separately.
+
+## Historical implementation checkpoints
+
 # Native implementation checkpoint â€” incomplete
 
 Development continues on `feature/native-virtual-container-framework`.

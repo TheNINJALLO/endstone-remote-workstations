@@ -1,3 +1,5 @@
+> **Legacy v0.4.0 documentation.** This page describes the Python/native-companion implementation. For the native prerelease, use [installation](NATIVE_INSTALLATION.md), [examples](NATIVE_EXAMPLES.md) and [SDK 1.5](NATIVE_SDK.md).
+
 # Native chemistry tables
 
 The Windows companion binds BDS 1.26.45.1's real Compound Creator (20), Element

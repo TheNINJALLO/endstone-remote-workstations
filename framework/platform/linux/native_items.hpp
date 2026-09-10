@@ -1,5 +1,6 @@
 #pragma once
 #include <oni/vcf/core.hpp>
+#include <oni/vcf/packet_items.hpp>
 #include <endstone/inventory/item_stack.h>
 namespace endstone {class Player;}
 namespace oni::vcf::platform::linux_native {
@@ -28,5 +29,10 @@ public:
  std::unique_ptr<NativeItem> reconstruct(std::span<const uint8_t>)const;
  endstone::ItemStack copy(const NativeItem&)const;
  std::vector<uint8_t> save(const endstone::ItemStack&)const;
+ // Detached native NetworkItemStackDescriptor construction preserves BDS's
+ // item-specific userdata. An explicit presentation ID never authorizes a
+ // write. native_descriptor() obtains the actual current slot's stack ID.
+ wire::Descriptor descriptor(std::span<const uint8_t>,int32_t presentation_id)const;
+ wire::Descriptor native_descriptor(uintptr_t inventory,uint32_t slot)const;
 };
 }

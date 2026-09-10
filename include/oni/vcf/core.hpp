@@ -111,6 +111,7 @@ public:
  void selected(vcf_handle,std::string_view,uint32_t);
  void player_gone(std::string_view);
  void opened(vcf_handle,vcf_handle,vcf_status);
+ void committed(vcf_handle,vcf_handle,uint64_t revision);
  void retired(vcf_handle,vcf_handle,vcf_status);
  void shutdown();
  uint32_t session_count() const { return static_cast<uint32_t>(sessions_.size()); }

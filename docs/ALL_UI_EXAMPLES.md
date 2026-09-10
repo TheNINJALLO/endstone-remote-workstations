@@ -25,7 +25,7 @@ qualification plus separate custom behavior.
 | `dropper` | `prepare(player, "dropper", mode)` | Original source behavior and per-feature custom behavior are not yet executable through the native adapter. |
 | `trappedchest` | `prepare(player, "trappedchest", mode)` | Original source behavior and per-feature custom behavior are not yet executable through the native adapter. |
 | `enderchest` | `prepare(player, "enderchest", mode)` | Original source behavior and per-feature custom behavior are not yet executable through the native adapter. |
-| `shulker` | `prepare(player, "shulker", mode)` | Original source behavior and per-feature custom behavior are not yet executable through the native adapter. |
+| `shulker` | `prepare(player, "shulker", VCF_REAL_SOURCE)` | [Linux held editor](NATIVE_HELD_STORAGE.md): selected command/transfer/cancel checks passed; interaction binding refuses equipment sync. Custom behavior and full qualification remain incomplete. |
 | `craft` | `prepare(player, "craft", mode)` | Original source behavior and per-feature custom behavior are not yet executable through the native adapter. |
 | `anvil` | `prepare(player, "anvil", mode)` | Original source behavior and per-feature custom behavior are not yet executable through the native adapter. |
 | `grindstone` | `prepare(player, "grindstone", mode)` | Original source behavior and per-feature custom behavior are not yet executable through the native adapter. |

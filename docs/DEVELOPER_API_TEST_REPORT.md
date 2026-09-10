@@ -1,3 +1,5 @@
+> **Legacy v0.4.0 documentation.** This page describes the Python/native-companion implementation. For the native prerelease, use [installation](NATIVE_INSTALLATION.md), [examples](NATIVE_EXAMPLES.md) and [SDK 1.5](NATIVE_SDK.md).
+
 # Dependency API 1.0: installed alpha test report
 
 RemoteWorkstations **0.3.0a1** and the separate **rw_ui_example 0.1.0** consumer

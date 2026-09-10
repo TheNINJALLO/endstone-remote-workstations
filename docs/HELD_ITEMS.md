@@ -1,3 +1,5 @@
+> **Legacy v0.4.0 documentation.** This page describes the Python/native-companion implementation. For the native prerelease, use [installation](NATIVE_INSTALLATION.md), [examples](NATIVE_EXAMPLES.md) and [SDK 1.5](NATIVE_SDK.md).
+
 # Held-item development
 
 The `0.5.0.dev1` development branch starts held-item support with actual-item

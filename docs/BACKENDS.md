@@ -1,3 +1,5 @@
+> **Legacy v0.4.0 documentation.** This page describes the Python/native-companion implementation. For the native prerelease, use [installation](NATIVE_INSTALLATION.md), [examples](NATIVE_EXAMPLES.md) and [SDK 1.5](NATIVE_SDK.md).
+
 # Backend decisions
 
 Seven Windows workstation contexts now use a real CPython/pybind11 companion in Endstone's

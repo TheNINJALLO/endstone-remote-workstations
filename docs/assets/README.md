@@ -16,3 +16,7 @@ No private chat or account details are included.
 | ender-chest.png | Actual online Ender Chest reached from that menu |
 | furnace.png | Native linked furnace |
 | chemistry.png | Element Constructor in the Education test world |
+
+## Native prerelease assets
+
+`native-banner.svg` is an original MIT-licensed vector illustration. `images/native-held-storage/` contains selected unaltered stock-client screenshots from the documented native held-editor test candidate. They show actual gameplay, contain no private chat/account information, and do not certify later artifacts. Other native image folders retain their individual linked test reports.

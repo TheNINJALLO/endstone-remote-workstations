@@ -1,3 +1,5 @@
+> **Legacy v0.4.0 documentation.** This page describes the Python/native-companion implementation. For the native prerelease, use [installation](NATIVE_INSTALLATION.md), [examples](NATIVE_EXAMPLES.md) and [SDK 1.5](NATIVE_SDK.md).
+
 # Reproducible build and runtime requirements
 
 Public API: Endstone **0.11.0**, Python plugin metadata `api_version = "0.11"`.

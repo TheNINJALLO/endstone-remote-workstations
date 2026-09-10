@@ -2,8 +2,10 @@
 
 SDK 1.2 introduces `inspect_held` for a connected player's selected hotbar item.
 This ports the read-only inspection portion of the held-item contract to C++.
-Native held editors, item locking, identity assignment, writeback and crash/save
-reconciliation remain incomplete. `native_open_available` is always zero.
+This older read-only API conservatively keeps `native_open_available` at zero.
+The separately enabled [Linux held shulker session](NATIVE_HELD_STORAGE.md) now
+implements identity, source locks and journaled transfers. Full held-editor and
+cross-save recovery qualification remains incomplete.
 A placed shulker block is not a substitute for the catalog's held-item source.
 
 **Bundles currently refuse with `VCF_UNAVAILABLE`.** The initial `ea7c6cf`

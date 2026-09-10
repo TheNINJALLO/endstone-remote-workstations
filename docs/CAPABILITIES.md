@@ -1,3 +1,5 @@
+> **Legacy v0.4.0 documentation.** This page describes the Python/native-companion implementation. For the native prerelease, use [installation](NATIVE_INSTALLATION.md), [examples](NATIVE_EXAMPLES.md) and [SDK 1.5](NATIVE_SDK.md).
+
 # Capability catalog
 
 Gameplay requires explicit configuration opt-in. Each entry states its tested scope; implemented-tested does not mean complete parity or production certification. Linked sources retain real BDS storage and world ticking.

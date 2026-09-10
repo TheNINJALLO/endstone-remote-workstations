@@ -15,12 +15,12 @@
 
 namespace sdk = oni::vcf::sdk;
 class NativePassthrough : public endstone::Plugin {
-    static constexpr std::array<std::string_view,26> screens = {
+    static constexpr std::array<std::string_view,27> screens = {
         "craft", "anvil", "grindstone", "smithing", "stonecutter", "loom",
         "cartography", "inventory2x2", "armor", "offhand", "recipebook", "enchanting",
         "furnace", "blastfurnace", "smoker", "enderchest", "barrel",
         "dispenser", "dropper", "brewing", "beacon", "crafter", "hopper",
-        "chest", "trappedchest", "doublechest"
+        "chest", "trappedchest", "doublechest", "shulker"
     };
     std::unique_ptr<sdk::Client> ui_;
     std::shared_ptr<endstone::Task> cleanup_;
@@ -91,7 +91,7 @@ class NativePassthrough : public endstone::Plugin {
         request.player=sdk::view(player_id);request.canonical_id=sdk::view(screen);
         request.source_permission=sdk::view("vcf.examples.passthrough");
         const bool shared=screen=="inventory2x2"||screen=="armor"||screen=="offhand"||screen=="recipebook";
-        request.mode=(shared||linked(screen))?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
+        request.mode=(shared||linked(screen)||screen=="shulker")?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
         std::string dimension;
         if(linked(screen)){
             auto xyz=coordinates(source);dimension=player.getDimension().getName();request.dimension=sdk::view(dimension);
@@ -117,7 +117,7 @@ public:
             },1,1);
             registerEvent(&NativePassthrough::interact,*this,endstone::EventPriority::Highest);
             registerEvent(&NativePassthrough::quit,*this);
-            getLogger().info("NativePassthrough connected through SDK {}.{}; twenty-six original-mode requests available subject to provider admission; saved-item observations and guarded edits available.",VCF_ABI_VERSION>>16,VCF_ABI_VERSION&0xffffu);
+            getLogger().info("NativePassthrough connected through SDK {}.{}; twenty-seven original-mode requests subject to provider admission; saved-item observations and guarded edits available.",VCF_ABI_VERSION>>16,VCF_ABI_VERSION&0xffffu);
         } catch(const std::exception& e) {getLogger().error("NativePassthrough unavailable: {}",e.what());ui_.reset();}
     }
     void onDisable() override {
@@ -138,8 +138,10 @@ public:
         if(!ui_||event.isCancelled()||!event.getPlayer().isSneaking()||!event.getItem())return;
         if(event.getAction()!=endstone::PlayerInteractEvent::Action::RightClickAir
             &&event.getAction()!=endstone::PlayerInteractEvent::Action::RightClickBlock)return;
-        if(event.getItem()->getType().getId()!="minecraft:compass")return;
         auto it=bindings_.find(event.getPlayer().getUniqueId().str());if(it==bindings_.end())return;
+        const std::string type=event.getItem()->getType().getId();
+        if(it->second=="shulker"){if(type!="minecraft:shulker_box"&&type!="minecraft:undyed_shulker_box"&&!type.ends_with("_shulker_box"))return;}
+        else if(type!="minecraft:compass")return;
         event.setCancelled(true);
         try{open(event.getPlayer(),it->second);}
         catch(const std::exception& e){event.getPlayer().sendErrorMessage(e.what());}
@@ -247,7 +249,7 @@ public:
             else if(args[0]=="bind"&&args.size()==2&&known(args[1])&&!linked(args[1])) {
                 if(bindings_.size()>=100&&!bindings_.contains(player->getUniqueId().str()))throw std::runtime_error("Binding limit reached.");
                 bindings_[player->getUniqueId().str()]=args[1];
-                player->sendMessage("Sneak and right-click with a compass to request "+args[1]+". Use /vcf_native unbind to clear.");
+                player->sendMessage("Sneak and right-click with "+std::string(args[1]=="shulker"?"the held shulker":"a compass")+" to request "+args[1]+". Use /vcf_native unbind to clear.");
             } else if(args.size()==2&&linked(args[0]))open(*player,args[0],args[1]);
             else if(args.size()==1)open(*player,args[0]);
             else throw std::runtime_error("Use /vcf_native <screen>, /vcf_native <source-screen> <x,y,z>, or /vcf_native bind <screen>.");
@@ -255,7 +257,7 @@ public:
         return true;
     }
 };
-ENDSTONE_PLUGIN("vcf_native_passthrough","0.1.0-dev",NativePassthrough) {
+ENDSTONE_PLUGIN("vcf_native_passthrough","0.5.0-native.1",NativePassthrough) {
     description="SDK-only original-mode regression example; gameplay qualification incomplete";
     depend={"onistone_vcf"};
     permission("vcf.examples.passthrough").default_(endstone::PermissionDefault::Operator);

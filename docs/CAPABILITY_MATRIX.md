@@ -16,7 +16,7 @@ The Linux Docker build passes locally and in CI and produces a real ELF `.so`. E
 | `dropper` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/closure smoke passed / not implemented |
 | `trappedchest` | storage | Not qualified / not implemented | Experimental nearby unpaired source, PC transfers/metadata and permission-loss retention passed / not implemented |
 | `enderchest` | storage | Not qualified / not implemented | Experimental nearby linked source, PC transfers/metadata/cleanup smoke passed / not implemented |
-| `shulker` | storage | Not qualified / not implemented | Blocked / not implemented |
+| `shulker` | storage | Experimental real-source command/transfer/cancel checks; custom and full qualification incomplete | Blocked / not implemented |
 | `craft` | workstation | Experimental original adapter, client untested / not implemented | Experimental original, PC 3Ãƒâ€”3 output/closure/reconnect smoke passed / not implemented |
 | `anvil` | workstation | Experimental original adapter, client untested / not implemented | Experimental original, PC rename/cost smoke passed / not implemented |
 | `grindstone` | workstation | Experimental original adapter, client untested / not implemented | Experimental original, initial output rejection unresolved; repeats passed / not implemented |

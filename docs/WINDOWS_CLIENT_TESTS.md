@@ -1,3 +1,5 @@
+> **Legacy v0.4.0 documentation.** This page describes the Python/native-companion implementation. For the native prerelease, use [installation](NATIVE_INSTALLATION.md), [examples](NATIVE_EXAMPLES.md) and [SDK 1.5](NATIVE_SDK.md).
+
 # Historical 0.1.0 Windows client test — 2026-09-06
 
 This is the earlier baseline report. See [TEST_REPORT.md](TEST_REPORT.md) for the

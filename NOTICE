@@ -1,0 +1,18 @@
+Onistone Virtual Container Framework
+Copyright the project contributors. Project code is licensed under MIT.
+
+Native build dependencies and notices:
+- Endstone 0.11.10 headers: Apache License 2.0, licenses/Endstone-Apache-2.0.txt.
+- expected-lite: Boost Software License 1.0, licenses/expected-lite-BSL-1.0.txt.
+- EnTT: MIT, licenses/EnTT-MIT.txt.
+- MinHook (Windows): BSD-style license, third_party/minhook/LICENSE.txt.
+- nlohmann/json: MIT, third_party/nlohmann/LICENSE.MIT.
+
+The distribution includes corresponding notices with each package. Linux system
+libraries and the Endstone runtime are external dependencies, not bundled here.
+LLVM/libFuzzer is a development test dependency and is not part of the plugin
+package. Proprietary BDS executables, symbols and private worlds are excluded.
+
+Minecraft is a trademark of Mojang/Microsoft. Documentation screenshots show
+Minecraft artwork; the project code license does not grant rights to that
+artwork. This project is not an official Minecraft product or endorsed by Mojang.

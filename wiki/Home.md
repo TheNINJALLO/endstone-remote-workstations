@@ -1,30 +1,17 @@
-![RemoteWorkstations](https://raw.githubusercontent.com/TheNINJALLO/endstone-remote-workstations/main/docs/assets/banner.svg)
+![Onistone VCF](https://raw.githubusercontent.com/TheNINJALLO/endstone-remote-workstations/v0.5.0-native.1/docs/assets/native-banner.svg)
 
-# RemoteWorkstations wiki
+# RemoteWorkstations and Onistone VCF
 
-Native Bedrock workstations and dependency API 1.5 for Endstone.
+Choose the documentation for the implementation you installed.
 
-**[Download the release](https://github.com/TheNINJALLO/endstone-remote-workstations/releases/latest)** · **[Repository](https://github.com/TheNINJALLO/endstone-remote-workstations)**
+## Native experimental prerelease
 
-## For server owners
+[Download v0.5.0-native.1](https://github.com/TheNINJALLO/endstone-remote-workstations/releases/tag/v0.5.0-native.1) · [Install](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Native-Installation) · [Examples](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Native-Examples) · [SDK 1.5](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Native-SDK)
 
-- [Installation](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Installation): choose the correct wheel, enable backends and upgrade.
-- [Commands and permissions](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Commands-and-Permissions): expose only authorized capabilities.
-- [Configuration and real sources](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Configuration-and-Sources): loaded blocks, actual entities and world features.
-- [Troubleshooting](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Troubleshooting): diagnose admission, dependencies and lifecycle issues.
+Linux `.so` and Windows `.dll`, standalone native consumers and an experimental Linux held-shulker editor. The full native/custom catalog and automatic cross-save recovery are incomplete. [Read qualification limits](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Native-Release).
 
-## For plugin developers
+## Stable RemoteWorkstations v0.4.0
 
-- [Developer examples](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Developer-Examples): native screens, Ender Chest, protected menus, exports, blocks, entities and NPCs.
-- [API reference](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/main/docs/DEVELOPER_API.md): methods, tickets, ownership and limits.
-- [Building from source](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Building-from-Source).
-- [Runnable example plugin](https://github.com/TheNINJALLO/endstone-remote-workstations/tree/main/examples/dependency_plugin).
+[Stable download](https://github.com/TheNINJALLO/endstone-remote-workstations/releases/tag/v0.4.0) · [Versioned documentation](https://github.com/TheNINJALLO/endstone-remote-workstations/tree/v0.4.0/docs) · [Legacy installation](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Installation)
 
-## Know the supported scope
-
-The catalog has 53 implemented entry points. Windows native execution is pinned
-to Endstone 0.11.10 / BDS 1.26.45.1 and the admitted Windows client. The portable
-wheel contains no Linux native companion. Held-item interfaces and exactly-once
-crash recovery are not supplied.
-
-[Compatibility and limits](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Compatibility-and-Limits) · [Validation](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Validation)
+The stable Python/native-companion APIs and feature counts do not apply to the native prerelease. Use separate server instances.

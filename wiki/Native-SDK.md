@@ -1,0 +1,215 @@
+> **v0.5.0-native.1:** see the new [actual held shulker editor](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Native-Held-Shulker), [installation](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Native-Installation) and [prerelease qualification](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Native-Release). Historical checks below retain their original artifact scope.
+
+# Native SDK 1.5 development contract
+
+This ABI is provisional. It is separate from Endstone's public C++ ABI and from
+private BDS hooks. Compile consumers with an appropriate Endstone SDK/toolchain
+and declare `depend = {"onistone_vcf"}` in their native plugin metadata.
+
+## Use the installed CMake package
+
+Copy the exported `sdk/` directory into your dependency directory. It can be
+renamed and moved independently of the provider. Set `CMAKE_PREFIX_PATH` to
+that directory, then add this to your existing native plugin project:
+
+```cmake
+find_package(OnistoneVCF 1.5 CONFIG REQUIRED)
+target_link_libraries(MyUiPlugin PRIVATE OnistoneVCF::sdk)
+```
+
+`OnistoneVCF::sdk` supplies the public headers, C++20 requirement and the
+consumer platform's loader library. A C consumer can use `OnistoneVCF::abi`
+for the C function-table headers. Neither target links the provider, its core
+archive or the Endstone runtime. Keep your plugin's compatible Endstone SDK
+and compiler configuration; this package does not certify a native ABI.
+
+The CMake package version `1.5.0` tracks SDK ABI 1.5, separately from the
+development provider's release version. To export just the SDK and its MIT
+license, run `cmake --install <build-directory> --component sdk --prefix <export>`;
+the standalone package is written under `<export>/sdk/`.
+
+The `installed_sdk_package` test relocates and renames that directory into a
+path containing spaces, then configures, builds and runs independent C/C++
+consumers using only the installed package. The discovery test verifies that
+an absent provider is refused without loading another module.
+
+See [native saved-item reads](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/docs/NATIVE_ITEM_SAVE.md) for the new 36-slot read API,
+its caller-owned NBT format, permissions and platform availability.
+See [inventory observations](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/docs/NATIVE_ITEM_OBSERVATIONS.md) to detect native item
+changes across calls, including changes that return to the original saved bytes.
+See [native inventory edits and recovery](https://github.com/TheNINJALLO/endstone-remote-workstations/wiki/Native-Recovery) for the
+experimental Linux write operation, complete saved-item inputs and restart review.
+
+## Discover and call the provider
+
+Include `oni/vcf/sdk.hpp` and `oni/vcf/loader.hpp`. The
+[compiled consumer](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/examples/native/consumer.cpp) is the reference.
+`sdk::discover()` resolves the provider's existing loaded module, including
+Endstone's shadow copy. Do not load the original file as a second DLL.
+
+All calls except function-table negotiation run on the server owner thread.
+Strings and byte spans are borrowed only during a call and copied when retained.
+Initialize every descriptor with `sdk::descriptor<T>()`, which fills its size
+and version. Opaque integer handles are provider-owned identities, not pointers.
+The caller supplies output structures and never frees provider memory.
+Capability string views last until provider shutdown.
+
+ABI 1.1 appends action discovery and protection guards; ABI 1.2 appends
+read-only held-item inspection; ABI 1.3 appends native saved-item reads; ABI 1.4
+appends consumer-owned inventory observations; ABI 1.5 appends guarded inventory
+edits. The provider accepts ABI 1.0 through 1.4 negotiation and descriptors,
+copies only the requested table prefix, and emits
+the callback version registered by that consumer, including protection callbacks.
+The current C++ SDK requires 1.5 and owns its function-table copy, so constructing
+`sdk::Client(sdk::discover(), "my_plugin")` is safe. C tests check the old
+table's boundary with sentinel bytes. This is compatibility with this project's
+development ABI, not with legacy Python imports.
+
+`ui.inspect_held(player_uuid)` returns a detached, bounded description of the
+selected held shulker, written book or writable book. Bundles refuse because
+their separately stored contents are absent from the public item snapshot. It checks the
+selected slot against the public main-hand snapshot, the player's permissions,
+and the consumer's lifetime. It does not change items or open an editor. See the
+[held-item contract and example](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/docs/NATIVE_HELD_ITEMS.md) before using its digest
+or optional identity; neither is an ownership lock.
+
+```cpp
+auto table = oni::vcf::sdk::discover();
+oni::vcf::sdk::Client ui(table, "my_plugin");
+auto ticket = ui.prepare(player_uuid, "chest", VCF_TRANSIENT, "Storage");
+ui.set(ticket, 0, "minecraft:stone", 12);
+ui.open(ticket); // queued; inspect ui.info(ticket) on a later tick
+```
+
+This example compiles. The current native chest renderer refuses with
+`VCF_UNAVAILABLE`; preparing model contents is not proof of a working screen.
+
+Ordinary forms use `vcf_menu_desc` and `show_menu`; buttons name actions
+registered with `register_action`. Own names resolve as
+`consumer:action`; another consumer may invoke only explicitly exported
+actions. Permission and registration are rechecked at dispatch, and callbacks
+execute on a later tick. Cancellation and double submission invalidate the
+session before another action can execute.
+
+A button selection completes the original menu ticket with the action's result;
+it does not allocate a second hidden ticket. Poll `session_info` and call
+`forget` after that ticket becomes terminal. The compiled consumer demonstrates
+this cleanup on its scheduler and reports outstanding tickets with
+`/vcf_catalog_showcase status`. Explicit `invoke_action` calls still return
+their own caller-owned tickets. Menu guards and action permissions are checked
+again on the dispatch tick, including when permission changed after selection.
+
+`ui.actions()` returns detached descriptions of the consumer's own actions
+and other consumers' explicit exports. Private actions remain hidden. The C
+functions `action_count` and `action_info` use a registry revision and copy
+text into caller-provided storage; a changed revision refuses with `VCF_STALE`.
+No returned description exposes a callback pointer or another consumer's context.
+
+`ui.guard(name, callback, context, canonical_id)` registers an owned protection
+callback. An empty canonical ID applies to all openings, including forms;
+otherwise aliases resolve to the exact canonical entry. The callback receives
+the requesting consumer, ticket, phase and complete source descriptor. Only
+`VCF_OK` permits continuation. Guards run on the server thread before dispatch,
+at asynchronous readiness, and during active native adapter checks (at most
+250 ms apart). Form selection rechecks guards too. Removing a guard or disabling
+its owner revokes it before any later callback dispatch. These checks do not
+claim an atomic interception of BDS's unchanged vanilla transaction path.
+
+For paired block sources, the adapter invokes guards with each verified source
+position under the same ticket, mode, dimension and canonical ID. Treat every
+position as independently protected and keep callbacks safe for repeated calls.
+The stored session keeps the originally requested position. A denial for either
+half refuses or closes the double chest; matching native content and slot sends
+recheck both positions before publication. See the
+[paired chest example](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/docs/examples/linux-linked-chests.md).
+
+`prepare`, `set_item` and `define_rule` configure provider-owned state.
+Real-source sessions reject preloading. Native/client-owned state cannot be
+silently replaced by changing a backing-mode flag.
+Items must be registered with the actual server; counts respect that item's
+maximum. Optional NBT uses bounded standard little-endian named compounds.
+The parser rejects truncation, duplicate compound keys, non-finite floats,
+excessive depth/nodes and trailing bytes. This does not yet qualify full native
+item codec round trips or nested-container writes under the new plugin.
+
+Tickets report preparing/opening/active/closing/recovering/terminal state,
+revision, generation and terminal status. `close` queues cancellation.
+An asynchronous adapter keeps a ticket opening until its native handshake
+finishes and closing until its manager is retired. Cancelling before dispatch
+does not close another plugin's form. Native opens recheck permissions when
+the handshake completes, and pending/closing native leases exclude concurrent
+opens for the same player. `VCF_PENDING` is an internal host-adapter result;
+public queueing operations still return `VCF_OK` when accepted.
+`forget` frees a terminal ticket. Consumers should release terminal handles;
+limits refuse further work instead of allowing unbounded growth.
+
+Call `dispose()` from `onDisable` and require `VCF_OK` before unloading.
+A call from an executing callback returns `VCF_REENTRANT`; schedule disposal
+after returning. Plugin-disable events additionally revoke the named owner.
+The Windows and Linux providers are pinned for process lifetime because Endstone may retain
+form callback objects. Its disabled callbacks hold only a revoked weak lifetime.
+**Hot replacement requires a server restart.**
+
+The ABI header is the authority for functions that exist. Protected-menu
+descriptors, editor-specific controls, request-batch publication,
+map providers and persistent storage operations are not yet exposed as completed
+native SDK functions. Their original contracts remain tracked in
+[ALL_UI_MIGRATION.md](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/docs/ALL_UI_MIGRATION.md).
+
+The experimental Windows original-mode adapter requires an explicit
+`experimental_original_windows: true` in `plugins/onistone_vcf/config.json`.
+For `craft`, `anvil`, `stonecutter`, `grindstone`, `smithing`, `loom` and
+`cartography`, request `VCF_NATIVE_CONTEXT`; BDS retains its original gameplay
+ownership. For `inventory2x2`, `armor`, `offhand` and `recipebook`, request
+`VCF_REAL_SOURCE`. These four share the real inventory screen and client-owned
+navigation/closure. Other backing modes refuse instead of substituting a
+screen. This configuration flag does not certify client or custom behavior.
+
+Linux has a separate `experimental_original_linux: true` flag for the four
+shared player-inventory roles in `VCF_REAL_SOURCE` mode, plus `craft`, `anvil`, `smithing`,
+`stonecutter`, `grindstone`, `loom`, `cartography` and `enchanting` in `VCF_NATIVE_CONTEXT`.
+It uses independently verified Linux ABI facts, including crafting's by-value
+owner argument and BDS-owned stack context.
+See the [Linux workstation example](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/docs/examples/linux-native-workstations.md).
+Linux enchanting's original offers/costs have PC smoke evidence; custom offers
+and linked real-table mode remain incomplete. Windows enchanting is not admitted.
+
+Linux also admits `furnace`, `blastfurnace` and `smoker` with `VCF_REAL_SOURCE`.
+Supply an explicit dimension, block position and source permission. The source
+must be loaded, nearby and of the exact matching block family. See the
+[linked-machine example and PC evidence](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/docs/examples/linux-linked-furnaces.md).
+These views retain the real block's vanilla contents and processing. Windows
+does not yet admit these three source adapters.
+
+The same explicit-source contract also admits Linux `enderchest` and `barrel`.
+The Ender view uses that online player's real Ender inventory; the barrel uses
+its real block inventory. The [linked-storage example](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/docs/examples/linux-linked-storage.md)
+documents actual transfers, metadata retention and cleanup. Source-free Ender
+access, virtual vaults, custom storage and Windows admission remain incomplete.
+
+Linux also admits explicit nearby `dispenser`, `dropper`, `brewing`, `beacon`
+and `crafter` sources. The [utility example](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/docs/examples/linux-linked-utilities.md)
+records selected native behavior, the initial SDK-close failures, and later
+repeated close/item/control restoration passes in `d6adf87`. Initial unaccepted
+input attempts remain documented. These original
+views do not implement custom processors or routing; Windows admission remains
+incomplete.
+
+The separate [linked hopper example](https://github.com/TheNINJALLO/endstone-remote-workstations/blob/v0.5.0-native.1/docs/examples/linux-linked-hopper.md) uses
+`VCF_REAL_SOURCE` and five real source slots, with a native current-contents
+refresh. Selected PC transfer, metadata and cleanup checks passed in `9a656e3`.
+It does not implement custom routing or hopper-minecart access.
+
+The original-mode adapter rejects preloaded items, changed slot policies,
+recipe definitions, replacement titles and unrelated source descriptors. It
+never reports success while silently ignoring requested custom behavior.
+The provider reclaims its own completed command/catalog tickets; SDK consumers
+retain responsibility for forgetting their own terminal tickets.
+
+Native Windows and Linux close leases retain previously owned window IDs for 60 seconds
+under this specific client profile. They reject a delayed old close only when
+the verified current native manager owns a different window. A legitimate close
+for the same window, another player or an unrelated ID passes through. Form
+cleanup similarly checks its own lease and observes replacement form/native
+opens before issuing Endstone's broad close operation. Packet callbacks record
+ownership changes; replacement packets are not sent recursively from them.

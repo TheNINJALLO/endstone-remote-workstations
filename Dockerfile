@@ -58,12 +58,12 @@ RUN cmake -S . -B out/linux-sanitized -G Ninja -DCMAKE_BUILD_TYPE=Debug \
  && mkdir -p /sanitizer-results /fuzz-corpus \
  && printf '\012\000\000\000' > /fuzz-corpus/empty-compound \
  && printf '\012\000\000\001\001\000x\177\000' > /fuzz-corpus/byte-compound \
+ && python3 tools/native/fuzz-corpus.py /storage-corpus /items-corpus /fuzz-corpus \
  && ASAN_OPTIONS=detect_leaks=1:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
  ctest --test-dir out/linux-sanitized --output-on-failure --output-junit /sanitizer-results/ctest.xml \
  && ASAN_OPTIONS=detect_leaks=1:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
  out/linux-sanitized/vcf_fuzz_nbt /fuzz-corpus -runs=100000 -max_len=65536 -timeout=5 -rss_limit_mb=1024 -seed=2169 \
  > /sanitizer-results/fuzz-nbt.txt 2>&1 \
- && python3 tools/native/fuzz-corpus.py /storage-corpus /items-corpus \
  && ASAN_OPTIONS=detect_leaks=1:abort_on_error=1 UBSAN_OPTIONS=halt_on_error=1 \
  out/linux-sanitized/vcf_fuzz_storage /storage-corpus -runs=100000 -max_len=65536 -timeout=5 -rss_limit_mb=1024 -seed=2169 \
  > /sanitizer-results/fuzz-storage.txt 2>&1 \

@@ -1,3 +1,5 @@
+> **v0.5.0-native.1:** see the new [actual held shulker editor](NATIVE_HELD_STORAGE.md), [installation](NATIVE_INSTALLATION.md) and [prerelease qualification](RELEASE_NATIVE_0_5_0.md). Historical checks below retain their original artifact scope.
+
 # Native SDK 1.5 development contract
 
 This ABI is provisional. It is separate from Endstone's public C++ ABI and from

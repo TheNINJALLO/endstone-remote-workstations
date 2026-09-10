@@ -1,3 +1,5 @@
+> **v0.5.0-native.1:** see the new [actual held shulker editor](NATIVE_HELD_STORAGE.md), [installation](NATIVE_INSTALLATION.md) and [prerelease qualification](RELEASE_NATIVE_0_5_0.md). Historical checks below retain their original artifact scope.
+
 # Native inventory edits and recovery
 
 The developing C++ backend exposes a guarded inventory write operation in SDK

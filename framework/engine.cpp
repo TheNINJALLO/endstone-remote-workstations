@@ -279,6 +279,9 @@ void Engine::emit(Session&s,uint32_t kind,std::string_view detail){
  vcf_event e{sizeof(e),consumers_.at(s.owner).version,s.id,{s.player.data(),static_cast<uint32_t>(s.player.size())},kind,s.result,s.inventory.revision,{detail.data(),static_cast<uint32_t>(detail.size())}};
  ++callbacks_;try{s.callback(s.context,&e);}catch(...){s.result=VCF_INTERNAL;}--callbacks_;
 }
+void Engine::committed(vcf_handle owner,vcf_handle id,uint64_t revision){
+ auto& s=session(owner,id);require(s.state==VCF_ACTIVE&&revision>s.inventory.revision,VCF_STALE);s.inventory.revision=revision;emit(s,VCF_EVENT_COMMIT,"held storage committed");
+}
 void Engine::finish(Session&s,vcf_status result){if(s.state==VCF_TERMINAL)return;s.state=VCF_TERMINAL;s.result=result;emit(s,result==VCF_OK||result==VCF_CLOSED?VCF_EVENT_CLOSE:VCF_EVENT_FAILURE);}
 vcf_handle Engine::invoke(vcf_handle owner,std::string player,std::string action){
  check();auto key=qualify(owner,action);auto it=actions_.find(key);require(it!=actions_.end(),VCF_NOT_FOUND);

@@ -1,1 +1,1 @@
-[Repository](https://github.com/TheNINJALLO/endstone-remote-workstations) · [Releases](https://github.com/TheNINJALLO/endstone-remote-workstations/releases) · [Report an issue](https://github.com/TheNINJALLO/endstone-remote-workstations/issues)
+[Stable v0.4.0](https://github.com/TheNINJALLO/endstone-remote-workstations/releases/tag/v0.4.0) Â· [Native prerelease](https://github.com/TheNINJALLO/endstone-remote-workstations/releases/tag/v0.5.0-native.1) Â· [Issues](https://github.com/TheNINJALLO/endstone-remote-workstations/issues)

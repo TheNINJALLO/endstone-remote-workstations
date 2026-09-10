@@ -21,7 +21,7 @@ No project wheel or Python package participates in native loading.
 
 The exported `sdk/` directory includes a relocatable `OnistoneVCF` CMake package,
 public headers and the MIT license. Consumers can use
-`find_package(OnistoneVCF 1.1 CONFIG REQUIRED)` and link `OnistoneVCF::sdk`;
+`find_package(OnistoneVCF 1.5 CONFIG REQUIRED)` and link `OnistoneVCF::sdk`;
 see [the SDK setup](NATIVE_SDK.md#use-the-installed-cmake-package). CTest verifies
 installation and consumption from a renamed directory containing spaces.
 

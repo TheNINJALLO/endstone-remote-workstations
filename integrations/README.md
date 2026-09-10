@@ -1,3 +1,5 @@
+> **Legacy Python integration.** Use the [native C++ examples](../docs/NATIVE_EXAMPLES.md) for v0.5.0-native.1.
+
 # Inventory helpers for RemoteWorkstations
 
 The requested repositories are `TheNINJALLO/endstone-ninjos-backpacks` and

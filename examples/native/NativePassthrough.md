@@ -61,8 +61,9 @@ the API contract, stock-client checks and administrator procedure.
    SDK/native closure and source-lifecycle evidence. Three new
    [linked chest paths](../../docs/examples/linux-linked-chests.md) add `chest`,
    `trappedchest` and `doublechest`, with selected PC transfer, metadata,
-   close/reopen and paired-source guard evidence. There are 26
-   requests, each subject to exact-build admission and qualification.
+   close/reopen and paired-source guard evidence. The separately enabled [held shulker session](../../docs/NATIVE_HELD_STORAGE.md)
+   adds `/vcf_native shulker` and `/vcf_native bind shulker`. There are 27
+   original-mode requests, each subject to exact-build admission and qualification.
 
 The operator-only `/vcf_native guard-deny "Overworld|2,91,7"` demonstration
 denies that source position for this consumer's tickets, including a double
@@ -89,3 +90,6 @@ response or counter is not rendering evidence. Current per-entry qualification
 is in `research/native-evidence/`; this procedure is not a claim those client
 tests passed. Custom recipes, maps, merchants and valuable-item recovery require
 their separate implementations and tests.
+
+
+**Known prerelease issue:** the held-shulker sneak-and-use binding currently refuses an equipment synchronization packet during preparation. Use the tested `/vcf_native shulker` command. No inventory transfer is performed by the refused opening.

@@ -113,9 +113,33 @@ void menu_action_ticket_lifecycle(){
     check(calls==5002&&e.session(caller,id).result==VCF_INTERNAL);e.forget(caller,id);
     check(e.session_count()==0);
 }
+void committed_callback_lifecycle(){
+    Fixture f;
+    struct State {Fixture* fixture;unsigned calls=0;uint64_t revision=0;bool close=false;} state{&f};
+    Session s;s.kind="shulker";s.player="player";s.mode=VCF_REAL_SOURCE;s.context=&state;
+    s.callback=[](void* context,const vcf_event* event)->vcf_status{
+        auto& state=*static_cast<State*>(context);
+        if(event->kind==VCF_EVENT_COMMIT){
+            ++state.calls;state.revision=event->revision;
+            if(state.close)state.fixture->engine.close(state.fixture->owner,event->ticket);
+        }
+        return VCF_OK;
+    };
+    auto id=f.engine.prepare(f.owner,s);f.engine.open(f.owner,id);f.engine.tick();
+    refused(VCF_STALE,[&]{f.engine.committed(f.owner,id,1);});
+    f.engine.opened(f.owner,id,VCF_OK);f.engine.committed(f.owner,id,2);
+    check(state.calls==1&&state.revision==2&&f.engine.session(f.owner,id).inventory.revision==2);
+    refused(VCF_STALE,[&]{f.engine.committed(f.owner,id,2);});
+    refused(VCF_STALE,[&]{f.engine.committed(f.owner,id,1);});check(state.calls==1);
+    state.close=true;f.engine.committed(f.owner,id,4);
+    check(state.calls==2&&state.revision==4&&f.engine.session(f.owner,id).state==VCF_CLOSING);
+    refused(VCF_STALE,[&]{f.engine.committed(f.owner,id,5);});
+    f.engine.tick();f.engine.retired(f.owner,id,VCF_CLOSED);check(f.closes==1);
+    refused(VCF_STALE,[&]{f.engine.committed(f.owner,id,6);});check(state.calls==2);
+}
 }
 int main() {
-    try { pending_and_cancel();permissions_and_release();disable_inside_callback();retired_window_closes();synchronous_host_completion();menu_action_ticket_lifecycle();
+    try { pending_and_cancel();permissions_and_release();disable_inside_callback();retired_window_closes();synchronous_host_completion();menu_action_ticket_lifecycle();committed_callback_lifecycle();
         std::cout<<"Asynchronous opens, closes, revocation and ownership passed\n";
     }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
     catch(const Error& e){std::cerr<<"Unexpected status "<<e.status<<'\n';return 2;}

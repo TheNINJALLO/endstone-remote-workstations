@@ -156,4 +156,34 @@ std::vector<uint8_t> NativeItems::save(const endstone::ItemStack& item)const{
  require(item.getAmount()>0&&item.getAmount()<=255&&m.field<uint8_t>(wrapper+8,34)==item.getAmount(),VCF_UNAVAILABLE);
  return save(wrapper+8);
 }
+wire::Descriptor NativeItems::descriptor(std::span<const uint8_t> bytes,int32_t presentation_id)const{
+ if(bytes.empty())return {};require(presentation_id>0);auto item=reconstruct(bytes);Memory m;
+ // Compiled Linux headers: descriptor80/alignment8, count16, block48,
+ // libc++ string56; native constructor caller takes this RDI/ItemStack RSI.
+ m.function(impl_->bedrock+0xbbcc130,962,"2121972eee048a0b9328bf3cf1e9556bcf1e0fd124ce5c3b6960baef3053795a");
+ m.function(impl_->bedrock+0xbbb2e20,424,"cc2704be464596167e1e35da1856da986f17c5f1d972ee48da3e6621e1e9e06f");
+ m.function(impl_->bedrock+0x4556820,130,"2a51578654884276c14e883fbbba13463721baddc41441cb145f8ba1af4ba420");
+ m.function(impl_->runtime+0x246380,148,"e59dc90433a510c06b8c756f51fc4c0d12c9b7731b2c241b01983bd8c1418f3b");
+ m.function(impl_->runtime+0x246420,133,"ae10473b56d68040cc98b6e5db1aa312b47596ea2e707f6ddf131171212617e1");
+ alignas(8) std::array<uint8_t,80> storage{};
+ reinterpret_cast<void(*)(void*,const void*)>(impl_->bedrock+0xbbcc130)(storage.data(),reinterpret_cast<const void*>(item->address()));
+ struct Owner{void* p;uintptr_t destroy;~Owner(){reinterpret_cast<void(*)(void*)>(destroy)(p);}} owner{storage.data(),impl_->bedrock+0x4556820};
+ const auto address=reinterpret_cast<uintptr_t>(storage.data());require(m.field<uintptr_t>(address)==impl_->bedrock+0xe2aa760,VCF_UNAVAILABLE);
+ const auto internal=m.field<uintptr_t>(address,8);require(m.field<uintptr_t>(internal)==impl_->bedrock+0xe6b2f00,VCF_UNAVAILABLE);
+ m.function(impl_->bedrock+0xbc3b450,9,"a8b949307958a62343c816f0dd87ca43a62cfcccbdf756a03f2892c213f30ffe");
+ m.function(impl_->bedrock+0xbc11310,3,"251447ee91a9067dcd6ab96703133f617565974cd6c4819021760c4688c91abf");
+ require(m.field<uintptr_t>(impl_->bedrock+0xe6b2f00,5*8)==impl_->bedrock+0xbc3b450&&m.field<uintptr_t>(impl_->bedrock+0xe6b2f00,14*8)==impl_->bedrock+0xbc11310,VCF_UNAVAILABLE);
+ wire::Descriptor result;result.numeric_id=reinterpret_cast<int16_t(*)(const void*)>(impl_->runtime+0x246380)(storage.data());
+ const auto auxiliary=reinterpret_cast<int16_t(*)(const void*)>(impl_->runtime+0x246420)(storage.data());require(auxiliary>=0,VCF_UNAVAILABLE);
+ result.auxiliary=static_cast<uint32_t>(auxiliary);result.count=m.field<uint16_t>(address,16);result.block_runtime_id=m.field<uint32_t>(address,48);result.network_id=presentation_id;
+ require(result.numeric_id!=0&&result.count==m.field<uint8_t>(item->address(),34),VCF_UNAVAILABLE);
+ const auto& userdata=*std::launder(reinterpret_cast<const std::string*>(storage.data()+56));require(userdata.size()<=65536,VCF_CAPACITY);
+ result.user_data.assign(userdata.begin(),userdata.end());
+ require(save(item->address())==std::vector<uint8_t>(bytes.begin(),bytes.end()),VCF_UNAVAILABLE);return result;
+}
+wire::Descriptor NativeItems::native_descriptor(uintptr_t inventory,uint32_t index)const{
+ verify();const auto address=slot_address(inventory,index);const auto bytes=slot(inventory,index);if(bytes.empty())return {};
+ Memory m;require(m.field<uint32_t>(address,144)==0,VCF_UNAVAILABLE);const auto id=m.field<int32_t>(address,128);require(id>0,VCF_UNAVAILABLE);
+ auto result=descriptor(bytes,id);require(slot(inventory,index)==bytes&&m.field<uint32_t>(address,144)==0&&m.field<int32_t>(address,128)==id,VCF_STALE);return result;
+}
 }

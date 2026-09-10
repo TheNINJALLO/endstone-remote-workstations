@@ -61,7 +61,7 @@ public:
   return true;
  }
 };
-ENDSTONE_PLUGIN(VCF_CONSUMER_ID,"0.1.0-dev",Consumer){
+ENDSTONE_PLUGIN(VCF_CONSUMER_ID,"0.5.0-native.1",Consumer){
  description="Native SDK contract consumer; per-screen gameplay qualification is incomplete";
  depend={"onistone_vcf"};
  command(VCF_CONSUMER_ID).description("Native SDK test menu or prepare request").usages("/"+std::string(VCF_CONSUMER_ID)+" [action: string]").permissions("remoteworkstations.use");

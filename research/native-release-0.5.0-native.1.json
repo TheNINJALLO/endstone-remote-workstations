@@ -1,0 +1,101 @@
+{
+  "version": "0.5.0-native.1",
+  "source_ref": "v0.5.0-native.1",
+  "recorded": "2026-09-10",
+  "all_ui_acceptance": "not-qualified",
+  "builds": {
+    "linux-x64": {
+      "status": "passed",
+      "tests_passed": 23
+    },
+    "windows-x64": {
+      "status": "passed",
+      "tests_passed": 21
+    },
+    "windows-debug": {
+      "status": "passed",
+      "tests_passed": 21
+    }
+  },
+  "artifacts": {
+    "linux-x64": {
+      "endstone_onistone_vcf.so": "f18796018aadacd2ca6a459fa4ac3de150fcf4012ea9f9be44a93bc9f8aa9ece",
+      "endstone_vcf_catalog_showcase.so": "23a1001e94c8a4e1a1c888c5a44cf3d35a6a438e91d82cd5b617a8a9dade27b6",
+      "endstone_vcf_native_passthrough.so": "1d71ba3498c2e731b7059c65040084b6c25cdb5b973e2b797b52e0bef7d8337b"
+    },
+    "windows-x64": {
+      "endstone_onistone_vcf.dll": "77ffb77788f8ce08f8a340c28ed6fb9ce2b310f32f0b5caa2ad0e3bf27002375",
+      "endstone_vcf_catalog_showcase.dll": "a4fc6887f01c5d0a397d6b3f1d78042137332768a01142dbfa5d6040e9e97bd3",
+      "endstone_vcf_native_passthrough.dll": "00e7f36c92602bb671f13cc869dc7427dde7afe50760b913699c9474c9430a29"
+    },
+    "windows-debug": {
+      "endstone_onistone_vcf.dll": "b8ab8682ee397c404bd1fd0c323e14a6a12d585a0a051adea17e4e945c69bca7",
+      "endstone_vcf_catalog_showcase.dll": "08e66654d49df3a53061fd860499df6b7dea3c9b987ae0bcd0897e0430d3fa76",
+      "endstone_vcf_native_passthrough.dll": "565eacf1badba094f060880ca2a92a9b0965aa5a3cf001fa0e6934cf748039c4"
+    }
+  },
+  "sanitizers": {
+    "tests_passed": 23,
+    "fuzz_runs": [
+      100000,
+      100000,
+      100000
+    ]
+  },
+  "runtime": {
+    "server": "Endstone 0.11.10",
+    "bds": "1.26.45.1",
+    "protocol": 2169,
+    "bds_sha256": "8ba803f23d681816495c7ac83bdba4b9cd7165a3bee5aedd18fa0c8c3d408ec2",
+    "loader_sha256": "ac665adb20c9d5c640da9e88de956d728f6dd7771a4461ce8205824ec9b300bc",
+    "linux_loader_smoke": "passed",
+    "exported_installed_mapped_equal": true,
+    "windows_current_runtime_smoke": "untested"
+  },
+  "client": {
+    "device": "Windows PC",
+    "version": "1.26.45",
+    "protocol": 2169,
+    "input": "Classic keyboard/mouse",
+    "stock_client": true
+  },
+  "held_shulker": {
+    "public_sdk": true,
+    "mode": "real-source",
+    "command_open": "passed",
+    "reopen": "passed",
+    "enchanted_quick_transfer_roundtrip": "passed",
+    "full_36_saved_slots_roundtrip_exact": true,
+    "forced_close_cursor_no_write": true,
+    "restored_cursor_and_contents": "passed",
+    "transactions": [
+      25,
+      26
+    ],
+    "transaction_stages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "changed_slots": [
+      6,
+      11
+    ],
+    "journal_sha256": "d4ec69409bf90091a13557cfacad305930048c92f6f34b5c18942a3468752a6f",
+    "enchanted_item_saved_sha256": "fed108563cb0684d0c49ee6508493333ff14355ff7ef3b99082f1c194af60a6c",
+    "interaction_binding": "refused-equipment-sync-packet-31-at-preparation-stage-0",
+    "interaction_workaround": "Use /vcf_native shulker.",
+    "automatic_crash_reconciliation": "not-implemented",
+    "windows": "unavailable",
+    "complete_qualification": false
+  },
+  "other_clients": {
+    "android": "untested",
+    "controller": "untested",
+    "multiplayer": "untested"
+  },
+  "remaining": "Full catalog custom gameplay, Windows writer parity, bundle/editor/equipment/chemistry integration, map integration and automatic BDS/plugin save recovery remain incomplete."
+}

@@ -1,6 +1,14 @@
 # Changelog
 
-## 0.5.0.dev1 (unreleased)
+## 0.5.0-native.1 — experimental native prerelease
+
+- Native Linux `.so` and Windows `.dll`, C ABI/SDK 1.5 and separate compiled consumers.
+- Experimental Linux held shulker editing with complete saved-item metadata, durable identity, guarded cursor transfers and COMMIT callbacks.
+- Native inventory writes, explicit restart review, six BDS crash-boundary records and expanded sanitizer/fuzz tests.
+- Versioned installation/how-to documentation, screenshots, wiki pages, platform archives and checksums.
+- Full catalog/custom behavior, Windows writer parity and automatic cross-save recovery remain incomplete. See [release limits](docs/RELEASE_NATIVE_0_5_0.md).
+
+## Historical Python 0.5.0.dev1 (unreleased)
 
 - Dependency API 1.6 adds read-only inspection of the actual held item.
 - Typed, bounded item snapshots preserve complete public NBT for detached copies.

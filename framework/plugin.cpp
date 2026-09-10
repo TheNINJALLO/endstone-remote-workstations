@@ -12,6 +12,7 @@
 #include "platform/linux/item_save.hpp"
 #include "platform/linux/inventory_watch.hpp"
 #include "platform/linux/inventory_writer.hpp"
+#include "platform/linux/held_storage.hpp"
 #endif
 #include <nlohmann/json.hpp>
 #include <endstone/plugin/plugin.h>
@@ -40,6 +41,7 @@ class VirtualContainerFramework:public endstone::Plugin {
  std::shared_ptr<Engine> engine_;std::unique_ptr<sdk::Client> self_;vcf_api api_{};
  std::shared_ptr<inventory::InventoryJournal> inventory_journal_;
 #ifndef _WIN32
+ std::unique_ptr<platform::linux_native::HeldStorage> held_storage_;
  struct InventoryReview {std::string player;uint64_t token;Clock::time_point expires;std::unique_ptr<platform::linux_native::InventoryWriter> snapshot;};
  std::map<std::string,InventoryReview> inventory_reviews_;uint64_t next_review_=1;
  bool recovery(endstone::CommandSender& sender,const std::vector<std::string>& args){
@@ -76,6 +78,12 @@ class VirtualContainerFramework:public endstone::Plugin {
 #endif
  platform::Admission admission_;std::shared_ptr<endstone::Task> task_;
  bool original_native_enabled_=false;
+ bool native_available(std::string_view kind)const{
+#ifndef _WIN32
+  if(kind=="shulker")return bool(held_storage_);
+#endif
+  return original_native_enabled_&&native_ui_&&NativeUi::supports(kind);
+ }
  wire::Inbox item_observations_;
  std::unique_ptr<NativeUi> native_ui_;
  std::shared_ptr<bool> lifetime_=std::make_shared<bool>(false);
@@ -103,8 +111,8 @@ class VirtualContainerFramework:public endstone::Plugin {
    auto action=detail.substr(colon+1);auto it=self.catalog_actions_.find(action);if(it==self.catalog_actions_.end())return VCF_NOT_FOUND;
    const auto&row=catalog()[it->second];auto*p=self.player(std::string_view(event->player.data,event->player.length));if(!p)return VCF_CLOSED;
    if(!p->hasPermission(std::string(row.permission)))return VCF_DENIED;
-   if(self.original_native_enabled_&&NativeUi::supports(row.id)){
-    auto mode=row.id=="inventory2x2"||row.id=="armor"||row.id=="offhand"||row.id=="recipebook"?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
+   if(self.native_available(row.id)){
+    auto mode=row.id=="inventory2x2"||row.id=="armor"||row.id=="offhand"||row.id=="recipebook"||row.id=="shulker"?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
     auto ticket=self.self_->prepare(p->getUniqueId().str(),row.id,mode);self.self_->open(ticket);return VCF_OK;
    }
    p->sendMessage(std::string(row.id)+": C++ native/custom screen adapter is not yet qualified. This form is the catalog, not that screen.");
@@ -114,6 +122,9 @@ class VirtualContainerFramework:public endstone::Plugin {
  vcf_status show(const Session&s){
   auto*p=player(s.player);if(!p)return VCF_CLOSED;
   if(!s.is_menu){
+#ifndef _WIN32
+   if(s.kind=="shulker"&&held_storage_)return held_storage_->open(s);
+#endif
    return original_native_enabled_&&native_ui_?native_ui_->open(s):VCF_UNAVAILABLE;
   }
   if(p->getGameVersion()!="1.26.45")return VCF_UNAVAILABLE;
@@ -186,8 +197,9 @@ public:
    }
    require(std::filesystem::file_size(config_path)<=4096,VCF_CAPACITY);
    std::ifstream config_file(config_path);auto config=nlohmann::json::parse(config_file);
-   require(config.is_object()&&config.size()>=2&&config.size()<=4&&config.value("schema_version",0)==1&&config.contains("experimental_original_windows")&&config["experimental_original_windows"].is_boolean());
-   for(auto it=config.begin();it!=config.end();++it){require(it.key()=="schema_version"||it.key()=="experimental_original_windows"||it.key()=="experimental_original_linux"||it.key()=="experimental_inventory_writes");if(it.key()!="schema_version")require(it.value().is_boolean());}
+   require(config.is_object()&&config.size()>=2&&config.size()<=5&&config.value("schema_version",0)==1&&config.contains("experimental_original_windows")&&config["experimental_original_windows"].is_boolean());
+   for(auto it=config.begin();it!=config.end();++it){require(it.key()=="schema_version"||it.key()=="experimental_original_windows"||it.key()=="experimental_original_linux"||it.key()=="experimental_inventory_writes"||it.key()=="experimental_held_storage");if(it.key()!="schema_version")require(it.value().is_boolean());}
+   require(!config.value("experimental_held_storage",false)||config.value("experimental_inventory_writes",false),VCF_INVALID);
 #ifdef _WIN32
    original_native_enabled_=config["experimental_original_windows"].get<bool>();
 #else
@@ -218,7 +230,7 @@ public:
    }
 #endif
    host.native_available=[this](std::string_view id){
-    return original_native_enabled_&&native_ui_&&NativeUi::supports(id);
+    return native_available(id);
    };
    host.open=[this](const Session&s){return show(s);};
    host.close=[this](const Session&s)->vcf_status{
@@ -228,11 +240,17 @@ public:
      if(owned)if(auto*p=player(s.player))p->closeForm();
      return VCF_OK;
     }
+#ifndef _WIN32
+    if(s.kind=="shulker"&&held_storage_)return held_storage_->close(s);
+#endif
     if(native_ui_)return native_ui_->close(s);
     return VCF_OK;
    };
    engine_=std::make_shared<Engine>(std::move(host));attach_engine(engine_.get());
    native_ui_=std::make_unique<NativeUi>(getServer(),*engine_);
+#ifndef _WIN32
+   if(config.value("experimental_held_storage",false))held_storage_=std::make_unique<platform::linux_native::HeldStorage>(getServer(),engine_,inventory_journal_);
+#endif
    sdk::checked(oni_vcf_get_api(VCF_ABI_VERSION,sizeof(api_),&api_));
    self_=std::make_unique<sdk::Client>(api_,"onistone_vcf");
    for(uint32_t i=0;i<catalog().size();++i){auto name="catalog."+std::string(catalog()[i].id);catalog_actions_.emplace(name,i);self_->action(name,choose,this,std::string(catalog()[i].permission));}
@@ -241,6 +259,9 @@ public:
     item_observations_.poll();
     poll_forms();
     if(native_ui_)native_ui_->tick();
+#ifndef _WIN32
+    if(held_storage_)held_storage_->tick();
+#endif
     engine_->tick();engine_->collect_terminal(self_->owner());
    }catch(...){getLogger().error("VCF scheduler stopped by invariant failure.");task_->cancel();}},0,1);
    registerEvent(&VirtualContainerFramework::quit,*this);
@@ -259,6 +280,10 @@ public:
  void onDisable()override{
   *lifetime_=false;
   if(task_)task_->cancel();
+#ifndef _WIN32
+  if(held_storage_)held_storage_->shutdown();
+  held_storage_.reset();
+#endif
   if(native_ui_)native_ui_->shutdown();
   if(engine_){try{engine_->shutdown();}catch(...){}}
   forms_.clear();
@@ -288,9 +313,15 @@ public:
  void dimension(endstone::PlayerDimensionChangeEvent&e){retire_player(e.getPlayer());}
  void consumer_disabled(endstone::PluginDisableEvent&e){if(engine_)engine_->release_named(e.getPlugin().getName());}
  void received(endstone::PacketReceiveEvent&e){
+#ifndef _WIN32
+  if(held_storage_)held_storage_->receive(e);
+#endif
   if(native_ui_)native_ui_->receive(e);
  }
  void sent(endstone::PacketSendEvent&e){
+#ifndef _WIN32
+  if(held_storage_)held_storage_->sent(e);
+#endif
   if(e.getPlayer()&&!e.isCancelled()){
    // The payload schema is pinned to the admitted build. This passive cache
    // never cancels traffic or grants authority over BDS inventory.
@@ -331,16 +362,16 @@ public:
    }
    auto*row=resolve(name);if(!row){sender.sendErrorMessage("Unknown UI entry.");return true;}
    if(!sender.hasPermission(std::string(row->permission))){sender.sendErrorMessage("Permission denied.");return true;}
-   if(original_native_enabled_&&NativeUi::supports(row->id)){
+   if(native_available(row->id)){
     auto*p=sender.asPlayer();if(!p){sender.sendErrorMessage("Open native screens from Minecraft.");return true;}
-    auto mode=row->id=="inventory2x2"||row->id=="armor"||row->id=="offhand"||row->id=="recipebook"?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
+    auto mode=row->id=="inventory2x2"||row->id=="armor"||row->id=="offhand"||row->id=="recipebook"||row->id=="shulker"?VCF_REAL_SOURCE:VCF_NATIVE_CONTEXT;
     auto ticket=self_->prepare(p->getUniqueId().str(),row->id,mode);self_->open(ticket);return true;
    }
    sender.sendErrorMessage(std::string(row->id)+": the native C++ adapter is not yet qualified; the legacy source contract is retained in the migration audit.");return true;
   }catch(...){sender.sendErrorMessage("VCF request refused; inspect diagnostics.");return true;}
  }
 };
-ENDSTONE_PLUGIN("onistone_vcf","0.1.0-dev",VirtualContainerFramework){
+ENDSTONE_PLUGIN("onistone_vcf","0.5.0-native.1",VirtualContainerFramework){
  description="Native virtual-container framework development build; all-UI qualification incomplete";
  authors={"TheNINJALLO"};website="https://github.com/TheNINJALLO/endstone-remote-workstations";
  command("vcf").description("Native VCF catalog and diagnostics").usages("/vcf [action: string] [type: string]").permissions("remoteworkstations.use");

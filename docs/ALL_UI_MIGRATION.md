@@ -12,7 +12,7 @@ The immutable floor is [original-ui-catalog.json](../research/original-ui-catalo
 | `dropper` | `/dropper` | `remoteworkstations.open.dropper` | block; C++ session integration pending |
 | `trappedchest` | `/trappedchest` | `remoteworkstations.open.trappedchest` | block; C++ session integration pending |
 | `enderchest` | `/enderchest`, `/ec` | `remoteworkstations.open.enderchest` | player; C++ session integration pending |
-| `shulker` | `/shulker` | `remoteworkstations.open.shulker` | held-item; C++ session integration pending |
+| `shulker` | `/shulker` | `remoteworkstations.open.shulker` | held-item; experimental Linux real-source editor, full qualification pending |
 | `craft` | `/craft`, `/workbench` | `remoteworkstations.open.craft` | player; Experimental C++ original session implemented; client and custom qualification pending |
 | `anvil` | `/anvil` | `remoteworkstations.open.anvil` | player; Experimental C++ original session implemented; client and custom qualification pending |
 | `grindstone` | `/grindstone` | `remoteworkstations.open.grindstone` | player; Experimental C++ original session implemented; client and custom qualification pending |
@@ -85,7 +85,7 @@ The immutable floor is [original-ui-catalog.json](../research/original-ui-catalo
 | `SlotButton` | Protected item icon/click contract pending. |
 | `InventoryMenu` | Protected 27-slot native inventory adapter pending; no form substitution. |
 | `EnderChest` | Real-source enderchest request retained; native C++ session implementation pending. |
-| `HeldItem` | Real-source shulker request retained; native primitives ported; durable-item session integration and qualification pending. |
+| `HeldItem` | Real-source shulker request retained; experimental Linux identity/source locks and journaled transfers implemented; Windows and full qualification pending. |
 | `BlockContext` | vcf_session_desc dimension/position/source_permission; source validation/opening pending. |
 | `SignContext` | Sign-specific typed fields/side and editor callbacks pending. |
 | `LinkedBlock` | Canonical ID plus real-source descriptor; binding pending. |

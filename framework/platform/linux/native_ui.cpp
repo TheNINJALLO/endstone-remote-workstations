@@ -622,4 +622,6 @@ void NativeUi::sent(endstone::PacketSendEvent&e){
  }
 }
 void NativeUi::shutdown(){for(auto&[_,v]:impl_->views)try{auto*p=impl_->player(v.player);impl_->close(p,v);if(p&&p->isValid())impl_->restore(*p,v);}catch(...){}impl_->views.clear();}
+bool native_player_ready(endstone::Player& player){return Bridge{}.inspect(player).ready;}
+bool native_stale_close(endstone::Player& player,uint8_t incoming){const auto state=Bridge{}.inspect(player);return state.ready||state.window!=incoming;}
 }
